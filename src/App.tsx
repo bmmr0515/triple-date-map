@@ -104,6 +104,34 @@ export default function App() {
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [showNoResultsToast, setShowNoResultsToast] = useState<boolean>(false);
 
+  // 📄 プライバシーポリシーページの表示制御 (SPA/URL同期ハイブリッドルーティング)
+  const [showPrivacyPage, setShowPrivacyPage] = useState<boolean>(
+    window.location.pathname === '/privacy' || window.location.pathname === '/privacy/'
+  );
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setShowPrivacyPage(window.location.pathname === '/privacy' || window.location.pathname === '/privacy/');
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const navigateToPrivacy = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    window.history.pushState(null, '', '/privacy');
+    setShowPrivacyPage(true);
+    setIsMobileMenuOpen(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const navigateToHome = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    window.history.pushState(null, '', '/');
+    setShowPrivacyPage(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   // 📍 現在地（GPS）ジャンプ用ステート＆参照
   const [isGpsJumping, setIsGpsJumping] = useState<boolean>(false);
   const userLocationMarkerRef = useRef<any>(null);
@@ -642,6 +670,281 @@ ${window.location.origin + window.location.pathname}
   };
 
   const fanRank = getFanRank(checkins.length);
+
+  // 📄 プライバシーポリシー全画面レンダリング (showPrivacyPage === true のとき)
+  if (showPrivacyPage) {
+    return (
+      <div className="privacy-page-container" style={{
+        minHeight: '100vh',
+        background: '#f8fafc',
+        color: '#1e293b',
+        fontFamily: "'Outfit', 'Inter', sans-serif",
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+        {/* 💖 グラデーションヘッダー */}
+        <header style={{
+          background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)',
+          padding: '32px 16px',
+          color: 'white',
+          textAlign: 'center',
+          boxShadow: '0 4px 20px rgba(255, 104, 151, 0.15)',
+          position: 'relative'
+        }}>
+          <div style={{ maxWidth: '720px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '32px', animation: 'float 3s ease-in-out infinite' }}>📜</span>
+            <h1 style={{ fontSize: '20px', fontWeight: '900', margin: 0, letterSpacing: '-0.02em' }}>
+              プライバシーポリシー
+            </h1>
+            <p style={{ fontSize: '11px', opacity: 0.9, margin: 0, fontWeight: '700' }}>
+              トリプルデート・マップ (非公式ファンサービス)
+            </p>
+          </div>
+        </header>
+
+        {/* 📚 ポリシー本文メインコンテンツ */}
+        <main style={{ flex: 1, maxWidth: '720px', width: '100%', margin: '24px auto', padding: '0 16px 80px' }}>
+          {/* マップに戻るフローティング誘導 */}
+          <button
+            onClick={navigateToHome}
+            className="pop-button font-black"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              background: '#ffffff',
+              color: 'var(--text-main)',
+              border: '2px solid #cbd5e1',
+              padding: '10px 18px',
+              borderRadius: '20px',
+              fontSize: '11.5px',
+              cursor: 'pointer',
+              marginBottom: '20px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.03)'
+            }}
+          >
+            🗺️ 聖地マップに戻る
+          </button>
+
+          <div style={{
+            background: '#ffffff',
+            borderRadius: '24px',
+            border: '2px solid #e2e8f0',
+            boxShadow: '0 10px 30px rgba(15, 23, 42, 0.03)',
+            padding: isMobile ? '24px 16px' : '40px 32px'
+          }}>
+            {/* 非公式明記の特別目立つアラートボックス */}
+            <div style={{
+              fontSize: '11.5px',
+              color: '#9f1239',
+              lineHeight: '1.7',
+              background: '#fff1f2',
+              padding: '18px',
+              borderRadius: '16px',
+              border: '1.5px solid #ffe4e6',
+              fontWeight: '900',
+              marginBottom: '28px'
+            }}>
+              🚨 免責事項（非公式宣言）<br />
+              本サービス「トリプルデートマップ」（以下「本サービス」）は、=LOVE / ≠ME / ≒JOY（以下「イコノイジョイ」）および各公式運営・所属事務所・各権利者とは一切関係のない非公式ファンサービスです。PWA / Webアプリとしてファン有志によって提供されています。
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '28px', fontSize: '12px', color: '#334155', lineHeight: '1.8' }}>
+              
+              <div>
+                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
+                  1. 取得する情報
+                </h3>
+                <p style={{ margin: 0 }}>
+                  本サービスでは、以下の情報またはデータを取得する可能性があります。
+                </p>
+                <ul style={{ margin: '6px 0 0 20px', padding: 0, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <li>端末の位置情報（GPSなどによる緯度・経度）</li>
+                  <li>聖地のチェックイン記録（巡礼した日時および聖地ID）</li>
+                  <li>ブラウザ情報（ユーザーエージェント、OS、ブラウザ種別）</li>
+                  <li>アクセス解析情報（本サービスへのアクセス状況や滞在時間など）</li>
+                  <li>お問い合わせの際にご入力いただく内容（ニックネーム、メールアドレス、送信内容など）</li>
+                  <li>Cookie（クッキー）またはそれに類似する技術</li>
+                  <li>広告・アフィリエイト計測に必要な情報（クリック情報等）</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
+                  2. 位置情報の利用について
+                </h3>
+                <p style={{ margin: 0 }}>
+                  本サービスでは、各聖地への「チェックイン機能」を提供するために端末の位置情報（GPS）を使用します。
+                  取得した現在地の緯度・経度は、ブラウザ（JavaScript）上でスポットとの距離を判定するために一時的に使用され、<strong>ユーザーの同意（ブラウザの許可）なく位置情報を勝手に取得することはありません。</strong>
+                  また、当サーバーや第三者のサーバーへユーザーの移動履歴、現在地ログ、移動ルートのデータを送信・保存・蓄積することは一切ございません。
+                </p>
+              </div>
+
+              <div>
+                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
+                  3. 利用目的
+                </h3>
+                <p style={{ margin: 0 }}>
+                  取得した情報は、以下の目的のためにのみ適切に利用します。
+                </p>
+                <ul style={{ margin: '6px 0 0 20px', padding: 0, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <li>本サービスの安定的な機能提供</li>
+                  <li>現地聖地チェックイン機能の提供および巡礼アワード（称号）の判定</li>
+                  <li>ユーザーの巡礼記録（チェックイン履歴）の保存とマイページへの表示</li>
+                  <li>不具合の検知、技術トラブルの修正および対応</li>
+                  <li>利用状況（アクセス数など）の匿名分析および本サービスの機能改善</li>
+                  <li>不当な連投やスパムなど、規約違反や不正利用の防止</li>
+                  <li>お問い合わせに対する内容の調査および適切な回答</li>
+                  <li>広告・アフィリエイトの効果測定</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
+                  4. 第三者サービスの利用
+                </h3>
+                <p style={{ margin: 0 }}>
+                  本サービスでは、機能提供、アクセス解析、地図表示、および持続可能な運営のために、以下の外部サービスを利用、または将来的に利用する場合があります。
+                </p>
+                <ul style={{ margin: '6px 0 0 20px', padding: 0, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <li><strong>Vercel</strong> (Webアプリのホスティングおよびアクセス解析（Vercel Analytics）)</li>
+                  <li><strong>Google Analytics</strong> (アクセス状況の分析)</li>
+                  <li><strong>Google Maps</strong> (聖地への経路案内・乗り換え表示)</li>
+                  <li><strong>Google AdSense</strong> (自動広告の配信)</li>
+                  <li><strong>Amazonアソシエイト</strong> (書籍・CDなどの紹介アフィリエイト)</li>
+                  <li><strong>もしもアフィリエイト</strong> (成果報酬型広告の掲載)</li>
+                  <li><strong>OFUSE</strong> (開発者へのファンレター・寄付・支援窓口の設置)</li>
+                  <li><strong>Discord</strong> (コミュニティ、不具合報告、聖地提案の受信用)</li>
+                  <li><strong>Googleフォーム</strong> (お問い合わせ、聖地の新規提案受付)</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
+                  5. 広告・アフィリエイトについて
+                </h3>
+                <p style={{ margin: 0, marginBottom: '8px' }}>
+                  本サービスでは、サーバー維持費、マップデータ更新費用、および開発運営の維持・向上のために、広告（自動広告）やアフィリエイトリンク（紹介用リンク）を掲載する場合があります。
+                </p>
+                <p style={{ margin: '0 0 8px 0', padding: '10px 14px', background: '#f8fafc', borderRadius: '10px', border: '1px solid #e2e8f0', fontSize: '11px', fontWeight: '800' }}>
+                  「トリプルデートマップは、Amazon.co.jpを宣伝しリンクすることによって紹介料を獲得できるAmazonアソシエイト・プログラムの参加者です。」
+                </p>
+                <p style={{ margin: 0 }}>
+                  また、もしもアフィリエイトを含むアフィリエイトASPを介して成果報酬型広告を利用し、関連する商品（楽曲CD、映像作品など）を紹介・掲載する場合があります。これらに伴い、第三者（アフィリエイトASPなど）が訪問者のブラウザから直接情報を収集したり、Cookieを配置する可能性があります。
+                </p>
+              </div>
+
+              <div>
+                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
+                  6. 個人情報の第三者提供
+                </h3>
+                <p style={{ margin: 0 }}>
+                  本サービスは、取得した個人情報を適切に保護し、以下の場合を除いてあらかじめ本人の同意を得ることなく第三者に提供することはありません。
+                </p>
+                <ul style={{ margin: '6px 0 0 20px', padding: 0, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <li>法令に基づく強制力を持った請求や要請がある場合</li>
+                  <li>人の生命、身体または財産の保護のために必要がある場合であり、本人の同意を得ることが困難であるとき</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
+                  7. 安全管理措置
+                </h3>
+                <p style={{ margin: 0 }}>
+                  本サービスは、取得した巡礼データやアカウント情報を保護するために適切なセキュリティ対策を実施し管理します。
+                  ただし、インターネット上のあらゆる通信やサービスである以上、100%完全に漏洩や侵害を防ぐことを完全に保証できるものではないことをご理解のうえご利用ください。
+                </p>
+              </div>
+
+              <div>
+                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
+                  8. ユーザーの権利
+                </h3>
+                <p style={{ margin: 0 }}>
+                  ユーザーは、ご自身の個人情報（アカウントニックネーム、チェックイン記録など）の確認・修正・削除を求める権利を有します。
+                  データの完全削除（アカウントの削除・履歴の消去）をご希望の場合は、下記のお問い合わせ用フォームよりお気軽にご連絡ください。速やかに対応いたします。
+                </p>
+              </div>
+
+              <div>
+                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
+                  9. 未成年の利用
+                </h3>
+                <p style={{ margin: 0 }}>
+                  未成年のユーザーが本サービスを利用し、位置情報の送信やアカウント登録を行う場合は、必ず親権者（保護者）の同意と指導を得たうえで本サービスを利用していただくようお願いいたします。
+                </p>
+              </div>
+
+              <div>
+                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
+                  10. 免責事項
+                </h3>
+                <p style={{ margin: 0 }}>
+                  本サービスは個人が開発する非公式ファンアプリであり、掲載している聖地情報、緯度経度の正確性、およびリンク先動画の存続性についていかなる保証もいたしません。
+                  また、本サービスを利用したこと、あるいは聖地へ実際に訪問したことによって発生した一切の怪我、トラブル、事故、第三者とのいざこざ等について、開発者および本サービス運営は一切の責任を負いません。
+                </p>
+              </div>
+
+              <div>
+                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
+                  11. プライバシーポリシーの改定
+                </h3>
+                <p style={{ margin: 0 }}>
+                  本プライバシーポリシーは、本サービスのアップデートや機能追加、法令の改正等に伴い、ユーザーへの予告なく必要に応じて変更・改定されることがあります。改定された内容は本ページに掲載された時点で即時有効となります。
+                </p>
+              </div>
+
+              <div>
+                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
+                  12. お問い合わせ
+                </h3>
+                <p style={{ margin: 0 }}>
+                  プライバシーポリシーに関するご質問、または個人データの開示・訂正・削除のご要望につきましては、以下の「お問い合わせ用フォーム」よりご連絡ください。
+                </p>
+                <div style={{ marginTop: '12px' }}>
+                  <a
+                    href="https://forms.gle/XXXXXXXXXXXX"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pop-button font-black"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      background: 'linear-gradient(135deg, #a78bfa 0%, #ff6897 100%)',
+                      color: 'white',
+                      padding: '10px 20px',
+                      borderRadius: '16px',
+                      textDecoration: 'none',
+                      fontSize: '11px',
+                      boxShadow: '0 4px 15px rgba(167, 139, 250, 0.3)'
+                    }}
+                  >
+                    ✉️ お問い合わせフォーム (Googleフォーム)
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
+          {/* プライバシーポリシーページの下部簡易フッター */}
+          <div style={{ textAlign: 'center', marginTop: '40px', fontSize: '10px', color: 'var(--text-muted)' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginBottom: '8px', fontWeight: '900' }}>
+              {/* 📜 利用規約リンク (将来追加できるようにリンクを準備) */}
+              <a href="#" onClick={(e) => { e.preventDefault(); setShowTermsModal(true); }} style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>利用規約</a>
+              <span>•</span>
+              <a href="#" onClick={navigateToHome} style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>聖地マップ</a>
+              <span>•</span>
+              <a href="https://forms.gle/XXXXXXXXXXXX" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>お問い合わせ</a>
+            </div>
+            © {new Date().getFullYear()} トリプルデートマップ (非公式)
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="app-container">
@@ -2404,32 +2707,79 @@ ${window.location.origin + window.location.pathname}
               </div>
             )}
 
-            {/* 📜 利用規約・免責事項リンク (文化を壊さない宣言) */}
+            {/* 📜 フッターリンク (利用規約・プライバシーポリシー・お問い合わせ) */}
             <div style={{
-              marginTop: '10px',
-              paddingTop: '8px',
+              marginTop: '12px',
+              paddingTop: '10px',
               borderTop: '1.5px dashed #e2e8f0',
               display: 'flex',
-              justifyContent: 'center'
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '6px'
             }}>
-              <button
-                type="button"
-                onClick={() => setShowTermsModal(true)}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  fontSize: '9px',
-                  color: 'var(--text-muted)',
-                  fontWeight: '800',
-                  textDecoration: 'underline',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px'
-                }}
-              >
-                <span>📜 利用規約・免責事項（モラル保護宣言）</span>
-              </button>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '10px',
+                flexWrap: 'wrap'
+              }}>
+                {/* 📜 利用規約リンク (将来的に個別ページ /terms に書き換える場合はここを a タグに置き換え) */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowTermsModal(true);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    fontSize: '9px',
+                    color: 'var(--text-muted)',
+                    fontWeight: '900',
+                    textDecoration: 'underline',
+                    cursor: 'pointer'
+                  }}
+                >
+                  利用規約
+                </button>
+                <span style={{ fontSize: '8px', color: '#cbd5e1' }}>•</span>
+                {/* 📄 プライバシーポリシーリンク */}
+                <button
+                  type="button"
+                  onClick={navigateToPrivacy}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    fontSize: '9px',
+                    color: 'var(--text-muted)',
+                    fontWeight: '900',
+                    textDecoration: 'underline',
+                    cursor: 'pointer'
+                  }}
+                >
+                  プライバシーポリシー
+                </button>
+                <span style={{ fontSize: '8px', color: '#cbd5e1' }}>•</span>
+                {/* ✉️ お問い合わせリンク */}
+                <a
+                  href="https://forms.gle/XXXXXXXXXXXX"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    fontSize: '9px',
+                    color: 'var(--text-muted)',
+                    fontWeight: '900',
+                    textDecoration: 'underline',
+                    cursor: 'pointer'
+                  }}
+                >
+                  お問い合わせ
+                </a>
+              </div>
+              <span style={{ fontSize: '8.5px', color: '#94a3b8', fontWeight: 'bold' }}>
+                本サービスは非公式ファンサービスです
+              </span>
             </div>
 
           </div>
