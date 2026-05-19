@@ -74,6 +74,7 @@ export default function App() {
   const [showProfileEdit, setShowProfileEdit] = useState<boolean>(false);
   const [rightPanelTab, setRightPanelTab] = useState<'detail' | 'mypage' | 'mission'>('detail');
   const [missionExpanded, setMissionExpanded] = useState<boolean>(true);
+  const [recipeMissionExpanded, setRecipeMissionExpanded] = useState<boolean>(true);
 
   // 📱 スマホレスポンシブ判定用ステートとリサイズ監視
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
@@ -215,6 +216,15 @@ export default function App() {
     if (triggerSpots.length > 0 && isAllChecked(triggerSpots)) {
       if (!currentAcquired.includes(triggerTitle) && !newlyEarnedTitles.includes(triggerTitle)) {
         newlyEarnedTitles.push(triggerTitle);
+      }
+    }
+
+    // 6. 笑顔のレシピ料理人 (6箇所)
+    const recipeSpots = spots.filter(s => s.tags && s.tags.includes("笑顔のレシピ巡礼"));
+    const recipeTitle = "笑顔のレシピ料理人";
+    if (recipeSpots.length > 0 && isAllChecked(recipeSpots)) {
+      if (!currentAcquired.includes(recipeTitle) && !newlyEarnedTitles.includes(recipeTitle)) {
+        newlyEarnedTitles.push(recipeTitle);
       }
     }
 
@@ -1498,6 +1508,152 @@ ${window.location.origin + window.location.pathname}
                                 <span style={{ fontSize: '10px', fontWeight: '900', color: isCompleted ? '#ff6897' : '#64748b' }}>称号報酬: 『この空がトリガー』完遂者</span>
                                 <span style={{ fontSize: '8px', color: '#94a3b8' }}>
                                   {isCompleted ? '🎉 称号報酬を獲得！マイページにバッジが光輝いています。' : '12箇所すべて巡るとプレミアム称号バッジが解放されます。'}
+                                </span>
+                              </div>
+                            </div>
+
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
+
+                  {/* 🌟 笑顔のレシピ巡礼ミッションの進捗カード */}
+                  {(() => {
+                    const recipeSpots = spots.filter(s => s.tags && s.tags.includes("笑顔のレシピ巡礼"));
+                    const checkedRecipeSpots = checkins.filter(c => {
+                      const spot = spots.find(s => s.id === c.spot_id);
+                      return spot && spot.tags && spot.tags.includes("笑顔のレシピ巡礼");
+                    });
+                    const uniqueCheckedCount = new Set(checkedRecipeSpots.map(c => c.spot_id)).size;
+                    const totalRecipeCount = recipeSpots.length || 6;
+                    const percent = Math.min(100, Math.round((uniqueCheckedCount / totalRecipeCount) * 100));
+                    const isCompleted = uniqueCheckedCount === totalRecipeCount;
+
+                    return (
+                      <div className="pop-panel" style={{
+                        borderRadius: '16px',
+                        border: '2px solid #e2e8f0',
+                        overflow: 'hidden',
+                        boxShadow: 'var(--shadow-panel)',
+                        marginTop: '16px'
+                      }}>
+                        {/* アコーディオンヘッダー */}
+                        <div 
+                          onClick={() => setRecipeMissionExpanded(!recipeMissionExpanded)}
+                          style={{
+                            padding: '16px',
+                            background: 'linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%)', // 爽やかなグリーン系グラデーション
+                            borderBottom: '1px solid #e2e8f0',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                            <span style={{ fontSize: '12px', fontWeight: '900', color: '#16a34a' }}>
+                              『笑顔のレシピ』夢の地へ巡礼せよ！
+                            </span>
+                            <span style={{ fontSize: '10px', color: 'var(--text-muted)', fontWeight: '800' }}>
+                              進行状況: {uniqueCheckedCount} / {totalRecipeCount} 箇所 ({percent}%)
+                            </span>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            {isCompleted ? (
+                              <span style={{ fontSize: '10px', fontWeight: '900', color: '#16a34a', background: '#ffffff', padding: '2px 8px', borderRadius: '9999px', border: '1px solid rgba(22,163,74,0.2)' }}>達成！</span>
+                            ) : (
+                              <ChevronRight className="w-4 h-4 text-slate-400" style={{ transform: recipeMissionExpanded ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
+                            )}
+                          </div>
+                        </div>
+
+                        {/* アコーディオンの中身（6箇所の聖地リスト） */}
+                        {recipeMissionExpanded && (
+                          <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', backgroundColor: '#ffffff' }}>
+                            
+                            {/* プログレスバー */}
+                            <div style={{ padding: '4px 6px 10px 6px' }}>
+                              <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '9999px', overflow: 'hidden' }}>
+                                <div style={{ width: `${percent}%`, height: '100%', background: 'linear-gradient(90deg, #4ade80 0%, #2dd4bf 100%)', transition: 'width 0.4s ease-out' }}></div>
+                              </div>
+                            </div>
+
+                            {/* 6箇所のリスト */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                              {recipeSpots.map(spot => {
+                                const isSpotChecked = checkins.some(c => c.spot_id === spot.id);
+                                return (
+                                  <div 
+                                    key={spot.id} 
+                                    onClick={() => {
+                                      handleFocusSpotOnMap(spot);
+                                      setSelectedSpot(spot);
+                                      setRightPanelTab('detail');
+                                    }}
+                                    style={{
+                                      display: 'flex',
+                                      justifyContent: 'space-between',
+                                      alignItems: 'center',
+                                      padding: '10px 12px',
+                                      borderRadius: '10px',
+                                      background: isSpotChecked ? '#f0fdf4' : '#f8fafc',
+                                      border: isSpotChecked ? '1px solid rgba(22, 163, 74, 0.2)' : '1px solid #e2e8f0',
+                                      cursor: 'pointer',
+                                      transition: 'all 0.2s'
+                                    }}
+                                    className="mission-spot-item"
+                                  >
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', overflow: 'hidden', paddingRight: '12px' }}>
+                                      <span style={{ fontSize: '11px', fontWeight: '800', color: isSpotChecked ? 'var(--text-main)' : 'var(--text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                        {spot.name}
+                                      </span>
+                                      <span style={{ fontSize: '8px', color: '#94a3b8' }}>{spot.category}</span>
+                                    </div>
+                                    <div style={{ flexShrink: 0 }}>
+                                      {isSpotChecked ? (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#ffffff', color: '#16a34a', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '900', border: '1px solid rgba(22,163,74,0.2)' }}>
+                                          <CheckCircle2 className="w-3 h-3 text-[#16a34a]" />
+                                          行った！
+                                        </div>
+                                      ) : (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#ffffff', color: '#94a3b8', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '800', border: '1px solid #e2e8f0' }}>
+                                          未チェック
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+
+                            {/* 称号獲得の通知報酬枠 */}
+                            <div style={{
+                              marginTop: '8px',
+                              padding: '10px',
+                              borderRadius: '10px',
+                              background: isCompleted ? 'linear-gradient(135deg, rgba(74,222,128,0.06) 0%, rgba(45,212,191,0.06) 100%)' : '#f8fafc',
+                              border: isCompleted ? '1px dashed #2dd4bf' : '1px dashed #cbd5e1',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '8px'
+                            }}>
+                              <div style={{
+                                width: '28px',
+                                height: '28px',
+                                borderRadius: '50%',
+                                background: isCompleted ? 'linear-gradient(135deg, #4ade80 0%, #2dd4bf 100%)' : '#e2e8f0',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                flexShrink: 0
+                              }}>
+                                <Award className="w-4 h-4 text-white" />
+                              </div>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                <span style={{ fontSize: '10px', fontWeight: '900', color: isCompleted ? '#16a34a' : '#64748b' }}>称号報酬: 笑顔のレシピ料理人</span>
+                                <span style={{ fontSize: '8px', color: '#94a3b8' }}>
+                                  {isCompleted ? '🎉 笑顔のレシピ料理人の称号を獲得！マイページでバッジが輝いています。' : '笑顔のレシピの聖地6箇所すべてを巡ると「笑顔のレシピ料理人」の称号が解放されます。'}
                                 </span>
                               </div>
                             </div>

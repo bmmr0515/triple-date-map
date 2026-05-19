@@ -1,0 +1,366 @@
+[
+  {
+    "name": "代々木アニメーション学院 東京校",
+    "group": "合同",
+    "category": "飲食店・その他",
+    "songOrEvent": "Documentary of =LOVE -Episode0-",
+    "reward_title": "すべての始まりの目撃者"
+  },
+  {
+    "name": "角島大橋（山口県）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『青春”サブリミナル”』",
+    "reward_title": "青サビの約束を交わした者"
+  },
+  {
+    "name": "富津臨海陸上競技場（千葉県）",
+    "group": "≠ME",
+    "category": "MVロケ地",
+    "songOrEvent": "『≠ME』",
+    "reward_title": "ノイミー原点の走者"
+  },
+  {
+    "name": "湘南鎌倉クリスタルホテル",
+    "group": "≠ME",
+    "category": "MVロケ地",
+    "songOrEvent": "『チョコレートメランコリー』",
+    "reward_title": "チョコメラの虜"
+  },
+  {
+    "name": "江ノ島湘南大堤防（神奈川県藤沢市）",
+    "group": "≠ME",
+    "category": "MVロケ地",
+    "songOrEvent": "『虹が架かる瞬間』",
+    "reward_title": "大堤防に架かる虹を見た者"
+  },
+  {
+    "name": "日本武道館",
+    "group": "=LOVE",
+    "category": "ライブ会場",
+    "songOrEvent": "『青春サブリミナル』",
+    "reward_title": "日本武道館の証言者"
+  },
+  {
+    "name": "富士急ハイランド コニファーフォレスト",
+    "group": "合同",
+    "category": "ライブ会場",
+    "songOrEvent": "『トリプルデート』",
+    "reward_title": "放水祭りのサバイバー"
+  },
+  {
+    "name": "旧福島県尋常中学校本館（安積歴史博物館）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『探せ ダイヤモンドリリー』",
+    "reward_title": "ダイヤモンドリリーの語り部"
+  },
+  {
+    "name": "大谷資料館（栃木県宇都宮市）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『あの子コンプレックス』",
+    "reward_title": "大谷資料館の目撃者"
+  },
+  {
+    "name": "セブ島（フィリピン）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『ナツマトペ』",
+    "reward_title": "ナツマトペの漂流者"
+  },
+  {
+    "name": "韓国・ソウル",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『Be Selfish』",
+    "reward_title": "Be Selfishの体現者"
+  },
+  {
+    "name": "京王競馬場線 府中競馬正門前駅",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『ズルいよ ズルいね』",
+    "reward_title": "ズルいよ駅の雨宿り人"
+  },
+  {
+    "name": "アトリエミカミ 学校スタジオ（茨城県）",
+    "group": "≠ME",
+    "category": "MVロケ地",
+    "songOrEvent": "『秘密インシデント』",
+    "reward_title": "秘密インシデントの当事者"
+  },
+  {
+    "name": "足摺岬（高知県）",
+    "group": "≠ME",
+    "category": "MVロケ地",
+    "songOrEvent": "『夏が来たから』",
+    "reward_title": "足摺岬で風を浴びた者"
+  },
+  {
+    "name": "越後屋東小川小学校スタジオ（埼玉県）",
+    "group": "≒JOY",
+    "category": "MVロケ地",
+    "songOrEvent": "『体育館ディスコ』",
+    "reward_title": "体育館ディスコのダンサー"
+  },
+  {
+    "name": "ロックハート城（群馬県）",
+    "group": "≠ME",
+    "category": "MVロケ地",
+    "songOrEvent": "『チョコレートメランコリー』",
+    "reward_title": "古城に閉じ込められし者"
+  },
+  {
+    "name": "アニヴェルセル大宮（埼玉県）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『The 5th』",
+    "reward_title": "制服クリスマスの約束人"
+  },
+  {
+    "name": "富士急ハイランド（山梨県）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『Oh！Darling』",
+    "reward_title": "Oh! Darlingの恋人"
+  },
+  {
+    "name": "所澤神明社（埼玉県所沢市）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『夏祭り恋慕う』",
+    "reward_title": "夏祭り恋慕うオタク"
+  },
+  {
+    "name": "フェスティバルウォーク蘇我（千葉県）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『ドライブ デート 都内』",
+    "reward_title": "ドライブデートのナビゲーター"
+  },
+  {
+    "name": "昭和の森（千葉県千葉市）",
+    "group": "≠ME",
+    "category": "MVロケ地",
+    "songOrEvent": "『君はこの夏、恋をする』",
+    "reward_title": "君夏に恋した者"
+  },
+  {
+    "name": "大慶園（千葉県市川市）",
+    "group": "≠ME",
+    "category": "MVロケ地",
+    "songOrEvent": "『天使は何処へ』",
+    "reward_title": "大慶園のネオンダンサー"
+  },
+  {
+    "name": "流山市立おおぐろの森中学校（千葉県）",
+    "group": "≠ME",
+    "category": "MVロケ地",
+    "songOrEvent": "『ラストチャンス、ラストダンス』",
+    "reward_title": "ラスチャンの中学生"
+  },
+  {
+    "name": "小滝沢キャンプ場（茨城県）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『=LOVE』",
+    "reward_title": "イコラブ原点のダブルピース"
+  },
+  {
+    "name": "うのしまヴィラ海岸（茨城県）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『=LOVE』",
+    "reward_title": "うのしま海岸の開拓者"
+  },
+  {
+    "name": "関東学院中学校・高等学校（神奈川県）",
+    "group": "≒JOY",
+    "category": "MVロケ地",
+    "songOrEvent": "『笑って フラジール』",
+    "reward_title": "笑ってフラジールの応援団"
+  },
+  {
+    "name": "旧三田川中学校（埼玉県小鹿野町）",
+    "group": "≒JOY",
+    "category": "MVロケ地",
+    "songOrEvent": "『今日も君の夢を見たんだ』",
+    "reward_title": "君の夢を見た夢追い人"
+  },
+  {
+    "name": "木更津市 木材港の大型倉庫（千葉県）",
+    "group": "≒JOY",
+    "category": "MVロケ地",
+    "songOrEvent": "『無謀人』",
+    "reward_title": "無謀なる港の開拓者"
+  },
+  {
+    "name": "牛久シャトー (旧シャトーカミヤ)",
+    "group": "≒JOY",
+    "category": "MVロケ地",
+    "songOrEvent": "『≒JOY』",
+    "reward_title": "ニアジョイ始まりの乾杯者"
+  },
+  {
+    "name": "ブリティッシュヒルズ（福島県）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『ウィークエンドシトロン』",
+    "reward_title": "ウィークエンドシトロンのお嬢様"
+  },
+  {
+    "name": "首都圏外郭放水路（埼玉県）",
+    "group": "≠ME",
+    "category": "MVロケ地",
+    "songOrEvent": "『P.I.C.』",
+    "reward_title": "地下神殿のステッキ使い"
+  },
+  {
+    "name": "イタリア街（東京都港区）",
+    "group": "≠ME",
+    "category": "MVロケ地",
+    "songOrEvent": "『はにかみショート』",
+    "reward_title": "はにかみショートの主人公"
+  },
+  {
+    "name": "ロングウッドステーション（千葉県）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『手遅れcaution』",
+    "reward_title": "手遅れ警告の発令者"
+  },
+  {
+    "name": "山梨英和大学（山梨県甲府市）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『僕らの制服クリスマス』",
+    "reward_title": "僕らの制服クリスマスの学生"
+  },
+  {
+    "name": "河口湖 音楽と森の美術館（山梨県）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『ラストノートしか知らない』",
+    "reward_title": "ラストノートの調香師"
+  },
+  {
+    "name": "ウェディングファンタジア（静岡県沼津市）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『Want you! Want you!』",
+    "reward_title": "Want you! のウェディングメイト"
+  },
+  {
+    "name": "不純喫茶ドープ 上野御徒町店（東京都台東区）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『呪って呪って』",
+    "reward_title": "不純喫茶の呪われし者"
+  },
+  {
+    "name": "西武園ゆうえんち（埼玉県所沢市）",
+    "group": "=LOVE",
+    "category": "飲食店・その他",
+    "songOrEvent": "『イコラブ社員旅行 in 埼玉！』",
+    "reward_title": "昭和レトロの旅人"
+  },
+  {
+    "name": "中華料理 喜楽（大森）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『この空がトリガー』",
+    "reward_title": "大森喜楽のラーメン愛好家"
+  },
+  {
+    "name": "Bar VEILLE（大森）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『この空がトリガー』",
+    "reward_title": "大森VEILLEの大人"
+  },
+  {
+    "name": "Shibuya Publishing & Booksellers",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『この空がトリガー』",
+    "reward_title": "SPBSの本の虫"
+  },
+  {
+    "name": "Hair Salon 1214（渋谷）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『この空がトリガー』",
+    "reward_title": "渋谷1214のヘアスタイリスト"
+  },
+  {
+    "name": "the AIRSTREAM GARDEN",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『この空がトリガー』",
+    "reward_title": "表参道エアストリームの旅人"
+  },
+  {
+    "name": "みらい館大明（池袋）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『この空がトリガー』",
+    "reward_title": "みらい館大明の放課後メンバー"
+  },
+  {
+    "name": "LadyBugs（神山町）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『この空がトリガー』",
+    "reward_title": "神山町LadyBugsの花屋"
+  },
+  {
+    "name": "豊洲ぐるり公園",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『この空がトリガー』",
+    "reward_title": "豊洲水辺のランニングスター"
+  },
+  {
+    "name": "神奈川工科大学 KAIT広場",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『この空がトリガー』",
+    "reward_title": "KAIT広場の芸術鑑賞家"
+  },
+  {
+    "name": "東京工科大学 八王子キャンパス",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『この空がトリガー』",
+    "reward_title": "八王子キャンパスの卒業生"
+  },
+  {
+    "name": "実践女子大学 渋谷キャンパス",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『この空がトリガー』",
+    "reward_title": "渋谷キャンパス of 夢追い人"
+  },
+  {
+    "name": "ミモザハウス（パスティスグループ）",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『この空がトリガー』",
+    "reward_title": "ミモザハウスの相合傘メイト"
+  },
+  {
+    "name": "サンタモニカクレープ原宿明治通り店",
+    "group": "=LOVE",
+    "category": "聖地店舗",
+    "songOrEvent": "『絶対アイドル辞めないで』",
+    "reward_title": "クレープの絶対アイドル"
+  },
+  {
+    "name": "MIYASHITA PARK",
+    "group": "=LOVE",
+    "category": "飲食店・その他",
+    "songOrEvent": "『絶対アイドル辞めないで』",
+    "reward_title": "MIYASHITAのアイドル"
+  }
+]
