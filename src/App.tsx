@@ -344,7 +344,7 @@ export default function App() {
         mapRef.current = null;
       }
     };
-  }, []);
+  }, [showPrivacyPage]);
 
   // ウィンドウのリサイズやレイアウト変動時に Leaflet の描画サイズを完璧に追従・更新する
   useEffect(() => {
@@ -467,7 +467,7 @@ export default function App() {
     if (clusterGroup) {
       map.addLayer(clusterGroup);
     }
-  }, [spots, checkins, selectedSpot, searchGroup, searchKeyword]);
+  }, [spots, checkins, selectedSpot, searchGroup, searchKeyword, showPrivacyPage]);
 
   // GPS判定付きチェックイン実行 (オプティミスティックUI ＆ 未ログインガード対応)
   const handleCheckin = (spot: Spot) => {
