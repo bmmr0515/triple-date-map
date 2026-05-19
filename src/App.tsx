@@ -729,7 +729,8 @@ ${window.location.origin + window.location.pathname}
   if (showPrivacyPage) {
     return (
       <div className="privacy-page-container" style={{
-        minHeight: '100vh',
+        height: '100vh',
+        overflowY: 'auto',
         background: '#f8fafc',
         color: '#1e293b',
         fontFamily: "'Outfit', 'Inter', sans-serif",
