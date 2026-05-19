@@ -75,6 +75,21 @@ export default function App() {
   const [rightPanelTab, setRightPanelTab] = useState<'detail' | 'mypage' | 'mission'>('detail');
   const [missionExpanded, setMissionExpanded] = useState<boolean>(true);
 
+  // 📱 スマホレスポンシブ判定用ステートとリサイズ監視
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (mobile && rightPanelTab === 'detail') {
+        setRightPanelTab('mypage');
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [rightPanelTab]);
+
   // GPS判定＆テスト用バイパス状態
   const [isGpsLocating, setIsGpsLocating] = useState<boolean>(false);
   const [gpsBypass, setGpsBypass] = useState<boolean>(false);
@@ -947,19 +962,26 @@ ${window.location.origin + window.location.pathname}
           </div>
           
           {/* ミニタブセレクター (ぷっくり角丸ボタン) */}
-          <div className="panel-tab-bar" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1.1fr', gap: '6px', padding: '12px' }}>
-            <button
-              onClick={() => setRightPanelTab('detail')}
-              className={`pop-button panel-tab-btn ${
-                rightPanelTab === 'detail'
-                  ? 'active-detail'
-                  : 'inactive'
-              }`}
-              style={{ padding: '8px 0', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '10px' }}
-            >
-              <Compass className="w-3.5 h-3.5" />
-              聖地詳細
-            </button>
+          <div className="panel-tab-bar" style={{ 
+            display: 'grid', 
+            gridTemplateColumns: isMobile ? '1fr 1fr' : '1fr 1fr 1.1fr', 
+            gap: '6px', 
+            padding: '12px' 
+          }}>
+            {!isMobile && (
+              <button
+                onClick={() => setRightPanelTab('detail')}
+                className={`pop-button panel-tab-btn ${
+                  rightPanelTab === 'detail'
+                    ? 'active-detail'
+                    : 'inactive'
+                }`}
+                style={{ padding: '8px 0', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '10px' }}
+              >
+                <Compass className="w-3.5 h-3.5" />
+                聖地詳細
+              </button>
+            )}
             
             <button
               onClick={() => setRightPanelTab('mypage')}
@@ -1156,8 +1178,8 @@ ${window.location.origin + window.location.pathname}
               </div>
             )}
 
-            {/* TAB 1: 聖地詳細エリア */}
-            {rightPanelTab === 'detail' && (
+            {/* TAB 1: 聖地詳細エリア (PC専用、スマホではボトムシートへ分離) */}
+            {!isMobile && rightPanelTab === 'detail' && (
               <div style={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
                 {!selectedSpot ? (
                   // デフォルト表示：「ピンをタップして詳細を表示」
@@ -2934,6 +2956,335 @@ ${window.location.origin + window.location.pathname}
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* 📱 スマホ用スライド式ボトムシート (モバイル限定、スポット選択時に下から出現) */}
+      {/* 📱 スマホ用スライド式ボトムシート (モバイル限定、スポット選択時に下から出現) */}
+      {isMobile && (
+        <div className={`mobile-bottom-sheet ${selectedSpot ? 'open' : ''}`}>
+          
+          {/* 上部のつまみバー (ドラッグできそうな引き手のノッチ) */}
+          <div className="bottom-sheet-handle" onClick={() => setSelectedSpot(null)}></div>
+          
+          {/* ボトムシート専用ヘッダー（✕閉じるボタンも完備） */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '10px 20px',
+            borderBottom: '1px solid #f1f5f9',
+            flexShrink: 0
+          }}>
+            <span style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              🗺️ 聖地詳細
+            </span>
+            <button
+              onClick={() => setSelectedSpot(null)}
+              style={{
+                background: '#f1f5f9',
+                border: 'none',
+                color: 'var(--text-muted)',
+                cursor: 'pointer',
+                borderRadius: '50%',
+                width: '26px',
+                height: '26px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <X size={14} />
+            </button>
+          </div>
+
+          {/* スポット情報コンテンツ表示 (スクロール可能) */}
+          {selectedSpot && (
+            <div className="info-scroll-area" style={{ flex: 1, overflowY: 'auto', padding: '16px 20px 24px 20px' }}>
+              
+              {/* カテゴリ ＆ 日付ヘッダー */}
+              <div className="detail-header">
+                <div className="detail-badges">
+                  <span className="spot-group-badge" style={{
+                    backgroundColor: selectedSpot.group === '=LOVE' ? '#fff5f8' :
+                                     selectedSpot.group === '≠ME' ? '#e0fbfa' :
+                                     selectedSpot.group === '≒JOY' ? '#fffbeb' : '#f5f3ff',
+                    color: selectedSpot.group === '=LOVE' ? 'var(--color-equal-love)' :
+                           selectedSpot.group === '≠ME' ? 'var(--color-not-equal-me)' :
+                           selectedSpot.group === '≒JOY' ? '#d97706' : 'var(--color-joint)',
+                    borderColor: selectedSpot.group === '=LOVE' ? 'rgba(255, 104, 151, 0.2)' :
+                                 selectedSpot.group === '≠ME' ? 'rgba(0, 210, 221, 0.2)' :
+                                 selectedSpot.group === '≒JOY' ? 'rgba(217, 119, 6, 0.2)' : 'rgba(167, 139, 250, 0.2)'
+                  }}>
+                    {selectedSpot.group}
+                  </span>
+                  <span className="spot-cat-badge">
+                    {selectedSpot.category}
+                  </span>
+                </div>
+                <span className="spot-date-text">
+                  {selectedSpot.event_date.replace(/-/g, '/')}
+                </span>
+              </div>
+
+              {/* スポットタイトル */}
+              <div className="detail-title-section" style={{ marginTop: '12px' }}>
+                <span className="detail-meta-label">SPOT NAME</span>
+                <h2 className="detail-title">{selectedSpot.name}</h2>
+              </div>
+
+              {/* 誕生年月（MEMORIAL DAY） */}
+              <div className="detail-time-box" style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <Calendar className="w-4 h-4 text-[#a78bfa]" />
+                <div className="detail-time-text">
+                  <span style={{ fontWeight: '800', color: 'var(--color-equal-love)', marginRight: '6px', letterSpacing: '0.05em', fontSize: '11px' }}>MEMORIAL DAY:</span>
+                  <span style={{ color: 'var(--text-main)', fontWeight: '900', fontSize: '11px' }}>
+                    {selectedSpot.event_date.split('-').map((v, i) => v + ['年', '月', '日'][i]).join('')}
+                  </span>
+                </div>
+              </div>
+
+              {/* 聖地エピソード */}
+              <div className="episode-container animate-fade-in-up" style={{ marginTop: '16px' }}>
+                <h4 className="detail-meta-label">聖地のエピソード</h4>
+                <p className="episode-text" style={{ fontSize: '12px', lineHeight: '1.6', color: 'var(--text-main)' }}>
+                  {selectedSpot.description}
+                </p>
+              </div>
+
+              {/* YouTube動画自動埋め込み (完全再現) */}
+              {selectedSpot.youtube_url && (() => {
+                const isIframe = selectedSpot.youtube_url.includes('<iframe');
+                let watchUrl = "";
+                
+                if (isIframe) {
+                  const match = selectedSpot.youtube_url.match(/src="([^"]+)"/);
+                  if (match && match[1]) {
+                    watchUrl = match[1].replace('/embed/', '/watch?v=');
+                  }
+                } else {
+                  watchUrl = selectedSpot.youtube_url.replace('/embed/', '/watch?v=');
+                }
+
+                return (
+                  <div className="video-section" style={{ marginTop: '16px' }}>
+                    <div className="video-label-bold" style={{ fontWeight: 'bold', fontSize: '11px', color: '#1e293b', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <Play className="w-3 h-3 text-red-500 fill-red-500" />
+                      {selectedSpot.youtube_title || "🎥 関連映像"}
+                    </div>
+                    <div className="video-box" style={{ width: '100%', aspectRatio: '16/9', borderRadius: '16px', overflow: 'hidden' }}>
+                      {isIframe ? (
+                        <div 
+                          style={{ width: '100%', height: '100%', border: 'none' }}
+                          dangerouslySetInnerHTML={{ 
+                            __html: selectedSpot.youtube_url
+                              .replace(/width="\d+"/, 'width="100%"')
+                              .replace(/height="\d+"/, 'height="100%"')
+                              .replace(/style="[^"]*"/, '')
+                          }} 
+                        />
+                      ) : (
+                        <iframe 
+                          width="100%" 
+                          height="100%" 
+                          src={`${selectedSpot.youtube_url}?modestbranding=1&rel=0`} 
+                          title={selectedSpot.youtube_title || "YouTube video player"} 
+                          frameBorder="0" 
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                          allowFullScreen
+                          style={{ width: '100%', height: '100%', border: 'none' }}
+                        ></iframe>
+                      )}
+                    </div>
+                    {watchUrl && (
+                      <a 
+                        href={watchUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="video-link"
+                        style={{ marginTop: '6px', fontSize: '11px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                      >
+                        YouTubeアプリで視聴する
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )}
+                  </div>
+                );
+              })()}
+
+              {/* 🗺️ Googleマップで経路案内ボタン */}
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${selectedSpot.latitude},${selectedSpot.longitude}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="pop-button google-map-route-btn animate-fade-in-up"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                  width: '100%',
+                  backgroundColor: '#ffffff',
+                  border: '2px solid #e2e8f0',
+                  padding: '12px',
+                  fontSize: '12px',
+                  color: '#475569',
+                  fontWeight: '800',
+                  textDecoration: 'none',
+                  borderRadius: '16px',
+                  boxShadow: '0 4px 10px rgba(0,0,0,0.02)',
+                  marginTop: '16px',
+                  transition: 'transform 0.2s'
+                }}
+              >
+                🗺️ Googleマップで経路案内
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+
+              {/* チェックイン＆Xシェアアクションエリア */}
+              <div className="checkin-action-area" style={{ marginTop: '20px', position: 'relative' }}>
+                {isCheckinAnimating && (
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    zIndex: 50,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    pointerEvents: 'none'
+                  }}>
+                    <div className="stamp-effect-big" style={{
+                      fontWeight: 900,
+                      fontSize: '14px',
+                      color: '#ffffff',
+                      letterSpacing: '0.1em',
+                      background: 'linear-gradient(135deg, var(--color-equal-love) 0%, var(--color-joint) 100%)',
+                      padding: '10px 20px',
+                      borderRadius: '9999px',
+                      boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
+                      border: '3px solid #ffffff'
+                    }}>
+                      💮 巡礼達成！ 💮
+                    </div>
+                  </div>
+                )}
+
+                {checkins.some(c => c.spot_id === selectedSpot.id) ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <button 
+                      onClick={() => handleCheckin(selectedSpot)}
+                      className="pop-button checked-in-btn font-black animate-fade-in-up"
+                      style={{ width: '100%', borderRadius: '16px' }}
+                    >
+                      <CheckCircle2 className="w-4 h-4" />
+                      巡礼済み！（タップで取り消し）
+                    </button>
+
+                    {/* 【Xシェア機能】 */}
+                    <button 
+                      onClick={() => handleXShare(selectedSpot)}
+                      className="pop-button animate-fade-in-up"
+                      style={{
+                        width: '100%',
+                        background: '#000000',
+                        color: '#ffffff',
+                        padding: '12px',
+                        fontSize: '12px',
+                        borderRadius: '16px',
+                        fontWeight: '800',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                        border: '2px solid rgba(255,255,255,0.1)'
+                      }}
+                    >
+                      <span style={{ fontFamily: 'system-ui', fontSize: '14px', marginRight: '4px', fontWeight: 'bold' }}>𝕏</span>
+                      Xでポストする
+                    </button>
+                  </div>
+                ) : (
+                  <button 
+                    onClick={() => handleCheckin(selectedSpot)}
+                    disabled={isGpsLocating}
+                    className="pop-button checkin-btn font-black"
+                    style={{
+                      width: '100%',
+                      borderRadius: '16px',
+                      cursor: isGpsLocating ? 'not-allowed' : 'pointer',
+                      opacity: isGpsLocating ? 0.8 : 1
+                    }}
+                  >
+                    <Compass className="w-4 h-4 text-white stroke-[2.5]" />
+                    {isGpsLocating ? '位置情報を判定中... 📍' : 'ここに巡礼する（チェックイン）'}
+                  </button>
+                )}
+
+                {/* 🏆 手動巡礼済みトグルボタン */}
+                <div style={{
+                  marginTop: '16px',
+                  paddingTop: '12px',
+                  borderTop: '1px dashed #cbd5e1',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '8px'
+                }}>
+                  <span style={{ fontSize: '11px', fontWeight: '800', color: '#64748b', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    👑 遠隔から手動で「行った！」にする
+                  </span>
+                  <button
+                    onClick={() => {
+                      if (!authSession) {
+                        setBlockMessage("聖地を手動チェックインして巡礼を記録するには、無料のアカウント登録が必要です🗺️✨");
+                        setShowBlockModal(true);
+                        return;
+                      }
+                      const isVisited = checkins.some(c => c.spot_id === selectedSpot.id);
+                      const originalCheckins = [...checkins];
+                      
+                      if (isVisited) {
+                        setCheckins(checkins.filter(c => c.spot_id !== selectedSpot.id));
+                        setTimeout(() => {
+                          try { db.removeCheckIn(selectedSpot.id); } catch(e) { setCheckins(originalCheckins); }
+                        }, 50);
+                      } else {
+                        const newCheckIn: CheckIn = {
+                          id: 'temp_' + Date.now(),
+                          user_id: currentUser.id,
+                          spot_id: selectedSpot.id,
+                          visited_at: new Date().toISOString()
+                        };
+                        setCheckins([...checkins, newCheckIn]);
+                        setIsCheckinAnimating(true);
+                        setTimeout(() => {
+                          setIsCheckinAnimating(false);
+                        }, 1200);
+
+                        setTimeout(() => {
+                          try { db.addCheckIn(selectedSpot.id); } catch(e) { setCheckins(originalCheckins); }
+                        }, 50);
+                      }
+                    }}
+                    className="pop-button"
+                    style={{
+                      padding: '6px 14px',
+                      fontSize: '11px',
+                      borderRadius: '12px',
+                      fontWeight: '900',
+                      backgroundColor: checkins.some(c => c.spot_id === selectedSpot.id) ? '#fef08a' : '#f59e0b',
+                      color: checkins.some(c => c.spot_id === selectedSpot.id) ? '#78350f' : '#ffffff',
+                      border: '2px solid',
+                      borderColor: checkins.some(c => c.spot_id === selectedSpot.id) ? '#fde047' : '#d97706',
+                      boxShadow: '0 2px 5px rgba(0,0,0,0.02)',
+                      transition: 'all 0.2s',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {checkins.some(c => c.spot_id === selectedSpot.id) ? '行った済みの取り消し' : '行った！'}
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          )}
         </div>
       )}
 

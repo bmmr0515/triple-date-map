@@ -1393,3 +1393,44 @@ input[type="range"].pop-slider::-webkit-slider-thumb:hover {
     filter: brightness(1);
   }
 }
+
+/* ==========================================================================
+   📱 スマホ専用スライド式ボトムシート (Bottom Sheet) プレミアム・スタイル
+   ========================================================================== */
+.mobile-bottom-sheet {
+  position: fixed;
+  bottom: -100%; /* 通常時は画面外（下部）に完全に隠す */
+  left: 0;
+  width: 100vw;
+  height: 65vh; /* スマホ画面の65%の高さ */
+  background: #ffffff;
+  border-top-left-radius: 28px; /* 美しいパステル角丸 */
+  border-top-right-radius: 28px;
+  box-shadow: 0 -15px 35px rgba(30, 41, 59, 0.15);
+  z-index: 2100; /* アサイドドロワー（z-index: 2000）より前面に表示 */
+  transition: bottom 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* open クラス付与で、下からスルスルと上昇！ */
+.mobile-bottom-sheet.open {
+  bottom: 0 !important;
+}
+
+/* 上部の指でスワイプできそうなドラッグノッチ線 */
+.bottom-sheet-handle {
+  width: 44px;
+  height: 5px;
+  background: #e2e8f0;
+  border-radius: 9999px;
+  margin: 12px auto 4px auto;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.2s;
+}
+
+.bottom-sheet-handle:hover {
+  background-color: #cbd5e1;
+}
