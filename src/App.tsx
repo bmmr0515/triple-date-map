@@ -299,32 +299,51 @@ export default function App() {
 
   // マップの初期セットアップ（CDN経由で読み込んだLをDOMにマウント）
   useEffect(() => {
-    if (typeof L !== 'undefined' && !mapRef.current) {
-      // 2. 地図の初期設定: 日本中心（35.6895, 139.6917）、ズームレベル6
-      const map = L.map('map-canvas', {
-        zoomControl: false,
-        attributionControl: false
-      }).setView([35.6895, 139.6917], 6);
+    let mapInstance = null;
 
-      // ポップで明るい Voyager タイルをロード
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        maxZoom: 20
-      }).addTo(map);
+    if (typeof L !== 'undefined') {
+      const container = document.getElementById('map-canvas');
+      if (container) {
+        // 多重初期化エラー（Map container is already initialized）を防ぐための強力なセーフガード
+        if ((container as any)._leaflet_id) {
+          (container as any)._leaflet_id = null;
+        }
 
-      // ズームコントロールを右上にカスタマイズして追加
-      L.control.zoom({
-        position: 'topright'
-      }).addTo(map);
+        // 2. 地図の初期設定: 日本中心（35.6895, 139.6917）、ズームレベル6
+        const map = L.map('map-canvas', {
+          zoomControl: false,
+          attributionControl: false
+        }).setView([35.6895, 139.6917], 6);
 
-      mapRef.current = map;
-      
-      // 初回のリサイズトリガー (複数回に分けて実行し、DOMマウントと完全に同期させてグレー背景バグを根絶)
-      setTimeout(() => { map && map.invalidateSize(); }, 50);
-      setTimeout(() => { map && map.invalidateSize(); }, 150);
-      setTimeout(() => { map && map.invalidateSize(); }, 300);
-      setTimeout(() => { map && map.invalidateSize(); }, 600);
-      setTimeout(() => { map && map.invalidateSize(); }, 1000);
+        // ポップで明るい Voyager タイルをロード
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+          maxZoom: 20
+        }).addTo(map);
+
+        // ズームコントロールを右上にカスタマイズして追加
+        L.control.zoom({
+          position: 'topright'
+        }).addTo(map);
+
+        mapRef.current = map;
+        mapInstance = map;
+        
+        // 初回のリサイズトリガー (複数回に分けて実行し、DOMマウントと完全に同期させてグレー背景バグを根絶)
+        setTimeout(() => { map && map.invalidateSize(); }, 50);
+        setTimeout(() => { map && map.invalidateSize(); }, 150);
+        setTimeout(() => { map && map.invalidateSize(); }, 300);
+        setTimeout(() => { map && map.invalidateSize(); }, 600);
+        setTimeout(() => { map && map.invalidateSize(); }, 1000);
+      }
     }
+
+    // 🌟 マップインスタンスのクリーンアップ処理（アンマウント時に完全に破棄し再初期化を可能にする）
+    return () => {
+      if (mapInstance) {
+        mapInstance.remove();
+        mapRef.current = null;
+      }
+    };
   }, []);
 
   // ウィンドウのリサイズやレイアウト変動時に Leaflet の描画サイズを完璧に追従・更新する

@@ -166,12 +166,14 @@ body {
   gap: 16px;
   overflow: hidden;
   height: 100%;
+  min-height: 0; /* flexの縮小が原因で潰れるのを防止 */
 }
 
 .map-container {
   flex: 1;
   position: relative;
   overflow: hidden;
+  min-height: 450px; /* 画面遷移や再マウント時の0px潰れを完全防止 */
 }
 
 .app-footer {
@@ -1210,7 +1212,7 @@ input[type="range"].pop-slider::-webkit-slider-thumb:hover {
   #map-canvas {
     width: 100% !important;
     height: 100% !important;
-    min-height: auto !important;
+    min-height: 320px !important; /* スマホ画面遷移時やリサイズ時の高さ潰れを防止 */
     display: block !important;
   }
 
