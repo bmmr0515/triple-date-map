@@ -139,6 +139,7 @@ export default function App() {
   // LeafletマップのDOM参照と操作オブジェクト
   const mapRef = useRef<any>(null);
   const markersRef = useRef<any[]>([]);
+  const clusterGroupRef = useRef<any>(null);
 
   // データ初期ロード ＆ 認証変更購読
   useEffect(() => {
@@ -404,8 +405,24 @@ export default function App() {
     if (!map || typeof L === 'undefined') return;
 
     // 既存のマーカーを完全に消去
+    if (clusterGroupRef.current) {
+      map.removeLayer(clusterGroupRef.current);
+      clusterGroupRef.current = null;
+    }
     markersRef.current.forEach(m => m.remove());
     markersRef.current = [];
+
+    // 新しいクラスタグループを作成
+    const useClustering = typeof L.markerClusterGroup === 'function';
+    const clusterGroup = useClustering ? L.markerClusterGroup({
+      showCoverageOnHover: false,
+      maxClusterRadius: 40,
+      spiderfyOnMaxZoom: true
+    }) : null;
+
+    if (clusterGroup) {
+      clusterGroupRef.current = clusterGroup;
+    }
 
     // 新たにフィルタリングされたマーカーを追加
     filteredSpotsOnMap.forEach(spot => {
@@ -414,15 +431,23 @@ export default function App() {
 
       // bindPopupは使用せず、右側のInfo Panelにデータを反映する
       const marker = L.marker([spot.latitude, spot.longitude], { icon })
-        .addTo(map)
         .on('click', () => {
           setSelectedSpot(spot);
           setRightPanelTab('detail'); // ピンをタップしたら自動的に「詳細」タブを表示
           map.setView([spot.latitude, spot.longitude], map.getZoom(), { animate: true });
         });
 
+      if (clusterGroup) {
+        clusterGroup.addLayer(marker);
+      } else {
+        marker.addTo(map);
+      }
       markersRef.current.push(marker);
     });
+
+    if (clusterGroup) {
+      map.addLayer(clusterGroup);
+    }
   }, [spots, checkins, selectedSpot, searchGroup, searchKeyword]);
 
   // GPS判定付きチェックイン実行 (オプティミスティックUI ＆ 未ログインガード対応)

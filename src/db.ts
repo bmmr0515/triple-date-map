@@ -703,6 +703,32 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/20QJax8CwQo?si=kPUEeAcfNct48srm\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     tags: ["トリガー巡礼"],
     reward_title: "ミモザハウスの相合傘メイト"
+  },
+  {
+    id: "spot-real-santamonica-crepe",
+    name: "サンタモニカクレープ原宿明治通り店",
+    group: "=LOVE",
+    category: "聖地店舗",
+    description: "=LOVEの17thシングル『絶対アイドル辞めないで』Type A・B・Cのジャケット写真が撮影された場所です。ピンクのキュートな外観が目印！MIYASHITA PARKのロケ地とも近いので、一緒に巡るのがおすすめです。現地でクレープを食べながら、推しと同じポーズで写真を撮ってみてはいかがでしょうか？（※お店や他のお客様の迷惑にならないようご配慮をお願いします）",
+    latitude: 35.6706,
+    longitude: 139.7042,
+    event_date: "2024-06-22",
+    youtube_title: "🎥 関連映像: 『絶対アイドル辞めないで』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/17NBPoc78oM?si=5jta82I7LorxasSC&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: "クレープの絶対アイドル"
+  },
+  {
+    id: "spot-real-miyashita-park",
+    name: "MIYASHITA PARK",
+    group: "=LOVE",
+    category: "飲食店・その他",
+    description: "=LOVEの17thシングル『絶対アイドル辞めないで』Type D・Eのジャケット写真が撮影されたスポットです。原宿・渋谷エリアのシンボル的な施設。Type A〜Cのロケ地（サンタモニカクレープ）から歩いて行ける距離にあるので、同日の巡礼ルートにぴったりです！",
+    latitude: 35.6612,
+    longitude: 139.7017,
+    event_date: "2024-06-22",
+    youtube_title: "🎥 関連映像: 『絶対アイドル辞めないで』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/17NBPoc78oM?si=5jta82I7LorxasSC&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: "MIYASHITAのアイドル"
   }
 ];
 
