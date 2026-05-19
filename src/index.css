@@ -1146,25 +1146,25 @@ input[type="range"].pop-slider::-webkit-slider-thumb:hover {
    📱 イコノイジョイ聖地マップ スマホ完全最適化レスポンシブ・スタイル (画面幅 768px 未満)
    ========================================================================== */
 @media (max-width: 767px) {
-  /* 1. 画面全体のスクロール制御 (アプリの高さを崩さず、はみ出しをスマートに回り込ませる) */
+  /* 1. 画面全体のスクロール制御 (スマホでも100vhで完全固定、ぎゅうぎゅう感を追放) */
   body {
-    overflow-y: auto !important;
-    height: auto !important;
-    position: relative !important;
+    overflow: hidden !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    position: fixed !important;
   }
 
   .app-container {
-    height: auto !important;
-    min-height: 100vh;
-    overflow: visible !important;
+    height: 100vh !important;
+    min-height: auto !important;
+    overflow: hidden !important;
   }
 
-  /* 2. ヘッダーの超コンパクト化 (要素がぎゅっと詰まって絶対に崩れない設計) */
+  /* 2. ヘッダーの超コンパクト化 (スマホでは3本線メニューだけですっきり見せる) */
   .app-header {
     height: 60px !important;
     padding: 0 16px !important;
-    position: sticky;
-    top: 0;
+    position: relative !important;
     z-index: 1000;
     background: #ffffff;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
@@ -1174,103 +1174,106 @@ input[type="range"].pop-slider::-webkit-slider-thumb:hover {
     font-size: 15px !important;
   }
 
-  .active-group-label {
-    display: none !important; /* スマホではラベル非表示 */
+  /* スマホではヘッダーのこれら要素を非表示にし、3本線ドロワーの中に格納します */
+  .active-group-label,
+  .group-badges-container,
+  .auth-header-controls {
+    display: none !important;
   }
 
-  .group-badges-container {
-    padding: 4px 8px !important;
-    gap: 4px !important;
+  /* 3本線メニューボタンの表示 */
+  .mobile-menu-trigger {
+    display: flex !important;
   }
 
-  .group-badge-text {
-    display: none !important; /* スマホではテキストを非表示にし、可愛いグループカラードットのみでスッキリ表現！ */
-  }
-
-  .border-r-slate {
-    border-right: none !important;
-    padding-right: 0 !important;
-  }
-
-  /* 3. メインレイアウトを縦並びへ強制切り替え */
+  /* 3. メインレイアウトを横並び(flex-row)のまま維持し、地図を最大化 */
   .main-area {
-    flex-direction: column !important;
-    height: auto !important;
-    overflow: visible !important;
+    flex-direction: row !important;
+    height: calc(100% - 60px - 96px) !important; /* ヘッダー(60px)とフッター(96px)を差し引いた残り高さ */
+    overflow: hidden !important;
   }
 
-  /* 4. 左側エリア (地図) の最大化 ＆ 不要な余白スペースを完全カット */
+  /* 4. 左側エリア (地図) を画面いっぱいに表示 */
   .left-area {
     width: 100% !important;
-    height: 50vh !important; /* 縦長画面の半分(50vh)を地図に割り当てる */
-    min-height: 350px !important;
-    padding: 0 !important; /* 周囲 of 不要な余白を完全に0にし、画面幅いっぱいに地図を表示！ */
+    height: 100% !important;
+    min-height: auto !important;
+    padding: 0 !important;
     gap: 0 !important;
     position: relative !important;
     overflow: hidden !important;
-    display: block !important;
+    display: flex !important;
   }
 
-  .map-container {
+  .map-container,
+  .map-wrapper,
+  #map-canvas {
     width: 100% !important;
-    height: 50vh !important;
-    min-height: 350px !important;
+    height: 100% !important;
+    min-height: auto !important;
     display: block !important;
   }
 
   .map-wrapper {
-    width: 100% !important;
-    height: 50vh !important;
-    min-height: 350px !important;
-    border-radius: 0 !important; /* スマホでは角丸をなくして画面端まで美しくフィット */
+    border-radius: 0 !important;
     border: none !important;
     box-shadow: none !important;
-    display: block !important;
-  }
-
-  #map-canvas {
-    height: 50vh !important;
-    min-height: 350px !important;
     width: 100% !important;
     display: block !important;
   }
 
-  /* 5. 右側情報パネル (Info Panel) の縦回り込み ＆ 超モダンな引き上げデザイン */
+  /* 5. 右側情報パネルを、スマホではスライド式「ドロワーメニュー」へ完全変更 */
   .right-panel {
-    width: 100% !important;
-    height: auto !important;
-    min-height: 50vh !important;
+    position: fixed !important;
+    top: 0 !important;
+    right: -100% !important; /* 通常時は右外に完全に隠す */
+    width: 85% !important;
+    max-width: 380px !important;
+    height: 100% !important;
+    min-height: auto !important;
     border-left: none !important;
-    border-top: 5px solid #f4f7fe !important;
-    box-shadow: 0 -15px 35px rgba(30, 41, 59, 0.08) !important;
-    border-top-left-radius: 28px !important; /* 地図の下からぬっと引き上がっているような超高級角丸 */
-    border-top-right-radius: 28px !important;
-    margin-top: -16px !important; /* 地図と少し重ねて見事なレイヤー立体感を演出 */
-    z-index: 300 !important;
+    border-top: none !important;
+    border-radius: 0 !important;
+    margin-top: 0 !important;
+    z-index: 2000 !important; /* 地図やヘッダーよりも手前 */
     background: #ffffff !important;
-    overflow: visible !important;
+    box-shadow: -10px 0 35px rgba(30, 41, 59, 0.15) !important;
+    transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+
+  /* JavaScriptで mobile-open クラスが付与されたら、シュッと画面内へ出現！ */
+  .right-panel.mobile-open {
+    right: 0 !important;
   }
 
   .panel-tab-bar {
     padding: 16px !important;
-    border-top-left-radius: 28px !important;
-    border-top-right-radius: 28px !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
     background: rgba(241, 245, 249, 0.6) !important;
   }
 
   .panel-content {
+    flex: 1 !important;
     height: auto !important;
-    overflow: visible !important;
+    overflow: hidden !important;
   }
 
   .info-scroll-area {
-    overflow-y: visible !important;
+    overflow-y: auto !important;
     height: auto !important;
     padding: 20px 16px !important;
   }
 
+  /* モバイルドロワー専用ヘッダーの表示 */
+  .drawer-mobile-header {
+    display: flex !important;
+  }
+
   /* 6. Leaflet ズームコントロールボタンを地図の右下に強制移動 */
-  /* これにより、地図の左側にあった不要なスペースが100%完全に消滅します！ */
   .leaflet-left {
     left: auto !important;
     right: 12px !important;
@@ -1288,14 +1291,14 @@ input[type="range"].pop-slider::-webkit-slider-thumb:hover {
     box-shadow: 0 8px 20px rgba(30, 41, 59, 0.1) !important;
   }
 
-  /* 8. アワードパネル (最下部にぴったり張り付く高級感あるスマホ配置) */
+  /* 8. アワードパネル (ドロワー内最下部にぴったり張り付くスマホ配置) */
   .award-panel {
     border-top: 3px solid #f4f7fe !important;
     background: #f8faff !important;
     padding: 16px !important;
-    margin-top: 30px !important;
-    border-bottom-left-radius: 28px !important;
-    border-bottom-right-radius: 28px !important;
+    margin-top: auto !important; /* ドロワーの最下部へ強制移動 */
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
   }
 }
 

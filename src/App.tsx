@@ -12,7 +12,9 @@ import {
   Sparkles,
   LogOut,
   Lock,
-  ShieldAlert
+  ShieldAlert,
+  Menu,
+  X
 } from 'lucide-react';
 import { db, Spot, User, CheckIn, GroupType } from './db';
 import { authService, AuthSession } from './auth';
@@ -62,6 +64,9 @@ export default function App() {
   const [showTermsModal, setShowTermsModal] = useState<boolean>(false);
   const [agreeTermsSignup, setAgreeTermsSignup] = useState<boolean>(false);
   const [agreeTermsBlock, setAgreeTermsBlock] = useState<boolean>(false);
+  
+  // 📱 モバイルドロワー開閉用ステート
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   
   // フィルター・表示制御状態
   const [selectedSpot, setSelectedSpot] = useState<Spot | null>(null);
@@ -637,6 +642,29 @@ ${window.location.origin + window.location.pathname}
 
         {/* アクティブグループの可愛いバッジ と アカウント認証UI */}
         <div className="header-right" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          
+          {/* 📱 モバイル用3本線メニューボタン */}
+          <button
+            className="mobile-menu-trigger"
+            onClick={() => setIsMobileMenuOpen(true)}
+            style={{
+              display: 'none',
+              background: '#f8fafc',
+              border: '2px solid #e2e8f0',
+              borderRadius: '12px',
+              padding: '8px 12px',
+              cursor: 'pointer',
+              color: 'var(--text-main)',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.02)',
+              transition: 'all 0.2s',
+              gap: '6px'
+            }}
+          >
+            <Menu size={18} />
+          </button>
+
           <div className="group-badges-container" style={{ display: 'flex', alignItems: 'center' }}>
             <span className="active-group-label" style={{ marginRight: '8px' }}>Active Groups</span>
             <span className="group-dot" style={{ backgroundColor: 'var(--color-equal-love)' }}></span>
@@ -816,8 +844,107 @@ ${window.location.origin + window.location.pathname}
 
         </div>
 
+        {/* 📱 モバイルメニュー用暗幕オーバーレイ */}
+        {isMobileMenuOpen && (
+          <div 
+            onClick={() => setIsMobileMenuOpen(false)}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100vw',
+              height: '100vh',
+              backgroundColor: 'rgba(30, 41, 59, 0.4)',
+              backdropFilter: 'blur(4px)',
+              zIndex: 1900,
+              transition: 'opacity 0.3s ease'
+            }}
+          ></div>
+        )}
+
         {/* 右側パネル (Info Panel / MyPage) */}
-        <aside className="right-panel">
+        <aside className={`right-panel ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
+
+          {/* 📱 スマホ専用ドロワーヘッダー（閉じるボタン & 認証コントロール） */}
+          <div className="drawer-mobile-header" style={{ display: 'none' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{
+                width: '28px',
+                height: '28px',
+                borderRadius: '8px',
+                background: 'var(--gradient-triple)',
+                padding: '2px'
+              }}>
+                <div style={{ width: '100%', height: '100%', borderRadius: '6px', background: '#fff', display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center' }}>
+                  🗺️
+                </div>
+              </div>
+              <span style={{ fontSize: '12px', fontWeight: '900', color: 'var(--text-main)' }}>メニュー</span>
+            </div>
+            
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              {/* モバイル用認証コントロール */}
+              <div className="mobile-auth-controls" style={{ display: 'flex', alignItems: 'center' }}>
+                {authSession ? (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(244,247,254,0.7)', padding: '2px 8px', borderRadius: '12px' }}>
+                    <span style={{ fontSize: '9px', fontWeight: 'bold', color: 'var(--text-main)', maxWidth: '80px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {currentUser.username}
+                    </span>
+                    <button
+                      onClick={async () => {
+                        await authService.signOut();
+                        alert("👋 ログアウトしました");
+                        setIsMobileMenuOpen(false);
+                      }}
+                      style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '1px' }}
+                    >
+                      <LogOut size={12} />
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => {
+                      setAuthMode('signin');
+                      setShowAuthModal(true);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="pop-button"
+                    style={{
+                      background: 'var(--gradient-triple)',
+                      border: 'none',
+                      color: '#ffffff',
+                      fontSize: '9px',
+                      fontWeight: 'bold',
+                      padding: '4px 10px',
+                      borderRadius: '12px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    ログイン
+                  </button>
+                )}
+              </div>
+
+              {/* 閉じるボタン */}
+              <button 
+                onClick={() => setIsMobileMenuOpen(false)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--text-muted)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '4px',
+                  borderRadius: '50%',
+                  backgroundColor: '#f1f5f9'
+                }}
+              >
+                <X size={16} />
+              </button>
+            </div>
+          </div>
           
           {/* ミニタブセレクター (ぷっくり角丸ボタン) */}
           <div className="panel-tab-bar" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1.1fr', gap: '6px', padding: '12px' }}>
