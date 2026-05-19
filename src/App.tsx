@@ -745,166 +745,105 @@ ${window.location.origin + window.location.pathname}
               fontWeight: '900',
               marginBottom: '28px'
             }}>
-              🚨 免責事項（非公式宣言）<br />
-              本サービス「トリプルデートマップ」（以下「本サービス」）は、=LOVE / ≠ME / ≒JOY（以下「イコノイジョイ」）および各公式運営・所属事務所・各権利者とは一切関係のない非公式ファンサービスです。PWA / Webアプリとしてファン有志によって提供されています。
+              💡 免責事項（非公式宣言）<br />
+              本サービス「トリプルデートマップ」（以下「本サービス」）は、=LOVE / ≠ME / ≒JOY（以下「イコノイジョイ」）および各公式運営・所属事務所・権利者とは一切関係のない非公式サービスです。PWA / Webアプリとしてファン有志によって提供されています。
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '28px', fontSize: '12px', color: '#334155', lineHeight: '1.8' }}>
               
               <div>
-                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  1. 取得する情報
-                </h3>
-                <p style={{ margin: 0 }}>
-                  本サービスでは、以下の情報またはデータを取得する可能性があります。
+                <p style={{ margin: 0, fontWeight: '700', color: '#475569' }}>
+                  『トリプルデートマップ』は、ユーザーの個人情報の取扱いおよびセキュリティについて、以下のとおり定めます。
                 </p>
+              </div>
+
+              <div>
+                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
+                  1. 収集する情報
+                </h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  <div>
+                    <strong style={{ color: 'var(--text-main)', display: 'block', fontSize: '12.5px' }}>● アカウント情報（外部連携）：</strong>
+                    <span style={{ display: 'block', marginTop: '2px' }}>
+                      本サービスはGoogle等のOAuth認証を利用しています。ログイン時にプラットフォームから提供される「メールアドレス」「氏名（表示名）」「プロフィール画像」のみを取得します。※ユーザーのパスワードは本サービスでは一切保持・管理いたしません。
+                    </span>
+                  </div>
+                  <div>
+                    <strong style={{ color: 'var(--text-main)', display: 'block', fontSize: '12.5px' }}>● 位置情報（GPSデータ）：</strong>
+                    <span style={{ display: 'block', marginTop: '2px' }}>
+                      聖地での「チェックイン機能」を利用する際、ユーザーの現在地情報を取得します。この情報は、チェックイン対象スポットとの距離判定にのみ一時的に使用され、ユーザーの移動履歴としてサーバーに保存・追跡されることはありません。
+                    </span>
+                  </div>
+                  <div>
+                    <strong style={{ color: 'var(--text-main)', display: 'block', fontSize: '12.5px' }}>● プロフィール・利用データ：</strong>
+                    <span style={{ display: 'block', marginTop: '2px' }}>
+                      獲得した称号（バッジ）、チェックイン履歴、ユーザーが提案・追加した聖地情報など、本サービス内でユーザーが生成したデータ。
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
+                  2. 利用目的
+                </h3>
                 <ul style={{ margin: '6px 0 0 20px', padding: 0, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <li>端末の位置情報（GPSなどによる緯度・経度）</li>
-                  <li>聖地のチェックイン記録（巡礼した日時および聖地ID）</li>
-                  <li>ブラウザ情報（ユーザーエージェント、OS、ブラウザ種別）</li>
-                  <li>アクセス解析情報（本サービスへのアクセス状況や滞在時間など）</li>
-                  <li>お問い合わせの際にご入力いただく内容（ニックネーム、メールアドレス、送信内容など）</li>
-                  <li>Cookie（クッキー）またはそれに類似する技術</li>
-                  <li>広告・アフィリエイト計測に必要な情報（クリック情報等）</li>
+                  <li>本サービスの提供・維持、およびアカウント認証（ログイン）管理のため</li>
+                  <li>GPSを利用した現在地とスポットの距離判定、およびチェックイン機能の提供のため</li>
+                  <li>ユーザーサポートおよびお問い合わせ対応のため</li>
+                  <li>サービスの利用状況分析および機能改善のため</li>
                 </ul>
               </div>
 
               <div>
                 <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  2. 位置情報の利用について
+                  3. 情報の管理と外部サービスの利用
                 </h3>
-                <p style={{ margin: 0 }}>
-                  本サービスでは、各聖地への「チェックイン機能」を提供するために端末の位置情報（GPS）を使用します。
-                  取得した現在地の緯度・経度は、ブラウザ（JavaScript）上でスポットとの距離を判定するために一時的に使用され、<strong>ユーザーの同意（ブラウザの許可）なく位置情報を勝手に取得することはありません。</strong>
-                  また、当サーバーや第三者のサーバーへユーザーの移動履歴、現在地ログ、移動ルートのデータを送信・保存・蓄積することは一切ございません。
-                </p>
-              </div>
-
-              <div>
-                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  3. 利用目的
-                </h3>
-                <p style={{ margin: 0 }}>
-                  取得した情報は、以下の目的のためにのみ適切に利用します。
-                </p>
                 <ul style={{ margin: '6px 0 0 20px', padding: 0, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <li>本サービスの安定的な機能提供</li>
-                  <li>現地聖地チェックイン機能の提供および巡礼アワード（称号）の判定</li>
-                  <li>ユーザーの巡礼記録（チェックイン履歴）の保存とマイページへの表示</li>
-                  <li>不具合の検知、技術トラブルの修正および対応</li>
-                  <li>利用状況（アクセス数など）の匿名分析および本サービスの機能改善</li>
-                  <li>不当な連投やスパムなど、規約違反や不正利用の防止</li>
-                  <li>お問い合わせに対する内容の調査および適切な回答</li>
-                  <li>広告・アフィリエイトの効果測定</li>
+                  <li>本サービスは、収集したデータを安全に管理するため、セキュリティ基準を満たした外部のクラウドデータベース（Supabase等）を利用してデータを保管しています。</li>
+                  <li>法令に基づく場合を除き、ユーザーの同意を得ることなく第三者へ個人情報を提供することはありません。</li>
                 </ul>
               </div>
 
               <div>
                 <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  4. 第三者サービスの利用
+                  4. 免責事項
                 </h3>
-                <p style={{ margin: 0 }}>
-                  本サービスでは、機能提供、アクセス解析、地図表示、および持続可能な運営のために、以下の外部サービスを利用、または将来的に利用する場合があります。
-                </p>
-                <ul style={{ margin: '6px 0 0 20px', padding: 0, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <li><strong>Vercel</strong> (Webアプリのホスティングおよびアクセス解析（Vercel Analytics）)</li>
-                  <li><strong>Google Analytics</strong> (アクセス状況の分析)</li>
-                  <li><strong>Google Maps</strong> (聖地への経路案内・乗り換え表示)</li>
-                  <li><strong>Google AdSense</strong> (自動広告の配信)</li>
-                  <li><strong>Amazonアソシエイト</strong> (書籍・CDなどの紹介アフィリエイト)</li>
-                  <li><strong>もしもアフィリエイト</strong> (成果報酬型広告の掲載)</li>
-                  <li><strong>OFUSE</strong> (開発者へのファンレター・寄付・支援窓口の設置)</li>
-                  <li><strong>Discord</strong> (コミュニティ、不具合報告、聖地提案の受信用)</li>
-                  <li><strong>Googleフォーム</strong> (お問い合わせ、聖地の新規提案受付)</li>
+                <ul style={{ margin: '6px 0 0 20px', padding: 0, display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <li>本サービスは、アクセス制御（RLS）や通信の暗号化を実施しデータの保護に努めておりますが、個人開発による運営のため、予期せぬシステム障害、サイバー攻撃、またはサービス終了に伴うデータの消失や損害について、法令により免責が認められない場合（運営者の故意または重過失による場合等）を除き、一切の責任を負いかねます。</li>
+                  <li style={{ color: '#ff6897', fontWeight: '800' }}>チェックイン記録などの大切な思い出のデータにつきましては、ユーザーご自身でもスクリーンショット等でバックアップを保管していただくことを強く推奨いたします。</li>
+                  <li>端末のGPS精度の誤差や、通信環境によってチェックインが正常に行えなかった場合の補償等はいたしかねます。</li>
                 </ul>
               </div>
 
               <div>
                 <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  5. 広告・アフィリエイトについて
+                  5. データの削除
                 </h3>
-                <p style={{ margin: 0, marginBottom: '8px' }}>
-                  本サービスでは、サーバー維持費、マップデータ更新費用、および開発運営の維持・向上のために、広告（自動広告）やアフィリエイトリンク（紹介用リンク）を掲載する場合があります。
-                </p>
-                <p style={{ margin: '0 0 8px 0', padding: '10px 14px', background: '#f8fafc', borderRadius: '10px', border: '1px solid #e2e8f0', fontSize: '11px', fontWeight: '800' }}>
-                  「トリプルデートマップは、Amazon.co.jpを宣伝しリンクすることによって紹介料を獲得できるAmazonアソシエイト・プログラムの参加者です。」
-                </p>
                 <p style={{ margin: 0 }}>
-                  また、もしもアフィリエイトを含むアフィリエイトASPを介して成果報酬型広告を利用し、関連する商品（楽曲CD、映像作品など）を紹介・掲載する場合があります。これらに伴い、第三者（アフィリエイトASPなど）が訪問者のブラウザから直接情報を収集したり、Cookieを配置する可能性があります。
+                  ユーザーは、本サービス内の設定画面等より、いつでも自身のアカウントおよび紐づく全データを完全に削除（退会）することができます。
                 </p>
               </div>
 
               <div>
                 <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  6. 個人情報の第三者提供
+                  6. 本ポリシーの変更
                 </h3>
                 <p style={{ margin: 0 }}>
-                  本サービスは、取得した個人情報を適切に保護し、以下の場合を除いてあらかじめ本人の同意を得ることなく第三者に提供することはありません。
-                </p>
-                <ul style={{ margin: '6px 0 0 20px', padding: 0, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <li>法令に基づく強制力を持った請求や要請がある場合</li>
-                  <li>人の生命、身体または財産の保護のために必要がある場合であり、本人の同意を得ることが困難であるとき</li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  7. 安全管理措置
-                </h3>
-                <p style={{ margin: 0 }}>
-                  本サービスは、取得した巡礼データやアカウント情報を保護するために適切なセキュリティ対策を実施し管理します。
-                  ただし、インターネット上のあらゆる通信やサービスである以上、100%完全に漏洩や侵害を防ぐことを完全に保証できるものではないことをご理解のうえご利用ください。
+                  本サービスは、必要に応じて本プライバシーポリシーを変更することがあります。変更した場合は、本サービス内でお知らせいたします。
                 </p>
               </div>
 
               <div>
                 <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  8. ユーザーの権利
+                  7. お問い合わせ
                 </h3>
                 <p style={{ margin: 0 }}>
-                  ユーザーは、ご自身の個人情報（アカウントニックネーム、チェックイン記録など）の確認・修正・削除を求める権利を有します。
-                  データの完全削除（アカウントの削除・履歴の消去）をご希望の場合は、下記のお問い合わせ用フォームよりお気軽にご連絡ください。速やかに対応いたします。
-                </p>
-              </div>
-
-              <div>
-                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  9. 未成年の利用
-                </h3>
-                <p style={{ margin: 0 }}>
-                  未成年のユーザーが本サービスを利用し、位置情報の送信やアカウント登録を行う場合は、必ず親権者（保護者）の同意と指導を得たうえで本サービスを利用していただくようお願いいたします。
-                </p>
-              </div>
-
-              <div>
-                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  10. 免責事項
-                </h3>
-                <p style={{ margin: 0 }}>
-                  本サービスは個人が開発する非公式ファンアプリであり、掲載している聖地情報、緯度経度の正確性、およびリンク先動画の存続性についていかなる保証もいたしません。
-                  また、本サービスを利用したこと、あるいは聖地へ実際に訪問したことによって発生した一切の怪我、トラブル、事故、第三者とのいざこざ等について、開発者および本サービス運営は一切の責任を負いません。
-                </p>
-              </div>
-
-              <div>
-                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  11. プライバシーポリシーの改定
-                </h3>
-                <p style={{ margin: 0 }}>
-                  本プライバシーポリシーは、本サービスのアップデートや機能追加、法令の改正等に伴い、ユーザーへの予告なく必要に応じて変更・改定されることがあります。改定された内容は本ページに掲載された時点で即時有効となります。
-                </p>
-              </div>
-
-              <div>
-                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  12. お問い合わせ
-                </h3>
-                <p style={{ margin: 0 }}>
-                  プライバシーポリシーに関するご質問、または個人データの開示・訂正・削除のご要望につきましては、以下の「お問い合わせ用フォーム」よりご連絡ください。
+                  個人情報の取扱い、または本サービスに関するお問い合わせは、公式Discordコミュニティにて、お願いいたします。
                 </p>
                 <div style={{ marginTop: '12px' }}>
                   <a
-                    href="https://forms.gle/XXXXXXXXXXXX"
+                    href="https://discord.gg/QBhyDJ5hF"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="pop-button font-black"
@@ -912,16 +851,16 @@ ${window.location.origin + window.location.pathname}
                       display: 'inline-flex',
                       alignItems: 'center',
                       gap: '8px',
-                      background: 'linear-gradient(135deg, #a78bfa 0%, #ff6897 100%)',
+                      background: 'linear-gradient(135deg, #5865F2 0%, #a78bfa 100%)',
                       color: 'white',
                       padding: '10px 20px',
                       borderRadius: '16px',
                       textDecoration: 'none',
-                      fontSize: '11px',
-                      boxShadow: '0 4px 15px rgba(167, 139, 250, 0.3)'
+                      fontSize: '11.5px',
+                      boxShadow: '0 4px 15px rgba(88, 101, 242, 0.3)'
                     }}
                   >
-                    ✉️ お問い合わせフォーム (Googleフォーム)
+                    👾 公式Discordコミュニティに参加する
                   </a>
                 </div>
               </div>
@@ -937,7 +876,7 @@ ${window.location.origin + window.location.pathname}
               <span>•</span>
               <a href="#" onClick={navigateToHome} style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>聖地マップ</a>
               <span>•</span>
-              <a href="https://forms.gle/XXXXXXXXXXXX" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>お問い合わせ</a>
+              <a href="https://discord.gg/QBhyDJ5hF" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>お問い合わせ (Discord)</a>
             </div>
             © {new Date().getFullYear()} トリプルデートマップ (非公式)
           </div>
@@ -2763,7 +2702,7 @@ ${window.location.origin + window.location.pathname}
                 <span style={{ fontSize: '8px', color: '#cbd5e1' }}>•</span>
                 {/* ✉️ お問い合わせリンク */}
                 <a
-                  href="https://forms.gle/XXXXXXXXXXXX"
+                  href="https://discord.gg/QBhyDJ5hF"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -2774,7 +2713,7 @@ ${window.location.origin + window.location.pathname}
                     cursor: 'pointer'
                   }}
                 >
-                  お問い合わせ
+                  お問い合わせ (Discord)
                 </a>
               </div>
               <span style={{ fontSize: '8.5px', color: '#94a3b8', fontWeight: 'bold' }}>
