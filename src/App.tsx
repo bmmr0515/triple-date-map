@@ -1251,6 +1251,51 @@ ${window.location.origin + window.location.pathname}
             </div>
           </div>
           
+          {/* ☕️ 開発者支援（カンパ）導線最優先枠 */}
+          <div style={{
+            padding: '12px 12px 4px 12px',
+            borderBottom: '1px dashed #e2e8f0',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}>
+            <a 
+              href="https://ofuse.me/6444a091" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="pop-button"
+              style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                background: 'linear-gradient(135deg, #fef08a 0%, #fde047 100%)', // 温かみのある明るいゴールド/イエロー系
+                color: '#854d0e', // 濃い目のブラウン/ゴールドテキスト
+                border: '1.5px solid #facc15',
+                borderRadius: '16px',
+                padding: '10px 16px',
+                fontSize: '12px',
+                fontWeight: '900',
+                textDecoration: 'none',
+                boxShadow: '0 4px 12px rgba(254, 240, 138, 0.4)',
+                transition: 'all 0.2s ease',
+                cursor: 'pointer'
+              }}
+            >
+              ☕️ サーバー代を支援する
+            </a>
+            <span style={{ 
+              fontSize: '9.5px', 
+              color: 'var(--text-muted)', 
+              marginTop: '4px',
+              textAlign: 'center',
+              fontWeight: '700'
+            }}>
+              ※有料サーバー維持のためのOFUSE支援ページが開きます
+            </span>
+          </div>
+
           {/* ミニタブセレクター (ぷっくり角丸ボタン) */}
           <div className="panel-tab-bar" style={{ 
             display: 'grid', 
