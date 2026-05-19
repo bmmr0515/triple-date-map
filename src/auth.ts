@@ -1,7 +1,8 @@
 // SupabaseやFirebase等のBaaSへの移行が極めて容易な認証サービスラッパー
 // ローカル検証環境では自動的にlocalStorageベースのBaaSシミュレータにフォールバックし、
-// インターネット接続やAPIキーのない状態でも完璧に動作確認できます。
+// 本番環境に環境変数が定義された瞬間、自動で本物のSupabase Auth (Google OAuth/Email)に切り替わります。
 
+import { createClient } from '@supabase/supabase-js';
 import { GroupType, User } from './db';
 
 export interface AuthSession {
@@ -15,7 +16,7 @@ type AuthStateCallback = (session: AuthSession | null) => void;
 interface SimUser {
   id: string;
   email: string;
-  passwordHash: string; // 簡単な平文模擬
+  passwordHash: string;
   username: string;
   oshi_group: GroupType;
   acquired_titles: string[];
@@ -23,7 +24,7 @@ interface SimUser {
   active_title: string;
 }
 
-// ローカルストレージベースのユーザーDB初期化
+// ローカルストレージベースの擬似ユーザーDB操作
 const getSimUsers = (): SimUser[] => {
   const data = localStorage.getItem('tdm_sim_users');
   return data ? JSON.parse(data) : [];
@@ -33,13 +34,58 @@ const saveSimUsers = (users: SimUser[]) => {
   localStorage.setItem('tdm_sim_users', JSON.stringify(users));
 };
 
-// サポートされている環境変数の検知（将来実機接続する場合のデモ）
+// 🔐 Supabaseの環境変数検知
 const SUPABASE_URL = (import.meta as any).env?.VITE_SUPABASE_URL || '';
 const SUPABASE_ANON_KEY = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY || '';
 const isRealBaaSConfigured = SUPABASE_URL !== '' && SUPABASE_ANON_KEY !== '';
 
-// イベントリスナーの管理
+// 本物のSupabaseクライアント（設定されている場合のみ初期化）
+export const supabase = isRealBaaSConfigured 
+  ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY) 
+  : null;
+
+// イベントリスナーの管理 (モックおよびSupabase両用)
 const listeners: AuthStateCallback[] = [];
+
+// Supabaseセッションから既存のUser型へ変換・同期するヘルパー
+const mapSupabaseUserToTdmUser = (sbUser: any): User => {
+  const metadata = sbUser.user_metadata || {};
+  return {
+    id: sbUser.id,
+    username: metadata.username || sbUser.email?.split('@')[0] || 'イコノイジョイファン',
+    oshi_group: (metadata.oshi_group as GroupType) || '合同',
+    acquired_titles: metadata.acquired_titles || [],
+    titles: metadata.titles || [],
+    active_title: metadata.active_title || ''
+  };
+};
+
+// 本物のSupabase接続時のセッション変更購読の開始
+if (supabase) {
+  supabase.auth.onAuthStateChange(async (event, session) => {
+    console.log('🔔 Supabase Auth Event:', event);
+    if (session && session.user) {
+      // ユーザーのメタデータを含めてセッションを作成
+      const tdmUser = mapSupabaseUserToTdmUser(session.user);
+      const authSession: AuthSession = {
+        user: tdmUser,
+        email: session.user.email || null
+      };
+
+      // 既存アプリコードとの互換性のためにLocalStorageを同期
+      localStorage.setItem('tdm_auth_session', JSON.stringify(authSession));
+      localStorage.setItem('tdm_user', JSON.stringify(tdmUser));
+
+      // 登録されているコールバックへ通知
+      listeners.forEach(cb => cb(authSession));
+    } else {
+      // ログアウト状態
+      localStorage.removeItem('tdm_auth_session');
+      localStorage.removeItem('tdm_user');
+      listeners.forEach(cb => cb(null));
+    }
+  });
+}
 
 export const authService = {
   // 現在のアクティブセッションの取得
@@ -68,22 +114,46 @@ export const authService = {
     };
   },
 
-  // 状態変更の通知
+  // 状態変更の通知（シミュレータ用）
   _notify(session: AuthSession | null) {
     listeners.forEach(cb => cb(session));
   },
 
   // 新規登録 (サインアップ)
   async signUp(email: string, password: string, username: string, oshiGroup: GroupType): Promise<{ success: boolean; error?: string }> {
-    // 1. 実機BaaSが設定されている場合は本物のSupabase/Firebase通信を実行可能（コードモック）
-    if (isRealBaaSConfigured) {
-      console.log('BaaS Sign Up Triggered for:', email);
-      // Example Supabase call:
-      // const { data, error } = await supabase.auth.signUp({ email, password, options: { data: { username, oshi_group: oshiGroup } } });
+    // 1. 本物のSupabaseが有効な場合
+    if (supabase) {
+      try {
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              username: username,
+              oshi_group: oshiGroup,
+              acquired_titles: [],
+              titles: [],
+              active_title: ''
+            }
+          }
+        });
+
+        if (error) throw error;
+        
+        // Supabaseは設定によっては確認メールを送るため、即時セッションが作られない場合があります。
+        // そのため確認が完了するまではモック側のように即ログイン扱いにならない場合があるためメッセージを返す
+        if (data.user && !data.session) {
+          return { success: true, error: '⚡ アカウントを作成しました。確認メールをお送りしましたので認証を完了させてください！' };
+        }
+        
+        return { success: true };
+      } catch (err: any) {
+        return { success: false, error: err.message || 'アカウント作成に失敗しました。' };
+      }
     }
 
-    // 2. 自動シミュレータ処理
-    await new Promise(resolve => setTimeout(resolve, 800)); // 通信レイテンシを再現
+    // 2. ローカルシミュレータ処理
+    await new Promise(resolve => setTimeout(resolve, 800));
 
     const users = getSimUsers();
     if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
@@ -93,7 +163,7 @@ export const authService = {
     const newUser: SimUser = {
       id: 'usr_' + Math.random().toString(36).substr(2, 9),
       email: email,
-      passwordHash: password, // シミュレータのため平文で保持
+      passwordHash: password,
       username: username,
       oshi_group: oshiGroup,
       acquired_titles: [],
@@ -104,7 +174,6 @@ export const authService = {
     users.push(newUser);
     saveSimUsers(users);
 
-    // 新規登録成功後に自動でログインセッションを作成
     const userSession: User = {
       id: newUser.id,
       username: newUser.username,
@@ -116,7 +185,6 @@ export const authService = {
 
     const session: AuthSession = { user: userSession, email: newUser.email };
     localStorage.setItem('tdm_auth_session', JSON.stringify(session));
-    // tdm_user にも設定して既存のdb.tsロジックと同期
     localStorage.setItem('tdm_user', JSON.stringify(userSession));
 
     this._notify(session);
@@ -125,10 +193,21 @@ export const authService = {
 
   // ログイン (サインイン)
   async signIn(email: string, password: string): Promise<{ success: boolean; error?: string }> {
-    if (isRealBaaSConfigured) {
-      console.log('BaaS Sign In Triggered for:', email);
+    // 1. 本物のSupabaseが有効な場合
+    if (supabase) {
+      try {
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password
+        });
+        if (error) throw error;
+        return { success: true };
+      } catch (err: any) {
+        return { success: false, error: err.message || 'ログインに失敗しました。' };
+      }
     }
 
+    // 2. ローカルシミュレータ処理
     await new Promise(resolve => setTimeout(resolve, 600));
 
     const users = getSimUsers();
@@ -138,7 +217,6 @@ export const authService = {
       return { success: false, error: 'メールアドレスまたはパスワードが正しくありません。' };
     }
 
-    // セッション作成
     const userSession: User = {
       id: found.id,
       username: found.username,
@@ -152,19 +230,33 @@ export const authService = {
     localStorage.setItem('tdm_auth_session', JSON.stringify(session));
     localStorage.setItem('tdm_user', JSON.stringify(userSession));
 
-    // そのユーザーの過去のチェックイン情報を同期（もしあれば）
-    // （シミュレータではチェックインDBはtdm_checkinsに残るためそのまま共有されます）
-
     this._notify(session);
     return { success: true };
   },
 
-  // Google連携ログイン (シミュレータ)
+  // 本物のGoogle OAuth 認証画面へリダイレクト
   async signInWithGoogle(): Promise<{ success: boolean; error?: string }> {
-    if (isRealBaaSConfigured) {
-      console.log('BaaS Google Login Triggered');
+    // 1. 本物のSupabaseが有効な場合
+    if (supabase) {
+      try {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: window.location.origin, // ログイン成功後にアプリへ戻る
+            queryParams: {
+              access_type: 'offline',
+              prompt: 'consent'
+            }
+          }
+        });
+        if (error) throw error;
+        return { success: true };
+      } catch (err: any) {
+        return { success: false, error: err.message || 'Google認証の開始に失敗しました。' };
+      }
     }
 
+    // 2. ローカルシミュレータ処理
     await new Promise(resolve => setTimeout(resolve, 800));
 
     const mockEmail = 'ikonoijoy_fan@gmail.com';
@@ -205,21 +297,41 @@ export const authService = {
 
   // ログアウト (サインアウト)
   async signOut(): Promise<void> {
-    if (isRealBaaSConfigured) {
-      console.log('BaaS Sign Out Triggered');
+    // 1. 本物のSupabaseが有効な場合
+    if (supabase) {
+      await supabase.auth.signOut();
+      return;
     }
 
+    // 2. ローカルシミュレータ処理
     await new Promise(resolve => setTimeout(resolve, 300));
-
     localStorage.removeItem('tdm_auth_session');
-    // デフォルトユーザー（ゲスト状態）に戻す
     localStorage.removeItem('tdm_user');
-
     this._notify(null);
   },
 
-  // 現在ログイン中のユーザー情報を同期する（プロフィール変更などの反映用）
-  syncUserProfile(updatedUser: User) {
+  // プロフィール変更等の反映同期
+  async syncUserProfile(updatedUser: User) {
+    // 1. 本物のSupabaseが有効な場合
+    if (supabase) {
+      try {
+        const { error } = await supabase.auth.updateUser({
+          data: {
+            username: updatedUser.username,
+            oshi_group: updatedUser.oshi_group,
+            active_title: updatedUser.active_title || '',
+            acquired_titles: updatedUser.acquired_titles || [],
+            titles: updatedUser.titles || []
+          }
+        });
+        if (error) throw error;
+      } catch (err) {
+        console.error('Failed to sync profile with Supabase:', err);
+      }
+      return;
+    }
+
+    // 2. ローカルシミュレータ処理
     const session = this.getSession();
     if (session && session.user && session.user.id === updatedUser.id) {
       session.user = updatedUser;
@@ -227,7 +339,6 @@ export const authService = {
       this._notify(session);
     }
 
-    // 模擬DB側も更新
     const users = getSimUsers();
     const idx = users.findIndex(u => u.id === updatedUser.id);
     if (idx !== -1) {
