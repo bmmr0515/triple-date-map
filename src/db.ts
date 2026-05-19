@@ -809,8 +809,8 @@ export const db = {
     return user;
   },
 
-  // CheckIns操作
-  getCheckIns(): CheckIn[] {
+  // 全ユーザーのRAWデータを取得する（内部用）
+  getAllCheckInsRaw(): CheckIn[] {
     const data = localStorage.getItem('tdm_checkins');
     if (!data) return [];
     try {
@@ -820,8 +820,17 @@ export const db = {
     }
   },
 
+  // CheckIns操作 (現在ログインしているユーザーのチェックインのみ取得)
+  getCheckIns(userId?: string): CheckIn[] {
+    const all = this.getAllCheckInsRaw();
+    const targetId = userId || this.getCurrentUser().id;
+    // ゲスト（未ログイン）の時は巡礼記録を空にするという仕様に基づき、[] を返却
+    if (!targetId || targetId === 'guest') return [];
+    return all.filter(c => c.user_id === targetId);
+  },
+
   addCheckIn(spotId: string, isManual?: boolean): CheckIn {
-    const checkins = this.getCheckIns();
+    const allCheckins = this.getAllCheckInsRaw();
     const user = this.getCurrentUser();
     const newCheckIn: CheckIn = {
       id: generateUUID(),
@@ -830,14 +839,16 @@ export const db = {
       visited_at: new Date().toISOString(),
       is_manual: isManual
     };
-    checkins.push(newCheckIn);
-    localStorage.setItem('tdm_checkins', JSON.stringify(checkins));
+    allCheckins.push(newCheckIn);
+    localStorage.setItem('tdm_checkins', JSON.stringify(allCheckins));
     return newCheckIn;
   },
 
   removeCheckIn(spotId: string): void {
-    const checkins = this.getCheckIns();
-    const filtered = checkins.filter(c => c.spot_id !== spotId);
+    const allCheckins = this.getAllCheckInsRaw();
+    const user = this.getCurrentUser();
+    // 現在のユーザーかつ指定のスポットIDに一致するチェックインのみを削除
+    const filtered = allCheckins.filter(c => !(c.spot_id === spotId && c.user_id === user.id));
     localStorage.setItem('tdm_checkins', JSON.stringify(filtered));
   },
 

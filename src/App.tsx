@@ -150,12 +150,17 @@ export default function App() {
     const unsubscribe = authService.onAuthStateChange((session) => {
       setAuthSession(session);
       if (session && session.user) {
+        // ログイン完了時
+        db.setCurrentUser(session.user);
         setCurrentUser(session.user);
         setEditUsername(session.user.username);
         setEditOshiGroup(session.user.oshi_group);
         setEditActiveTitle(session.user.active_title || '');
+        
+        // 🌟 新しいユーザーの ID に基づいて最新の記録を再フェッチし画面を更新する
+        setCheckins(db.getCheckIns(session.user.id));
       } else {
-        // 未ログイン時はデフォルトのゲスト情報にする
+        // ログアウト時 / 未ログイン時
         const guestUser: User = {
           id: "guest",
           username: "未ログインの巡礼者",
@@ -163,10 +168,15 @@ export default function App() {
           titles: [],
           acquired_titles: []
         };
+        db.setCurrentUser(guestUser);
         setCurrentUser(guestUser);
         setEditUsername(guestUser.username);
         setEditOshiGroup(guestUser.oshi_group);
         setEditActiveTitle(guestUser.active_title || '');
+        
+        // 🌟 ステート・キャッシュの完全初期化: 巡礼記録を即座に空にする
+        setCheckins([]);
+        sessionStorage.clear();
       }
     });
 
