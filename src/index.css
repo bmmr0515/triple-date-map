@@ -1,0 +1,1392 @@
+:root {
+  font-family: 'Noto Sans JP', 'Outfit', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  font-weight: 500;
+
+  color-scheme: light;
+  --bg-app: #f4f7fe; /* 優しく明るいパステルブルーグレー */
+  --bg-panel: #ffffff;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --border-light: rgba(0, 0, 0, 0.06);
+
+  /* イコノイジョイ・パステルカラー */
+  --color-equal-love: #ff6897; /* =LOVE: 甘酸っぱいパステルピンク */
+  --color-not-equal-me: #00d2dd; /* ≠ME: 爽快なソーダブルー */
+  --color-nearly-joy: #ffd60a; /* ≒JOY: はつらつレモンイエロー */
+  --color-joint: #a78bfa; /* 合同: ゆめかわラベンダー */
+
+  /* グラデーション */
+  --gradient-triple: linear-gradient(135deg, var(--color-equal-love) 0%, var(--color-not-equal-me) 50%, var(--color-nearly-joy) 100%);
+  --gradient-soft: linear-gradient(180deg, #ffffff 0%, #f4f7fe 100%);
+  
+  /* ぷっくりシャドウ */
+  --shadow-bubble: 0 10px 25px rgba(100, 116, 139, 0.05), 0 2px 5px rgba(100, 116, 139, 0.02);
+  --shadow-panel: 0 15px 35px rgba(139, 92, 246, 0.06);
+  --shadow-btn: 0 8px 20px rgba(255, 104, 151, 0.15);
+
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 画面全体のスクロールを完全に禁止 (100vh, 100vw 使い切り) */
+body {
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background-color: var(--bg-app);
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+/* ----------------------------------
+   レイアウト用セマンティック・クラス (バニラCSS)
+------------------------------------- */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--bg-app);
+}
+
+.app-header {
+  height: 72px;
+  background: #ffffff;
+  border-bottom: 3px solid #f4f7fe;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  z-index: 50;
+  flex-shrink: 0;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--gradient-triple);
+  padding: 3px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.header-icon-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.active-group-label {
+  font-size: 10px;
+  font-weight: 900;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.group-badges-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 9999px;
+  padding: 6px 14px;
+}
+
+.group-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.group-badge-text {
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.border-r-slate {
+  border-right: 1px solid #e2e8f0;
+  padding-right: 8px;
+}
+
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  position: relative;
+}
+
+.left-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column; /* 地図を領域いっぱいに美しく最大化 */
+  padding: 16px;
+  gap: 16px;
+  overflow: hidden;
+  height: 100%;
+}
+
+.map-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.app-footer {
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-shrink: 0;
+  padding: 16px 24px !important;
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.footer-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.footer-meta-text {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: var(--color-joint);
+}
+
+.footer-title {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--text-main);
+}
+
+.footer-title-year {
+  color: var(--color-equal-love);
+}
+
+.slider-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 10px 20px;
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  font-weight: 900;
+  color: var(--text-muted);
+}
+
+.milestone-container {
+  width: 300px;
+  flex-shrink: 0;
+  background: #fff5f8;
+  border: 1px solid rgba(255, 104, 151, 0.15);
+  border-radius: 16px;
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.milestone-label {
+  font-size: 8px;
+  font-weight: 900;
+  color: var(--color-equal-love);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.milestone-text {
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.right-panel {
+  width: 400px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border-left: 4px solid #f4f7fe;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+  z-index: 20;
+  box-shadow: -10px 0 30px rgba(0,0,0,0.01);
+}
+
+/* タブバー */
+.panel-tab-bar {
+  padding: 16px;
+  border-bottom: 3px solid #f4f7fe;
+  background: rgba(241, 245, 249, 0.4);
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.panel-tab-btn {
+  flex: 1;
+  padding: 10px 0;
+  font-size: 12px;
+  font-weight: 900;
+  border-radius: 14px;
+}
+
+.panel-tab-btn.active-detail {
+  background: linear-gradient(135deg, var(--color-equal-love) 0%, var(--color-joint) 100%);
+  color: #ffffff;
+  box-shadow: 0 6px 15px rgba(255, 104, 151, 0.15);
+}
+
+.panel-tab-btn.active-mypage {
+  background: linear-gradient(135deg, var(--color-not-equal-me) 0%, var(--color-joint) 100%);
+  color: #ffffff;
+  box-shadow: 0 6px 15px rgba(0, 203, 214, 0.15);
+}
+
+.panel-tab-btn.active-mission {
+  background: linear-gradient(135deg, #eab308 0%, #f97316 100%);
+  color: #ffffff;
+  box-shadow: 0 6px 15px rgba(234, 179, 8, 0.2);
+}
+
+.panel-tab-btn.inactive {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  color: var(--text-muted);
+}
+
+.panel-tab-btn.inactive:hover {
+  color: var(--text-main);
+  border-color: #cbd5e1;
+}
+
+/* コンテンツ */
+.panel-content {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* デフォルトウェルカム */
+.welcome-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  text-align: center;
+  color: var(--text-muted);
+  background: linear-gradient(180deg, #ffffff 0%, rgba(244, 247, 254, 0.2) 100%);
+  height: 100%;
+}
+
+.welcome-icon-box {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #f8fafc;
+  border: 3px dashed #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.welcome-title {
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.welcome-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 260px;
+}
+
+/* 詳細コンテンツスクロールエリア */
+.info-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 12px;
+}
+
+.detail-badges {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.spot-group-badge {
+  font-size: 9px;
+  font-weight: 900;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+}
+
+.spot-cat-badge {
+  font-size: 9px;
+  font-weight: 700;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  color: var(--text-muted);
+}
+
+.spot-date-text {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-family: 'Outfit', sans-serif;
+}
+
+.detail-title-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-meta-label {
+  font-size: 8px;
+  font-weight: 900;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  margin-bottom: 2px;
+}
+
+.detail-title {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+.detail-time-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 8px 16px;
+}
+
+.detail-time-text {
+  font-size: 11px;
+  color: var(--text-main);
+  font-weight: 800;
+}
+
+.episode-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.episode-text {
+  font-size: 12px;
+  color: #334155;
+  line-height: 1.7;
+  background: #f8fafc;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  white-space: pre-line;
+}
+
+.video-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.video-label {
+  font-size: 9px;
+  font-weight: 900;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.video-box {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid #f1f5f9;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+  background: #f8fafc;
+}
+
+.video-link {
+  font-size: 9px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
+  font-weight: 700;
+  text-decoration: none;
+  margin-top: 4px;
+}
+
+.video-link:hover {
+  color: var(--text-main);
+  text-decoration: underline;
+}
+
+.checkin-action-area {
+  position: relative;
+  padding-top: 8px;
+}
+
+.checked-in-btn {
+  width: 100%;
+  background: #fff5f8;
+  border: 2px solid rgba(255, 104, 151, 0.25);
+  color: var(--color-equal-love);
+  padding: 14px;
+  font-size: 12px;
+}
+
+.checked-in-btn:hover {
+  background: #ffeef2;
+}
+
+.checkin-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--color-equal-love) 0%, var(--color-joint) 50%, var(--color-not-equal-me) 100%);
+  color: #ffffff;
+  padding: 14px;
+  font-size: 12px;
+  box-shadow: var(--shadow-btn);
+  border: 2px solid rgba(255,255,255,0.2);
+}
+
+.checkin-btn:hover {
+  opacity: 0.95;
+}
+
+/* アワードパネル (最下部固定) */
+.award-panel {
+  padding: 16px;
+  border-top: 3px solid #f4f7fe;
+  background: #f8faff;
+  flex-shrink: 0;
+}
+
+.award-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 900;
+  color: #475569;
+  margin-bottom: 6px;
+}
+
+.award-progress-bar {
+  width: 100%;
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 9999px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.03);
+  margin-bottom: 8px;
+}
+
+.award-progress-inner {
+  height: 100%;
+  background: var(--gradient-triple);
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+}
+
+.award-rank-box {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* プロフィール & 履歴画面 */
+.profile-edit-box {
+  border-radius: 16px;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.05) 0%, rgba(255, 104, 151, 0.05) 100%);
+  border: 2px solid #ffffff;
+  box-shadow: var(--shadow-panel);
+}
+
+.profile-main-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.profile-avatar-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--gradient-triple);
+  padding: 3px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.profile-avatar-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 9px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-username {
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--text-main);
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-oshi-badge {
+  font-size: 9px;
+  background: #ffffff;
+  border: 2px solid rgba(167, 139, 250, 0.2);
+  color: var(--color-joint);
+  padding: 1px 10px;
+  border-radius: 9999px;
+  font-weight: 900;
+  margin-top: 2px;
+  display: inline-block;
+}
+
+/* プロフィール編集フォーム */
+.edit-form-panel {
+  padding: 16px;
+  border: 2px solid rgba(167, 139, 250, 0.2);
+  border-radius: 20px;
+  animation: fadeInUp 0.4s ease;
+}
+
+.form-label {
+  display: block;
+  font-size: 8px;
+  font-weight: 900;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.form-input {
+  width: 100%;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-joint);
+}
+
+.oshi-buttons-grid {
+  display: grid;
+  grid-template-cols: repeat(4, 1fr);
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.oshi-btn {
+  padding: 6px 0;
+  font-size: 9px;
+}
+
+.oshi-btn.active {
+  background: var(--color-joint);
+  color: #ffffff;
+}
+
+.oshi-btn.inactive {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: var(--text-muted);
+}
+
+.form-submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--color-equal-love) 0%, var(--color-joint) 100%);
+  color: #ffffff;
+  padding: 10px;
+  font-size: 12px;
+  box-shadow: 0 4px 10px rgba(255, 104, 151, 0.1);
+  border: 1px solid rgba(255,255,255,0.1);
+  margin-top: 8px;
+}
+
+/* タイムライン */
+.timeline-section-title {
+  font-size: 10px;
+  font-weight: 900;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.timeline-list {
+  position: relative;
+  padding-left: 16px;
+  border-left: 2px solid #e2e8f0;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -22px;
+  top: 10px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.timeline-card {
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ffffff;
+  border-radius: 16px;
+  cursor: pointer;
+  box-shadow: var(--shadow-bubble);
+  background: #ffffff;
+}
+
+.timeline-card:hover {
+  border-color: rgba(167, 139, 250, 0.2);
+}
+
+.timeline-card-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+  padding-right: 12px;
+}
+
+.timeline-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.timeline-card-group {
+  font-size: 8px;
+  font-weight: 900;
+  color: var(--text-muted);
+}
+
+.timeline-card-time {
+  font-size: 8px;
+  color: var(--text-muted);
+  font-family: 'Outfit', sans-serif;
+}
+
+.timeline-card-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #334155;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reset-btn-container {
+  padding-top: 16px;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: center;
+}
+
+/* ----------------------------------
+   ポップ・ボタン & マップ共通定義
+------------------------------------- */
+.pop-panel {
+  background: var(--bg-panel);
+  border-radius: 24px;
+  border: 3px solid #ffffff;
+  box-shadow: var(--shadow-panel);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+}
+
+.pop-button {
+  border-radius: 16px;
+  font-weight: 800;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.pop-button:active {
+  transform: scale(0.95);
+}
+
+/* Leafletマップ全体の配置（中央にどーんと表示） */
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #eef2f7;
+  border-radius: 28px;
+  border: 4px solid #ffffff;
+  box-shadow: var(--shadow-panel);
+  overflow: hidden;
+}
+
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background: #eef2f7 !important;
+}
+
+/* ズームコントロールボタンのカスタム */
+.leaflet-bar {
+  border: none !important;
+  box-shadow: var(--shadow-bubble) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+.leaflet-bar a {
+  background-color: #ffffff !important;
+  color: var(--text-main) !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+  font-weight: 900 !important;
+  width: 38px !important;
+  height: 38px !important;
+  line-height: 38px !important;
+  transition: background-color 0.2s ease;
+}
+
+.leaflet-bar a:hover {
+  background-color: #f1f5f9 !important;
+}
+
+/* ぷっくりバルーンカスタムピン */
+.custom-leaflet-pin {
+  background: none !important;
+  border: none !important;
+}
+
+.pop-pin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  position: relative;
+  cursor: pointer;
+}
+
+.pop-pin-balloon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  background-color: currentColor;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), 0 0 8px rgba(255, 255, 255, 0.5) inset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #ffffff;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.25);
+}
+
+.pop-pin-text {
+  transform: rotate(45deg);
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 12px;
+  font-family: 'Outfit', sans-serif;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+/* 選択中のピンのアニメーション */
+.pop-pin-container.active .pop-pin-balloon {
+  transform: rotate(-45deg) scale(1.3) translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  animation: floatMini 1.2s infinite ease-in-out alternate;
+}
+
+@keyframes floatMini {
+  0% { transform: rotate(-45deg) scale(1.3) translateY(0); }
+  100% { transform: rotate(-45deg) scale(1.3) translateY(-4px); }
+}
+
+/* 訪問済みチェックバッジ */
+.pop-pin-stamp {
+  position: absolute;
+  top: -6px;
+  right: -2px;
+  width: 17px;
+  height: 17px;
+  background: var(--color-equal-love);
+  color: #ffffff;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  font-size: 10px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 6px rgba(255, 104, 151, 0.3);
+  z-index: 10;
+}
+
+/* スライダーデザイン */
+input[type="range"].pop-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+}
+
+input[type="range"].pop-slider:focus {
+  outline: none;
+}
+
+input[type="range"].pop-slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: #e2e8f0;
+  border-radius: 10px;
+  border: none;
+}
+
+input[type="range"].pop-slider::-webkit-slider-thumb {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 4px solid var(--color-equal-love);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -8px;
+  box-shadow: 0 4px 10px rgba(255, 104, 151, 0.2);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+}
+
+input[type="range"].pop-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+/* アニメーション */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes stampBig {
+  0% {
+    transform: scale(2.5) rotate(-45deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(0.95) rotate(-10deg);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1) rotate(-15deg);
+    opacity: 1;
+  }
+}
+
+.stamp-effect-big {
+  animation: stampBig 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards;
+}
+
+/* スクロールバーのカスタマイズ (Info Panel用) */
+.info-scroll-area::-webkit-scrollbar {
+  width: 6px;
+}
+.info-scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+.info-scroll-area::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+.info-scroll-area::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ==========================================================================
+   🔍 フローティング検索バー ＆ グラスモーフィズムスタイル
+   ========================================================================== */
+.map-search-bar {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  z-index: 1000;
+  display: flex;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 8px 12px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  align-items: center;
+}
+
+@media (min-width: 640px) {
+  .map-search-bar {
+    max-width: 580px; /* 450px から 580px に拡張して、長い検索文字列も余裕で全表示 */
+    left: 20px;
+    right: auto;
+  }
+}
+
+.search-select {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 6px 12px;
+  font-size: 12px; /* 11px から 12px にアップして見やすく */
+  font-weight: 800;
+  color: var(--text-main);
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  transition: all 0.2s ease;
+}
+.search-select:focus {
+  border-color: var(--color-equal-love);
+}
+
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  font-size: 13px; /* 11px から 13px に拡大して視認性を大幅向上 */
+  font-weight: 700;
+  color: var(--text-main);
+  outline: none;
+  padding: 6px 8px; /* パディングを広げて文字切れを防止 */
+}
+.search-input::placeholder {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.search-clear-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+.search-clear-btn:hover {
+  color: var(--color-equal-love);
+}
+
+/* ⚠️ 検索結果0件フィードバック */
+.map-no-results {
+  position: absolute;
+  top: 75px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: rgba(239, 68, 68, 0.95);
+  backdrop-filter: blur(5px);
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 800;
+  box-shadow: 0 10px 25px rgba(239, 68, 68, 0.2);
+  border: 2px solid #ffffff;
+  pointer-events: none;
+  animation: bounce-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes bounce-in {
+  0% { opacity: 0; transform: translate(-50%, -10px) scale(0.9); }
+  100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+/* ==========================================================================
+   📱 イコノイジョイ聖地マップ スマホ完全最適化レスポンシブ・スタイル (画面幅 768px 未満)
+   ========================================================================== */
+@media (max-width: 767px) {
+  /* 1. 画面全体のスクロール制御 (アプリの高さを崩さず、はみ出しをスマートに回り込ませる) */
+  body {
+    overflow-y: auto !important;
+    height: auto !important;
+    position: relative !important;
+  }
+
+  .app-container {
+    height: auto !important;
+    min-height: 100vh;
+    overflow: visible !important;
+  }
+
+  /* 2. ヘッダーの超コンパクト化 (要素がぎゅっと詰まって絶対に崩れない設計) */
+  .app-header {
+    height: 60px !important;
+    padding: 0 16px !important;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  }
+
+  .header-title {
+    font-size: 15px !important;
+  }
+
+  .active-group-label {
+    display: none !important; /* スマホではラベル非表示 */
+  }
+
+  .group-badges-container {
+    padding: 4px 8px !important;
+    gap: 4px !important;
+  }
+
+  .group-badge-text {
+    display: none !important; /* スマホではテキストを非表示にし、可愛いグループカラードットのみでスッキリ表現！ */
+  }
+
+  .border-r-slate {
+    border-right: none !important;
+    padding-right: 0 !important;
+  }
+
+  /* 3. メインレイアウトを縦並びへ強制切り替え */
+  .main-area {
+    flex-direction: column !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* 4. 左側エリア (地図) の最大化 ＆ 不要な余白スペースを完全カット */
+  .left-area {
+    width: 100% !important;
+    height: 50vh !important; /* 縦長画面の半分(50vh)を地図に割り当てる */
+    min-height: 350px !important;
+    padding: 0 !important; /* 周囲 of 不要な余白を完全に0にし、画面幅いっぱいに地図を表示！ */
+    gap: 0 !important;
+    position: relative !important;
+    overflow: hidden !important;
+    display: block !important;
+  }
+
+  .map-container {
+    width: 100% !important;
+    height: 50vh !important;
+    min-height: 350px !important;
+    display: block !important;
+  }
+
+  .map-wrapper {
+    width: 100% !important;
+    height: 50vh !important;
+    min-height: 350px !important;
+    border-radius: 0 !important; /* スマホでは角丸をなくして画面端まで美しくフィット */
+    border: none !important;
+    box-shadow: none !important;
+    display: block !important;
+  }
+
+  #map-canvas {
+    height: 50vh !important;
+    min-height: 350px !important;
+    width: 100% !important;
+    display: block !important;
+  }
+
+  /* 5. 右側情報パネル (Info Panel) の縦回り込み ＆ 超モダンな引き上げデザイン */
+  .right-panel {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 50vh !important;
+    border-left: none !important;
+    border-top: 5px solid #f4f7fe !important;
+    box-shadow: 0 -15px 35px rgba(30, 41, 59, 0.08) !important;
+    border-top-left-radius: 28px !important; /* 地図の下からぬっと引き上がっているような超高級角丸 */
+    border-top-right-radius: 28px !important;
+    margin-top: -16px !important; /* 地図と少し重ねて見事なレイヤー立体感を演出 */
+    z-index: 300 !important;
+    background: #ffffff !important;
+    overflow: visible !important;
+  }
+
+  .panel-tab-bar {
+    padding: 16px !important;
+    border-top-left-radius: 28px !important;
+    border-top-right-radius: 28px !important;
+    background: rgba(241, 245, 249, 0.6) !important;
+  }
+
+  .panel-content {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .info-scroll-area {
+    overflow-y: visible !important;
+    height: auto !important;
+    padding: 20px 16px !important;
+  }
+
+  /* 6. Leaflet ズームコントロールボタンを地図の右下に強制移動 */
+  /* これにより、地図の左側にあった不要なスペースが100%完全に消滅します！ */
+  .leaflet-left {
+    left: auto !important;
+    right: 12px !important;
+    bottom: 24px !important; /* 地図の右下にすっきりと美しく収める */
+    top: auto !important;
+  }
+
+  .leaflet-top {
+    top: auto !important;
+  }
+
+  .leaflet-bar {
+    margin-right: 0 !important;
+    margin-bottom: 0 !important;
+    box-shadow: 0 8px 20px rgba(30, 41, 59, 0.1) !important;
+  }
+
+  /* 8. アワードパネル (最下部にぴったり張り付く高級感あるスマホ配置) */
+  .award-panel {
+    border-top: 3px solid #f4f7fe !important;
+    background: #f8faff !important;
+    padding: 16px !important;
+    margin-top: 30px !important;
+    border-bottom-left-radius: 28px !important;
+    border-bottom-right-radius: 28px !important;
+  }
+}
+
+/* ==========================================================================
+   📍 巡礼済みゴールドピン ＆ 現在地GPSジャンプボタンの装飾
+   ========================================================================== */
+
+/* 1. 巡礼済みゴールドピンのデザイン */
+.pop-pin-container.visited {
+  filter: drop-shadow(0 4px 10px rgba(234, 179, 8, 0.4));
+  animation: pulseGold 2s infinite alternate;
+}
+
+@keyframes pulseGold {
+  0% { transform: scale(1); filter: drop-shadow(0 4px 10px rgba(234, 179, 8, 0.4)); }
+  100% { transform: scale(1.05); filter: drop-shadow(0 6px 15px rgba(234, 179, 8, 0.6)); }
+}
+
+/* 2. 📍 現在地GPSドットマーカー（パルスアニメーション付き） */
+.custom-gps-dot {
+  background: none !important;
+  border: none !important;
+}
+
+.user-gps-dot {
+  width: 18px;
+  height: 18px;
+  background: #007aff;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 122, 255, 0.6), 0 0 0 8px rgba(0, 122, 255, 0.2);
+  animation: pulseGps 2s infinite alternate;
+}
+
+@keyframes pulseGps {
+  0% { box-shadow: 0 0 10px rgba(0, 122, 255, 0.6), 0 0 0 2px rgba(0, 122, 255, 0.25); transform: scale(0.9); }
+  100% { box-shadow: 0 0 15px rgba(0, 122, 255, 0.8), 0 0 0 14px rgba(0, 122, 255, 0.15); transform: scale(1.1); }
+}
+
+/* 3. ◎ 現在地へジャンプボタンのホバー・スマホ補正 */
+.gps-jump-btn:hover {
+  transform: scale(1.1) rotate(5deg);
+  background-color: #f8fafc !important;
+  color: var(--color-equal-love) !important;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15) !important;
+}
+
+.gps-jump-btn:active {
+  transform: scale(0.95);
+}
+
+.gps-jump-btn.locating svg {
+  color: var(--color-equal-love) !important;
+}
+
+/* 4. Googleマップ経路案内ボタンのホバーエフェクト */
+.google-map-route-btn {
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.google-map-route-btn:hover {
+  transform: translateY(-2px);
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.05) !important;
+}
+
+/* 5. 🎖️ 獲得称号バッジのプレミアムきらめきアニメーション */
+.badge-pill {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: pulseBadge 2.5s infinite ease-in-out !important;
+}
+
+.badge-pill:hover {
+  transform: translateY(-2px) scale(1.06);
+  box-shadow: 0 5px 12px rgba(255, 104, 151, 0.6) !important;
+}
+
+@keyframes pulseBadge {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 2px 4px rgba(167, 139, 250, 0.3);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(167, 139, 250, 0.5), 0 0 8px rgba(255, 104, 151, 0.3);
+    filter: brightness(1.1);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 2px 4px rgba(167, 139, 250, 0.3);
+    filter: brightness(1);
+  }
+}

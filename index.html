@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗺️</text></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+    <!-- 📄 メタデータ & SEO 最適化 -->
+    <title>トリプルデート・マップ | イコノイジョイ聖地巡礼</title>
+    <meta name="description" content="イコノイジョイ（=LOVE、≠ME、≒JOY）のロケ地・聖地巡礼マップ。位置情報（GPS）によるスタンプラリーやアワード称号コレクションを搭載した、ファンコミュニティ向けの非公式インフラアプリです。" />
+    <meta name="keywords" content="イコラブ, ノイミー, ニアジョイ, トリプルデート, 聖地巡礼, ロケ地, スタンプラリー, チェックイン, 位置情報" />
+    
+    <!-- 🌐 SNSシェア / OGP (Open Graph Protocol) 設定 (X/Twitter対応) -->
+    <meta property="og:title" content="トリプルデート・マップ | イコノイジョイ聖地巡礼" />
+    <meta property="og:description" content="イコノイジョイの聖地巡礼をもっと楽しく！GPSスタンプラリーで限定の称号やアワードを集めよう🗺️✨" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://triple-date-map.vercel.app/" />
+    <meta property="og:image" content="https://triple-date-map.vercel.app/ogp.png" />
+    <meta property="og:site_name" content="トリプルデート・マップ" />
+    <meta property="og:locale" content="ja_JP" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="トリプルデート・マップ | イコノイジョイ聖地巡礼" />
+    <meta name="twitter:description" content="イコノイジョイの聖地巡礼をもっと楽しく！GPSスタンプラリーで限定の称号やアワードを集めよう🗺️✨" />
+    <meta name="twitter:image" content="https://triple-date-map.vercel.app/ogp.png" />
+    <!-- Google Fonts (Outfit & Noto Sans JP) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- 1. 【必須】CDN経由で Leaflet.js の CSS と JS を読み込み -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
