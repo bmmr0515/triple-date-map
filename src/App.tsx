@@ -1404,12 +1404,37 @@ ${window.location.origin + window.location.pathname}
                             alignItems: 'center'
                           }}
                         >
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                            <span style={{ fontSize: '12px', fontWeight: '900', color: '#6d28d9' }}>
-                              『この空がトリガー』全聖地巡礼せよ！
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                            {/* 🏷️ メインタイトル（小見出し）：バッジ風装飾 */}
+                            <span style={{
+                              alignSelf: 'flex-start',
+                              fontSize: '9px',
+                              fontWeight: '900',
+                              color: '#6d28d9',
+                              background: '#f3e8ff',
+                              padding: '2px 8px',
+                              borderRadius: '6px',
+                              letterSpacing: '0.02em',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '3px'
+                            }}>
+                              🏷️ この空がトリガー 巡礼ミッション
                             </span>
-                            <span style={{ fontSize: '10px', color: 'var(--text-muted)', fontWeight: '800' }}>
-                              進行状況: {uniqueCheckedCount} / {totalTriggerCount} 箇所 ({percent}%)
+                            {/* 👑 サブタイトル（大見出し）：目を引くエモいタイトル */}
+                            <span style={{
+                              fontSize: '15px',
+                              fontWeight: '900',
+                              color: '#1e293b',
+                              letterSpacing: '-0.02em',
+                              lineHeight: '1.2',
+                              marginTop: '2px'
+                            }}>
+                              青い空を見上げた日
+                            </span>
+                            {/* 📊 進行状況 */}
+                            <span style={{ fontSize: '9.5px', color: 'var(--text-muted)', fontWeight: '800', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                              🧭 進行状況: {uniqueCheckedCount} / {totalTriggerCount} 箇所 ({percent}%)
                             </span>
                           </div>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -1551,12 +1576,37 @@ ${window.location.origin + window.location.pathname}
                             alignItems: 'center'
                           }}
                         >
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                            <span style={{ fontSize: '12px', fontWeight: '900', color: '#16a34a' }}>
-                              『笑顔のレシピ』夢の地へ巡礼せよ！
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                            {/* 🏷️ メインタイトル（小見出し）：バッジ風装飾 */}
+                            <span style={{
+                              alignSelf: 'flex-start',
+                              fontSize: '9px',
+                              fontWeight: '900',
+                              color: '#16a34a',
+                              background: '#dcfce7',
+                              padding: '2px 8px',
+                              borderRadius: '6px',
+                              letterSpacing: '0.02em',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '3px'
+                            }}>
+                              🏷️ 笑顔のレシピ 巡礼ミッション
                             </span>
-                            <span style={{ fontSize: '10px', color: 'var(--text-muted)', fontWeight: '800' }}>
-                              進行状況: {uniqueCheckedCount} / {totalRecipeCount} 箇所 ({percent}%)
+                            {/* 👑 サブタイトル（大見出し）：目を引くエモいタイトル */}
+                            <span style={{
+                              fontSize: '15px',
+                              fontWeight: '900',
+                              color: '#1e293b',
+                              letterSpacing: '-0.02em',
+                              lineHeight: '1.2',
+                              marginTop: '2px'
+                            }}>
+                              みんなで作る最高のレシピ
+                            </span>
+                            {/* 📊 進行状況 */}
+                            <span style={{ fontSize: '9.5px', color: 'var(--text-muted)', fontWeight: '800', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                              🧭 進行状況: {uniqueCheckedCount} / {totalRecipeCount} 箇所 ({percent}%)
                             </span>
                           </div>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
