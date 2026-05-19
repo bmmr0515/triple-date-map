@@ -152,8 +152,8 @@ export default function App() {
     const currentTitles = currentUser.titles || [];
     const newlyEarnedTitles: string[] = [];
 
-    // ユニークな巡礼済みのスポットIDのSet
-    const checkedSpotIds = new Set(checkins.map(c => c.spot_id));
+    // ユニークな現地GPS巡礼済みのスポットIDのSet (現地チェックインのみ称号・アワードの対象にする)
+    const checkedSpotIds = new Set(checkins.filter(c => c.is_manual !== true).map(c => c.spot_id));
 
     // 1. 各聖地ごとの固有称号 (reward_title) の判定
     spots.forEach(spot => {
@@ -492,7 +492,11 @@ export default function App() {
           alert("❌ 位置情報の取得が許可されなかったか、GPSの測位に失敗したため巡礼できませんでした。");
         }
       },
-      { enableHighAccuracy: true, timeout: 8000 }
+      {
+        enableHighAccuracy: true, // 🛰️ 高精度GPSセンサー（ハードウェアGPS）を強制起動
+        timeout: 10000,           // 測位の安定化を待つため10秒間の猶予を設定
+        maximumAge: 0             // 過去の古いキャッシュデータを使用せず、常に最新の現在地を取得
+      }
     );
   };
 
@@ -1447,7 +1451,8 @@ ${window.location.origin + window.location.pathname}
                                 id: 'temp_' + Date.now(),
                                 user_id: currentUser.id,
                                 spot_id: selectedSpot.id,
-                                visited_at: new Date().toISOString()
+                                visited_at: new Date().toISOString(),
+                                is_manual: true
                               };
                               setCheckins([...checkins, newCheckIn]);
                               setIsCheckinAnimating(true);
@@ -1456,7 +1461,7 @@ ${window.location.origin + window.location.pathname}
                               }, 1200);
 
                               setTimeout(() => {
-                                try { db.addCheckIn(selectedSpot.id); } catch(e) { setCheckins(originalCheckins); }
+                                try { db.addCheckIn(selectedSpot.id, true); } catch(e) { setCheckins(originalCheckins); }
                               }, 50);
                             }
                           }}
@@ -3250,7 +3255,8 @@ ${window.location.origin + window.location.pathname}
                           id: 'temp_' + Date.now(),
                           user_id: currentUser.id,
                           spot_id: selectedSpot.id,
-                          visited_at: new Date().toISOString()
+                          visited_at: new Date().toISOString(),
+                          is_manual: true
                         };
                         setCheckins([...checkins, newCheckIn]);
                         setIsCheckinAnimating(true);
@@ -3259,7 +3265,7 @@ ${window.location.origin + window.location.pathname}
                         }, 1200);
 
                         setTimeout(() => {
-                          try { db.addCheckIn(selectedSpot.id); } catch(e) { setCheckins(originalCheckins); }
+                          try { db.addCheckIn(selectedSpot.id, true); } catch(e) { setCheckins(originalCheckins); }
                         }, 50);
                       }
                     }}

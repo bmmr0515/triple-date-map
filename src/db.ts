@@ -27,6 +27,7 @@ export interface CheckIn {
   user_id: string;
   spot_id: string;
   visited_at: string;
+  is_manual?: boolean;
 }
 
 export type GroupType = "=LOVE" | "≠ME" | "≒JOY" | "合同";
@@ -793,14 +794,15 @@ export const db = {
     }
   },
 
-  addCheckIn(spotId: string): CheckIn {
+  addCheckIn(spotId: string, isManual?: boolean): CheckIn {
     const checkins = this.getCheckIns();
     const user = this.getCurrentUser();
     const newCheckIn: CheckIn = {
       id: generateUUID(),
       user_id: user.id,
       spot_id: spotId,
-      visited_at: new Date().toISOString()
+      visited_at: new Date().toISOString(),
+      is_manual: isManual
     };
     checkins.push(newCheckIn);
     localStorage.setItem('tdm_checkins', JSON.stringify(checkins));
