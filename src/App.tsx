@@ -2731,45 +2731,43 @@ ${window.location.origin + window.location.pathname}
                 </div>
               )}
 
-              {/* 新規登録時の利用規約同意チェックボックス */}
-              {authMode === 'signup' && (
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '8px',
-                  textAlign: 'left',
-                  background: '#f8fafc',
-                  padding: '10px 12px',
-                  borderRadius: '12px',
-                  border: '1px solid #e2e8f0',
-                  marginTop: '4px'
-                }}>
-                  <input 
-                    type="checkbox" 
-                    id="terms-agree-signup"
-                    checked={agreeTermsSignup}
-                    onChange={(e) => setAgreeTermsSignup(e.target.checked)}
-                    style={{
-                      marginTop: '2px',
-                      width: '14px',
-                      height: '14px',
-                      accentColor: 'var(--color-equal-love)',
-                      cursor: 'pointer'
-                    }}
-                  />
-                  <label htmlFor="terms-agree-signup" style={{ fontSize: '9.5px', fontWeight: '800', color: 'var(--text-main)', cursor: 'pointer', lineHeight: '1.4' }}>
-                    <span onClick={(e) => { e.preventDefault(); setShowTermsModal(true); }} style={{ color: '#ff6897', textDecoration: 'underline', cursor: 'pointer' }}>利用規約・免責事項</span>
-                    に同意して、コミュニティのモラルを遵守します。
-                  </label>
-                </div>
-              )}
+              {/* 利用規約 ＆ プライバシーポリシー 同意チェックボックス (ログイン・登録共通) */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '8px',
+                textAlign: 'left',
+                background: '#f8fafc',
+                padding: '10px 12px',
+                borderRadius: '12px',
+                border: '1px solid #e2e8f0',
+                marginTop: '4px'
+              }}>
+                <input 
+                  type="checkbox" 
+                  id="terms-agree-signup"
+                  checked={agreeTermsSignup}
+                  onChange={(e) => setAgreeTermsSignup(e.target.checked)}
+                  style={{
+                    marginTop: '2px',
+                    width: '14px',
+                    height: '14px',
+                    accentColor: 'var(--color-equal-love)',
+                    cursor: 'pointer'
+                  }}
+                />
+                <label htmlFor="terms-agree-signup" style={{ fontSize: '9.5px', fontWeight: '800', color: 'var(--text-main)', cursor: 'pointer', lineHeight: '1.4' }}>
+                  <span onClick={(e) => { e.preventDefault(); setShowTermsModal(true); }} style={{ color: '#ff6897', textDecoration: 'underline', cursor: 'pointer' }}>利用規約 ＆ プライバシーポリシー</span>
+                  に同意して、コミュニティのモラルを遵守します。
+                </label>
+              </div>
 
               <button
                 type="submit"
-                disabled={isAuthLoading || (authMode === 'signup' && !agreeTermsSignup)}
+                disabled={isAuthLoading || !agreeTermsSignup}
                 className="pop-button font-black"
                 style={{
-                  background: (authMode === 'signup' && !agreeTermsSignup) 
+                  background: (!agreeTermsSignup) 
                     ? '#cbd5e1' 
                     : 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)',
                   color: 'white',
@@ -2777,13 +2775,13 @@ ${window.location.origin + window.location.pathname}
                   padding: '12px',
                   borderRadius: '14px',
                   fontSize: '12px',
-                  cursor: (isAuthLoading || (authMode === 'signup' && !agreeTermsSignup)) ? 'not-allowed' : 'pointer',
-                  opacity: (isAuthLoading || (authMode === 'signup' && !agreeTermsSignup)) ? 0.6 : 1,
+                  cursor: (isAuthLoading || !agreeTermsSignup) ? 'not-allowed' : 'pointer',
+                  opacity: (isAuthLoading || !agreeTermsSignup) ? 0.6 : 1,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '8px',
-                  boxShadow: (authMode === 'signup' && !agreeTermsSignup) ? 'none' : '0 8px 20px rgba(255, 104, 151, 0.3)',
+                  boxShadow: (!agreeTermsSignup) ? 'none' : '0 8px 20px rgba(255, 104, 151, 0.3)',
                   marginTop: '6px'
                 }}
               >
@@ -2804,8 +2802,9 @@ ${window.location.origin + window.location.pathname}
               <div style={{ flex: 1, height: '1px', backgroundColor: '#e2e8f0' }}></div>
             </div>
 
-            {/* Googleログインシミュレートボタン */}
+            {/* Googleログインシミュレートボタン (利用規約に同意していない場合は非活性化) */}
             <button
+              disabled={isAuthLoading || !agreeTermsSignup}
               onClick={async () => {
                 setAuthError('');
                 setIsAuthLoading(true);
@@ -2824,21 +2823,25 @@ ${window.location.origin + window.location.pathname}
               className="pop-button"
               style={{
                 width: '100%',
-                backgroundColor: '#ffffff',
-                border: '2px solid #e2e8f0',
+                backgroundColor: (!agreeTermsSignup) ? '#f8fafc' : '#ffffff',
+                border: '2px solid',
+                borderColor: (!agreeTermsSignup) ? '#e2e8f0' : '#cbd5e1',
                 padding: '10px',
                 borderRadius: '14px',
                 fontSize: '11px',
                 fontWeight: '900',
-                color: 'var(--text-main)',
+                color: (!agreeTermsSignup) ? '#94a3b8' : 'var(--text-main)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '8px',
-                cursor: 'pointer'
+                cursor: (isAuthLoading || !agreeTermsSignup) ? 'not-allowed' : 'pointer',
+                opacity: (!agreeTermsSignup) ? 0.5 : 1,
+                boxShadow: 'none',
+                transition: 'all 0.25s'
               }}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" style={{ flexShrink: 0, filter: (!agreeTermsSignup) ? 'grayscale(1)' : 'none', opacity: (!agreeTermsSignup) ? 0.5 : 1 }}>
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                 <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
                 <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
@@ -3351,7 +3354,7 @@ ${window.location.origin + window.location.pathname}
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '2px solid #f1f5f9', paddingBottom: '12px' }}>
               <span style={{ fontSize: '20px' }}>📜</span>
               <h3 style={{ fontSize: '16px', fontWeight: '900', color: 'var(--text-main)', margin: 0 }}>
-                利用規約・免責事項 (モラル保護宣言)
+                利用規約 ＆ プライバシーポリシー
               </h3>
             </div>
 
@@ -3370,24 +3373,24 @@ ${window.location.origin + window.location.pathname}
               maxHeight: '50vh'
             }}>
               <p style={{ fontWeight: '900', fontSize: '12px', color: 'var(--text-main)', marginTop: 0, marginBottom: '12px', borderBottom: '1px solid #cbd5e1', paddingBottom: '6px' }}>
-                ■ トリプルデートマップ 利用規約・免責事項
+                ■ トリプルデートマップ 利用規約 ＆ プライバシーポリシー
               </p>
-              {"本アプリは、ファンがグループの歴史を追体験し、推し活文化を長期的に共同保存するための非公式コミュニティインフラです。すべてのユーザーがモラルを守り、安全に楽しむために、以下の規約への同意をお願いいたします。\n\n"}
+              {"本アプリは、ファンがグループの歴史を追体験し、推し活文化を長期的に共同保存するための非公式コミュニティインフラです。すべてのユーザーがモラルを守り、安全に楽しむために、以下の規約・ポリシーへの同意をお願いいたします。\n\n"}
               
-              <strong>1. 非公式ファンアプリについて</strong>{"\n"}
-              {"本アプリは個人が開発した非公式のファンアプリであり、対象グループ（=LOVE、≠ME、≒JOY）、所属事務所、所属レーベル、運営会社、および関係各社とは一切関係がありません。本アプリに関するお問い合わせや要望などを, 公式の窓口や関係先へ行うことは絶対におやめください。\n\n"}
+              <strong>1. 非公式ファンアプリの宣言</strong>{"\n"}
+              {"本アプリは個人が開発した非公式のファンアプリであり、対象グループ（=LOVE、≠ME、≒JOY）、所属事務所、所属レーベル、運営会社、および関係各社とは一切関係がありません。本アプリに関するお問い合わせや要望などを、公式の窓口や関係各社へ送ることは絶対におやめください。\n\n"}
 
-              <strong>2. 位置情報（GPS）の利用</strong>{"\n"}
-              {"本アプリは、現地での聖地チェックイン判定を行うため、端末のGPS（位置情報）機能を利用します。取得した位置情報は、その場での距離判定にのみ使用され、ユーザーの移動履歴を不当に追跡・保存したり、第三者に公開することはいたしません。\n\n"}
+              <strong>2. 位置情報（GPS）の取り扱い（プライバシーポリシー）</strong>{"\n"}
+              {"本アプリは、現地での聖地チェックイン判定（スポットと現在地との距離計算）を行うため、ブラウザ経由で端末のGPS（位置情報）を使用します。\n取得した現在地の緯度・経度データは、ブラウザ内のローカル（JavaScript）上で距離を計算するためだけに一時的に使用され、当サーバーや第三者のサーバーへ移動履歴、ルートログ、現在地座標などを送信・保存・蓄積することは100%一切ございません。ユーザーの移動が外部に追跡されるリスクはございませんのでご安心ください。\n\n"}
 
-              <strong>3. 現地ルールの遵守と立入禁止エリアへの侵入禁止</strong>{"\n"}
+              <strong>3. 個人情報の取得と保護方針（Googleログインなど）</strong>{"\n"}
+              {"Googleアカウントによるログイン（ソーシャル認証）を使用する際、本アプリは安全な認証連携システムを介して、ユーザーの公開プロフィール情報（ユーザーID、表示名、プロフィール画像URLのみ）を取得します。\n取得したデータは、アカウントの識別、チェックイン履歴の紐付け、およびアプリ内ニックネームの設定のためにのみ使用し、メールアドレスの悪用、パスワードなどの機密情報の収集、および第三者へのデータの提供・売買は一切行いません。\n\n"}
+
+              <strong>4. 現地ルールの遵守と立入禁止エリアへの侵入禁止</strong>{"\n"}
               {"聖地を訪問する際は、現地の交通ルール、公共のマナー、各自治体や店舗・施設の利用ルールを必ず遵守してください。\n私有地、立入禁止エリア、撮影禁止区域、および夜間立ち入りが制限されている場所への侵入や、近隣住民・営業中の店舗への迷惑行為は固く禁じます。万が一、現地の状況に変更（閉店・立入禁止化など）があった場合は、速やかにアプリ内から修正提案を行ってください。\n\n"}
 
-              <strong>4. ユーザー生成コンテンツ（UGC）と投稿責任</strong>{"\n"}
-              {"将来的な機能を含む、アプリ内での聖地情報の追加・修正提案、コメントなどの投稿内容に関する一切の責任は、投稿したユーザー本人に帰属します。他者を誹謗中傷する内容、虚偽の情報、権利を侵害するデータの投稿は禁止します。\n\n"}
-
               <strong>5. 免責事項</strong>{"\n"}
-              {"本アプリの利用、または本アプリの情報に基づいた聖地への訪問（巡礼）によって発生したあらゆるトラブル、事故、怪我、紛失、損害、およびユーザー間の紛争について、開発者および運営側は一切の責任を負いません。すべてユーザーご自身の自己責任においてご利用ください。"}
+              {"本アプリの利用、または本アプリの情報に基づいた聖地への訪問（巡礼）によって発生したあらゆるトラブル、事故、怪我、紛失、損害（現地での不法侵入等を含む）、およびユーザー間の紛争について、開発者および運営側は一切の責任を負いません。すべてユーザーご自身の自己責任において安全にご利用ください。"}
             </div>
 
             <button
