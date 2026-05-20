@@ -3389,13 +3389,11 @@ ${window.location.origin + window.location.pathname}
                 setIsAuthLoading(true);
                 try {
                   const res = await authService.signInWithX();
-                  if (res.success) {
-                    setShowAuthModal(false);
-                    alert("🎉 X (Twitter) アカウントでの認証に成功しました！");
-                  } else {
+                  if (!res.success) {
                     console.error("X Auth Error Details:", res.error);
                     setAuthError(res.error || "X認証に失敗しました。");
                   }
+                  // 成功時は何のアラートも出さず、シームレスにXの公式OAuth認証画面へとブラウザを遷移させます。
                 } catch (err: any) {
                   console.error("X Auth Exception:", err);
                   setAuthError(err.message || "X認証中にエラーが発生しました。");
