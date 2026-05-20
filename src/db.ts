@@ -538,25 +538,11 @@ const INITIAL_SPOTS: Spot[] = [
     reward_title: "昭和レトロの旅人"
   },
   {
-    id: "spot-trigger-kiraku",
-    name: "中華料理 喜楽（大森）",
-    group: "=LOVE",
-    category: "MVロケ地",
-    description: "大谷映美里がラーメンを食べていたお店。実際に同じメニューを頼んでオタ活したいスポット。",
-    latitude: 35.5866,
-    longitude: 139.7297,
-    event_date: "2023-02-22",
-    youtube_title: "🎥 関連映像: 『この空がトリガー』公式MV",
-    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/20QJax8CwQo?si=kPUEeAcfNct48srm\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
-    tags: ["トリガー巡礼"],
-    reward_title: "大森喜楽のラーメン愛好家"
-  },
-  {
     id: "spot-trigger-veille",
     name: "Bar VEILLE（大森）",
     group: "=LOVE",
     category: "MVロケ地",
-    description: "諸橋沙夏が訪れた大人な雰囲気のバー。喜楽のすぐ近く。",
+    description: "諸橋沙夏が訪れた大人な雰囲気のバー。大森エリアの情緒ある路地に佇む名店。",
     latitude: 35.5864,
     longitude: 139.7296,
     event_date: "2023-02-22",
