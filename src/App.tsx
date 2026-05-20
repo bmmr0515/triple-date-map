@@ -169,6 +169,7 @@ export default function App() {
   const [listSearchGroup, setListSearchGroup] = useState<string>('すべて');
   const [listLimit, setListLimit] = useState<number>(20);
   const [listSelectedArea, setListSelectedArea] = useState<string>('すべて');
+  const [listSelectedMission, setListSelectedMission] = useState<string>('すべて');
   const [listSortKey, setListSortKey] = useState<'default' | 'song-asc' | 'date-desc' | 'date-asc'>('default');
 
   // 🚀 新着お知らせの既読未読＆自動ポップアップ判定
@@ -242,6 +243,22 @@ export default function App() {
     if (listSelectedArea !== 'すべて') {
       const spotArea = extractArea(spot);
       if (spotArea !== listSelectedArea) {
+        return false;
+      }
+    }
+
+    // ミッション別
+    if (listSelectedMission !== 'すべて') {
+      const hasMission = spot.tags && spot.tags.some(tag => {
+        if (listSelectedMission === 'trigger') return tag.includes('トリガー巡礼');
+        if (listSelectedMission === 'recipe') return tag.includes('笑顔のレシピ巡礼');
+        if (listSelectedMission === 'hawaiians') return tag.includes('ハワイアンズ巡礼');
+        if (listSelectedMission === 'hokkaido') return tag.includes('超特Q北海道巡礼');
+        if (listSelectedMission === 'fighter') return tag.includes('排他的ファイター巡礼') || tag.includes('排彼のファイター巡礼');
+        if (listSelectedMission === 'kyunkawa') return tag.includes('きゅんかわ人生巡礼');
+        return false;
+      });
+      if (!hasMission) {
         return false;
       }
     }
@@ -1592,9 +1609,44 @@ ${window.location.origin + window.location.pathname}
                   )}
                 </div>
 
-                {/* 📍 都道府県フィルター ＆ 📋 ソート並べ替え */}
-                <div style={{ display: 'flex', gap: '8px' }}>
-                  {/* 都道府県セレクト */}
+                {/* 📍 都道府県・ミッションフィルター ＆ 📋 ソート並べ替え */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {/* ミッションセレクト */}
+                  <div style={{ position: 'relative' }}>
+                    <select
+                      value={listSelectedMission}
+                      onChange={(e) => {
+                        setListSelectedMission(e.target.value);
+                        setListLimit(20);
+                      }}
+                      style={{
+                        width: '100%',
+                        padding: '8px 24px 8px 10px',
+                        borderRadius: '10px',
+                        border: '2px solid #e2e8f0',
+                        fontSize: '11px',
+                        fontWeight: 'bold',
+                        color: '#475569',
+                        outline: 'none',
+                        background: '#ffffff',
+                        cursor: 'pointer',
+                        appearance: 'none',
+                        WebkitAppearance: 'none'
+                      }}
+                    >
+                      <option value="すべて">🏅 すべてのミッション・タグ</option>
+                      <option value="trigger">☁️ この空がトリガー (全12箇所)</option>
+                      <option value="recipe">🍳 笑顔のレシピ (全6箇所)</option>
+                      <option value="hawaiians">🌺 常夏のハワイアンズ (全1箇所)</option>
+                      <option value="hokkaido">🚄 超特Q北海道 (全4箇所)</option>
+                      <option value="fighter">🥊 排他的ファイター (全3箇所)</option>
+                      <option value="kyunkawa">🎀 きゅんかわ人生 (全4箇所)</option>
+                    </select>
+                    <div style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', fontSize: '9px', color: '#94a3b8' }}>▼</div>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    {/* 都道府県セレクト */}
                   <div style={{ flex: 1, position: 'relative' }}>
                     <select
                       value={listSelectedArea}
@@ -1655,6 +1707,7 @@ ${window.location.origin + window.location.pathname}
                     </select>
                     <div style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', fontSize: '9px', color: '#94a3b8' }}>▼</div>
                   </div>
+                </div>
                 </div>
 
                 {/* グループ別フィルタータブ */}
