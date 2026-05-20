@@ -196,20 +196,15 @@ export default function App() {
   }, [activeView]);
 
   // 📋 聖地リスト用フィルタリング（都道府県の動的抽出と多重ソートを適用）
-  // 📍 聖地データの都道府県（大まかなエリア）の動的抽出ヘルパー
+  // 📍 聖地データの都道府県（日本の47都道府県名）の動的抽出ヘルパー
   const extractArea = (spot: Spot): string => {
-    const areaMatch = spot.description.match(/(東京都|神奈川県|千葉県|埼玉県|群馬県|栃木県|茨城県|山梨県|静岡県|沖縄県|高知県|福島県|山口県|セブ島|韓国)/);
-    if (areaMatch) return areaMatch[0];
-    if (spot.name.includes('（')) {
-      const innerMatch = spot.name.match(/（(.*?)）/);
-      if (innerMatch) return innerMatch[1];
-    }
-    return 'その他';
+    // 日本の47都道府県名のみを厳密にマッチング
+    const areaMatch = spot.description.match(/(東京都|北海道|京都府|大阪府|神奈川県|千葉県|埼玉県|愛知県|兵庫県|福岡県|静岡県|茨城県|広島県|宮城県|新潟県|長野県|栃木県|群馬県|熊本県|岡山県|三重県|鹿児島県|山口県|愛媛県|福島県|滋賀県|青森県|山形県|石川県|秋田県|香川県|和歌山県|宮崎県|富山県|佐賀県|鳥取県|徳島県|高知県|島根県|岩手県|山梨県|長崎県|大分県|沖縄県|奈良県|福井県|岐阜県)/);
+    return areaMatch ? areaMatch[0] : '';
   };
 
-  // データベース上の登録聖地から、存在する都道府県/エリアを動的に抽出
-  const availableAreas = Array.from(new Set(spots.map(extractArea))).filter(a => a !== 'その他');
-  availableAreas.push('その他');
+  // データベース上の登録聖地から、存在する都道府県のみを動的に抽出
+  const availableAreas = Array.from(new Set(spots.map(extractArea))).filter(a => a !== '');
 
   // 📋 聖地リスト用フィルターリング＆並べ替えソート処理
   const filteredListSpots = spots.filter(spot => {
