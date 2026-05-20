@@ -234,6 +234,63 @@ export const authService = {
     return { success: true };
   },
 
+  // 本物のX (Twitter) OAuth 認証画面へリダイレクト (Supabase twitter provider)
+  async signInWithX(): Promise<{ success: boolean; error?: string }> {
+    // 1. 本物のSupabaseが有効な場合
+    if (supabase) {
+      try {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: 'twitter',
+          options: {
+            redirectTo: window.location.origin // ログイン成功後にアプリへ戻る
+          }
+        });
+        if (error) throw error;
+        return { success: true };
+      } catch (err: any) {
+        return { success: false, error: err.message || 'X認証の開始に失敗しました。' };
+      }
+    }
+
+    // 2. ローカルシミュレータ処理 (オフラインデバッグ用)
+    await new Promise(resolve => setTimeout(resolve, 800));
+
+    const mockEmail = 'ikonoijoy_twt@gmail.com';
+    const users = getSimUsers();
+    let found = users.find(u => u.email.toLowerCase() === mockEmail.toLowerCase());
+
+    if (!found) {
+      found = {
+        id: 'usr_twt' + Math.random().toString(36).substr(2, 5),
+        email: mockEmail,
+        passwordHash: 'twitter_oauth_bypass',
+        username: 'Xから来た巡礼者',
+        oshi_group: '合同',
+        acquired_titles: [],
+        titles: [],
+        active_title: ''
+      };
+      users.push(found);
+      saveSimUsers(users);
+    }
+
+    const userSession: User = {
+      id: found.id,
+      username: found.username,
+      oshi_group: found.oshi_group,
+      acquired_titles: found.acquired_titles,
+      titles: found.titles,
+      active_title: found.active_title
+    };
+
+    const session: AuthSession = { user: userSession, email: found.email };
+    localStorage.setItem('tdm_auth_session', JSON.stringify(session));
+    localStorage.setItem('tdm_user', JSON.stringify(userSession));
+
+    this._notify(session);
+    return { success: true };
+  },
+
   // 本物のGoogle OAuth 認証画面へリダイレクト
   async signInWithGoogle(): Promise<{ success: boolean; error?: string }> {
     // 1. 本物のSupabaseが有効な場合

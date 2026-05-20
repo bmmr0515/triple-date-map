@@ -3385,6 +3385,52 @@ ${window.location.origin + window.location.pathname}
               <div style={{ flex: 1, height: '1px', backgroundColor: '#e2e8f0' }}></div>
             </div>
 
+            {/* X (Twitter) ログインシミュレートボタン (一番上に配置して目立たせる) */}
+            <button
+              disabled={isAuthLoading || !agreeTermsSignup}
+              onClick={async () => {
+                setAuthError('');
+                setIsAuthLoading(true);
+                try {
+                  const res = await authService.signInWithX();
+                  if (res.success) {
+                    setShowAuthModal(false);
+                    alert("🎉 X (Twitter) アカウントでの認証に成功しました！");
+                  }
+                } catch (err) {
+                  setAuthError("X認証に失敗しました。");
+                } finally {
+                  setIsAuthLoading(false);
+                }
+              }}
+              className="pop-button"
+              style={{
+                width: '100%',
+                backgroundColor: (!agreeTermsSignup) ? '#f8fafc' : '#0f1419', // クールで目立つXブラック
+                border: '2px solid',
+                borderColor: (!agreeTermsSignup) ? '#e2e8f0' : '#0f1419',
+                padding: '11px',
+                borderRadius: '14px',
+                fontSize: '11.5px',
+                fontWeight: '900',
+                color: (!agreeTermsSignup) ? '#94a3b8' : '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                cursor: (isAuthLoading || !agreeTermsSignup) ? 'not-allowed' : 'pointer',
+                opacity: (!agreeTermsSignup) ? 0.5 : 1,
+                boxShadow: (!agreeTermsSignup) ? 'none' : '0 4px 14px rgba(15, 20, 25, 0.18)',
+                transition: 'all 0.25s',
+                marginBottom: '8px'
+              }}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" style={{ flexShrink: 0, fill: (!agreeTermsSignup) ? '#94a3b8' : '#ffffff' }}>
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+              Xアカウントでログイン
+            </button>
+
             {/* Googleログインシミュレートボタン (利用規約に同意していない場合は非活性化) */}
             <button
               disabled={isAuthLoading || !agreeTermsSignup}
