@@ -1088,9 +1088,9 @@ const INITIAL_SPOTS: Spot[] = [
     memorial_date: "2024-04-01"
   },
   {
-    id: "spot-joy-ohimesama",
+    id: "spot-love-ohimesama",
     name: "大宮アートグレイスウエディングシャトー シャトー・シャンパーニュ",
-    group: "≒JOY",
+    group: "=LOVE",
     category: "MVロケ地",
     description: "『お姫様の作り方』MV撮影地です。\n【住所】〒331-0813 埼玉県さいたま市北区植竹町１丁目８１６−７",
     latitude: 35.9288,
