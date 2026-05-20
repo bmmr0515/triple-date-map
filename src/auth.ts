@@ -246,7 +246,8 @@ export const authService = {
 
     try {
       const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'twitter',
+        // 新しい X / Twitter (OAuth 2.0) プロバイダーには 'x' を指定します
+        provider: 'x',
         options: {
           // X認証の成功後に安全に戻るリダイレクトURLを設定
           redirectTo: window.location.origin
