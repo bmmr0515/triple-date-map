@@ -1086,6 +1086,139 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["しょこりさんぽ巡礼", "しょこりさんぽゴール"],
     reward_title: "しょこりさ推し！",
     memorial_date: "2024-04-01"
+  },
+  {
+    id: "spot-joy-ohimesama",
+    name: "大宮アートグレイスウエディングシャトー シャトー・シャンパーニュ",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "『お姫様の作り方』MV撮影地です。\n【住所】〒331-0813 埼玉県さいたま市北区植竹町１丁目８１６−７",
+    latitude: 35.9288,
+    longitude: 139.6276,
+    event_date: "2023-09-06",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/2udLA8-QuD8?si=IgDtzpDQw2op5mQH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+  {
+    id: "spot-joy-lion1",
+    name: "株式会社 山勝 第三工場",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "『超孤独ライオン』MVロケ地です。\n【住所】〒252-1125 神奈川県綾瀬市吉岡東２丁目７−２２",
+    latitude: 35.4357,
+    longitude: 139.4278,
+    event_date: "2022-11-23",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/Ry9UCc9H3nw?si=nI2koRtc6JzCfC1t" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+  {
+    id: "spot-joy-lion2",
+    name: "株式会社 山勝 第一工場",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "『超孤独ライオン』MVロケ地です。\n【住所】〒252-1125 神奈川県綾瀬市吉岡東２丁目７−２２（同上）",
+    latitude: 35.4358,
+    longitude: 139.4279,
+    event_date: "2022-11-23",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/Ry9UCc9H3nw?si=nI2koRtc6JzCfC1t" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+  {
+    id: "spot-joy-sweet16",
+    name: "鴨川令徳高等学校",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "『スイートシックスティーン』MVロケ地です。\n【住所】〒296-0001 千葉県鴨川市横渚８１５",
+    latitude: 35.1090,
+    longitude: 140.1030,
+    event_date: "2023-02-22",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/GuvkL9Gz9P0?si=6fuhxAVaoqwlBSW5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+  {
+    id: "spot-joy-byun1",
+    name: "茨城空港 国際線チェックインカウンター前",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "『大空、ビュンと』巡礼スポット①。\n【住所】〒311-3416 茨城県小美玉市与沢１６０１−５５",
+    latitude: 36.1825,
+    longitude: 140.4132,
+    event_date: "2023-07-19",
+    tags: ["大空、ビュンと巡礼"]
+  },
+  {
+    id: "spot-joy-byun2",
+    name: "茨城空港 送迎デッキ側休憩スペース",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "『大空、ビュンと』巡礼スポット②。\n【住所】〒311-3416 茨城県小美玉市与沢１６０１−５５",
+    latitude: 36.1826,
+    longitude: 140.4131,
+    event_date: "2023-07-19",
+    tags: ["大空、ビュンと巡礼"]
+  },
+  {
+    id: "spot-joy-byun3",
+    name: "茨城空港 駐車場側休憩スペース",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "『大空、ビュンと』巡礼スポット③。\n【住所】〒311-3416 茨城県小美玉市与沢１６０１−５５",
+    latitude: 36.1824,
+    longitude: 140.4130,
+    event_date: "2023-07-19",
+    tags: ["大空、ビュンと巡礼"]
+  },
+  {
+    id: "spot-joy-byun4",
+    name: "茨城空港 国際線出発口横エスカレーター前",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "『大空、ビュンと』巡礼スポット④。\n【住所】〒311-3416 茨城県小美玉市与沢１６０１−５５",
+    latitude: 36.1827,
+    longitude: 140.4133,
+    event_date: "2023-07-19",
+    tags: ["大空、ビュンと巡礼"]
+  },
+  {
+    id: "spot-joy-byun5",
+    name: "渋谷スクランブル交差点",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "『大空、ビュンと』巡礼スポット⑤。\n【住所】〒150-0042 東京都渋谷区道玄坂２丁目２",
+    latitude: 35.6595,
+    longitude: 139.7005,
+    event_date: "2023-07-19",
+    tags: ["大空、ビュンと巡礼"]
+  },
+  {
+    id: "spot-joy-byun6",
+    name: "ぶたの旨味らーめん とんくる",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "『大空、ビュンと』巡礼スポット⑥。\n【住所】〒151-0073 東京都渋谷区笹塚２丁目１１−７ アーバンイマイII 102",
+    latitude: 35.6744,
+    longitude: 139.6644,
+    event_date: "2023-07-19",
+    tags: ["大空、ビュンと巡礼"]
+  },
+  {
+    id: "spot-joy-byun7",
+    name: "ノアスタジオ都立大 B1Cst",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "『大空、ビュンと』巡礼スポット⑦（ゴール）。\n【住所】〒152-0031 東京都目黒区中根１丁目７−２３ ＳＴビル",
+    latitude: 35.6179,
+    longitude: 139.6757,
+    event_date: "2023-07-19",
+    tags: ["大空、ビュンと巡礼", "大空、ビュンとゴール"],
+    reward_title: "大空を駆ける者"
+  },
+  {
+    id: "spot-joy-exult",
+    name: "相模大野立体駐車場",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "『その先はイグザルト』MVロケ地です。\n【住所】〒252-0303 神奈川県相模原市南区相模大野4丁目4-2",
+    latitude: 35.5312,
+    longitude: 139.4355,
+    event_date: "2023-09-06",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/x68AnwPpT-s?si=zIGRJITwcnj5BJ4H" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   }
 ];
 
