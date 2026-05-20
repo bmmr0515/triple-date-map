@@ -154,15 +154,29 @@ export default function App() {
 
   // 📋 リストから「地図で見る」を押した際のアクション
   const handleViewOnMap = (spot: Spot) => {
-    setActiveView('map');
     setSelectedSpot(spot);
     setRightPanelTab('detail');
-    setTimeout(() => {
-      if (mapRef.current) {
-        mapRef.current.setView([spot.latitude, spot.longitude], 15, { animate: true });
-      }
-    }, 200);
+    setActiveView('map'); // この状態切り替えが useEffect 側での invalidateSize & setView の連動処理を安全にトリガーします
   };
+
+  // 🗺️ ビュー切り替え（非表示から表示）の際、Leafletの描画サイズを強制的に再計算（invalidateSize）して真っ白化バグを完全に解消するエフェクト
+  useEffect(() => {
+    if (activeView === 'map' && mapRef.current) {
+      // 画面の display が none から block に変わったことをブラウザが検知し、レイアウトが確定するのを待つために 100ms 待ちます
+      const timer = setTimeout(() => {
+        if (mapRef.current) {
+          console.log("Map resized and visible size recalculated securely.");
+          mapRef.current.invalidateSize();
+          
+          // 選択中のスポットがあれば、その座標へ滑らかにアニメーションズーム移動します
+          if (selectedSpot) {
+            mapRef.current.setView([selectedSpot.latitude, selectedSpot.longitude], 15, { animate: true });
+          }
+        }
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [activeView, selectedSpot]);
 
   // 📋 聖地リスト用フィルタリング
   const filteredListSpots = spots.filter(spot => {
@@ -1266,12 +1280,18 @@ ${window.location.origin + window.location.pathname}
       {/* 2. メイン領域 (左右分割: 左側が 地図 + 下部スライダー, 右側が Info Panel) */}
       <div className="main-area">
         
-        {/* 左側: 地図領域 */}
-        <div className="left-area">
+        {/* 左側: 地図領域 (マップとリストが干渉せず共存し、高速に切り替わる display:none 方式を採用) */}
+        <div className="left-area" style={{ position: 'relative', height: '100%' }}>
           
-          {activeView === 'map' ? (
-            /* 地図エリア (中央のメインエリア) */
-            <div className="map-container" style={{ position: 'relative' }}>
+          {/* 地図エリア (中央のメインエリア) */}
+          <div 
+            className="map-container" 
+            style={{ 
+              position: 'relative',
+              height: '100%',
+              display: activeView === 'map' ? 'block' : 'none'
+            }}
+          >
             {/* 🔍 フローティング検索バー */}
             <div className="map-search-bar">
               {/* グループ絞り込みセレクト */}
@@ -1348,17 +1368,19 @@ ${window.location.origin + window.location.pathname}
               ></div>
             </div>
           </div>
-          ) : (
-            /* 📋 聖地一覧リストUI (Lazy Load & 検索 & 絞り込み搭載) */
-            <div className="spots-list-container" style={{
+          {/* 📋 聖地一覧リストUI (Lazy Load & 検索 & 絞り込み搭載) */}
+          <div 
+            className="spots-list-container" 
+            style={{
               height: '100%',
-              display: 'flex',
+              display: activeView === 'list' ? 'flex' : 'none',
               flexDirection: 'column',
               background: '#f8fafc',
               borderRadius: '24px',
               overflow: 'hidden',
               boxShadow: '0 4px 20px rgba(0,0,0,0.03)'
-            }}>
+            }}
+          >
               {/* リストヘッダー（検索・絞り込みフィルター） */}
               <div className="list-filters-box" style={{
                 padding: '20px',
@@ -1676,7 +1698,6 @@ ${window.location.origin + window.location.pathname}
                 )}
               </div>
             </div>
-          )}
 
         </div>
 
