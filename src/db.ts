@@ -11,6 +11,7 @@ export interface Spot {
   youtube_url?: string;
   tags?: string[];
   reward_title?: string;
+  memorial_date?: string;
 }
 
 export interface User {
