@@ -32,6 +32,13 @@ export interface Notice {
 
 export const APP_NOTICES: Notice[] = [
   {
+    id: 'notice-20260520-noimie-school-quest',
+    date: '2026/05/20',
+    title: '🎉 【新ミッション】ノイミー学園クエストシリーズ始動！ハワイアンズ＆北海道の聖地5箇所を追加！',
+    content: '【ノイミー学園クエストシリーズ始動！】\n≠MEの特典映像「ノイミー学園」の舞台となったハワイアンズ（福島県）と北海道（千歳・札幌）の聖地計5箇所が新たに追加され、2つの巡礼ミッションが開放されました！\n\n・ミッションA：『ハワイアーンなリゾート地！』\n　├ 対象：スパリゾートハワイアンズ (福島県)\n　└ 報酬称号：常夏のハワイアンズ\n・ミッションB：『超特Qな雪遊び！？』\n　├ 対象：IORI、国営滝野すずらん丘陵公園 滝野スノーワールド、アシリベツの滝、かに源 (計4箇所)\n　└ 報酬称号：超特Qなクイズ王\n\n各スポットを訪れてGPSチェックインを記録し、ノイミー学園の特別なプレミアム称号を解放しましょう！',
+    type: 'update'
+  },
+  {
     id: 'notice-20260520-kiraku-closed',
     date: '2026/05/20',
     title: '⚠️ 【聖地削除】中華料理 喜楽（大森）の閉店に伴うデータ更新のお知らせ',
@@ -117,6 +124,8 @@ export default function App() {
   const [rightPanelTab, setRightPanelTab] = useState<'detail' | 'mypage' | 'mission'>('detail');
   const [missionExpanded, setMissionExpanded] = useState<boolean>(true);
   const [recipeMissionExpanded, setRecipeMissionExpanded] = useState<boolean>(true);
+  const [hawaiiansMissionExpanded, setHawaiiansMissionExpanded] = useState<boolean>(true);
+  const [hokkaidoMissionExpanded, setHokkaidoMissionExpanded] = useState<boolean>(true);
 
   // 📱 スマホレスポンシブ判定用ステートとリサイズ監視
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
@@ -393,6 +402,24 @@ export default function App() {
     if (recipeSpots.length > 0 && isAllChecked(recipeSpots)) {
       if (!currentAcquired.includes(recipeTitle) && !newlyEarnedTitles.includes(recipeTitle)) {
         newlyEarnedTitles.push(recipeTitle);
+      }
+    }
+
+    // 7. 常夏のハワイアンズ (1箇所)
+    const hawaiiansSpots = spots.filter(s => s.tags && s.tags.includes("ハワイアンズ巡礼"));
+    const hawaiiansTitle = "常夏のハワイアンズ";
+    if (hawaiiansSpots.length > 0 && isAllChecked(hawaiiansSpots)) {
+      if (!currentAcquired.includes(hawaiiansTitle) && !newlyEarnedTitles.includes(hawaiiansTitle)) {
+        newlyEarnedTitles.push(hawaiiansTitle);
+      }
+    }
+
+    // 8. 超特Qなクイズ王 (4箇所)
+    const hokkaidoSpots = spots.filter(s => s.tags && s.tags.includes("超特Q北海道巡礼"));
+    const hokkaidoTitle = "超特Qなクイズ王";
+    if (hokkaidoSpots.length > 0 && isAllChecked(hokkaidoSpots)) {
+      if (!currentAcquired.includes(hokkaidoTitle) && !newlyEarnedTitles.includes(hokkaidoTitle)) {
+        newlyEarnedTitles.push(hokkaidoTitle);
       }
     }
 
@@ -2407,6 +2434,346 @@ ${window.location.origin + window.location.pathname}
                                 <span style={{ fontSize: '10px', fontWeight: '900', color: isCompleted ? '#16a34a' : '#64748b' }}>称号報酬: 笑顔のレシピ料理人</span>
                                 <span style={{ fontSize: '8px', color: '#94a3b8' }}>
                                   {isCompleted ? '🎉 笑顔のレシピ料理人の称号を獲得！マイページでバッジが輝いています。' : '笑顔のレシピの聖地6箇所すべてを巡ると「笑顔のレシピ料理人」の称号が解放されます。'}
+                                </span>
+                              </div>
+                            </div>
+
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
+
+                  {/* 🌟 ノイミー学園クエストシリーズ：ミッションA (ハワイアンズ) */}
+                  {(() => {
+                    const hawaiianSpots = spots.filter(s => s.tags && s.tags.includes("ハワイアンズ巡礼"));
+                    const checkedHawaiianSpots = checkins.filter(c => {
+                      const spot = spots.find(s => s.id === c.spot_id);
+                      return spot && spot.tags && spot.tags.includes("ハワイアンズ巡礼");
+                    });
+                    const uniqueCheckedCount = new Set(checkedHawaiianSpots.map(c => c.spot_id)).size;
+                    const totalCount = hawaiianSpots.length || 1;
+                    const percent = Math.min(100, Math.round((uniqueCheckedCount / totalCount) * 100));
+                    const isCompleted = uniqueCheckedCount === totalCount;
+
+                    return (
+                      <div className="pop-panel" style={{
+                        borderRadius: '16px',
+                        border: '2px solid #e2e8f0',
+                        overflow: 'hidden',
+                        boxShadow: 'var(--shadow-panel)',
+                        marginTop: '16px'
+                      }}>
+                        {/* アコーディオンヘッダー */}
+                        <div 
+                          onClick={() => setHawaiiansMissionExpanded(!hawaiiansMissionExpanded)}
+                          style={{
+                            padding: '16px',
+                            background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)', // 爽やかなブルー系グラデーション
+                            borderBottom: '1px solid #e2e8f0',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                            {/* 🏷️ メインタイトル（小見出し）：バッジ風装飾 */}
+                            <span style={{
+                              alignSelf: 'flex-start',
+                              fontSize: '9px',
+                              fontWeight: '900',
+                              color: '#3b82f6',
+                              background: '#dbeafe',
+                              padding: '2px 8px',
+                              borderRadius: '6px',
+                              letterSpacing: '0.02em',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '3px'
+                            }}>
+                              🏷️ ノイミー学園クエストシリーズ
+                            </span>
+                            {/* 👑 サブタイトル（大見出し）：エモいタイトル */}
+                            <span style={{
+                              fontSize: '15px',
+                              fontWeight: '900',
+                              color: '#1e293b',
+                              letterSpacing: '-0.02em',
+                              lineHeight: '1.2',
+                              marginTop: '2px'
+                            }}>
+                              『ハワイアーンなリゾート地！』
+                            </span>
+                            {/* 📊 進行状況 */}
+                            <span style={{ fontSize: '9.5px', color: 'var(--text-muted)', fontWeight: '800', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                              🧭 進行状況: {uniqueCheckedCount} / {totalCount} 箇所 ({percent}%)
+                            </span>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            {isCompleted ? (
+                              <span style={{ fontSize: '10px', fontWeight: '900', color: '#3b82f6', background: '#ffffff', padding: '2px 8px', borderRadius: '9999px', border: '1px solid rgba(59,130,246,0.2)' }}>達成！</span>
+                            ) : (
+                              <ChevronRight className="w-4 h-4 text-slate-400" style={{ transform: hawaiiansMissionExpanded ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
+                            )}
+                          </div>
+                        </div>
+
+                        {/* アコーディオンの中身 */}
+                        {hawaiiansMissionExpanded && (
+                          <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', backgroundColor: '#ffffff' }}>
+                            {/* プログレスバー */}
+                            <div style={{ padding: '4px 6px 10px 6px' }}>
+                              <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '9999px', overflow: 'hidden' }}>
+                                <div style={{ width: `${percent}%`, height: '100%', background: 'linear-gradient(90deg, #60a5fa 0%, #3b82f6 100%)', transition: 'width 0.4s ease-out' }}></div>
+                              </div>
+                            </div>
+
+                            {/* スポットリスト */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                              {hawaiianSpots.map(spot => {
+                                const isSpotChecked = checkins.some(c => c.spot_id === spot.id);
+                                return (
+                                  <div 
+                                    key={spot.id} 
+                                    onClick={() => {
+                                      handleFocusSpotOnMap(spot);
+                                      setSelectedSpot(spot);
+                                      setRightPanelTab('detail');
+                                    }}
+                                    style={{
+                                      display: 'flex',
+                                      justifyContent: 'space-between',
+                                      alignItems: 'center',
+                                      padding: '8px 10px',
+                                      borderRadius: '10px',
+                                      background: isSpotChecked ? '#f0fdf4' : '#f8fafc',
+                                      border: isSpotChecked ? '1px solid rgba(74,222,128,0.2)' : '1px solid #f1f5f9',
+                                      cursor: 'pointer',
+                                      transition: 'all 0.2s'
+                                    }}
+                                  >
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                      <span style={{ fontSize: '11px', fontWeight: '800', color: isSpotChecked ? '#16a34a' : '#334155' }}>
+                                        {spot.name}
+                                      </span>
+                                      <span style={{ fontSize: '8px', color: '#94a3b8' }}>
+                                        📍 福島県いわき市
+                                      </span>
+                                    </div>
+                                    <div>
+                                      {isSpotChecked ? (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#dcfce7', color: '#16a34a', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '900' }}>
+                                          行った！
+                                        </div>
+                                      ) : (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#ffffff', color: '#94a3b8', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '800', border: '1px solid #e2e8f0' }}>
+                                          未チェック
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+
+                            {/* 称号獲得の通知報酬枠 */}
+                            <div style={{
+                              marginTop: '8px',
+                              padding: '10px',
+                              borderRadius: '10px',
+                              background: isCompleted ? 'linear-gradient(135deg, rgba(59,130,246,0.06) 0%, rgba(37,99,235,0.06) 100%)' : '#f8fafc',
+                              border: isCompleted ? '1px dashed #3b82f6' : '1px dashed #cbd5e1',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '8px'
+                            }}>
+                              <div style={{
+                                width: '28px',
+                                height: '28px',
+                                borderRadius: '50%',
+                                background: isCompleted ? 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)' : '#e2e8f0',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                flexShrink: 0
+                              }}>
+                                <Award className="w-4 h-4 text-white" />
+                              </div>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                <span style={{ fontSize: '10px', fontWeight: '900', color: isCompleted ? '#2563eb' : '#64748b' }}>称号報酬: 常夏のハワイアンズ</span>
+                                <span style={{ fontSize: '8px', color: '#94a3b8' }}>
+                                  {isCompleted ? '🎉 常夏のハワイアンズの称号を獲得！マイページでバッジが輝いています。' : 'スパリゾートハワイアンズを訪れてチェックインすると「常夏のハワイアンズ」の称号が解放されます。'}
+                                </span>
+                              </div>
+                            </div>
+
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
+
+                  {/* 🌟 ノイミー学園クエストシリーズ：ミッションB (超特Q北海道) */}
+                  {(() => {
+                    const hokkaidoSpots = spots.filter(s => s.tags && s.tags.includes("超特Q北海道巡礼"));
+                    const checkedHokkaidoSpots = checkins.filter(c => {
+                      const spot = spots.find(s => s.id === c.spot_id);
+                      return spot && spot.tags && spot.tags.includes("超特Q北海道巡礼");
+                    });
+                    const uniqueCheckedCount = new Set(checkedHokkaidoSpots.map(c => c.spot_id)).size;
+                    const totalCount = hokkaidoSpots.length || 4;
+                    const percent = Math.min(100, Math.round((uniqueCheckedCount / totalCount) * 100));
+                    const isCompleted = uniqueCheckedCount === totalCount;
+
+                    return (
+                      <div className="pop-panel" style={{
+                        borderRadius: '16px',
+                        border: '2px solid #e2e8f0',
+                        overflow: 'hidden',
+                        boxShadow: 'var(--shadow-panel)',
+                        marginTop: '16px'
+                      }}>
+                        {/* アコーディオンヘッダー */}
+                        <div 
+                          onClick={() => setHokkaidoMissionExpanded(!hokkaidoMissionExpanded)}
+                          style={{
+                            padding: '16px',
+                            background: 'linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%)', // 爽やかなパープル系グラデーション
+                            borderBottom: '1px solid #e2e8f0',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                            {/* 🏷️ メインタイトル（小見出し）：バッジ風装飾 */}
+                            <span style={{
+                              alignSelf: 'flex-start',
+                              fontSize: '9px',
+                              fontWeight: '900',
+                              color: '#7c3aed',
+                              background: '#ede9fe',
+                              padding: '2px 8px',
+                              borderRadius: '6px',
+                              letterSpacing: '0.02em',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '3px'
+                            }}>
+                              🏷️ ノイミー学園クエストシリーズ
+                            </span>
+                            {/* 👑 サブタイトル（大見出し）：エモいタイトル */}
+                            <span style={{
+                              fontSize: '15px',
+                              fontWeight: '900',
+                              color: '#1e293b',
+                              letterSpacing: '-0.02em',
+                              lineHeight: '1.2',
+                              marginTop: '2px'
+                            }}>
+                              『超特Qな雪遊び！？』
+                            </span>
+                            {/* 📊 進行状況 */}
+                            <span style={{ fontSize: '9.5px', color: 'var(--text-muted)', fontWeight: '800', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                              🧭 進行状況: {uniqueCheckedCount} / {totalCount} 箇所 ({percent}%)
+                            </span>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            {isCompleted ? (
+                              <span style={{ fontSize: '10px', fontWeight: '900', color: '#7c3aed', background: '#ffffff', padding: '2px 8px', borderRadius: '9999px', border: '1px solid rgba(124,58,237,0.2)' }}>達成！</span>
+                            ) : (
+                              <ChevronRight className="w-4 h-4 text-slate-400" style={{ transform: hokkaidoMissionExpanded ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
+                            )}
+                          </div>
+                        </div>
+
+                        {/* アコーディオンの中身 */}
+                        {hokkaidoMissionExpanded && (
+                          <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', backgroundColor: '#ffffff' }}>
+                            {/* プログレスバー */}
+                            <div style={{ padding: '4px 6px 10px 6px' }}>
+                              <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '9999px', overflow: 'hidden' }}>
+                                <div style={{ width: `${percent}%`, height: '100%', background: 'linear-gradient(90deg, #a78bfa 0%, #7c3aed 100%)', transition: 'width 0.4s ease-out' }}></div>
+                              </div>
+                            </div>
+
+                            {/* スポットリスト */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                              {hokkaidoSpots.map(spot => {
+                                const isSpotChecked = checkins.some(c => c.spot_id === spot.id);
+                                return (
+                                  <div 
+                                    key={spot.id} 
+                                    onClick={() => {
+                                      handleFocusSpotOnMap(spot);
+                                      setSelectedSpot(spot);
+                                      setRightPanelTab('detail');
+                                    }}
+                                    style={{
+                                      display: 'flex',
+                                      justifyContent: 'space-between',
+                                      alignItems: 'center',
+                                      padding: '8px 10px',
+                                      borderRadius: '10px',
+                                      background: isSpotChecked ? '#f0fdf4' : '#f8fafc',
+                                      border: isSpotChecked ? '1px solid rgba(74,222,128,0.2)' : '1px solid #f1f5f9',
+                                      cursor: 'pointer',
+                                      transition: 'all 0.2s'
+                                    }}
+                                  >
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                      <span style={{ fontSize: '11px', fontWeight: '800', color: isSpotChecked ? '#16a34a' : '#334155' }}>
+                                        {spot.name}
+                                      </span>
+                                      <span style={{ fontSize: '8px', color: '#94a3b8' }}>
+                                        {spot.name === 'IORI' ? '📍 北海道千歳市' : '📍 北海道札幌市'}
+                                      </span>
+                                    </div>
+                                    <div>
+                                      {isSpotChecked ? (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#dcfce7', color: '#16a34a', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '900' }}>
+                                          行った！
+                                        </div>
+                                      ) : (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#ffffff', color: '#94a3b8', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '800', border: '1px solid #e2e8f0' }}>
+                                          未チェック
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+
+                            {/* 称号獲得の通知報酬枠 */}
+                            <div style={{
+                              marginTop: '8px',
+                              padding: '10px',
+                              borderRadius: '10px',
+                              background: isCompleted ? 'linear-gradient(135deg, rgba(124,58,237,0.06) 0%, rgba(109,40,217,0.06) 100%)' : '#f8fafc',
+                              border: isCompleted ? '1px dashed #7c3aed' : '1px dashed #cbd5e1',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '8px'
+                            }}>
+                              <div style={{
+                                width: '28px',
+                                height: '28px',
+                                borderRadius: '50%',
+                                background: isCompleted ? 'linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%)' : '#e2e8f0',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                flexShrink: 0
+                              }}>
+                                <Award className="w-4 h-4 text-white" />
+                              </div>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                <span style={{ fontSize: '10px', fontWeight: '900', color: isCompleted ? '#6d28d9' : '#64748b' }}>称号報酬: 超特Qなクイズ王</span>
+                                <span style={{ fontSize: '8px', color: '#94a3b8' }}>
+                                  {isCompleted ? '🎉 超特Qなクイズ王の称号を獲得！マイページでバッジが輝いています。' : '「超特Q 北海道行き」の聖地4箇所すべてを巡ると「超特Qなクイズ王」の称号が解放されます。'}
                                 </span>
                               </div>
                             </div>
