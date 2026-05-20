@@ -32,10 +32,17 @@ export interface Notice {
 
 export const APP_NOTICES: Notice[] = [
   {
+    id: 'notice-20260520-sorting-filter',
+    date: '2026/05/20',
+    title: '📍 聖地リストの都道府県絞り込み＆ソート機能・お知らせ通知UIをリリース！',
+    content: '【聖地リストがさらに便利に！】\n・都道府県/エリア別フィルター：東京都、神奈川県、千葉県など、聖地が存在するエリアで絞り込みができるようになりました！\n・便利な並び替え（ソート）：五十音順（曲名順）やカレンダー順（新しい順/古い順）の並び替えに対応！目的の聖地がスムーズに見つかります。\n\n【お知らせ通知UIの導入】\n・新着情報がある場合、モバイルメニューやフッターに「赤い通知バッジ」が表示されるようになりました！お知らせを開く（モーダル表示）と自動的に既読になりバッジが消去されます。',
+    type: 'update'
+  },
+  {
     id: 'notice-20260520-recipe',
     date: '2026/05/20',
     title: '🎉 11箇所の新スポットと「笑顔のレシピ」巡礼ミッションが追加されました！',
-    content: '【新スポット追加】\n・スタジオゼロノアール (千葉県木更津市)\n・ロックハート城 (群馬県)\n・東京ドーム / メッセモール等 『笑顔のレシピ』関連聖地6箇所\n・サンタモニカクレープ原宿店 / MIYASHITA PARK等 『絶対アイドル辞めないで』ジャケット撮影地\n・その他、多数のMV撮影地が追加されました！\n\n【笑顔のレシピ 巡礼ミッション始動！】\n指定の聖地を巡ってチェックインを記録すると、限定の称号「笑顔のレシピ料理人」が獲得できます！ぜひ挑戦してみてください！',
+    content: '【新スポット追加】\n・スタジオゼロノアール (千葉県木更津市)\n・ロックハート城 (群馬県)\n・東京ドーム / メッセモール等 『笑顔のレシピ』関連聖地6箇所\n・サンタモニカクレープ原宿店 / MIYASHITA PARK等 『絶対アイドル辞めないで』ジャケット撮影地\n・その他、多数のMV撮影地が追加されました！\n\n【笑顔のレシピ 巡礼ミッション始動！】\n指定 of 聖地を巡ってチェックインを記録すると、限定の称号「笑顔のレシピ料理人」が獲得できます！ぜひ挑戦してみてください！',
     type: 'update'
   },
   {
@@ -136,6 +143,8 @@ export default function App() {
   const [listSearchKeyword, setListSearchKeyword] = useState<string>('');
   const [listSearchGroup, setListSearchGroup] = useState<string>('すべて');
   const [listLimit, setListLimit] = useState<number>(20);
+  const [listSelectedArea, setListSelectedArea] = useState<string>('すべて');
+  const [listSortKey, setListSortKey] = useState<'default' | 'song-asc' | 'date-desc' | 'date-asc'>('default');
 
   // 🚀 新着お知らせの既読未読＆自動ポップアップ判定
   useEffect(() => {
@@ -146,11 +155,17 @@ export default function App() {
       setHasUnreadNotices(true);
       setWelcomeNotice(latestNotice);
       setShowWelcomeNoticeModal(true);
-      // ポップアップを表示した時点で既読にします
-      localStorage.setItem('tdm_last_read_notice', latestNotice.id);
-      setHasUnreadNotices(false);
     }
   }, []);
+
+  // 新着お知らせのポップアップを閉じる際の既読処理ヘルパー
+  const handleCloseWelcomeNotice = () => {
+    setShowWelcomeNoticeModal(false);
+    setHasUnreadNotices(false);
+    if (welcomeNotice) {
+      localStorage.setItem('tdm_last_read_notice', welcomeNotice.id);
+    }
+  };
 
   // 📋 リストから「地図で見る」を押した際のアクション
   const handleViewOnMap = (spot: Spot) => {
@@ -180,12 +195,37 @@ export default function App() {
     }
   }, [activeView]);
 
-  // 📋 聖地リスト用フィルタリング
+  // 📋 聖地リスト用フィルタリング（都道府県の動的抽出と多重ソートを適用）
+  // 📍 聖地データの都道府県（大まかなエリア）の動的抽出ヘルパー
+  const extractArea = (spot: Spot): string => {
+    const areaMatch = spot.description.match(/(東京都|神奈川県|千葉県|埼玉県|群馬県|栃木県|茨城県|山梨県|静岡県|沖縄県|高知県|福島県|山口県|セブ島|韓国)/);
+    if (areaMatch) return areaMatch[0];
+    if (spot.name.includes('（')) {
+      const innerMatch = spot.name.match(/（(.*?)）/);
+      if (innerMatch) return innerMatch[1];
+    }
+    return 'その他';
+  };
+
+  // データベース上の登録聖地から、存在する都道府県/エリアを動的に抽出
+  const availableAreas = Array.from(new Set(spots.map(extractArea))).filter(a => a !== 'その他');
+  availableAreas.push('その他');
+
+  // 📋 聖地リスト用フィルターリング＆並べ替えソート処理
   const filteredListSpots = spots.filter(spot => {
     // グループ別
     if (listSearchGroup !== 'すべて' && spot.group !== listSearchGroup) {
       return false;
     }
+    
+    // 都道府県/エリア別
+    if (listSelectedArea !== 'すべて') {
+      const spotArea = extractArea(spot);
+      if (spotArea !== listSelectedArea) {
+        return false;
+      }
+    }
+    
     // キーワード検索（名称、説明、カテゴリ、タグ、関連曲）
     if (listSearchKeyword.trim()) {
       const keyword = listSearchKeyword.toLowerCase();
@@ -202,7 +242,28 @@ export default function App() {
     return true;
   });
 
-  const visibleSpots = filteredListSpots.slice(0, listLimit);
+  // ソートロジックの適用
+  const sortedListSpots = [...filteredListSpots].sort((a, b) => {
+    if (listSortKey === 'song-asc') {
+      const titleA = a.reward_title || '';
+      const titleB = b.reward_title || '';
+      return titleA.localeCompare(titleB, 'ja');
+    }
+    if (listSortKey === 'date-desc') {
+      const dateA = a.memorial_date ? new Date(a.memorial_date).getTime() : 0;
+      const dateB = b.memorial_date ? new Date(b.memorial_date).getTime() : 0;
+      return dateB - dateA; // 新しい順
+    }
+    if (listSortKey === 'date-asc') {
+      const dateA = a.memorial_date ? new Date(a.memorial_date).getTime() : 0;
+      const dateB = b.memorial_date ? new Date(b.memorial_date).getTime() : 0;
+      return dateA - dateB; // 古い順
+    }
+    return 0; // デフォルト（登録順）
+  });
+
+  const visibleSpots = sortedListSpots.slice(0, listLimit);
+  
   const [editActiveTitle, setEditActiveTitle] = useState<string>('');
 
   // 🔍 検索・絞り込み用ステート
@@ -1209,10 +1270,24 @@ ${window.location.origin + window.location.pathname}
               justifyContent: 'center',
               boxShadow: '0 2px 8px rgba(0,0,0,0.02)',
               transition: 'all 0.2s',
-              gap: '6px'
+              gap: '6px',
+              position: 'relative'
             }}
           >
             <Menu size={18} />
+            {hasUnreadNotices && (
+              <span style={{
+                position: 'absolute',
+                top: '-2px',
+                right: '-2px',
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
+                background: '#ef4444',
+                border: '2px solid #ffffff',
+                boxShadow: '0 0 6px rgba(239,68,68,0.4)'
+              }}></span>
+            )}
           </button>
 
           <div className="group-badges-container" style={{ display: 'flex', alignItems: 'center' }}>
@@ -1459,6 +1534,71 @@ ${window.location.origin + window.location.pathname}
                       ✕
                     </button>
                   )}
+                </div>
+
+                {/* 📍 都道府県フィルター ＆ 📋 ソート並べ替え */}
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  {/* 都道府県セレクト */}
+                  <div style={{ flex: 1, position: 'relative' }}>
+                    <select
+                      value={listSelectedArea}
+                      onChange={(e) => {
+                        setListSelectedArea(e.target.value);
+                        setListLimit(20);
+                      }}
+                      style={{
+                        width: '100%',
+                        padding: '8px 24px 8px 10px',
+                        borderRadius: '10px',
+                        border: '2px solid #e2e8f0',
+                        fontSize: '11px',
+                        fontWeight: 'bold',
+                        color: '#475569',
+                        outline: 'none',
+                        background: '#ffffff',
+                        cursor: 'pointer',
+                        appearance: 'none',
+                        WebkitAppearance: 'none'
+                      }}
+                    >
+                      <option value="すべて">📍 すべてのエリア</option>
+                      {availableAreas.map(area => (
+                        <option key={area} value={area}>📍 {area}</option>
+                      ))}
+                    </select>
+                    <div style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', fontSize: '9px', color: '#94a3b8' }}>▼</div>
+                  </div>
+
+                  {/* ソートセレクト */}
+                  <div style={{ flex: 1, position: 'relative' }}>
+                    <select
+                      value={listSortKey}
+                      onChange={(e) => {
+                        setListSortKey(e.target.value as any);
+                        setListLimit(20);
+                      }}
+                      style={{
+                        width: '100%',
+                        padding: '8px 24px 8px 10px',
+                        borderRadius: '10px',
+                        border: '2px solid #e2e8f0',
+                        fontSize: '11px',
+                        fontWeight: 'bold',
+                        color: '#475569',
+                        outline: 'none',
+                        background: '#ffffff',
+                        cursor: 'pointer',
+                        appearance: 'none',
+                        WebkitAppearance: 'none'
+                      }}
+                    >
+                      <option value="default">✨ デフォルト順</option>
+                      <option value="song-asc">🎵 曲名五十音順</option>
+                      <option value="date-desc">📅 新しい順 (降順)</option>
+                      <option value="date-asc">📅 古い順 (昇順)</option>
+                    </select>
+                    <div style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', fontSize: '9px', color: '#94a3b8' }}>▼</div>
+                  </div>
                 </div>
 
                 {/* グループ別フィルタータブ */}
@@ -3515,6 +3655,53 @@ ${window.location.origin + window.location.pathname}
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                gap: '8px',
+                flexWrap: 'wrap',
+                marginBottom: '4px'
+              }}>
+                {/* 🔔 アプリお知らせ・更新情報リンク */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowNoticeHistoryModal(true);
+                    setHasUnreadNotices(false);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    fontSize: '9px',
+                    color: 'var(--text-main)',
+                    fontWeight: '900',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    padding: '3px 8px',
+                    borderRadius: '8px',
+                    backgroundColor: hasUnreadNotices ? '#fee2e2' : '#f1f5f9',
+                    boxShadow: hasUnreadNotices ? '0 0 6px rgba(239,68,68,0.2)' : 'none',
+                    transition: 'all 0.2s',
+                    position: 'relative'
+                  }}
+                >
+                  <span>🔔 お知らせ・更新情報</span>
+                  {hasUnreadNotices && (
+                    <span style={{
+                      width: '5px',
+                      height: '5px',
+                      borderRadius: '50%',
+                      background: '#ef4444',
+                      display: 'inline-block'
+                    }}></span>
+                  )}
+                </button>
+              </div>
+
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
                 gap: '10px',
                 flexWrap: 'wrap'
               }}>
@@ -3770,7 +3957,7 @@ ${window.location.origin + window.location.pathname}
           alignItems: 'center',
           justifyContent: 'center',
           padding: '16px'
-        }} onClick={() => setShowWelcomeNoticeModal(false)}>
+        }} onClick={handleCloseWelcomeNotice}>
           <div style={{
             width: '100%',
             maxWidth: '440px',
@@ -3793,7 +3980,7 @@ ${window.location.origin + window.location.pathname}
                 アップデート情報！
               </h3>
               <button
-                onClick={() => setShowWelcomeNoticeModal(false)}
+                onClick={handleCloseWelcomeNotice}
                 style={{
                   position: 'absolute',
                   top: '16px',
@@ -3858,7 +4045,7 @@ ${window.location.origin + window.location.pathname}
               </div>
 
               <button
-                onClick={() => setShowWelcomeNoticeModal(false)}
+                onClick={handleCloseWelcomeNotice}
                 style={{
                   width: '100%',
                   background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)',
