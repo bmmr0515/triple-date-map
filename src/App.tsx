@@ -32,6 +32,13 @@ export interface Notice {
 
 export const APP_NOTICES: Notice[] = [
   {
+    id: 'notice-20260520-fighter-kyunkawa',
+    date: '2026/05/20',
+    title: '🎉 【新ミッション】「排他的ファイター」「きゅんかわ人生」巡礼ミッションが同時開放！',
+    content: '【新ミッション＆聖地追加のお知らせ】\n≠MEおよび≒JOYの人気楽曲から、計8箇所の新規スポットデータが追加され、2つの巡礼ミッションが同時始動しました！\n\n・ミッションA：『輝け、僕の世界。』 (排彼のファイター)\n　├ 対象スポット：芸能花伝舎、GOBLIN. 海岸HALL店、スカパー東京メディアセンター\n　└ 報酬称号：孤高のファイター\n・ミッションB：『きゅんかわアイドルどこですか!?』 (きゅんかわ人生)\n　├ 対象スポット：パティオス18番街、パティオス12番街、打瀬３丁目公園、エムベイポイント幕張 25階円卓会議室\n　└ 報酬称号：きゅんかわマスター\n\nさらに、『はんぶんこクリスマス』MV撮影地の「Studio vence BAYSIDE」（新木場）も新規登録！\nぜひチェックインして限定称号を獲得しましょう！',
+    type: 'update'
+  },
+  {
     id: 'notice-20260520-noimie-school-quest',
     date: '2026/05/20',
     title: '🎉 【新ミッション】ノイミー学園クエストシリーズ始動！ハワイアンズ＆北海道の聖地5箇所を追加！',
@@ -126,6 +133,8 @@ export default function App() {
   const [recipeMissionExpanded, setRecipeMissionExpanded] = useState<boolean>(true);
   const [hawaiiansMissionExpanded, setHawaiiansMissionExpanded] = useState<boolean>(true);
   const [hokkaidoMissionExpanded, setHokkaidoMissionExpanded] = useState<boolean>(true);
+  const [fighterMissionExpanded, setFighterMissionExpanded] = useState<boolean>(true);
+  const [kyunkawaMissionExpanded, setKyunkawaMissionExpanded] = useState<boolean>(true);
 
   // 📱 スマホレスポンシブ判定用ステートとリサイズ監視
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
@@ -420,6 +429,24 @@ export default function App() {
     if (hokkaidoSpots.length > 0 && isAllChecked(hokkaidoSpots)) {
       if (!currentAcquired.includes(hokkaidoTitle) && !newlyEarnedTitles.includes(hokkaidoTitle)) {
         newlyEarnedTitles.push(hokkaidoTitle);
+      }
+    }
+
+    // 9. 孤高のファイター (3箇所)
+    const fighterSpots = spots.filter(s => s.tags && (s.tags.includes("排彼のファイター巡礼") || s.tags.includes("排彼のファイター巡礼") || s.tags.includes("排彼のファイター巡礼") || s.tags.includes("排他的ファイター巡礼")));
+    const fighterTitle = "孤高のファイター";
+    if (fighterSpots.length > 0 && isAllChecked(fighterSpots)) {
+      if (!currentAcquired.includes(fighterTitle) && !newlyEarnedTitles.includes(fighterTitle)) {
+        newlyEarnedTitles.push(fighterTitle);
+      }
+    }
+
+    // 10. きゅんかわマスター (4箇所)
+    const kyunkawaSpots = spots.filter(s => s.tags && s.tags.includes("きゅんかわ人生巡礼"));
+    const kyunkawaTitle = "きゅんかわマスター";
+    if (kyunkawaSpots.length > 0 && isAllChecked(kyunkawaSpots)) {
+      if (!currentAcquired.includes(kyunkawaTitle) && !newlyEarnedTitles.includes(kyunkawaTitle)) {
+        newlyEarnedTitles.push(kyunkawaTitle);
       }
     }
 
@@ -2774,6 +2801,346 @@ ${window.location.origin + window.location.pathname}
                                 <span style={{ fontSize: '10px', fontWeight: '900', color: isCompleted ? '#6d28d9' : '#64748b' }}>称号報酬: 超特Qなクイズ王</span>
                                 <span style={{ fontSize: '8px', color: '#94a3b8' }}>
                                   {isCompleted ? '🎉 超特Qなクイズ王の称号を獲得！マイページでバッジが輝いています。' : '「超特Q 北海道行き」の聖地4箇所すべてを巡ると「超特Qなクイズ王」の称号が解放されます。'}
+                                </span>
+                              </div>
+                            </div>
+
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
+
+                  {/* 🌟 排他的ファイター 巡礼ミッション */}
+                  {(() => {
+                    const fighterSpots = spots.filter(s => s.tags && (s.tags.includes("排彼のファイター巡礼") || s.tags.includes("排彼のファイター巡礼") || s.tags.includes("排彼のファイター巡礼") || s.tags.includes("排他的ファイター巡礼")));
+                    const checkedFighterSpots = checkins.filter(c => {
+                      const spot = spots.find(s => s.id === c.spot_id);
+                      return spot && spot.tags && (spot.tags.includes("排彼のファイター巡礼") || spot.tags.includes("排他的ファイター巡礼"));
+                    });
+                    const uniqueCheckedCount = new Set(checkedFighterSpots.map(c => c.spot_id)).size;
+                    const totalCount = fighterSpots.length || 3;
+                    const percent = Math.min(100, Math.round((uniqueCheckedCount / totalCount) * 100));
+                    const isCompleted = uniqueCheckedCount === totalCount;
+
+                    return (
+                      <div className="pop-panel" style={{
+                        borderRadius: '16px',
+                        border: '2px solid #e2e8f0',
+                        overflow: 'hidden',
+                        boxShadow: 'var(--shadow-panel)',
+                        marginTop: '16px'
+                      }}>
+                        {/* アコーディオンヘッダー */}
+                        <div 
+                          onClick={() => setFighterMissionExpanded(!fighterMissionExpanded)}
+                          style={{
+                            padding: '16px',
+                            background: 'linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%)', // クールで少し熱いピンク・レッド系グラデーション
+                            borderBottom: '1px solid #e2e8f0',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                            {/* 🏷️ メインタイトル（小見出し）：バッジ風装飾 */}
+                            <span style={{
+                              alignSelf: 'flex-start',
+                              fontSize: '9px',
+                              fontWeight: '900',
+                              color: '#e11d48',
+                              background: '#ffe4e6',
+                              padding: '2px 8px',
+                              borderRadius: '6px',
+                              letterSpacing: '0.02em',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '3px'
+                            }}>
+                              🏷️ 排他的ファイター 巡礼ミッション
+                            </span>
+                            {/* 👑 サブタイトル（大見出し）：エモいタイトル */}
+                            <span style={{
+                              fontSize: '15px',
+                              fontWeight: '900',
+                              color: '#1e293b',
+                              letterSpacing: '-0.02em',
+                              lineHeight: '1.2',
+                              marginTop: '2px'
+                            }}>
+                              『輝け、僕の世界。』
+                            </span>
+                            {/* 📊 進行状況 */}
+                            <span style={{ fontSize: '9.5px', color: 'var(--text-muted)', fontWeight: '800', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                              🧭 進行状況: {uniqueCheckedCount} / {totalCount} 箇所 ({percent}%)
+                            </span>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            {isCompleted ? (
+                              <span style={{ fontSize: '10px', fontWeight: '900', color: '#e11d48', background: '#ffffff', padding: '2px 8px', borderRadius: '9999px', border: '1px solid rgba(225,29,72,0.2)' }}>達成！</span>
+                            ) : (
+                              <ChevronRight className="w-4 h-4 text-slate-400" style={{ transform: fighterMissionExpanded ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
+                            )}
+                          </div>
+                        </div>
+
+                        {/* アコーディオンの中身 */}
+                        {fighterMissionExpanded && (
+                          <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', backgroundColor: '#ffffff' }}>
+                            {/* プログレスバー */}
+                            <div style={{ padding: '4px 6px 10px 6px' }}>
+                              <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '9999px', overflow: 'hidden' }}>
+                                <div style={{ width: `${percent}%`, height: '100%', background: 'linear-gradient(90deg, #fda4af 0%, #f43f5e 100%)', transition: 'width 0.4s ease-out' }}></div>
+                              </div>
+                            </div>
+
+                            {/* スポットリスト */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                              {fighterSpots.map(spot => {
+                                const isSpotChecked = checkins.some(c => c.spot_id === spot.id);
+                                return (
+                                  <div 
+                                    key={spot.id} 
+                                    onClick={() => {
+                                      handleFocusSpotOnMap(spot);
+                                      setSelectedSpot(spot);
+                                      setRightPanelTab('detail');
+                                    }}
+                                    style={{
+                                      display: 'flex',
+                                      justifyContent: 'space-between',
+                                      alignItems: 'center',
+                                      padding: '8px 10px',
+                                      borderRadius: '10px',
+                                      background: isSpotChecked ? '#f0fdf4' : '#f8fafc',
+                                      border: isSpotChecked ? '1px solid rgba(74,222,128,0.2)' : '1px solid #f1f5f9',
+                                      cursor: 'pointer',
+                                      transition: 'all 0.2s'
+                                    }}
+                                  >
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                      <span style={{ fontSize: '11px', fontWeight: '800', color: isSpotChecked ? '#16a34a' : '#334155' }}>
+                                        {spot.name}
+                                      </span>
+                                      <span style={{ fontSize: '8px', color: '#94a3b8' }}>
+                                        {spot.name === '芸能花伝舎' ? '📍 東京都新宿区' : spot.name === 'GOBLIN. 海岸HALL店' ? '📍 東京都港区' : '📍 東京都江東区'}
+                                      </span>
+                                    </div>
+                                    <div>
+                                      {isSpotChecked ? (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#dcfce7', color: '#16a34a', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '900' }}>
+                                          行った！
+                                        </div>
+                                      ) : (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#ffffff', color: '#94a3b8', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '800', border: '1px solid #e2e8f0' }}>
+                                          未チェック
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+
+                            {/* 称号獲得の通知報酬枠 */}
+                            <div style={{
+                              marginTop: '8px',
+                              padding: '10px',
+                              borderRadius: '10px',
+                              background: isCompleted ? 'linear-gradient(135deg, rgba(244,63,94,0.06) 0%, rgba(225,29,72,0.06) 100%)' : '#f8fafc',
+                              border: isCompleted ? '1px dashed #f43f5e' : '1px dashed #cbd5e1',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '8px'
+                            }}>
+                              <div style={{
+                                width: '28px',
+                                height: '28px',
+                                borderRadius: '50%',
+                                background: isCompleted ? 'linear-gradient(135deg, #fda4af 0%, #f43f5e 100%)' : '#e2e8f0',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                flexShrink: 0
+                              }}>
+                                <Award className="w-4 h-4 text-white" />
+                              </div>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                <span style={{ fontSize: '10px', fontWeight: '900', color: isCompleted ? '#e11d48' : '#64748b' }}>称号報酬: 孤高のファイター</span>
+                                <span style={{ fontSize: '8px', color: '#94a3b8' }}>
+                                  {isCompleted ? '🎉 孤高のファイターの称号を獲得！マイページでバッジが輝いています。' : '「排他的ファイター」の聖地3箇所すべてを巡ると「孤高のファイター」の称号が解放されます。'}
+                                </span>
+                              </div>
+                            </div>
+
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
+
+                  {/* 🌟 きゅんかわ人生 巡礼ミッション */}
+                  {(() => {
+                    const kyunkawaSpots = spots.filter(s => s.tags && s.tags.includes("きゅんかわ人生巡礼"));
+                    const checkedKyunkawaSpots = checkins.filter(c => {
+                      const spot = spots.find(s => s.id === c.spot_id);
+                      return spot && spot.tags && spot.tags.includes("きゅんかわ人生巡礼");
+                    });
+                    const uniqueCheckedCount = new Set(checkedKyunkawaSpots.map(c => c.spot_id)).size;
+                    const totalCount = kyunkawaSpots.length || 4;
+                    const percent = Math.min(100, Math.round((uniqueCheckedCount / totalCount) * 100));
+                    const isCompleted = uniqueCheckedCount === totalCount;
+
+                    return (
+                      <div className="pop-panel" style={{
+                        borderRadius: '16px',
+                        border: '2px solid #e2e8f0',
+                        overflow: 'hidden',
+                        boxShadow: 'var(--shadow-panel)',
+                        marginTop: '16px'
+                      }}>
+                        {/* アコーディオンヘッダー */}
+                        <div 
+                          onClick={() => setKyunkawaMissionExpanded(!kyunkawaMissionExpanded)}
+                          style={{
+                            padding: '16px',
+                            background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)', // ≒JOYのイメージカラーでもある、爽やかで明るい黄緑・グリーン系グラデーション
+                            borderBottom: '1px solid #e2e8f0',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                            {/* 🏷️ メインタイトル（小見出し）：バッジ風装飾 */}
+                            <span style={{
+                              alignSelf: 'flex-start',
+                              fontSize: '9px',
+                              fontWeight: '900',
+                              color: '#16a34a',
+                              background: '#dcfce7',
+                              padding: '2px 8px',
+                              borderRadius: '6px',
+                              letterSpacing: '0.02em',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '3px'
+                            }}>
+                              🏷️ きゅんかわ人生 巡礼ミッション
+                            </span>
+                            {/* 👑 サブタイトル（大見出し）：エモいタイトル */}
+                            <span style={{
+                              fontSize: '15px',
+                              fontWeight: '900',
+                              color: '#1e293b',
+                              letterSpacing: '-0.02em',
+                              lineHeight: '1.2',
+                              marginTop: '2px'
+                            }}>
+                              『きゅんかわアイドルどこですか!?』
+                            </span>
+                            {/* 📊 進行状況 */}
+                            <span style={{ fontSize: '9.5px', color: 'var(--text-muted)', fontWeight: '800', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                              🧭 進行状況: {uniqueCheckedCount} / {totalCount} 箇所 ({percent}%)
+                            </span>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            {isCompleted ? (
+                              <span style={{ fontSize: '10px', fontWeight: '900', color: '#16a34a', background: '#ffffff', padding: '2px 8px', borderRadius: '9999px', border: '1px solid rgba(22,163,74,0.2)' }}>達成！</span>
+                            ) : (
+                              <ChevronRight className="w-4 h-4 text-slate-400" style={{ transform: kyunkawaMissionExpanded ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
+                            )}
+                          </div>
+                        </div>
+
+                        {/* アコーディオンの中身 */}
+                        {kyunkawaMissionExpanded && (
+                          <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', backgroundColor: '#ffffff' }}>
+                            {/* プログレスバー */}
+                            <div style={{ padding: '4px 6px 10px 6px' }}>
+                              <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '9999px', overflow: 'hidden' }}>
+                                <div style={{ width: `${percent}%`, height: '100%', background: 'linear-gradient(90deg, #4ade80 0%, #16a34a 100%)', transition: 'width 0.4s ease-out' }}></div>
+                              </div>
+                            </div>
+
+                            {/* スポットリスト */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                              {kyunkawaSpots.map(spot => {
+                                const isSpotChecked = checkins.some(c => c.spot_id === spot.id);
+                                return (
+                                  <div 
+                                    key={spot.id} 
+                                    onClick={() => {
+                                      handleFocusSpotOnMap(spot);
+                                      setSelectedSpot(spot);
+                                      setRightPanelTab('detail');
+                                    }}
+                                    style={{
+                                      display: 'flex',
+                                      justifyContent: 'space-between',
+                                      alignItems: 'center',
+                                      padding: '8px 10px',
+                                      borderRadius: '10px',
+                                      background: isSpotChecked ? '#f0fdf4' : '#f8fafc',
+                                      border: isSpotChecked ? '1px solid rgba(74,222,128,0.2)' : '1px solid #f1f5f9',
+                                      cursor: 'pointer',
+                                      transition: 'all 0.2s'
+                                    }}
+                                  >
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                      <span style={{ fontSize: '11px', fontWeight: '800', color: isSpotChecked ? '#16a34a' : '#334155' }}>
+                                        {spot.name}
+                                      </span>
+                                      <span style={{ fontSize: '8px', color: '#94a3b8' }}>
+                                        📍 千葉県千葉市美浜区
+                                      </span>
+                                    </div>
+                                    <div>
+                                      {isSpotChecked ? (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#dcfce7', color: '#16a34a', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '900' }}>
+                                          行った！
+                                        </div>
+                                      ) : (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#ffffff', color: '#94a3b8', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '800', border: '1px solid #e2e8f0' }}>
+                                          未チェック
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+
+                            {/* 称号獲得の通知報酬枠 */}
+                            <div style={{
+                              marginTop: '8px',
+                              padding: '10px',
+                              borderRadius: '10px',
+                              background: isCompleted ? 'linear-gradient(135deg, rgba(74,222,128,0.06) 0%, rgba(22,163,74,0.06) 100%)' : '#f8fafc',
+                              border: isCompleted ? '1px dashed #16a34a' : '1px dashed #cbd5e1',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '8px'
+                            }}>
+                              <div style={{
+                                width: '28px',
+                                height: '28px',
+                                borderRadius: '50%',
+                                background: isCompleted ? 'linear-gradient(135deg, #4ade80 0%, #16a34a 100%)' : '#e2e8f0',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                flexShrink: 0
+                              }}>
+                                <Award className="w-4 h-4 text-white" />
+                              </div>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                <span style={{ fontSize: '10px', fontWeight: '900', color: isCompleted ? '#16a34a' : '#64748b' }}>称号報酬: きゅんかわマスター</span>
+                                <span style={{ fontSize: '8px', color: '#94a3b8' }}>
+                                  {isCompleted ? '🎉 きゅんかわマスターの称号を獲得！マイページでバッジが輝いています。' : '「きゅんかわ人生」の聖地4箇所すべてを巡ると「きゅんかわマスター」の称号が解放されます。'}
                                 </span>
                               </div>
                             </div>
