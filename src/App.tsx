@@ -564,6 +564,16 @@ export default function App() {
 
     if (clusterGroup) {
       clusterGroupRef.current = clusterGroup;
+      
+      // 🌟 クラスタクリック時にズームインさせる処理を明示的にバインドし、縮小・ズームアウトバグを根絶します
+      clusterGroup.on('clusterclick', (a: any) => {
+        const bounds = a.layer.getBounds();
+        map.fitBounds(bounds, {
+          maxZoom: 16, // 近づきすぎや広がりすぎを防ぐため、最適拡大率を16に制限します
+          animate: true,
+          padding: [30, 30] // マーカーが画面端に隠れないようパディングを付与
+        });
+      });
     }
 
     // 新たにフィルタリングされたマーカーを追加
@@ -576,7 +586,7 @@ export default function App() {
         .on('click', () => {
           setSelectedSpot(spot);
           setRightPanelTab('detail'); // ピンをタップしたら自動的に「詳細」タブを表示
-          map.setView([spot.latitude, spot.longitude], map.getZoom(), { animate: true });
+          map.setView([spot.latitude, spot.longitude], 16, { animate: true }); // 詳細を確認できるようズームレベル16に拡大
         });
 
       if (clusterGroup) {
@@ -804,7 +814,7 @@ ${window.location.origin + window.location.pathname}
     
     setTimeout(() => {
       if (mapRef.current) {
-        mapRef.current.setView([spot.latitude, spot.longitude], mapRef.current.getZoom(), { animate: true });
+        mapRef.current.setView([spot.latitude, spot.longitude], 16, { animate: true }); // 詳細を確認できるようズームレベル16に拡大
       }
     }, 150);
   };
