@@ -3392,9 +3392,13 @@ ${window.location.origin + window.location.pathname}
                   if (res.success) {
                     setShowAuthModal(false);
                     alert("🎉 X (Twitter) アカウントでの認証に成功しました！");
+                  } else {
+                    console.error("X Auth Error Details:", res.error);
+                    setAuthError(res.error || "X認証に失敗しました。");
                   }
-                } catch (err) {
-                  setAuthError("X認証に失敗しました。");
+                } catch (err: any) {
+                  console.error("X Auth Exception:", err);
+                  setAuthError(err.message || "X認証中にエラーが発生しました。");
                 } finally {
                   setIsAuthLoading(false);
                 }
