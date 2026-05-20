@@ -559,7 +559,8 @@ export default function App() {
     const clusterGroup = useClustering ? L.markerClusterGroup({
       showCoverageOnHover: false,
       maxClusterRadius: 40,
-      spiderfyOnMaxZoom: true
+      spiderfyOnMaxZoom: true,
+      zoomToBoundsOnClick: false // 🌟 デフォルトの自動ズームクリックを完全に無効化し、競合を完全に根絶します
     }) : null;
 
     if (clusterGroup) {
@@ -568,10 +569,13 @@ export default function App() {
       // 🌟 クラスタクリック時にズームインさせる処理を明示的にバインドし、縮小・ズームアウトバグを根絶します
       clusterGroup.on('clusterclick', (a: any) => {
         const bounds = a.layer.getBounds();
+        const currentZoom = map.getZoom();
+        
+        // 既に十分ズームイン（16以上）している状態であれば、ズームアウトさせず現在の詳細ズームを維持してフィットさせます
         map.fitBounds(bounds, {
-          maxZoom: 16, // 近づきすぎや広がりすぎを防ぐため、最適拡大率を16に制限します
+          maxZoom: Math.max(currentZoom, 16),
           animate: true,
-          padding: [30, 30] // マーカーが画面端に隠れないようパディングを付与
+          padding: [30, 30]
         });
       });
     }
@@ -586,7 +590,10 @@ export default function App() {
         .on('click', () => {
           setSelectedSpot(spot);
           setRightPanelTab('detail'); // ピンをタップしたら自動的に「詳細」タブを表示
-          map.setView([spot.latitude, spot.longitude], 16, { animate: true }); // 詳細を確認できるようズームレベル16に拡大
+          
+          // 既にズームイン（16以上）している状態でピンを押しても、ズームレベルを下げず（動かさず）に滑らかに中央移動のみ行います
+          const currentZoom = map.getZoom();
+          map.setView([spot.latitude, spot.longitude], Math.max(currentZoom, 16), { animate: true });
         });
 
       if (clusterGroup) {
@@ -814,7 +821,8 @@ ${window.location.origin + window.location.pathname}
     
     setTimeout(() => {
       if (mapRef.current) {
-        mapRef.current.setView([spot.latitude, spot.longitude], 16, { animate: true }); // 詳細を確認できるようズームレベル16に拡大
+        const currentZoom = mapRef.current.getZoom();
+        mapRef.current.setView([spot.latitude, spot.longitude], Math.max(currentZoom, 16), { animate: true }); // 既にズームインしていればそのまま維持
       }
     }, 150);
   };
