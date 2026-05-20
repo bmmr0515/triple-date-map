@@ -198,6 +198,16 @@ export default function App() {
     localStorage.getItem('tdm_shokori_started') === 'true'
   );
 
+  // 🎓 チュートリアル（初回ウォークスルー）
+  const [showTutorial, setShowTutorial] = useState<boolean>(
+    localStorage.getItem('tdm_tutorial_done') !== 'true'
+  );
+  const [tutorialStep, setTutorialStep] = useState<number>(0);
+
+  // 💝 支援お願いポップアップ（ピンタップ累計カウント）
+  const [showSupportModal, setShowSupportModal] = useState<boolean>(false);
+
+
   // 🚀 新着お知らせの既読未読＆自動ポップアップ判定
   useEffect(() => {
     const lastReadId = localStorage.getItem('tdm_last_read_notice');
@@ -824,6 +834,18 @@ export default function App() {
           // 既にズームイン（16以上）している状態でピンを押しても、ズームレベルを下げず（動かさず）に滑らかに中央移動のみ行います
           const currentZoom = map.getZoom();
           map.setView([spot.latitude, spot.longitude], Math.max(currentZoom, 16), { animate: true });
+
+          // 💝 ピンタップ累計カウント → 3回・5回目で支援ポップアップ（1度きり）
+          const alreadyShown = localStorage.getItem('tdm_support_shown') === 'true';
+          if (!alreadyShown) {
+            const prev = parseInt(localStorage.getItem('tdm_pin_count') || '0', 10);
+            const next = prev + 1;
+            localStorage.setItem('tdm_pin_count', String(next));
+            if (next === 3 || next === 5) {
+              setShowSupportModal(true);
+              localStorage.setItem('tdm_support_shown', 'true');
+            }
+          }
         });
 
       if (clusterGroup) {
@@ -1330,7 +1352,98 @@ ${window.location.origin + window.location.pathname}
 
   return (
     <div className="app-container">
-      
+
+      {/* 🎓 初回チュートリアル ウォークスルー */}
+      {showTutorial && (() => {
+        const steps = [
+          {
+            emoji: '🗺️',
+            title: 'トリプルデートマップへようこそ！',
+            body: 'マップ上のピンをタップすると、その場所のMVをその場で再生して聖地を追体験できます。'
+          },
+          {
+            emoji: '📍',
+            title: '聖地に着いたらチェックイン！',
+            body: 'GPSを使ってチェックイン！実際に訪れた足跡を記録に残せます。'
+          },
+          {
+            emoji: '🏆',
+            title: 'ミッションをクリアして称号をGET！',
+            body: '様々なミッションをクリアしていくと、あなただけの特別な『称号』が解放されます！さっそくマップを探索してみましょう！'
+          }
+        ];
+        const step = steps[tutorialStep];
+        const isLast = tutorialStep === steps.length - 1;
+        return (
+          <div className="tutorial-overlay" onClick={(e) => { if (e.target === e.currentTarget) { setShowTutorial(false); localStorage.setItem('tdm_tutorial_done', 'true'); } }}>
+            <div className="tutorial-card">
+              <div className="tutorial-step-dots">
+                {steps.map((_, i) => (
+                  <div key={i} className={`tutorial-dot ${i === tutorialStep ? 'active' : ''}`} />
+                ))}
+              </div>
+              <span className="tutorial-emoji">{step.emoji}</span>
+              <h2 className="tutorial-title">{step.title}</h2>
+              <p className="tutorial-body">{step.body}</p>
+              <button
+                className="tutorial-btn-primary"
+                onClick={() => {
+                  if (isLast) {
+                    setShowTutorial(false);
+                    localStorage.setItem('tdm_tutorial_done', 'true');
+                  } else {
+                    setTutorialStep(s => s + 1);
+                  }
+                }}
+              >
+                {isLast ? '🚀 マップを探索する！' : '次へ →'}
+              </button>
+              <button
+                className="tutorial-btn-skip"
+                onClick={() => {
+                  setShowTutorial(false);
+                  localStorage.setItem('tdm_tutorial_done', 'true');
+                }}
+              >
+                スキップ
+              </button>
+            </div>
+          </div>
+        );
+      })()}
+
+      {/* 💝 支援お願いポップアップ */}
+      {showSupportModal && (
+        <div className="tutorial-overlay" onClick={(e) => { if (e.target === e.currentTarget) setShowSupportModal(false); }}>
+          <div className="support-modal-card">
+            <span style={{ fontSize: '44px', display: 'block', textAlign: 'center', marginBottom: '14px' }}>💖</span>
+            <h2 style={{ fontSize: '16px', fontWeight: '900', color: '#0f172a', textAlign: 'center', margin: '0 0 12px 0', lineHeight: '1.4' }}>
+              【開発・運営からのお願い】
+            </h2>
+            <p style={{ fontSize: '12.5px', color: '#475569', textAlign: 'center', lineHeight: '1.8', margin: '0 0 22px 0', fontWeight: '600' }}>
+              マップをご利用いただきありがとうございます！<br />
+              当アプリは<strong>完全無料・広告なしで自費運営</strong>しています。<br />
+              より多くの聖地追加やサーバー維持のため、もしよろしければ「OFUSE」よりご支援（カンパ）をいただけますと大変励みになります！
+            </p>
+            <a
+              className="support-modal-btn-primary"
+              href="https://ofuse.me/o?uid=180694"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setShowSupportModal(false)}
+            >
+              💖 OFUSEで応援する
+            </a>
+            <button
+              className="support-modal-btn-close"
+              onClick={() => setShowSupportModal(false)}
+            >
+              閉じる
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* 1. 上部パネル (Header) */}
       <header className="app-header">
         <div className="header-left">
@@ -2197,34 +2310,36 @@ ${window.location.origin + window.location.pathname}
           
           {/* ☕️ 開発者支援（カンパ）導線最優先枠 */}
           <div style={{
-            padding: '12px 12px 8px 12px',
+            padding: '14px 16px 10px 16px',
             borderBottom: '1px dashed #e2e8f0',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
             width: '100%',
-            minHeight: '64px'
+            gap: '6px'
           }}>
-            <a 
+            <a
+              className="ofuse-support-btn"
+              href="https://ofuse.me/o?uid=180694"
+              target="_blank"
+              rel="noopener noreferrer"
               data-ofuse-widget-button="true"
-              href="https://ofuse.me/o?uid=180694" 
-              data-ofuse-id="180694" 
-              data-ofuse-size="large" 
-              data-ofuse-color="pink" 
-              data-ofuse-text="開発費用を支援する" 
+              data-ofuse-id="180694"
+              data-ofuse-size="large"
+              data-ofuse-color="pink"
+              data-ofuse-text="開発費用を支援する"
               data-ofuse-style="rectangle"
             >
-              開発費用を支援する
+              💖 OFUSEで開発を応援する
             </a>
             <span style={{ 
               fontSize: '9.5px', 
               color: 'var(--text-muted)', 
-              marginTop: '8px',
               textAlign: 'center',
               fontWeight: '700'
             }}>
-              ※有料サーバー維持のためのOFUSE支援ページが開きます
+              無料・広告なしで運営中 ✨ 支援が大きな励みになります
             </span>
           </div>
 

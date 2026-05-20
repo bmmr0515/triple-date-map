@@ -1436,3 +1436,243 @@ input[type="range"].pop-slider::-webkit-slider-thumb:hover {
 .bottom-sheet-handle:hover {
   background-color: #cbd5e1;
 }
+
+/* ==========================================================================
+   💖 OFUSEサポートボタン — パルスグラデーションアニメーション
+   ========================================================================== */
+.ofuse-support-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #ff6897 0%, #ff8fab 40%, #fbbf24 100%);
+  background-size: 200% 200%;
+  color: #ffffff !important;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 10px 16px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(255, 104, 151, 0.4), 0 0 0 0 rgba(255, 104, 151, 0.3);
+  animation: ofusePulse 3s ease-in-out infinite;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  letter-spacing: 0.01em;
+}
+
+.ofuse-support-btn:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 24px rgba(255, 104, 151, 0.55), 0 0 0 6px rgba(255, 104, 151, 0.12);
+  animation-play-state: paused;
+}
+
+.ofuse-support-btn:active {
+  transform: scale(0.96);
+}
+
+@keyframes ofusePulse {
+  0%   { box-shadow: 0 4px 16px rgba(255, 104, 151, 0.35), 0 0 0 0   rgba(255, 104, 151, 0.25); background-position: 0% 50%; }
+  50%  { box-shadow: 0 6px 22px rgba(255, 104, 151, 0.55), 0 0 0 8px rgba(255, 104, 151, 0.0);  background-position: 100% 50%; }
+  100% { box-shadow: 0 4px 16px rgba(255, 104, 151, 0.35), 0 0 0 0   rgba(255, 104, 151, 0.25); background-position: 0% 50%; }
+}
+
+/* ==========================================================================
+   🎓 チュートリアル モーダル スタイル
+   ========================================================================== */
+.tutorial-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeInOverlay 0.3s ease;
+}
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.tutorial-card {
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 32px 28px 28px;
+  max-width: 360px;
+  width: 100%;
+  box-shadow: 0 30px 60px rgba(15, 23, 42, 0.2), 0 0 0 1px rgba(255,255,255,0.8) inset;
+  animation: tutorialSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.tutorial-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #ff6897, #a78bfa, #fbbf24);
+}
+
+@keyframes tutorialSlideUp {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.tutorial-step-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tutorial-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.tutorial-dot.active {
+  background: #ff6897;
+  width: 22px;
+  border-radius: 4px;
+}
+
+.tutorial-emoji {
+  font-size: 48px;
+  text-align: center;
+  display: block;
+  margin-bottom: 14px;
+  animation: floatMini 2s infinite ease-in-out alternate;
+}
+
+.tutorial-title {
+  font-size: 16px;
+  font-weight: 900;
+  color: #0f172a;
+  text-align: center;
+  margin: 0 0 10px 0;
+  line-height: 1.4;
+}
+
+.tutorial-body {
+  font-size: 13px;
+  color: #475569;
+  text-align: center;
+  line-height: 1.75;
+  margin: 0 0 24px 0;
+  font-weight: 600;
+}
+
+.tutorial-btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, #ff6897 0%, #a78bfa 100%);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 900;
+  padding: 13px;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(255, 104, 151, 0.35);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+  letter-spacing: 0.01em;
+}
+
+.tutorial-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(255, 104, 151, 0.45);
+}
+
+.tutorial-btn-primary:active {
+  transform: scale(0.97);
+}
+
+.tutorial-btn-skip {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 4px;
+  border-radius: 12px;
+  transition: color 0.2s ease;
+}
+
+.tutorial-btn-skip:hover {
+  color: #64748b;
+}
+
+/* ==========================================================================
+   💝 支援お願いポップアップ スタイル
+   ========================================================================== */
+.support-modal-card {
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 32px 28px 28px;
+  max-width: 360px;
+  width: 100%;
+  box-shadow: 0 30px 60px rgba(15, 23, 42, 0.2);
+  animation: tutorialSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.support-modal-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #fbbf24, #ff6897, #a78bfa);
+}
+
+.support-modal-btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, #ff6897 0%, #fbbf24 100%);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 900;
+  padding: 13px;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(255, 104, 151, 0.35);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
+.support-modal-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(255, 104, 151, 0.45);
+}
+
+.support-modal-btn-close {
+  width: 100%;
+  background: #f1f5f9;
+  border: none;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 11px;
+  border-radius: 14px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.support-modal-btn-close:hover {
+  background: #e2e8f0;
+}
