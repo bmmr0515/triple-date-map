@@ -160,9 +160,9 @@ export default function App() {
   };
 
   // 🗺️ ビュー切り替え（非表示から表示）の際、Leafletの描画サイズを強制的に再計算（invalidateSize）して真っ白化バグを完全に解消するエフェクト
+  // 🌟 依存配列から selectedSpot を削除することで、マップ上でピンをクリックした際の二重発火によるズームアウトバグを根絶します！
   useEffect(() => {
     if (activeView === 'map' && mapRef.current) {
-      // 画面の display が none から block に変わったことをブラウザが検知し、レイアウトが確定するのを待つために 100ms 待ちます
       const timer = setTimeout(() => {
         if (mapRef.current) {
           console.log("Map resized and visible size recalculated securely.");
@@ -170,13 +170,15 @@ export default function App() {
           
           // 選択中のスポットがあれば、その座標へ滑らかにアニメーションズーム移動します
           if (selectedSpot) {
-            mapRef.current.setView([selectedSpot.latitude, selectedSpot.longitude], 15, { animate: true });
+            const currentZoom = mapRef.current.getZoom();
+            // すでに詳細ズームしていればその倍率を維持し、最低でもズームレベル16を保証
+            mapRef.current.setView([selectedSpot.latitude, selectedSpot.longitude], Math.max(currentZoom, 16), { animate: true });
           }
         }
       }, 100);
       return () => clearTimeout(timer);
     }
-  }, [activeView, selectedSpot]);
+  }, [activeView]);
 
   // 📋 聖地リスト用フィルタリング
   const filteredListSpots = spots.filter(spot => {
@@ -571,12 +573,22 @@ export default function App() {
         const bounds = a.layer.getBounds();
         const currentZoom = map.getZoom();
         
-        // 既に十分ズームイン（16以上）している状態であれば、ズームアウトさせず現在の詳細ズームを維持してフィットさせます
-        map.fitBounds(bounds, {
-          maxZoom: Math.max(currentZoom, 16),
-          animate: true,
-          padding: [30, 30]
-        });
+        // Leafletが算出したターゲットズームレベルを事前取得
+        const targetZoom = map.getBoundsZoom(bounds);
+        
+        // 算出されたズームが現在のズームレベル以下（＝縮小されてしまう場合）は、
+        // fitBoundsをバイパスし、強制的に「現在のズームレベル + 2」または最低16へズームインさせます！
+        if (targetZoom <= currentZoom) {
+          const nextZoom = Math.min(Math.max(currentZoom + 2, 16), 18); // 最大18まで段階的に拡大
+          map.setView(a.latlng, nextZoom, { animate: true });
+        } else {
+          // 拡大方向の移動であれば、通常の境界フィットを実行します
+          map.fitBounds(bounds, {
+            maxZoom: Math.max(currentZoom, 16),
+            animate: true,
+            padding: [30, 30]
+          });
+        }
       });
     }
 
