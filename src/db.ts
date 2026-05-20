@@ -1060,6 +1060,32 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["きゅんかわ人生巡礼"],
     reward_title: "きゅんかわマスター",
     memorial_date: "2023-12-18"
+  },
+  {
+    id: "spot-shokori-start",
+    name: "東京駅八重洲南口 グランルーフ 歩行者デッキ",
+    group: "=LOVE",
+    category: "飲食店・その他",
+    description: "瀧脇笙古さんと音嶋莉沙さんの仲良しコンビ「しょこりさ」のお散歩スタート地点です。\n【住所】〒100-0005 東京都千代田区丸の内１丁目９−１",
+    latitude: 35.6797,
+    longitude: 139.7684,
+    event_date: "2024-04-01",
+    tags: ["しょこりさんぽ巡礼"],
+    reward_title: "しょこりさ推し！",
+    memorial_date: "2024-04-01"
+  },
+  {
+    id: "spot-shokori-goal",
+    name: "TOKYO TORCH Park 錦鯉の泳ぐ池",
+    group: "=LOVE",
+    category: "飲食店・その他",
+    description: "「鯉さん元気！？」でおなじみ、しょこりさんぽのゴール地点です。\n【住所】〒100-0004 東京都千代田区大手町２丁目６−４",
+    latitude: 35.6841,
+    longitude: 139.7699,
+    event_date: "2024-04-01",
+    tags: ["しょこりさんぽ巡礼", "しょこりさんぽゴール"],
+    reward_title: "しょこりさ推し！",
+    memorial_date: "2024-04-01"
   }
 ];
 

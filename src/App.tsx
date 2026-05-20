@@ -135,6 +135,7 @@ export default function App() {
   const [hokkaidoMissionExpanded, setHokkaidoMissionExpanded] = useState<boolean>(true);
   const [fighterMissionExpanded, setFighterMissionExpanded] = useState<boolean>(true);
   const [kyunkawaMissionExpanded, setKyunkawaMissionExpanded] = useState<boolean>(true);
+  const [shokoriMissionExpanded, setShokoriMissionExpanded] = useState<boolean>(true);
 
   // 📱 スマホレスポンシブ判定用ステートとリサイズ監視
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
@@ -171,6 +172,9 @@ export default function App() {
   const [listSelectedArea, setListSelectedArea] = useState<string>('すべて');
   const [listSelectedMission, setListSelectedMission] = useState<string>('すべて');
   const [listSortKey, setListSortKey] = useState<'default' | 'song-asc' | 'date-desc' | 'date-asc'>('default');
+  const [shokoriMissionStarted, setShokoriMissionStarted] = useState<boolean>(
+    localStorage.getItem('tdm_shokori_started') === 'true'
+  );
 
   // 🚀 新着お知らせの既読未読＆自動ポップアップ判定
   useEffect(() => {
@@ -234,6 +238,11 @@ export default function App() {
 
   // 📋 聖地リスト用フィルターリング＆並べ替えソート処理
   const filteredListSpots = spots.filter(spot => {
+    // ルート解放型ミッションの未解放ゴール地点は非表示
+    if (!shokoriMissionStarted && spot.id === 'spot-shokori-goal') {
+      return false;
+    }
+
     // グループ別
     if (listSearchGroup !== 'すべて' && spot.group !== listSearchGroup) {
       return false;
@@ -256,6 +265,7 @@ export default function App() {
         if (listSelectedMission === 'hokkaido') return tag.includes('超特Q北海道巡礼');
         if (listSelectedMission === 'fighter') return tag.includes('排他的ファイター巡礼') || tag.includes('排彼のファイター巡礼');
         if (listSelectedMission === 'kyunkawa') return tag.includes('きゅんかわ人生巡礼');
+        if (listSelectedMission === 'shokori') return tag.includes('しょこりさんぽ巡礼');
         return false;
       });
       if (!hasMission) {
@@ -530,6 +540,14 @@ export default function App() {
       }
     }
 
+    // 10. しょこりさ推し！ (しょこりさんぽゴールチェックイン時)
+    const shokoriTitle = "しょこりさ推し！";
+    if (checkedSpotIds.has("spot-shokori-goal")) {
+      if (!currentAcquired.includes(shokoriTitle) && !newlyEarnedTitles.includes(shokoriTitle)) {
+        newlyEarnedTitles.push(shokoriTitle);
+      }
+    }
+
     // 称号獲得時の保存・適用処理
     if (newlyEarnedTitles.length > 0) {
       // 1. 未ログイン（ゲスト）ユーザーなら保存処理はスキップしてBaaS Read/Write負荷をゼロにする
@@ -624,6 +642,11 @@ export default function App() {
 
   // 🔍 検索・絞り込みを適用した聖地リスト (AND条件)
   const filteredSpotsOnMap = spots.filter(spot => {
+    // 0. ルート解放型ミッションの未解放ゴール地点は非表示
+    if (!shokoriMissionStarted && spot.id === 'spot-shokori-goal') {
+      return false;
+    }
+
     // 1. グループ絞り込み
     if (searchGroup !== 'すべて' && spot.group !== searchGroup) {
       return false;
@@ -1641,6 +1664,7 @@ ${window.location.origin + window.location.pathname}
                       <option value="hokkaido">🚄 超特Q北海道 (全4箇所)</option>
                       <option value="fighter">🥊 排他的ファイター (全3箇所)</option>
                       <option value="kyunkawa">🎀 きゅんかわ人生 (全4箇所)</option>
+                      <option value="shokori">🌸 しょこりさんぽ (全2箇所)</option>
                     </select>
                     <div style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', fontSize: '9px', color: '#94a3b8' }}>▼</div>
                   </div>
@@ -3203,6 +3227,207 @@ ${window.location.origin + window.location.pathname}
                       </div>
                     );
                   })()}
+
+                  {/* 🌟 しょこりさんぽ 巡礼ミッション (ルート解放型) */}
+                  {(() => {
+                    const shokoriSpots = spots.filter(s => s.tags && s.tags.includes("しょこりさんぽ巡礼"));
+                    // ゴール地点の判定
+                    const checkedShokoriSpots = checkins.filter(c => c.spot_id === "spot-shokori-goal");
+                    const isCompleted = checkedShokoriSpots.length > 0;
+                    const percent = isCompleted ? 100 : (shokoriMissionStarted ? 50 : 0);
+
+                    return (
+                      <div className="pop-panel" style={{
+                        borderRadius: '16px',
+                        border: '2px solid #e2e8f0',
+                        overflow: 'hidden',
+                        boxShadow: 'var(--shadow-panel)',
+                        marginTop: '16px'
+                      }}>
+                        {/* アコーディオンヘッダー */}
+                        <div 
+                          onClick={() => setShokoriMissionExpanded(!shokoriMissionExpanded)}
+                          style={{
+                            padding: '16px',
+                            background: 'linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%)', // ピンク系
+                            borderBottom: '1px solid #e2e8f0',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                            {/* 🏷️ メインタイトル */}
+                            <span style={{
+                              alignSelf: 'flex-start',
+                              fontSize: '9px',
+                              fontWeight: '900',
+                              color: '#db2777',
+                              background: '#fbcfe8',
+                              padding: '2px 8px',
+                              borderRadius: '6px',
+                              letterSpacing: '0.02em',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '3px'
+                            }}>
+                              🏷️ しょこりさんぽ 巡礼ミッション
+                            </span>
+                            {/* 👑 サブタイトル */}
+                            <span style={{
+                              fontSize: '15px',
+                              fontWeight: '900',
+                              color: '#1e293b',
+                              letterSpacing: '-0.02em',
+                              lineHeight: '1.2',
+                              marginTop: '2px'
+                            }}>
+                              『鯉さん元気！？しょこりさんぽ』
+                            </span>
+                            {/* 📊 進行状況 */}
+                            <span style={{ fontSize: '9.5px', color: 'var(--text-muted)', fontWeight: '800', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                              🧭 進行状況: {isCompleted ? 'クリア！' : (shokoriMissionStarted ? '探索中...' : '未開始')}
+                            </span>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            {isCompleted ? (
+                              <span style={{ fontSize: '10px', fontWeight: '900', color: '#db2777', background: '#ffffff', padding: '2px 8px', borderRadius: '9999px', border: '1px solid rgba(219,39,119,0.2)' }}>達成！</span>
+                            ) : (
+                              <ChevronRight className="w-4 h-4 text-slate-400" style={{ transform: shokoriMissionExpanded ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
+                            )}
+                          </div>
+                        </div>
+
+                        {/* アコーディオンの中身 */}
+                        {shokoriMissionExpanded && (
+                          <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', backgroundColor: '#ffffff' }}>
+                            {/* ルート解放ボタン */}
+                            {!shokoriMissionStarted && (
+                              <div style={{ padding: '16px', textAlign: 'center', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px dashed #cbd5e1' }}>
+                                <div style={{ fontSize: '11px', fontWeight: 'bold', color: '#475569', marginBottom: '8px' }}>
+                                  しょこりさの思い出のルートを辿ろう！<br/>ミッションを開始すると、隠されたゴール地点がマップ上に解放されます。
+                                </div>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setShokoriMissionStarted(true);
+                                    localStorage.setItem('tdm_shokori_started', 'true');
+                                  }}
+                                  style={{
+                                    background: 'linear-gradient(135deg, #f472b6 0%, #db2777 100%)',
+                                    color: 'white',
+                                    fontWeight: 'bold',
+                                    fontSize: '12px',
+                                    padding: '8px 16px',
+                                    borderRadius: '9999px',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    boxShadow: '0 4px 10px rgba(219, 39, 119, 0.3)'
+                                  }}
+                                >
+                                  ▶️ ミッション開始
+                                </button>
+                              </div>
+                            )}
+
+                            {/* プログレスバー */}
+                            {shokoriMissionStarted && (
+                              <div style={{ padding: '4px 6px 10px 6px' }}>
+                                <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '9999px', overflow: 'hidden' }}>
+                                  <div style={{ width: `${percent}%`, height: '100%', background: 'linear-gradient(90deg, #f472b6 0%, #db2777 100%)', transition: 'width 0.4s ease-out' }}></div>
+                                </div>
+                              </div>
+                            )}
+
+                            {/* スポットリスト */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                              {shokoriSpots.map(spot => {
+                                // ミッション未開始の場合はゴールを表示しない
+                                if (!shokoriMissionStarted && spot.id === 'spot-shokori-goal') return null;
+
+                                const isSpotChecked = checkins.some(c => c.spot_id === spot.id);
+                                return (
+                                  <div 
+                                    key={spot.id} 
+                                    onClick={() => {
+                                      handleFocusSpotOnMap(spot);
+                                      setSelectedSpot(spot);
+                                      setRightPanelTab('detail');
+                                    }}
+                                    style={{
+                                      display: 'flex',
+                                      justifyContent: 'space-between',
+                                      alignItems: 'center',
+                                      padding: '8px 10px',
+                                      borderRadius: '10px',
+                                      background: isSpotChecked ? '#fdf2f8' : '#f8fafc',
+                                      border: isSpotChecked ? '1px solid rgba(244,114,182,0.2)' : '1px solid #f1f5f9',
+                                      cursor: 'pointer',
+                                      transition: 'all 0.2s'
+                                    }}
+                                  >
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                      <span style={{ fontSize: '11px', fontWeight: '800', color: isSpotChecked ? '#db2777' : '#334155' }}>
+                                        {spot.name === '東京駅八重洲南口 グランルーフ 歩行者デッキ' ? '🏁 スタート: 東京駅' : '🎯 ゴール: 錦鯉の泳ぐ池'}
+                                      </span>
+                                      <span style={{ fontSize: '8px', color: '#94a3b8' }}>
+                                        📍 東京都千代田区
+                                      </span>
+                                    </div>
+                                    <div>
+                                      {isSpotChecked ? (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#fce7f3', color: '#db2777', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '900' }}>
+                                          行った！
+                                        </div>
+                                      ) : (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#ffffff', color: '#94a3b8', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '800', border: '1px solid #e2e8f0' }}>
+                                          未チェック
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+
+                            {/* 称号獲得の通知報酬枠 */}
+                            <div style={{
+                              marginTop: '8px',
+                              padding: '10px',
+                              borderRadius: '10px',
+                              background: isCompleted ? 'linear-gradient(135deg, rgba(244,114,182,0.06) 0%, rgba(219,39,119,0.06) 100%)' : '#f8fafc',
+                              border: isCompleted ? '1px dashed #db2777' : '1px dashed #cbd5e1',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '8px'
+                            }}>
+                              <div style={{
+                                width: '28px',
+                                height: '28px',
+                                borderRadius: '50%',
+                                background: isCompleted ? 'linear-gradient(135deg, #f472b6 0%, #db2777 100%)' : '#e2e8f0',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                flexShrink: 0
+                              }}>
+                                <Award className="w-4 h-4 text-white" />
+                              </div>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                <span style={{ fontSize: '10px', fontWeight: '900', color: isCompleted ? '#db2777' : '#64748b' }}>称号報酬: しょこりさ推し！</span>
+                                <span style={{ fontSize: '8px', color: '#94a3b8' }}>
+                                  {isCompleted ? '🎉 しょこりさ推し！の称号を獲得！マイページでバッジが輝いています。' : 'ミッションを開始し、隠されたゴール地点にチェックインすると「しょこりさ推し！」の称号が解放されます。'}
+                                </span>
+                              </div>
+                            </div>
+
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
+
 
                 </div>
               </div>
