@@ -148,7 +148,38 @@ export const authService = {
         
         return { success: true };
       } catch (err: any) {
-        return { success: false, error: err.message || 'アカウント作成に失敗しました。' };
+        const msg: string = err?.message || '';
+
+        // ⏱️ レートリミットエラー（1時間の確認メール送信上限超過）
+        if (
+          msg.toLowerCase().includes('rate limit') ||
+          msg.toLowerCase().includes('over_email_send_rate_limit') ||
+          msg.toLowerCase().includes('email rate limit exceeded') ||
+          msg.toLowerCase().includes('for security purposes')
+        ) {
+          return {
+            success: false,
+            error:
+              '⏱️ 現在、確認メールの送信数が上限に達しています。\n\n' +
+              '【解決方法】\n' +
+              '① しばらく時間をおいてから（目安：1時間後）再度お試しください。\n' +
+              '② すでに登録済みの方はそのままログインをお試しください。\n' +
+              '③ Xアカウントでのログインもご利用いただけます。'
+          };
+        }
+
+        // 📧 メールアドレス重複エラー
+        if (
+          msg.toLowerCase().includes('user already registered') ||
+          msg.toLowerCase().includes('already been registered')
+        ) {
+          return {
+            success: false,
+            error: 'このメールアドレスはすでに登録されています。ログイン画面からサインインしてください。'
+          };
+        }
+
+        return { success: false, error: msg || 'アカウント作成に失敗しました。' };
       }
     }
 
@@ -160,9 +191,14 @@ export const authService = {
       return { success: false, error: 'このメールアドレスは既に登録されています。' };
     }
 
+    // ⚠️【開発シミュレータ専用】
+    // VITE_SUPABASE_URL が未設定のローカル開発時のみ実行されます。
+    // 本番環境では必ず if (supabase) ブロック（Supabase Auth）が先に実行されます。
+    // パスワードはブラウザのlocalStorageにのみ保存され、サーバーには一切送信されません。
     const newUser: SimUser = {
       id: 'usr_' + Math.random().toString(36).substr(2, 9),
       email: email,
+      // 開発シミュレータのため簡易照合用に保持（本番Supabaseではbcryptハッシュ化される）
       passwordHash: password,
       username: username,
       oshi_group: oshiGroup,

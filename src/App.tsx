@@ -32,6 +32,13 @@ export interface Notice {
 
 export const APP_NOTICES: Notice[] = [
   {
+    id: 'notice-20260521-privacy-update',
+    date: '2026/05/21',
+    title: '📋 【重要】プライバシーポリシーを更新しました',
+    content: '【プライバシーポリシー更新のご案内】\n本サービスのプライバシーポリシーを更新しました。主な変更点は以下のとおりです。\n\n【変更点】\n・アカウント登録時（メール/パスワード方式）に、登録いただいた「メールアドレス」「ニックネーム」「推しグループ」「獲得称号」が、認証サービス「Supabase」（米国）のクラウドサーバーに保存される旨を明記しました。\n・X（Twitter）ログイン時に取得する情報の範囲を明記しました。\n・チェックイン記録（巡礼履歴）は引き続き、お使いの端末内にのみ保存されます（クラウド保存は行っておりません）。\n\n【Supabaseとは？】\nSupabase Inc.（米国）が提供する、業界標準のセキュリティ基準（SOC2 Type 2準拠）を満たした認証・データ管理サービスです。パスワードはSupabase側でハッシュ化（暗号化）されており、本サービスの運営者が平文で確認することはできません。\n\n詳細は画面下部の「プライバシーポリシー」よりご確認ください。ご不明な点はDiscordコミュニティへお問い合わせください。',
+    type: 'system'
+  },
+  {
     id: 'notice-20260520-byun-mission',
     date: '2026/05/20',
     title: '✈️ 【新ミッション】順次解放型ミッション『ビュン、と飛んだ日』公開＆聖地大量追加！',
@@ -1172,21 +1179,36 @@ ${window.location.origin + window.location.pathname}
                 </h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   <div>
-                    <strong style={{ color: 'var(--text-main)', display: 'block', fontSize: '12.5px' }}>● アカウント情報（外部連携）：</strong>
+                    <strong style={{ color: 'var(--text-main)', display: 'block', fontSize: '12.5px' }}>● メール/パスワード登録時に収集する情報：</strong>
                     <span style={{ display: 'block', marginTop: '2px' }}>
-                      本サービスはX（Twitter）のOAuth認証を利用しています。ログイン時にプラットフォームから提供される「メールアドレス」「氏名（表示名）」「プロフィール画像」のみを取得します。※ユーザーのパスワードは本サービスでは一切保持・管理いたしません。
+                      アカウント登録時にご入力いただいた以下の情報を収集します。これらの情報は認証サービス「Supabase」（米国）のクラウドサーバーに保存されます。
+                    </span>
+                    <ul style={{ margin: '6px 0 0 16px', padding: 0, display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                      <li>メールアドレス</li>
+                      <li>ニックネーム（表示名）</li>
+                      <li>推しグループ（=LOVE / ≠ME / ≒JOY / 合同）</li>
+                      <li>獲得称号・設定中の称号</li>
+                    </ul>
+                    <span style={{ display: 'block', marginTop: '4px', color: '#64748b' }}>
+                      ※パスワードはSupabase側でハッシュ化（暗号化）されており、本サービス運営者が平文で参照することはできません。
+                    </span>
+                  </div>
+                  <div>
+                    <strong style={{ color: 'var(--text-main)', display: 'block', fontSize: '12.5px' }}>● X（Twitter）ログイン時に収集する情報：</strong>
+                    <span style={{ display: 'block', marginTop: '2px' }}>
+                      XのOAuth 2.0認証を経由してログインした場合、Xプラットフォームから提供される「メールアドレス」「表示名」のみを取得します。パスワードは本サービスでは一切保持・管理いたしません。
                     </span>
                   </div>
                   <div>
                     <strong style={{ color: 'var(--text-main)', display: 'block', fontSize: '12.5px' }}>● 位置情報（GPSデータ）：</strong>
                     <span style={{ display: 'block', marginTop: '2px' }}>
-                      聖地での「チェックイン機能」を利用する際、ユーザーの現在地情報を取得します。この情報は、チェックイン対象スポットとの距離判定にのみ一時的に使用され、ユーザーの移動履歴としてサーバーに保存・追跡されることはありません。
+                      「チェックイン機能」を利用する際、ユーザーの現在地情報を一時的に取得します。この情報はチェックイン対象スポットとの距離判定にのみ使用され、移動履歴としてサーバーに保存・追跡されることはありません。
                     </span>
                   </div>
                   <div>
-                    <strong style={{ color: 'var(--text-main)', display: 'block', fontSize: '12.5px' }}>● プロフィール・利用データ：</strong>
+                    <strong style={{ color: 'var(--text-main)', display: 'block', fontSize: '12.5px' }}>● チェックイン記録・利用データ：</strong>
                     <span style={{ display: 'block', marginTop: '2px' }}>
-                      獲得した称号（バッジ）、チェックイン履歴、ユーザーが提案・追加した聖地情報など、本サービス内でユーザーが生成したデータ。
+                      チェックイン履歴（巡礼記録）は<strong>お使いの端末のブラウザ内（localStorage）にのみ保存</strong>されます。クラウドサーバーへの送信は行っておりません。端末の初期化やブラウザのデータ消去により削除される場合があります。
                     </span>
                   </div>
                 </div>
@@ -1208,10 +1230,22 @@ ${window.location.origin + window.location.pathname}
                 <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
                   3. 情報の管理と外部サービスの利用
                 </h3>
-                <ul style={{ margin: '6px 0 0 20px', padding: 0, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <li>本サービスは、収集したデータを安全に管理するため、セキュリティ基準を満たした外部のクラウドデータベース（Supabase等）を利用してデータを保管しています。</li>
-                  <li>法令に基づく場合を除き、ユーザーの同意を得ることなく第三者へ個人情報を提供することはありません。</li>
-                </ul>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '12px 14px' }}>
+                    <strong style={{ display: 'block', fontSize: '12px', color: 'var(--text-main)', marginBottom: '4px' }}>🔐 認証サービス：Supabase（Supabase Inc. / 米国）</strong>
+                    <ul style={{ margin: '4px 0 0 16px', padding: 0, display: 'flex', flexDirection: 'column', gap: '3px', fontSize: '11.5px' }}>
+                      <li>アカウント登録・ログイン認証の管理に使用しています。</li>
+                      <li>保存されるデータ：メールアドレス、ニックネーム、推しグループ、獲得称号</li>
+                      <li>データはSupabase Inc.の管理するサーバー（主に米国）に保存されます。</li>
+                      <li>Supabaseは業界標準のセキュリティ基準（SOC2 Type 2）に準拠しています。</li>
+                      <li>Supabaseのプライバシーポリシー：<a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer" style={{ color: '#ff6897' }}>https://supabase.com/privacy</a></li>
+                    </ul>
+                  </div>
+                  <ul style={{ margin: '0', padding: '0 0 0 20px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <li>法令に基づく場合を除き、ユーザーの同意を得ることなく第三者へ個人情報を提供することはありません。</li>
+                    <li>チェックイン記録（巡礼履歴）はお使いの端末内にのみ保存され、クラウドへの送信は行いません。</li>
+                  </ul>
+                </div>
               </div>
 
               <div>
@@ -5464,7 +5498,12 @@ ${window.location.origin + window.location.pathname}
                     setAuthEmail('');
                     setAuthPassword('');
                     setAuthUsername('');
-                    alert("✨ アカウントの作成に成功し、ログインしました！");
+                    // 確認メール送信時（Email Confirmations: ON）と即時ログイン時でメッセージを分岐
+                    if (res.error && res.error.includes('確認メール')) {
+                      alert(res.error);
+                    } else {
+                      alert("✨ アカウントの作成に成功しました！巡礼の旅へようこそ！");
+                    }
                   } else {
                     setAuthError(res.error || '新規登録に失敗しました。');
                   }
