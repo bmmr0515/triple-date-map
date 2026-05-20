@@ -14,10 +14,38 @@ import {
   Lock,
   ShieldAlert,
   Menu,
-  X
+  X,
+  Bell,
+  Search
 } from 'lucide-react';
 import { db, Spot, User, CheckIn, GroupType } from './db';
 import { authService, AuthSession } from './auth';
+
+// 🔔 アプリ内新着お知らせのインターフェースとデータ定義
+export interface Notice {
+  id: string;
+  date: string;
+  title: string;
+  content: string;
+  type: 'update' | 'event' | 'system';
+}
+
+export const APP_NOTICES: Notice[] = [
+  {
+    id: 'notice-20260520-recipe',
+    date: '2026/05/20',
+    title: '🎉 11箇所の新スポットと「笑顔のレシピ」巡礼ミッションが追加されました！',
+    content: '【新スポット追加】\n・スタジオゼロノアール (千葉県木更津市)\n・ロックハート城 (群馬県)\n・東京ドーム / メッセモール等 『笑顔のレシピ』関連聖地6箇所\n・サンタモニカクレープ原宿店 / MIYASHITA PARK等 『絶対アイドル辞めないで』ジャケット撮影地\n・その他、多数のMV撮影地が追加されました！\n\n【笑顔のレシピ 巡礼ミッション始動！】\n指定の聖地を巡ってチェックインを記録すると、限定の称号「笑顔のレシピ料理人」が獲得できます！ぜひ挑戦してみてください！',
+    type: 'update'
+  },
+  {
+    id: 'notice-20260519-x-login',
+    date: '2026/05/19',
+    title: '🔒 X (Twitter) アカウントによる公式認証ログインに対応しました！',
+    content: 'ログイン画面でXアカウントを使ったソーシャルログイン（OAuth 2.0認証）が利用可能になりました。\n\nワンタップで簡単にアカウント登録・サインインができ、ご自身の巡礼記録やチェックイン履歴が安全に引き継がれます。ファンの方々の利便性向上のためにぜひご利用ください！',
+    type: 'system'
+  }
+];
 
 // CDNで読み込んだグローバルな Leaflet (L) をTypeScriptに認識させる
 declare const L: any;
@@ -98,6 +126,67 @@ export default function App() {
   // プロフィール編集用一時ステート
   const [editUsername, setEditUsername] = useState<string>('');
   const [editOshiGroup, setEditOshiGroup] = useState<GroupType>('合同');
+
+  // 📋 聖地一覧リスト ＆ 🔔 新着お知らせ用ステート
+  const [activeView, setActiveView] = useState<'map' | 'list'>('map');
+  const [showWelcomeNoticeModal, setShowWelcomeNoticeModal] = useState<boolean>(false);
+  const [welcomeNotice, setWelcomeNotice] = useState<Notice | null>(null);
+  const [hasUnreadNotices, setHasUnreadNotices] = useState<boolean>(false);
+  const [showNoticeHistoryModal, setShowNoticeHistoryModal] = useState<boolean>(false);
+  const [listSearchKeyword, setListSearchKeyword] = useState<string>('');
+  const [listSearchGroup, setListSearchGroup] = useState<string>('すべて');
+  const [listLimit, setListLimit] = useState<number>(20);
+
+  // 🚀 新着お知らせの既読未読＆自動ポップアップ判定
+  useEffect(() => {
+    const lastReadId = localStorage.getItem('tdm_last_read_notice');
+    const latestNotice = APP_NOTICES[0];
+    
+    if (latestNotice && lastReadId !== latestNotice.id) {
+      setHasUnreadNotices(true);
+      setWelcomeNotice(latestNotice);
+      setShowWelcomeNoticeModal(true);
+      // ポップアップを表示した時点で既読にします
+      localStorage.setItem('tdm_last_read_notice', latestNotice.id);
+      setHasUnreadNotices(false);
+    }
+  }, []);
+
+  // 📋 リストから「地図で見る」を押した際のアクション
+  const handleViewOnMap = (spot: Spot) => {
+    setActiveView('map');
+    setSelectedSpot(spot);
+    setRightPanelTab('detail');
+    setTimeout(() => {
+      if (mapRef.current) {
+        mapRef.current.setView([spot.latitude, spot.longitude], 15, { animate: true });
+      }
+    }, 200);
+  };
+
+  // 📋 聖地リスト用フィルタリング
+  const filteredListSpots = spots.filter(spot => {
+    // グループ別
+    if (listSearchGroup !== 'すべて' && spot.group !== listSearchGroup) {
+      return false;
+    }
+    // キーワード検索（名称、説明、カテゴリ、タグ、関連曲）
+    if (listSearchKeyword.trim()) {
+      const keyword = listSearchKeyword.toLowerCase();
+      const nameMatch = spot.name.toLowerCase().includes(keyword);
+      const descMatch = spot.description.toLowerCase().includes(keyword);
+      const categoryMatch = spot.category.toLowerCase().includes(keyword);
+      const rewardMatch = spot.reward_title?.toLowerCase().includes(keyword) || false;
+      const tagMatch = spot.tags?.some(t => t.toLowerCase().includes(keyword)) || false;
+      
+      if (!nameMatch && !descMatch && !categoryMatch && !rewardMatch && !tagMatch) {
+        return false;
+      }
+    }
+    return true;
+  });
+
+  const visibleSpots = filteredListSpots.slice(0, listLimit);
   const [editActiveTitle, setEditActiveTitle] = useState<string>('');
 
   // 🔍 検索・絞り込み用ステート
@@ -969,6 +1058,97 @@ ${window.location.origin + window.location.pathname}
         {/* アクティブグループの可愛いバッジ と アカウント認証UI */}
         <div className="header-right" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           
+          {/* 📋 ビュー切り替えトグル ＆ 🔔 通知ベル */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {/* 切り替えセグメンテッドトグル */}
+            <div style={{
+              display: 'flex',
+              background: '#f1f5f9',
+              padding: '3px',
+              borderRadius: '10px',
+              border: '1px solid #e2e8f0'
+            }}>
+              <button
+                onClick={() => setActiveView('map')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  padding: '6px 12px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  background: activeView === 'map' ? '#ffffff' : 'transparent',
+                  color: activeView === 'map' ? 'var(--text-main)' : '#64748b',
+                  fontSize: '11px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  boxShadow: activeView === 'map' ? '0 2px 6px rgba(0,0,0,0.05)' : 'none',
+                  transition: 'all 0.2s'
+                }}
+              >
+                🗺️ マップ
+              </button>
+              <button
+                onClick={() => setActiveView('list')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  padding: '6px 12px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  background: activeView === 'list' ? '#ffffff' : 'transparent',
+                  color: activeView === 'list' ? 'var(--text-main)' : '#64748b',
+                  fontSize: '11px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  boxShadow: activeView === 'list' ? '0 2px 6px rgba(0,0,0,0.05)' : 'none',
+                  transition: 'all 0.2s'
+                }}
+              >
+                📋 リスト
+              </button>
+            </div>
+
+            {/* 通知ベルボタン */}
+            <button
+              onClick={() => {
+                setShowNoticeHistoryModal(true);
+                setHasUnreadNotices(false);
+              }}
+              style={{
+                position: 'relative',
+                background: '#ffffff',
+                border: '2px solid #e2e8f0',
+                borderRadius: '10px',
+                width: '36px',
+                height: '36px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                color: '#475569',
+                transition: 'all 0.2s'
+              }}
+              className="pop-button"
+              title="お知らせ・更新履歴"
+            >
+              <Bell size={16} />
+              {hasUnreadNotices && (
+                <span style={{
+                  position: 'absolute',
+                  top: '-2px',
+                  right: '-2px',
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '50%',
+                  background: '#ef4444',
+                  border: '2px solid #ffffff'
+                }}></span>
+              )}
+            </button>
+          </div>
+
           {/* 📱 モバイル用3本線メニューボタン */}
           <button
             className="mobile-menu-trigger"
@@ -1089,8 +1269,9 @@ ${window.location.origin + window.location.pathname}
         {/* 左側: 地図領域 */}
         <div className="left-area">
           
-          {/* 地図エリア (中央のメインエリア) */}
-          <div className="map-container" style={{ position: 'relative' }}>
+          {activeView === 'map' ? (
+            /* 地図エリア (中央のメインエリア) */
+            <div className="map-container" style={{ position: 'relative' }}>
             {/* 🔍 フローティング検索バー */}
             <div className="map-search-bar">
               {/* グループ絞り込みセレクト */}
@@ -1167,6 +1348,335 @@ ${window.location.origin + window.location.pathname}
               ></div>
             </div>
           </div>
+          ) : (
+            /* 📋 聖地一覧リストUI (Lazy Load & 検索 & 絞り込み搭載) */
+            <div className="spots-list-container" style={{
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              background: '#f8fafc',
+              borderRadius: '24px',
+              overflow: 'hidden',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.03)'
+            }}>
+              {/* リストヘッダー（検索・絞り込みフィルター） */}
+              <div className="list-filters-box" style={{
+                padding: '20px',
+                background: '#ffffff',
+                borderBottom: '1px solid #e2e8f0',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px'
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <h2 style={{ fontSize: '15px', fontWeight: 900, color: 'var(--text-main)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    📋 聖地一覧リスト <span style={{ fontSize: '10px', fontWeight: 'bold', color: '#64748b', background: '#f1f5f9', padding: '2px 8px', borderRadius: '8px' }}>{filteredListSpots.length} 件</span>
+                  </h2>
+                </div>
+                
+                {/* 検索入力欄 */}
+                <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                  <Search size={16} style={{ position: 'absolute', left: '12px', color: '#94a3b8' }} />
+                  <input
+                    type="text"
+                    placeholder="スポット名、関連曲、住所、キーワードで検索..."
+                    value={listSearchKeyword}
+                    onChange={(e) => {
+                      setListSearchKeyword(e.target.value);
+                      setListLimit(20);
+                    }}
+                    style={{
+                      width: '100%',
+                      padding: '10px 12px 10px 38px',
+                      borderRadius: '12px',
+                      border: '2px solid #e2e8f0',
+                      outline: 'none',
+                      fontSize: '12px',
+                      transition: 'all 0.2s',
+                      boxShadow: '0 2px 6px rgba(0,0,0,0.02)'
+                    }}
+                  />
+                  {listSearchKeyword && (
+                    <button
+                      onClick={() => {
+                        setListSearchKeyword('');
+                        setListLimit(20);
+                      }}
+                      style={{ position: 'absolute', right: '12px', background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', fontSize: '12px' }}
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+
+                {/* グループ別フィルタータブ */}
+                <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', paddingBottom: '2px' }} className="no-scrollbar">
+                  {(['すべて', '=LOVE', '≠ME', '≒JOY', '合同'] as const).map((group) => {
+                    const isSelected = listSearchGroup === group;
+                    let activeBg = 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)';
+                    let activeColor = '#ffffff';
+                    if (group === '=LOVE') activeBg = 'var(--color-equal-love)';
+                    else if (group === '≠ME') activeBg = 'var(--color-not-equal-me)';
+                    else if (group === '≒JOY') activeBg = 'var(--color-nearly-joy)';
+                    else if (group === '合同') activeBg = 'linear-gradient(135deg, #a78bfa 0%, #818cf8 100%)';
+
+                    return (
+                      <button
+                        key={group}
+                        onClick={() => {
+                          setListSearchGroup(group);
+                          setListLimit(20);
+                        }}
+                        style={{
+                          padding: '6px 12px',
+                          borderRadius: '20px',
+                          border: isSelected ? 'none' : '1px solid #e2e8f0',
+                          background: isSelected ? activeBg : '#ffffff',
+                          color: isSelected ? activeColor : '#64748b',
+                          fontSize: '11px',
+                          fontWeight: 'black',
+                          cursor: 'pointer',
+                          whiteSpace: 'nowrap',
+                          transition: 'all 0.2s',
+                          boxShadow: isSelected ? '0 4px 8px rgba(0,0,0,0.06)' : 'none'
+                        }}
+                      >
+                        {group}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* スポットカードリスト */}
+              <div style={{
+                flex: 1,
+                overflowY: 'auto',
+                padding: '16px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px'
+              }} className="custom-scrollbar">
+                {visibleSpots.length === 0 ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px 0', color: '#94a3b8' }}>
+                    <span style={{ fontSize: '32px', marginBottom: '10px' }}>🔍</span>
+                    <span style={{ fontWeight: 'bold', fontSize: '13px' }}>該当する聖地が見つかりませんでした。</span>
+                  </div>
+                ) : (
+                  <>
+                    {visibleSpots.map((spot) => {
+                      let groupColor = '#64748b';
+                      let groupBg = '#f1f5f9';
+                      if (spot.group === '=LOVE') { groupColor = '#ff6897'; groupBg = '#ffeef2'; }
+                      else if (spot.group === '≠ME') { groupColor = '#06b6d4'; groupBg = '#ecfeff'; }
+                      else if (spot.group === '≒JOY') { groupColor = '#eab308'; groupBg = '#fef9c3'; }
+                      else if (spot.group === '合同') { groupColor = '#6366f1'; groupBg = '#e0e7ff'; }
+
+                      const isVisited = checkins.some(c => c.spot_id === spot.id);
+                      
+                      // 都道府県等の大まかなエリアを説明文や住所から動的に抽出
+                      let area = 'その他';
+                      const areaMatch = spot.description.match(/(東京都|神奈川県|千葉県|埼玉県|群馬県|栃木県|茨城県|山梨県|静岡県|沖縄県|高知県|福島県|山口県|セブ島|韓国)/);
+                      if (areaMatch) {
+                        area = areaMatch[0];
+                      } else if (spot.name.includes('（')) {
+                        const innerMatch = spot.name.match(/（(.*?)）/);
+                        if (innerMatch) area = innerMatch[1];
+                      }
+
+                      return (
+                        <div
+                          key={spot.id}
+                          style={{
+                            background: '#ffffff',
+                            border: isVisited ? '2px solid #bef264' : '1px solid #e2e8f0',
+                            borderRadius: '16px',
+                            padding: '16px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '10px',
+                            transition: 'all 0.2s',
+                            position: 'relative',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.02)'
+                          }}
+                          className="list-spot-card"
+                        >
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', alignItems: 'center' }}>
+                            <span style={{
+                              fontSize: '9px',
+                              fontWeight: '950',
+                              color: groupColor,
+                              background: groupBg,
+                              padding: '2px 8px',
+                              borderRadius: '6px'
+                            }}>
+                              {spot.group}
+                            </span>
+                            
+                            <span style={{
+                              fontSize: '9px',
+                              fontWeight: 'bold',
+                              color: '#64748b',
+                              background: '#f1f5f9',
+                              padding: '2px 8px',
+                              borderRadius: '6px'
+                            }}>
+                              📍 {area}
+                            </span>
+
+                            <span style={{
+                              fontSize: '9px',
+                              fontWeight: 'bold',
+                              color: '#a855f7',
+                              background: '#f3e8ff',
+                              padding: '2px 8px',
+                              borderRadius: '6px'
+                            }}>
+                              🏷️ {spot.category}
+                            </span>
+
+                            {isVisited ? (
+                              <span style={{
+                                marginLeft: 'auto',
+                                fontSize: '9px',
+                                fontWeight: 'bold',
+                                color: '#65a30d',
+                                background: '#ecfccb',
+                                padding: '2px 8px',
+                                borderRadius: '6px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '2px'
+                              }}>
+                                ✅ 巡礼完了
+                              </span>
+                            ) : (
+                              <span style={{
+                                marginLeft: 'auto',
+                                fontSize: '9px',
+                                fontWeight: 'bold',
+                                color: '#94a3b8',
+                                background: '#f8fafc',
+                                padding: '2px 8px',
+                                borderRadius: '6px'
+                              }}>
+                                未訪問
+                              </span>
+                            )}
+                          </div>
+
+                          <h3 style={{
+                            fontSize: '14px',
+                            fontWeight: 900,
+                            color: 'var(--text-main)',
+                            margin: 0,
+                            lineHeight: 1.4
+                          }}>
+                            {spot.name}
+                          </h3>
+
+                          {spot.reward_title && (
+                            <div style={{
+                              fontSize: '10px',
+                              color: '#64748b',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '4px',
+                              background: '#f8fafc',
+                              padding: '5px 8px',
+                              borderRadius: '6px'
+                            }}>
+                              🎵 <span style={{ fontWeight: 'bold' }}>{spot.reward_title.replace("の証言者", "").replace("の約束人", "").replace("の旅人", "").replace("の恋人", "").replace("の漂流者", "").replace("の語り部", "").replace("のダンサー", "").replace("の走者", "").replace("の虜", "")}</span> 関連
+                            </div>
+                          )}
+
+                          <p style={{
+                            fontSize: '11px',
+                            color: '#64748b',
+                            margin: 0,
+                            lineHeight: 1.5,
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden'
+                          }}>
+                            {spot.description}
+                          </p>
+
+                          <div style={{ display: 'flex', gap: '8px', marginTop: '2px' }}>
+                            <button
+                              onClick={() => handleViewOnMap(spot)}
+                              style={{
+                                flex: 1,
+                                background: 'linear-gradient(135deg, #a78bfa 0%, #818cf8 100%)',
+                                color: '#ffffff',
+                                border: 'none',
+                                borderRadius: '8px',
+                                padding: '6px 12px',
+                                fontSize: '10px',
+                                fontWeight: 'black',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '4px',
+                                transition: 'all 0.2s'
+                              }}
+                              className="pop-button"
+                            >
+                              🗺️ 地図で見る
+                            </button>
+                            
+                            <button
+                              onClick={() => {
+                                setSelectedSpot(spot);
+                                setRightPanelTab('detail');
+                              }}
+                              style={{
+                                background: '#f1f5f9',
+                                color: '#475569',
+                                border: 'none',
+                                borderRadius: '8px',
+                                padding: '6px 12px',
+                                fontSize: '10px',
+                                fontWeight: 'bold',
+                                cursor: 'pointer',
+                                transition: 'background 0.2s'
+                              }}
+                            >
+                              詳細 ➔
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+
+                    {filteredListSpots.length > listLimit && (
+                      <button
+                        onClick={() => setListLimit(prev => prev + 20)}
+                        style={{
+                          padding: '10px',
+                          background: '#ffffff',
+                          border: '2px dashed #cbd5e1',
+                          borderRadius: '12px',
+                          color: '#475569',
+                          fontSize: '11px',
+                          fontWeight: 'bold',
+                          cursor: 'pointer',
+                          textAlign: 'center',
+                          transition: 'all 0.2s',
+                          marginTop: '4px'
+                        }}
+                        className="pop-button"
+                      >
+                        ➕ さらに読み込む (残り {filteredListSpots.length - listLimit} 件)
+                      </button>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+          )}
 
         </div>
 
@@ -3022,6 +3532,304 @@ ${window.location.origin + window.location.pathname}
       </div>
 
       {/* 🔐 BaaS 認証ダイアログ（ログイン ＆ サインアップ） */}
+      {/* 🔔 更新情報・お知らせ履歴モーダル */}
+      {showNoticeHistoryModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          backgroundColor: 'rgba(15, 23, 42, 0.4)',
+          backdropFilter: 'blur(6px)',
+          zIndex: 3000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '16px'
+        }} onClick={() => setShowNoticeHistoryModal(false)}>
+          <div style={{
+            width: '100%',
+            maxWidth: '560px',
+            background: '#ffffff',
+            borderRadius: '24px',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15)',
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
+            maxHeight: '85vh'
+          }} onClick={(e) => e.stopPropagation()}>
+            
+            {/* モーダルヘッダー */}
+            <div style={{
+              padding: '20px 24px',
+              background: 'linear-gradient(135deg, #ffeef2 0%, #e0e7ff 100%)',
+              borderBottom: '1px solid #f1f5f9',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <h2 style={{ fontSize: '15px', fontWeight: 900, color: 'var(--text-main)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                🔔 トリプルデートマップ お知らせ履歴
+              </h2>
+              <button
+                onClick={() => setShowNoticeHistoryModal(false)}
+                style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  background: '#ffffff',
+                  border: 'none',
+                  color: '#64748b',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.05)'
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* お知らせのタイムラインリスト */}
+            <div style={{
+              flex: 1,
+              overflowY: 'auto',
+              padding: '24px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '24px'
+            }} className="custom-scrollbar">
+              {APP_NOTICES.map((notice, idx) => {
+                let badgeBg = '#f1f5f9';
+                let badgeColor = '#475569';
+                let badgeLabel = 'お知らせ';
+                if (notice.type === 'update') {
+                  badgeBg = '#ecfccb';
+                  badgeColor = '#65a30d';
+                  badgeLabel = 'データ更新';
+                } else if (notice.type === 'system') {
+                  badgeBg = '#e0e7ff';
+                  badgeColor = '#4f46e5';
+                  badgeLabel = '機能追加';
+                }
+
+                return (
+                  <div key={notice.id} style={{
+                    display: 'flex',
+                    gap: '16px',
+                    position: 'relative'
+                  }}>
+                    {/* タイムラインの縦線 */}
+                    {idx !== APP_NOTICES.length - 1 && (
+                      <div style={{
+                        position: 'absolute',
+                        left: '19px',
+                        top: '40px',
+                        bottom: '-30px',
+                        width: '2px',
+                        background: '#e2e8f0'
+                      }}></div>
+                    )}
+
+                    {/* 左側タイムラインノード */}
+                    <div style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '50%',
+                      background: notice.type === 'update' ? '#d9f99d' : '#c7d2fe',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '16px',
+                      zIndex: 2,
+                      flexShrink: 0
+                    }}>
+                      {notice.type === 'update' ? '🗺️' : '🔒'}
+                    </div>
+
+                    {/* 右側お知らせ本文 */}
+                    <div style={{
+                      flex: 1,
+                      background: '#f8fafc',
+                      borderRadius: '16px',
+                      padding: '16px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '8px'
+                    }}>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}>
+                        <span style={{ fontSize: '11px', fontWeight: 'bold', color: '#94a3b8' }}>
+                          {notice.date}
+                        </span>
+                        <span style={{
+                          fontSize: '9px',
+                          fontWeight: '900',
+                          background: badgeBg,
+                          color: badgeColor,
+                          padding: '2px 8px',
+                          borderRadius: '6px'
+                        }}>
+                          {badgeLabel}
+                        </span>
+                      </div>
+                      
+                      <h4 style={{
+                        fontSize: '13px',
+                        fontWeight: 900,
+                        color: 'var(--text-main)',
+                        margin: 0,
+                        lineHeight: 1.4
+                      }}>
+                        {notice.title}
+                      </h4>
+                      
+                      <p style={{
+                        fontSize: '11px',
+                        color: '#475569',
+                        margin: 0,
+                        lineHeight: 1.6,
+                        whiteSpace: 'pre-line'
+                      }}>
+                        {notice.content}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 🚀 アプリ起動時新着お知らせウェルカムモーダル */}
+      {showWelcomeNoticeModal && welcomeNotice && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          backgroundColor: 'rgba(15, 23, 42, 0.4)',
+          backdropFilter: 'blur(8px)',
+          zIndex: 4000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '16px'
+        }} onClick={() => setShowWelcomeNoticeModal(false)}>
+          <div style={{
+            width: '100%',
+            maxWidth: '440px',
+            background: '#ffffff',
+            borderRadius: '24px',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.2)',
+            overflow: 'hidden'
+          }} onClick={(e) => e.stopPropagation()}>
+            
+            {/* 可愛いグラデーションヘッダー */}
+            <div style={{
+              padding: '24px',
+              background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)',
+              color: '#ffffff',
+              textAlign: 'center',
+              position: 'relative'
+            }}>
+              <div style={{ fontSize: '24px', marginBottom: '8px', fontWeight: 'bold' }}>✨ WHAT'S NEW ✨</div>
+              <h3 style={{ fontSize: '15px', fontWeight: 900, margin: 0, lineHeight: 1.4 }}>
+                アップデート情報！
+              </h3>
+              <button
+                onClick={() => setShowWelcomeNoticeModal(false)}
+                style={{
+                  position: 'absolute',
+                  top: '16px',
+                  right: '16px',
+                  width: '28px',
+                  height: '28px',
+                  borderRadius: '50%',
+                  background: 'rgba(255,255,255,0.2)',
+                  border: 'none',
+                  color: '#ffffff',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* お知らせ内容 */}
+            <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                <span style={{
+                  fontSize: '9px',
+                  fontWeight: '950',
+                  background: '#ecfccb',
+                  color: '#65a30d',
+                  padding: '2px 8px',
+                  borderRadius: '6px'
+                }}>
+                  データ更新
+                </span>
+                <span style={{ fontSize: '11px', fontWeight: 'bold', color: '#94a3b8' }}>
+                  {welcomeNotice.date}
+                </span>
+              </div>
+
+              <h4 style={{
+                fontSize: '13px',
+                fontWeight: 900,
+                color: 'var(--text-main)',
+                margin: 0,
+                lineHeight: 1.4
+              }}>
+                {welcomeNotice.title}
+              </h4>
+
+              <div style={{
+                background: '#f8fafc',
+                borderRadius: '16px',
+                padding: '16px',
+                maxHeight: '180px',
+                overflowY: 'auto',
+                fontSize: '11px',
+                color: '#475569',
+                lineHeight: 1.6,
+                whiteSpace: 'pre-line'
+              }} className="custom-scrollbar">
+                {welcomeNotice.content}
+              </div>
+
+              <button
+                onClick={() => setShowWelcomeNoticeModal(false)}
+                style={{
+                  width: '100%',
+                  background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '12px',
+                  padding: '12px',
+                  fontSize: '12px',
+                  fontWeight: 'black',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 12px rgba(255, 104, 151, 0.25)',
+                  transition: 'transform 0.1s'
+                }}
+                className="pop-button"
+              >
+                わかった！さっそく遊ぶ 🗺️
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {showAuthModal && (
         <div style={{
           position: 'fixed',
