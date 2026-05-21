@@ -132,9 +132,16 @@ const AffiliateEmbed = ({ html }: { html: string }) => {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (ref.current) {
-      ref.current.innerHTML = '';
-      const fragment = document.createRange().createContextualFragment(html);
-      ref.current.appendChild(fragment);
+      ref.current.innerHTML = html;
+      const scripts = ref.current.querySelectorAll('script');
+      scripts.forEach(script => {
+        const newScript = document.createElement('script');
+        Array.from(script.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+        newScript.text = script.innerHTML;
+        // Moshimoスクリプトのタイポ（[0]抜け）を動的に補正
+        newScript.text = newScript.text.replace('e=c.getElementsByTagName("body"),e.appendChild(d)', 'e=c.getElementsByTagName("body")[0],e.appendChild(d)');
+        script.parentNode?.replaceChild(newScript, script);
+      });
     }
   }, [html]);
   return <div ref={ref} />;
