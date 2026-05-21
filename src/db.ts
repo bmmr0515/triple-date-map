@@ -1219,6 +1219,32 @@ const INITIAL_SPOTS: Spot[] = [
     longitude: 139.4355,
     event_date: "2023-09-06",
     youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/x68AnwPpT-s?si=zIGRJITwcnj5BJ4H" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+  {
+    id: "spot-joy-denwabango1",
+    name: "静岡県立大学 草薙キャンパス",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "≒JOYの人気曲『電話番号教えて』のMVロケ地。広大な大学キャンパスを舞台に、ニアジョイメンバーたちの青春感あふれるシーンが撮影された。静岡屈指の国公立大学のキャンパスで、MVの爽やかな世界観が見事に表現されている。\n【⚠️注意】現在も学生が通う現役の大学キャンパスです。敷地内への無断立ち入りや、学生の迷惑になる長時間の滞留・撮影はご遠慮ください。\n【住所】〒422-8002 静岡県静岡市駿河区谷田52-1",
+    latitude: 34.9960,
+    longitude: 138.4454,
+    event_date: "2024-01-01",
+    youtube_title: "🎥 関連映像: 『電話番号教えて』公式MV",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/KZ0_Q66AgLk?si=F2qd1RlbVR6gHoLx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "電話番号を知っている者"
+  },
+  {
+    id: "spot-joy-denwabango2",
+    name: "白鵬女子高等学校",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "≒JOYの人気曲『電話番号教えて』のMVロケ地。神奈川県横浜市鶴見区に位置する女子校で、制服姿のメンバーたちが青春ストーリーを繰り広げた。学校という舞台がMVの「好きな人に電話番号を聞けない」という切ない世界観にピッタリとはまった名ロケ地。\n【⚠️注意】現在も生徒が通う現役の高校です。敷地内への無断立ち入り、生徒が映り込む撮影、長時間の滞留は絶対に禁止です。公道から静かに外観を眺める程度に留めてください。\n【住所】〒230-0074 神奈川県横浜市鶴見区北寺尾4丁目10-13",
+    latitude: 35.5161,
+    longitude: 139.6586,
+    event_date: "2024-01-01",
+    youtube_title: "🎥 関連映像: 『電話番号教えて』公式MV",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/KZ0_Q66AgLk?si=F2qd1RlbVR6gHoLx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "電話番号を知っている者"
   }
 ];
 
