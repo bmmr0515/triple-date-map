@@ -128,23 +128,38 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number): nu
   return R * c;
 }
 
-const AffiliateEmbed = ({ html }: { html: string }) => {
-  const ref = useRef<HTMLDivElement>(null);
+declare global {
+  interface Window {
+    msmaflink?: any;
+    MoshimoAffiliateObject?: string;
+  }
+}
+
+const MoshimoLink = ({ config }: { config: any }) => {
   useEffect(() => {
-    if (ref.current) {
-      ref.current.innerHTML = html;
-      const scripts = ref.current.querySelectorAll('script');
-      scripts.forEach(script => {
-        const newScript = document.createElement('script');
-        Array.from(script.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
-        newScript.text = script.innerHTML;
-        // Moshimoスクリプトのタイポ（[0]抜け）を動的に補正
-        newScript.text = newScript.text.replace('e=c.getElementsByTagName("body"),e.appendChild(d)', 'e=c.getElementsByTagName("body")[0],e.appendChild(d)');
-        script.parentNode?.replaceChild(newScript, script);
-      });
+    // 1. グローバルに msmaflink スタブ（キュー）を初期化
+    if (!window.msmaflink) {
+      window.MoshimoAffiliateObject = 'msmaflink';
+      window.msmaflink = function() {
+        (window.msmaflink.q = window.msmaflink.q || []).push(arguments);
+      };
     }
-  }, [html]);
-  return <div ref={ref} />;
+
+    // 2. Moshimoの外部スクリプトを動的に読み込み（すでに存在すればスキップ）
+    const scriptId = 'moshimo-affiliate-script';
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement('script');
+      script.id = scriptId;
+      script.src = '//dn.msmstatic.com/site/cardlink/bundle.js?20220329';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+
+    // 3. コンフィグを関数（またはキュー）に渡してレンダリングをリクエスト
+    window.msmaflink(config);
+  }, [config]);
+
+  return <div id={`msmaflink-${config.eid}`}></div>;
 };
 
 export default function App() {
@@ -3925,13 +3940,15 @@ ${window.location.origin + window.location.pathname}
                     </div>
 
                     {/* アフィリエイト商品リンク */}
-                    {selectedSpot.affiliate_html && (
+                    {selectedSpot.moshimo_links && selectedSpot.moshimo_links.length > 0 && (
                       <div className="affiliate-container animate-fade-in-up" style={{ marginTop: '16px' }}>
                         <h4 className="detail-meta-label">
                           💿 関連商品・リンク
                         </h4>
-                        <div style={{ marginTop: '8px' }}>
-                          <AffiliateEmbed html={selectedSpot.affiliate_html} />
+                        <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          {selectedSpot.moshimo_links.map((config, index) => (
+                            <MoshimoLink key={index} config={config} />
+                          ))}
                         </div>
                       </div>
                     )}
@@ -6138,11 +6155,13 @@ ${window.location.origin + window.location.pathname}
               </div>
 
               {/* アフィリエイト商品リンク */}
-              {selectedSpot.affiliate_html && (
+              {selectedSpot.moshimo_links && selectedSpot.moshimo_links.length > 0 && (
                 <div className="affiliate-container animate-fade-in-up" style={{ marginTop: '16px' }}>
                   <h4 className="detail-meta-label">💿 関連商品・リンク</h4>
-                  <div style={{ marginTop: '8px' }}>
-                    <AffiliateEmbed html={selectedSpot.affiliate_html} />
+                  <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {selectedSpot.moshimo_links.map((config, index) => (
+                      <MoshimoLink key={index} config={config} />
+                    ))}
                   </div>
                 </div>
               )}
