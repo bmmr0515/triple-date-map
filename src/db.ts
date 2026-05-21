@@ -12,6 +12,7 @@ export interface Spot {
   tags?: string[];
   reward_title?: string;
   memorial_date?: string;
+  affiliate_html?: string;
 }
 
 export interface User {
@@ -1245,6 +1246,110 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『電話番号教えて』公式MV",
     youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/KZ0_Q66AgLk?si=F2qd1RlbVR6gHoLx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
     reward_title: "電話番号を知っている者"
+  },
+  {
+    id: "spot-joy-denwabango-dance",
+    name: "livedoor URBAN SPORTS PARK",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "『電話番号教えて！』Special Dance ver.の撮影が行われた聖地です。広大なアーバンスポーツパーク（有明アーバンスポーツパーク）を背景に、メンバーのキレのあるダンスが披露されました。スポーティで開放感のあるロケーションをぜひ現地で体感してください。\n【住所】〒135-0063 東京都江東区有明1-13-7",
+    latitude: 35.6393,
+    longitude: 139.7878,
+    event_date: "2026-02-24",
+    memorial_date: "2026-02-24",
+    youtube_title: "🎥 関連映像: 『電話番号教えて！』Special Dance ver.",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/KZ0_Q66AgLk?si=l28ao9rCkEF12uYX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    affiliate_html: `<script type="text/javascript">
+(function(b,c,f,g,a,d,e){b.MoshimoAffiliateObject=a;
+b[a]=b[a]||function(){arguments.currentScript=c.currentScript
+||c.scripts[c.scripts.length-2];(b[a].q=b[a].q||[]).push(arguments)};
+c.getElementById(a)||(d=c.createElement(f),d.src=g,
+d.id=a,e=c.getElementsByTagName("body"),e.appendChild(d))})
+(window,document,"script","//dn.msmstatic.com/site/cardlink/bundle.js?20220329","msmaflink");
+msmaflink({"n":"電話番号教えて!(Type B)【CD+DVD】/≒JOY[CD+DVD]通常盤【返品種別A】","b":"","t":"","d":"https://thumbnail.image.rakuten.co.jp","c_p":"","p":["/@0_mall/joshin-cddvd/cabinet/459/vvcl-2852-3.jpg"],"u":{"u":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","t":"rakuten","r_v":""},"v":"2.1","b_l":[{"id":1,"u_tx":"楽天市場で見る","u_bc":"#f76956","u_url":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","a_id":5575332,"p_id":54,"pl_id":27059,"pc_id":54,"s_n":"rakuten","u_so":1}],"eid":"xOmBi","s":"s"});
+</script>
+<div id="msmaflink-xOmBi">リンク</div>`
+  },
+  {
+    id: "spot-joy-bluehawaii-1",
+    name: "ユクサおおすみ海の学校",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "『ブルーハワイレモン』MVのメイン舞台となる学校シーンや、エモーショナルなダンスシーン等が撮影されたロケ地です。青い海と空に囲まれた美しいノスタルジーを感じる場所で、MVの世界観にどっぷりと浸ることができます。\n【住所】〒891-2313 鹿児島県鹿屋市天神町3629-1",
+    latitude: 31.3726,
+    longitude: 130.7793,
+    event_date: "2025-05-04",
+    memorial_date: "2025-05-04",
+    youtube_title: "🎥 関連映像: 『ブルーハワイレモン』公式MV",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/cBtqEehEKuQ?si=rGMNCqbbSYD3FUuL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+  {
+    id: "spot-joy-bluehawaii-2",
+    name: "THOUSAND GARDEN TARUMIZU",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "『ブルーハワイレモン』MVの中で、メンバーが訪れるお洒落なお店シーン等の撮影地です。海沿いの風を感じながら、推したちが過ごしたひと夏のリゾート気分を味わえる最高のスポットです。\n【住所】〒891-2114 鹿児島県垂水市新城827-1",
+    latitude: 31.4462,
+    longitude: 130.7715,
+    event_date: "2025-05-04",
+    memorial_date: "2025-05-04",
+    youtube_title: "🎥 関連映像: 『ブルーハワイレモン』公式MV",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/cBtqEehEKuQ?si=rGMNCqbbSYD3FUuL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+  {
+    id: "spot-joy-bluehawaii-3",
+    name: "鹿児島交通 一里山停留所",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "『ブルーハワイレモン』MVにて、田舎の風景の中にぽつんと佇むバス停シーン等の撮影地です。ノスタルジックな夏の空気感がそのまま残っており、MVのワンシーンを再現しての記念撮影にぴったりです。\n【住所】鹿児島県鹿屋市白水町周辺",
+    latitude: 31.3911,
+    longitude: 130.7990,
+    event_date: "2025-05-04",
+    memorial_date: "2025-05-04",
+    youtube_title: "🎥 関連映像: 『ブルーハワイレモン』公式MV",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/cBtqEehEKuQ?si=rGMNCqbbSYD3FUuL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+  {
+    id: "spot-joy-bluehawaii-4",
+    name: "垂水港西防波堤灯台",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "『ブルーハワイレモン』MVのイントロ部分で、怜音が防波堤を全力で走っている印象的なシーンの撮影地です。果てしなく続く海と灯台のコントラストが美しく、楽曲の爽快感を体感できる聖地です。\n【住所】鹿児島県垂水市 垂水港西防波堤外端",
+    latitude: 31.4844,
+    longitude: 130.6916,
+    event_date: "2025-05-04",
+    memorial_date: "2025-05-04",
+    youtube_title: "🎥 関連映像: 『ブルーハワイレモン』公式MV",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/cBtqEehEKuQ?si=rGMNCqbbSYD3FUuL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+  {
+    id: "spot-joy-bluehawaii-jacket",
+    name: "とちぎ海浜自然の家",
+    group: "≒JOY",
+    category: "MVロケ地",
+    description: "『ブルーハワイレモン』の全タイプ（Type A〜D）のジャケット写真が撮影された場所です。洗練された建築と自然の調和が美しく、メンバーたちの爽やかなビジュアルが最大限に引き出されたロケ地となっています。\n【住所】〒311-1412 茨城県鉾田市玉田336-2",
+    latitude: 36.1660,
+    longitude: 140.5470,
+    event_date: "2025-05-04",
+    memorial_date: "2025-05-04",
+    affiliate_html: `<script type="text/javascript">
+(function(b,c,f,g,a,d,e){b.MoshimoAffiliateObject=a;
+b[a]=b[a]||function(){arguments.currentScript=c.currentScript
+||c.scripts[c.scripts.length-2];(b[a].q=b[a].q||[]).push(arguments)};
+c.getElementById(a)||(d=c.createElement(f),d.src=g,
+d.id=a,e=c.getElementsByTagName("body"),e.appendChild(d))})
+(window,document,"script","//dn.msmstatic.com/site/cardlink/bundle.js?20220329","msmaflink");
+msmaflink({"n":"ブルーハワイレモン(Type A)","b":"","t":"","d":"https://thumbnail.image.rakuten.co.jp","c_p":"","p":["/@0_mall/joshin-cddvd/cabinet/459/vvcl-2852-3.jpg"],"u":{"u":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","t":"rakuten","r_v":""},"v":"2.1","b_l":[{"id":1,"u_tx":"楽天市場で見る","u_bc":"#f76956","u_url":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","a_id":5575332,"p_id":54,"pl_id":27059,"pc_id":54,"s_n":"rakuten","u_so":1}],"eid":"bhTypeA","s":"s"});
+msmaflink({"n":"ブルーハワイレモン(Type B)","b":"","t":"","d":"https://thumbnail.image.rakuten.co.jp","c_p":"","p":["/@0_mall/joshin-cddvd/cabinet/459/vvcl-2852-3.jpg"],"u":{"u":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","t":"rakuten","r_v":""},"v":"2.1","b_l":[{"id":1,"u_tx":"楽天市場で見る","u_bc":"#f76956","u_url":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","a_id":5575332,"p_id":54,"pl_id":27059,"pc_id":54,"s_n":"rakuten","u_so":1}],"eid":"bhTypeB","s":"s"});
+msmaflink({"n":"ブルーハワイレモン(Type C)","b":"","t":"","d":"https://thumbnail.image.rakuten.co.jp","c_p":"","p":["/@0_mall/joshin-cddvd/cabinet/459/vvcl-2852-3.jpg"],"u":{"u":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","t":"rakuten","r_v":""},"v":"2.1","b_l":[{"id":1,"u_tx":"楽天市場で見る","u_bc":"#f76956","u_url":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","a_id":5575332,"p_id":54,"pl_id":27059,"pc_id":54,"s_n":"rakuten","u_so":1}],"eid":"bhTypeC","s":"s"});
+msmaflink({"n":"ブルーハワイレモン(Type D)","b":"","t":"","d":"https://thumbnail.image.rakuten.co.jp","c_p":"","p":["/@0_mall/joshin-cddvd/cabinet/459/vvcl-2852-3.jpg"],"u":{"u":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","t":"rakuten","r_v":""},"v":"2.1","b_l":[{"id":1,"u_tx":"楽天市場で見る","u_bc":"#f76956","u_url":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","a_id":5575332,"p_id":54,"pl_id":27059,"pc_id":54,"s_n":"rakuten","u_so":1}],"eid":"bhTypeD","s":"s"});
+</script>
+<div style="display:flex; flex-direction:column; gap:8px;">
+<div id="msmaflink-bhTypeA">リンク</div>
+<div id="msmaflink-bhTypeB">リンク</div>
+<div id="msmaflink-bhTypeC">リンク</div>
+<div id="msmaflink-bhTypeD">リンク</div>
+</div>`
   }
 ];
 

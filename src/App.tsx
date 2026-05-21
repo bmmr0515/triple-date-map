@@ -32,6 +32,13 @@ export interface Notice {
 
 export const APP_NOTICES: Notice[] = [
   {
+    id: 'notice-20260522-bluehawaii',
+    date: '2026/05/22',
+    title: '📍 【新スポット追加】≒JOY『電話番号教えて！』Dance ver. および『ブルーハワイレモン』のロケ地を追加！',
+    content: '【新規聖地追加のお知らせ】\n≒JOY『電話番号教えて！』Dance ver. および『ブルーハワイレモン』のMV・ジャケット撮影地を追加しました！\n\n■ 追加スポット（計6件）\n・電話番号教えて！ Dance ver.：livedoor URBAN SPORTS PARK（有明アーバンスポーツパーク）\n・ブルーハワイレモン：ユクサおおすみ海の学校、THOUSAND GARDEN TARUMIZU、鹿児島交通 一里山停留所、垂水港西防波堤灯台、とちぎ海浜自然の家\n\n夏のノスタルジーを感じるエモーショナルなロケーションや、開放感のあるダンススポットなど、見どころ満載の聖地ばかりです。ぜひマップで確認して巡礼を楽しんでください！',
+    type: 'update'
+  },
+  {
     id: 'notice-20260521-denwabango',
     date: '2026/05/21',
     title: '📍 【新スポット追加】≒JOY『電話番号教えて』MVロケ地を2件追加しました！',
@@ -120,6 +127,18 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number): nu
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
+
+const AffiliateEmbed = ({ html }: { html: string }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.innerHTML = '';
+      const fragment = document.createRange().createContextualFragment(html);
+      ref.current.appendChild(fragment);
+    }
+  }, [html]);
+  return <div ref={ref} />;
+};
 
 export default function App() {
   // データベース状態
@@ -3898,6 +3917,18 @@ ${window.location.origin + window.location.pathname}
                       </p>
                     </div>
 
+                    {/* アフィリエイト商品リンク */}
+                    {selectedSpot.affiliate_html && (
+                      <div className="affiliate-container animate-fade-in-up" style={{ marginTop: '16px' }}>
+                        <h4 className="detail-meta-label">
+                          💿 関連商品・リンク
+                        </h4>
+                        <div style={{ marginTop: '8px' }}>
+                          <AffiliateEmbed html={selectedSpot.affiliate_html} />
+                        </div>
+                      </div>
+                    )}
+
                     {/* YouTube動画自動埋め込み */}
                     {selectedSpot.youtube_url && (() => {
                       const isIframe = selectedSpot.youtube_url.includes('<iframe');
@@ -6098,6 +6129,16 @@ ${window.location.origin + window.location.pathname}
                   {selectedSpot.description}
                 </p>
               </div>
+
+              {/* アフィリエイト商品リンク */}
+              {selectedSpot.affiliate_html && (
+                <div className="affiliate-container animate-fade-in-up" style={{ marginTop: '16px' }}>
+                  <h4 className="detail-meta-label">💿 関連商品・リンク</h4>
+                  <div style={{ marginTop: '8px' }}>
+                    <AffiliateEmbed html={selectedSpot.affiliate_html} />
+                  </div>
+                </div>
+              )}
 
               {/* YouTube動画自動埋め込み (完全再現) */}
               {selectedSpot.youtube_url && (() => {
