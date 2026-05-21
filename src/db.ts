@@ -12,7 +12,6 @@ export interface Spot {
   tags?: string[];
   reward_title?: string;
   memorial_date?: string;
-  moshimo_links?: any[];
 }
 
 export interface User {
@@ -1258,10 +1257,7 @@ const INITIAL_SPOTS: Spot[] = [
     event_date: "2026-02-24",
     memorial_date: "2026-02-24",
     youtube_title: "🎥 関連映像: 『電話番号教えて！』Special Dance ver.",
-    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/KZ0_Q66AgLk?si=l28ao9rCkEF12uYX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
-    moshimo_links: [
-      {"n":"電話番号教えて!(Type B)【CD+DVD】/≒JOY[CD+DVD]通常盤【返品種別A】","b":"","t":"","d":"https://thumbnail.image.rakuten.co.jp","c_p":"","p":["/@0_mall/joshin-cddvd/cabinet/459/vvcl-2852-3.jpg"],"u":{"u":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","t":"rakuten","r_v":""},"v":"2.1","b_l":[{"id":1,"u_tx":"楽天市場で見る","u_bc":"#f76956","u_url":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","a_id":5575332,"p_id":54,"pl_id":27059,"pc_id":54,"s_n":"rakuten","u_so":1}],"eid":"xOmBi","s":"s"}
-    ]
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/KZ0_Q66AgLk?si=l28ao9rCkEF12uYX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
     id: "spot-joy-bluehawaii-1",
@@ -1326,13 +1322,7 @@ const INITIAL_SPOTS: Spot[] = [
     event_date: "2025-05-04",
     memorial_date: "2025-05-04",
     youtube_title: "🎥 関連映像: 『ブルーハワイレモン』ジャケット撮影メイキング",
-    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/gS5sfnSuS6g?si=XINY3svDWqg7TQ_C" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
-    moshimo_links: [
-      {"n":"ブルーハワイレモン(Type A)","b":"","t":"","d":"https://thumbnail.image.rakuten.co.jp","c_p":"","p":["/@0_mall/joshin-cddvd/cabinet/459/vvcl-2852-3.jpg"],"u":{"u":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","t":"rakuten","r_v":""},"v":"2.1","b_l":[{"id":1,"u_tx":"楽天市場で見る","u_bc":"#f76956","u_url":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","a_id":5575332,"p_id":54,"pl_id":27059,"pc_id":54,"s_n":"rakuten","u_so":1}],"eid":"bhTypeA","s":"s"},
-      {"n":"ブルーハワイレモン(Type B)","b":"","t":"","d":"https://thumbnail.image.rakuten.co.jp","c_p":"","p":["/@0_mall/joshin-cddvd/cabinet/459/vvcl-2852-3.jpg"],"u":{"u":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","t":"rakuten","r_v":""},"v":"2.1","b_l":[{"id":1,"u_tx":"楽天市場で見る","u_bc":"#f76956","u_url":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","a_id":5575332,"p_id":54,"pl_id":27059,"pc_id":54,"s_n":"rakuten","u_so":1}],"eid":"bhTypeB","s":"s"},
-      {"n":"ブルーハワイレモン(Type C)","b":"","t":"","d":"https://thumbnail.image.rakuten.co.jp","c_p":"","p":["/@0_mall/joshin-cddvd/cabinet/459/vvcl-2852-3.jpg"],"u":{"u":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","t":"rakuten","r_v":""},"v":"2.1","b_l":[{"id":1,"u_tx":"楽天市場で見る","u_bc":"#f76956","u_url":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","a_id":5575332,"p_id":54,"pl_id":27059,"pc_id":54,"s_n":"rakuten","u_so":1}],"eid":"bhTypeC","s":"s"},
-      {"n":"ブルーハワイレモン(Type D)","b":"","t":"","d":"https://thumbnail.image.rakuten.co.jp","c_p":"","p":["/@0_mall/joshin-cddvd/cabinet/459/vvcl-2852-3.jpg"],"u":{"u":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","t":"rakuten","r_v":""},"v":"2.1","b_l":[{"id":1,"u_tx":"楽天市場で見る","u_bc":"#f76956","u_url":"https://item.rakuten.co.jp/joshin-cddvd/4547366790559/","a_id":5575332,"p_id":54,"pl_id":27059,"pc_id":54,"s_n":"rakuten","u_so":1}],"eid":"bhTypeD","s":"s"}
-    ]
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/gS5sfnSuS6g?si=XINY3svDWqg7TQ_C" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   }
 ];
 

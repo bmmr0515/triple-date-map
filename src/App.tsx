@@ -128,39 +128,6 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number): nu
   return R * c;
 }
 
-declare global {
-  interface Window {
-    msmaflink?: any;
-    MoshimoAffiliateObject?: string;
-  }
-}
-
-const MoshimoLink = ({ config }: { config: any }) => {
-  useEffect(() => {
-    // 1. グローバルに msmaflink スタブ（キュー）を初期化
-    if (!window.msmaflink) {
-      window.MoshimoAffiliateObject = 'msmaflink';
-      window.msmaflink = function() {
-        (window.msmaflink.q = window.msmaflink.q || []).push(arguments);
-      };
-    }
-
-    // 2. Moshimoの外部スクリプトを動的に読み込み（すでに存在すればスキップ）
-    const scriptId = 'moshimo-affiliate-script';
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement('script');
-      script.id = scriptId;
-      script.src = '//dn.msmstatic.com/site/cardlink/bundle.js?20220329';
-      script.async = true;
-      document.body.appendChild(script);
-    }
-
-    // 3. コンフィグを関数（またはキュー）に渡してレンダリングをリクエスト
-    window.msmaflink(config);
-  }, [config]);
-
-  return <div id={`msmaflink-${config.eid}`}></div>;
-};
 
 export default function App() {
   // データベース状態
@@ -3939,19 +3906,7 @@ ${window.location.origin + window.location.pathname}
                       </p>
                     </div>
 
-                    {/* アフィリエイト商品リンク */}
-                    {selectedSpot.moshimo_links && selectedSpot.moshimo_links.length > 0 && (
-                      <div className="affiliate-container animate-fade-in-up" style={{ marginTop: '16px' }}>
-                        <h4 className="detail-meta-label">
-                          💿 関連商品・リンク
-                        </h4>
-                        <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                          {selectedSpot.moshimo_links.map((config, index) => (
-                            <MoshimoLink key={index} config={config} />
-                          ))}
-                        </div>
-                      </div>
-                    )}
+
 
                     {/* YouTube動画自動埋め込み */}
                     {selectedSpot.youtube_url && (() => {
@@ -6154,17 +6109,7 @@ ${window.location.origin + window.location.pathname}
                 </p>
               </div>
 
-              {/* アフィリエイト商品リンク */}
-              {selectedSpot.moshimo_links && selectedSpot.moshimo_links.length > 0 && (
-                <div className="affiliate-container animate-fade-in-up" style={{ marginTop: '16px' }}>
-                  <h4 className="detail-meta-label">💿 関連商品・リンク</h4>
-                  <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    {selectedSpot.moshimo_links.map((config, index) => (
-                      <MoshimoLink key={index} config={config} />
-                    ))}
-                  </div>
-                </div>
-              )}
+
 
               {/* YouTube動画自動埋め込み (完全再現) */}
               {selectedSpot.youtube_url && (() => {
