@@ -32,6 +32,13 @@ export interface Notice {
 
 export const APP_NOTICES: Notice[] = [
   {
+    id: 'notice-20260523-marshmallow',
+    date: '2026/05/23',
+    title: '📍 【新スポット追加】≠ME『マシュマロフロート』のMVロケ地を追加しました！',
+    content: '【新規聖地追加のお知らせ】\n≠ME『マシュマロフロート』のMVロケ地（東京オペラシティ）を追加しました！\n\n都会的で洗練されたロケーションで、2番のサビのダンスシーンや印象的なラストシーンが撮影された場所です。ぜひマップで確認して巡礼を楽しんでください！',
+    type: 'update'
+  },
+  {
     id: 'notice-20260522-bluehawaii',
     date: '2026/05/22',
     title: '📍 【新スポット追加】≒JOY『電話番号教えて！』Dance ver. および『ブルーハワイレモン』のロケ地を追加！',

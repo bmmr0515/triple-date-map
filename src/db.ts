@@ -1323,6 +1323,19 @@ const INITIAL_SPOTS: Spot[] = [
     memorial_date: "2025-05-04",
     youtube_title: "🎥 関連映像: 『ブルーハワイレモン』ジャケット撮影メイキング",
     youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/gS5sfnSuS6g?si=XINY3svDWqg7TQ_C" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+  {
+    id: "spot-me-marshmallow-float",
+    name: "東京オペラシティ",
+    group: "≠ME",
+    category: "MVロケ地",
+    description: "『マシュマロフロート』のMV内に登場する聖地です。2番のサビのダンスシーンや、MVの最後を飾る印象的なシーンの撮影が行われました。都会的で洗練されたロケーションの雰囲気を、ぜひ現地で体感しながらMVを振り返ってみてください。\n【住所】〒163-1403 東京都新宿区西新宿3-20-2",
+    latitude: 35.6828,
+    longitude: 139.6881,
+    event_date: "2023-04-17",
+    memorial_date: "2023-04-17",
+    youtube_title: "🎥 関連映像: 『マシュマロフロート』公式MV",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/Vn0CYp7_MNs?si=EUm7u-eBNVRDdkXm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   }
 ];
 
