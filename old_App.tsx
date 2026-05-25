@@ -20,7 +20,6 @@ import {
 } from 'lucide-react';
 import { db, Spot, User, CheckIn, GroupType } from './db';
 import { authService, AuthSession } from './auth';
-import { AdBanner } from './components/AdBanner';
 
 // 🔔 アプリ内新着お知らせのインターフェースとデータ定義
 export interface Notice {
@@ -32,69 +31,6 @@ export interface Notice {
 }
 
 export const APP_NOTICES: Notice[] = [
-  {
-    id: 'notice-20260523-marshmallow',
-    date: '2026/05/23',
-    title: '📍 【新スポット追加】≠ME『マシュマロフロート』のMVロケ地を追加しました！',
-    content: '【新規聖地追加のお知らせ】\n≠ME『マシュマロフロート』のMVロケ地（東京オペラシティ）を追加しました！\n\n都会的で洗練されたロケーションで、2番のサビのダンスシーンや印象的なラストシーンが撮影された場所です。ぜひマップで確認して巡礼を楽しんでください！',
-    type: 'update'
-  },
-  {
-    id: 'notice-20260522-bluehawaii',
-    date: '2026/05/22',
-    title: '📍 【新スポット追加】≒JOY『電話番号教えて！』Dance ver. および『ブルーハワイレモン』のロケ地を追加！',
-    content: '【新規聖地追加のお知らせ】\n≒JOY『電話番号教えて！』Dance ver. および『ブルーハワイレモン』のMV・ジャケット撮影地を追加しました！\n\n■ 追加スポット（計6件）\n・電話番号教えて！ Dance ver.：livedoor URBAN SPORTS PARK（有明アーバンスポーツパーク）\n・ブルーハワイレモン：ユクサおおすみ海の学校、THOUSAND GARDEN TARUMIZU、鹿児島交通 一里山停留所、垂水港西防波堤灯台、とちぎ海浜自然の家\n\n夏のノスタルジーを感じるエモーショナルなロケーションや、開放感のあるダンススポットなど、見どころ満載の聖地ばかりです。ぜひマップで確認して巡礼を楽しんでください！',
-    type: 'update'
-  },
-  {
-    id: 'notice-20260521-denwabango',
-    date: '2026/05/21',
-    title: '📍 【新スポット追加】≒JOY『電話番号教えて』MVロケ地を2件追加しました！',
-    content: '【新規聖地追加のお知らせ】\n≒JOYの人気楽曲『電話番号教えて』のMVロケ地が2件追加されました！\n\n■ 追加スポット\n① 静岡県立大学 草薙キャンパス（静岡県静岡市駿河区）\n② 白鵬女子高等学校（神奈川県横浜市鶴見区）\n\nどちらもメンバーたちが制服姿で青春を駆け抜けた、MVの世界観を彩る名ロケ地です。ぜひマップで確認してチェックインを目指してください！\n\n⚠️ 学校施設は現役の教育機関です。訪問の際は周辺への配慮を忘れずに、公道からのみご観覧ください。',
-    type: 'update'
-  },
-  {
-    id: 'notice-20260521-privacy-update',
-    date: '2026/05/21',
-    title: '📋 【重要】プライバシーポリシーを更新しました',
-    content: '【プライバシーポリシー更新のご案内】\n本サービスのプライバシーポリシーを更新しました。主な変更点は以下のとおりです。\n\n【変更点】\n・アカウント登録時（メール/パスワード方式）に、登録いただいた「メールアドレス」「ニックネーム」「推しグループ」「獲得称号」が、認証サービス「Supabase」（米国）のクラウドサーバーに保存される旨を明記しました。\n・X（Twitter）ログイン時に取得する情報の範囲を明記しました。\n・チェックイン記録（巡礼履歴）は引き続き、お使いの端末内にのみ保存されます（クラウド保存は行っておりません）。\n\n【Supabaseとは？】\nSupabase Inc.（米国）が提供する、業界標準のセキュリティ基準（SOC2 Type 2準拠）を満たした認証・データ管理サービスです。パスワードはSupabase側でハッシュ化（暗号化）されており、本サービスの運営者が平文で確認することはできません。\n\n詳細は画面下部の「プライバシーポリシー」よりご確認ください。ご不明な点はDiscordコミュニティへお問い合わせください。',
-    type: 'system'
-  },
-  {
-    id: 'notice-20260520-byun-mission',
-    date: '2026/05/20',
-    title: '✈️ 【新ミッション】順次解放型ミッション『ビュン、と飛んだ日』公開＆聖地大量追加！',
-    content: '【新規スポット追加のお知らせ】\n≒JOYの『お姫様の作り方』『超孤独ライオン』『スイートシックスティーン』『その先はイグザルト』から計5箇所の聖地を新たに追加しました！\n\n【順次解放型ミッションが公開！】\nさらに、『大空、ビュンと』に関連する7箇所のスポットを使用した新しいミッション『ビュン、と飛んだ日』がスタートしました！\n\n・ミッションルール：最初の目的地（茨城空港 国際線チェックインカウンター前）にチェックインすると、次の目的地がマップ上に解放されます。順番にスポットを巡り、最終目的地を目指しましょう！\n・クリア報酬：称号「大空を駆ける者」\n\nぜひ新しい聖地巡礼をお楽しみください！',
-    type: 'update'
-  },
-  {
-    id: 'notice-20260520-shokorisanpo',
-    date: '2026/05/20',
-    title: '🌸 【新ミッション】ルート解放型ミッション『しょこりさんぽ』が追加されました！',
-    content: '【新ミッション＆聖地追加のお知らせ】\n=LOVEの瀧脇笙古さん・音嶋莉沙さんのコンビ「しょこりさ」のお散歩ルートを辿る、新しい「ルート解放型ミッション」が追加されました！\n\n・ミッション：『鯉さん元気！？しょこりさんぽ』\n　├ スタート地点：東京駅八重洲南口 グランルーフ 歩行者デッキ\n　└ 報酬称号：しょこりさ推し！\n\n【ルート解放型とは？】\nミッションを開始するまで、ゴール地点はマップ上に表示されません。ミッション詳細画面から「ミッション開始」ボタンを押して隠された目的地を解放し、ゴールを目指してチェックインしましょう！',
-    type: 'update'
-  },
-  {
-    id: 'notice-20260520-fighter-kyunkawa',
-    date: '2026/05/20',
-    title: '🎉 【新ミッション】「排他的ファイター」「きゅんかわ人生」巡礼ミッションが同時開放！',
-    content: '【新ミッション＆聖地追加のお知らせ】\n≠MEおよび≒JOYの人気楽曲から、計8箇所の新規スポットデータが追加され、2つの巡礼ミッションが同時始動しました！\n\n・ミッションA：『輝け、僕の世界。』 (排彼のファイター)\n　├ 対象スポット：芸能花伝舎、GOBLIN. 海岸HALL店、スカパー東京メディアセンター\n　└ 報酬称号：孤高のファイター\n・ミッションB：『きゅんかわアイドルどこですか!?』 (きゅんかわ人生)\n　├ 対象スポット：パティオス18番街、パティオス12番街、打瀬３丁目公園、エムベイポイント幕張 25階円卓会議室\n　└ 報酬称号：きゅんかわマスター\n\nさらに、『はんぶんこクリスマス』MV撮影地の「Studio vence BAYSIDE」（新木場）も新規登録！\nぜひチェックインして限定称号を獲得しましょう！',
-    type: 'update'
-  },
-  {
-    id: 'notice-20260520-noimie-school-quest',
-    date: '2026/05/20',
-    title: '🎉 【新ミッション】ノイミー学園クエストシリーズ始動！ハワイアンズ＆北海道の聖地5箇所を追加！',
-    content: '【ノイミー学園クエストシリーズ始動！】\n≠MEの特典映像「ノイミー学園」の舞台となったハワイアンズ（福島県）と北海道（千歳・札幌）の聖地計5箇所が新たに追加され、2つの巡礼ミッションが開放されました！\n\n・ミッションA：『ハワイアーンなリゾート地！』\n　├ 対象：スパリゾートハワイアンズ (福島県)\n　└ 報酬称号：常夏のハワイアンズ\n・ミッションB：『超特Qな雪遊び！？』\n　├ 対象：IORI、国営滝野すずらん丘陵公園 滝野スノーワールド、アシリベツの滝、かに源 (計4箇所)\n　└ 報酬称号：超特Qなクイズ王\n\n各スポットを訪れてGPSチェックインを記録し、ノイミー学園の特別なプレミアム称号を解放しましょう！',
-    type: 'update'
-  },
-  {
-    id: 'notice-20260520-kiraku-closed',
-    date: '2026/05/20',
-    title: '⚠️ 【聖地削除】中華料理 喜楽（大森）の閉店に伴うデータ更新のお知らせ',
-    content: '【聖地削除のご案内】\n『この空がトリガー』のMVロケ地として登録されておりました「中華料理 喜楽（大森）」につきまして、店舗の閉店情報を確認いたしましたため、マップおよび聖地一覧リストよりデータを削除いたしました。\n\nこれまでファンの方々へ美味しい思い出を提供してくださった店舗様へ、深く感謝申し上げます。\n\n※近隣の聖地「Bar VEILLE（大森）」などは引き続き掲載されております。',
-    type: 'system'
-  },
   {
     id: 'notice-20260520-sorting-filter',
     date: '2026/05/20',
@@ -136,7 +72,6 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number): nu
   return R * c;
 }
 
-
 export default function App() {
   // データベース状態
   const [spots, setSpots] = useState<Spot[]>([]);
@@ -162,7 +97,6 @@ export default function App() {
 
   // 📜 利用規約・免責事項のステート
   const [showTermsModal, setShowTermsModal] = useState<boolean>(false);
-  const [showContactModal, setShowContactModal] = useState<boolean>(false);
   const [agreeTermsSignup, setAgreeTermsSignup] = useState<boolean>(false);
   const [agreeTermsBlock, setAgreeTermsBlock] = useState<boolean>(false);
   
@@ -176,12 +110,6 @@ export default function App() {
   const [rightPanelTab, setRightPanelTab] = useState<'detail' | 'mypage' | 'mission'>('detail');
   const [missionExpanded, setMissionExpanded] = useState<boolean>(true);
   const [recipeMissionExpanded, setRecipeMissionExpanded] = useState<boolean>(true);
-  const [hawaiiansMissionExpanded, setHawaiiansMissionExpanded] = useState<boolean>(true);
-  const [hokkaidoMissionExpanded, setHokkaidoMissionExpanded] = useState<boolean>(true);
-  const [fighterMissionExpanded, setFighterMissionExpanded] = useState<boolean>(true);
-  const [kyunkawaMissionExpanded, setKyunkawaMissionExpanded] = useState<boolean>(true);
-  const [shokoriMissionExpanded, setShokoriMissionExpanded] = useState<boolean>(true);
-  const [byunMissionExpanded, setByunMissionExpanded] = useState<boolean>(true);
 
   // 📱 スマホレスポンシブ判定用ステートとリサイズ監視
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
@@ -216,21 +144,7 @@ export default function App() {
   const [listSearchGroup, setListSearchGroup] = useState<string>('すべて');
   const [listLimit, setListLimit] = useState<number>(20);
   const [listSelectedArea, setListSelectedArea] = useState<string>('すべて');
-  const [listSelectedMission, setListSelectedMission] = useState<string>('すべて');
   const [listSortKey, setListSortKey] = useState<'default' | 'song-asc' | 'date-desc' | 'date-asc'>('default');
-  const [shokoriMissionStarted, setShokoriMissionStarted] = useState<boolean>(
-    localStorage.getItem('tdm_shokori_started') === 'true'
-  );
-
-  // 🎓 チュートリアル（初回ウォークスルー）
-  const [showTutorial, setShowTutorial] = useState<boolean>(
-    localStorage.getItem('tdm_tutorial_done') !== 'true'
-  );
-  const [tutorialStep, setTutorialStep] = useState<number>(0);
-
-  // 💝 支援お願いポップアップ（ピンタップ累計カウント）
-  const [showSupportModal, setShowSupportModal] = useState<boolean>(false);
-
 
   // 🚀 新着お知らせの既読未読＆自動ポップアップ判定
   useEffect(() => {
@@ -282,39 +196,23 @@ export default function App() {
   }, [activeView]);
 
   // 📋 聖地リスト用フィルタリング（都道府県の動的抽出と多重ソートを適用）
-  // 📍 聖地データの都道府県（日本の47都道府県名）の動的抽出ヘルパー
+  // 📍 聖地データの都道府県（大まかなエリア）の動的抽出ヘルパー
   const extractArea = (spot: Spot): string => {
-    // 日本の47都道府県名のみを厳密にマッチング
-    const areaMatch = spot.description.match(/(東京都|北海道|京都府|大阪府|神奈川県|千葉県|埼玉県|愛知県|兵庫県|福岡県|静岡県|茨城県|広島県|宮城県|新潟県|長野県|栃木県|群馬県|熊本県|岡山県|三重県|鹿児島県|山口県|愛媛県|福島県|滋賀県|青森県|山形県|石川県|秋田県|香川県|和歌山県|宮崎県|富山県|佐賀県|鳥取県|徳島県|高知県|島根県|岩手県|山梨県|長崎県|大分県|沖縄県|奈良県|福井県|岐阜県)/);
-    return areaMatch ? areaMatch[0] : '';
+    const areaMatch = spot.description.match(/(東京都|神奈川県|千葉県|埼玉県|群馬県|栃木県|茨城県|山梨県|静岡県|沖縄県|高知県|福島県|山口県|セブ島|韓国)/);
+    if (areaMatch) return areaMatch[0];
+    if (spot.name.includes('（')) {
+      const innerMatch = spot.name.match(/（(.*?)）/);
+      if (innerMatch) return innerMatch[1];
+    }
+    return 'その他';
   };
 
-  // データベース上の登録聖地から、存在する都道府県のみを動的に抽出
-  const availableAreas = Array.from(new Set(spots.map(extractArea))).filter(a => a !== '');
+  // データベース上の登録聖地から、存在する都道府県/エリアを動的に抽出
+  const availableAreas = Array.from(new Set(spots.map(extractArea))).filter(a => a !== 'その他');
+  availableAreas.push('その他');
 
   // 📋 聖地リスト用フィルターリング＆並べ替えソート処理
   const filteredListSpots = spots.filter(spot => {
-    // ルート解放型ミッションの未解放ゴール地点は非表示
-    if (!shokoriMissionStarted && spot.id === 'spot-shokori-goal') {
-      return false;
-    }
-
-    // 大空、ビュンと 順次解放ロジック
-    const byunSpotsOrder = [
-      "spot-joy-byun1", "spot-joy-byun2", "spot-joy-byun3", 
-      "spot-joy-byun4", "spot-joy-byun5", "spot-joy-byun6", "spot-joy-byun7"
-    ];
-    const spotByunIndex = byunSpotsOrder.indexOf(spot.id);
-    if (spotByunIndex > 0) {
-      // 直前のスポットがチェックインされているか確認
-      const prevSpotId = byunSpotsOrder[spotByunIndex - 1];
-      const isPrevChecked = checkins.some(c => c.spot_id === prevSpotId);
-      // 直前のスポットがチェックインされていなければ、このスポットは非表示（未解放）
-      if (!isPrevChecked) {
-        return false;
-      }
-    }
-
     // グループ別
     if (listSearchGroup !== 'すべて' && spot.group !== listSearchGroup) {
       return false;
@@ -324,24 +222,6 @@ export default function App() {
     if (listSelectedArea !== 'すべて') {
       const spotArea = extractArea(spot);
       if (spotArea !== listSelectedArea) {
-        return false;
-      }
-    }
-
-    // ミッション別
-    if (listSelectedMission !== 'すべて') {
-      const hasMission = spot.tags && spot.tags.some(tag => {
-        if (listSelectedMission === 'trigger') return tag.includes('トリガー巡礼');
-        if (listSelectedMission === 'recipe') return tag.includes('笑顔のレシピ巡礼');
-        if (listSelectedMission === 'hawaiians') return tag.includes('ハワイアンズ巡礼');
-        if (listSelectedMission === 'hokkaido') return tag.includes('超特Q北海道巡礼');
-        if (listSelectedMission === 'fighter') return tag.includes('排他的ファイター巡礼') || tag.includes('排彼のファイター巡礼');
-        if (listSelectedMission === 'kyunkawa') return tag.includes('きゅんかわ人生巡礼');
-        if (listSelectedMission === 'shokori') return tag.includes('しょこりさんぽ巡礼');
-        if (listSelectedMission === 'byun') return tag.includes('大空、ビュンと巡礼');
-        return false;
-      });
-      if (!hasMission) {
         return false;
       }
     }
@@ -514,42 +394,6 @@ export default function App() {
       }
     }
 
-    // 7. 常夏のハワイアンズ (1箇所)
-    const hawaiiansSpots = spots.filter(s => s.tags && s.tags.includes("ハワイアンズ巡礼"));
-    const hawaiiansTitle = "常夏のハワイアンズ";
-    if (hawaiiansSpots.length > 0 && isAllChecked(hawaiiansSpots)) {
-      if (!currentAcquired.includes(hawaiiansTitle) && !newlyEarnedTitles.includes(hawaiiansTitle)) {
-        newlyEarnedTitles.push(hawaiiansTitle);
-      }
-    }
-
-    // 8. 超特Qなクイズ王 (4箇所)
-    const hokkaidoSpots = spots.filter(s => s.tags && s.tags.includes("超特Q北海道巡礼"));
-    const hokkaidoTitle = "超特Qなクイズ王";
-    if (hokkaidoSpots.length > 0 && isAllChecked(hokkaidoSpots)) {
-      if (!currentAcquired.includes(hokkaidoTitle) && !newlyEarnedTitles.includes(hokkaidoTitle)) {
-        newlyEarnedTitles.push(hokkaidoTitle);
-      }
-    }
-
-    // 9. 孤高のファイター (3箇所)
-    const fighterSpots = spots.filter(s => s.tags && (s.tags.includes("排彼のファイター巡礼") || s.tags.includes("排彼のファイター巡礼") || s.tags.includes("排彼のファイター巡礼") || s.tags.includes("排他的ファイター巡礼")));
-    const fighterTitle = "孤高のファイター";
-    if (fighterSpots.length > 0 && isAllChecked(fighterSpots)) {
-      if (!currentAcquired.includes(fighterTitle) && !newlyEarnedTitles.includes(fighterTitle)) {
-        newlyEarnedTitles.push(fighterTitle);
-      }
-    }
-
-    // 10. きゅんかわマスター (4箇所)
-    const kyunkawaSpots = spots.filter(s => s.tags && s.tags.includes("きゅんかわ人生巡礼"));
-    const kyunkawaTitle = "きゅんかわマスター";
-    if (kyunkawaSpots.length > 0 && isAllChecked(kyunkawaSpots)) {
-      if (!currentAcquired.includes(kyunkawaTitle) && !newlyEarnedTitles.includes(kyunkawaTitle)) {
-        newlyEarnedTitles.push(kyunkawaTitle);
-      }
-    }
-
     // 3. イコラブの伝道師 (=LOVE全巡礼)
     const equalLoveSpots = spots.filter(s => s.group === "=LOVE");
     const equalLoveTitle = "イコラブの伝道師";
@@ -610,22 +454,6 @@ export default function App() {
     if (checkedSpotIds.size >= 20) {
       if (!currentAcquired.includes(oniTitle) && !newlyEarnedTitles.includes(oniTitle)) {
         newlyEarnedTitles.push(oniTitle);
-      }
-    }
-
-    // 10. しょこりさ推し！ (しょこりさんぽゴールチェックイン時)
-    const shokoriTitle = "しょこりさ推し！";
-    if (checkedSpotIds.has("spot-shokori-goal")) {
-      if (!currentAcquired.includes(shokoriTitle) && !newlyEarnedTitles.includes(shokoriTitle)) {
-        newlyEarnedTitles.push(shokoriTitle);
-      }
-    }
-
-    // 11. 大空を駆ける者 (大空、ビュンと巡礼ゴールチェックイン時)
-    const byunTitle = "大空を駆ける者";
-    if (checkedSpotIds.has("spot-joy-byun7")) {
-      if (!currentAcquired.includes(byunTitle) && !newlyEarnedTitles.includes(byunTitle)) {
-        newlyEarnedTitles.push(byunTitle);
       }
     }
 
@@ -723,25 +551,6 @@ export default function App() {
 
   // 🔍 検索・絞り込みを適用した聖地リスト (AND条件)
   const filteredSpotsOnMap = spots.filter(spot => {
-    // 0. ルート解放型ミッションの未解放ゴール地点は非表示
-    if (!shokoriMissionStarted && spot.id === 'spot-shokori-goal') {
-      return false;
-    }
-
-    // 0.5. 大空、ビュンと 順次解放ロジック
-    const byunSpotsOrder = [
-      "spot-joy-byun1", "spot-joy-byun2", "spot-joy-byun3", 
-      "spot-joy-byun4", "spot-joy-byun5", "spot-joy-byun6", "spot-joy-byun7"
-    ];
-    const spotByunIndex = byunSpotsOrder.indexOf(spot.id);
-    if (spotByunIndex > 0) {
-      const prevSpotId = byunSpotsOrder[spotByunIndex - 1];
-      const isPrevChecked = checkins.some(c => c.spot_id === prevSpotId);
-      if (!isPrevChecked) {
-        return false;
-      }
-    }
-
     // 1. グループ絞り込み
     if (searchGroup !== 'すべて' && spot.group !== searchGroup) {
       return false;
@@ -858,18 +667,6 @@ export default function App() {
           // 既にズームイン（16以上）している状態でピンを押しても、ズームレベルを下げず（動かさず）に滑らかに中央移動のみ行います
           const currentZoom = map.getZoom();
           map.setView([spot.latitude, spot.longitude], Math.max(currentZoom, 16), { animate: true });
-
-          // 💝 ピンタップ累計カウント → 3回・5回目で支援ポップアップ（1度きり）
-          const alreadyShown = localStorage.getItem('tdm_support_shown') === 'true';
-          if (!alreadyShown) {
-            const prev = parseInt(localStorage.getItem('tdm_pin_count') || '0', 10);
-            const next = prev + 1;
-            localStorage.setItem('tdm_pin_count', String(next));
-            if (next === 3 || next === 5) {
-              setShowSupportModal(true);
-              localStorage.setItem('tdm_support_shown', 'true');
-            }
-          }
         });
 
       if (clusterGroup) {
@@ -1225,36 +1022,21 @@ ${window.location.origin + window.location.pathname}
                 </h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   <div>
-                    <strong style={{ color: 'var(--text-main)', display: 'block', fontSize: '12.5px' }}>● メール/パスワード登録時に収集する情報：</strong>
+                    <strong style={{ color: 'var(--text-main)', display: 'block', fontSize: '12.5px' }}>● アカウント情報（外部連携）：</strong>
                     <span style={{ display: 'block', marginTop: '2px' }}>
-                      アカウント登録時にご入力いただいた以下の情報を収集します。これらの情報は認証サービス「Supabase」（米国）のクラウドサーバーに保存されます。
-                    </span>
-                    <ul style={{ margin: '6px 0 0 16px', padding: 0, display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                      <li>メールアドレス</li>
-                      <li>ニックネーム（表示名）</li>
-                      <li>推しグループ（=LOVE / ≠ME / ≒JOY / 合同）</li>
-                      <li>獲得称号・設定中の称号</li>
-                    </ul>
-                    <span style={{ display: 'block', marginTop: '4px', color: '#64748b' }}>
-                      ※パスワードはSupabase側でハッシュ化（暗号化）されており、本サービス運営者が平文で参照することはできません。
-                    </span>
-                  </div>
-                  <div>
-                    <strong style={{ color: 'var(--text-main)', display: 'block', fontSize: '12.5px' }}>● X（Twitter）ログイン時に収集する情報：</strong>
-                    <span style={{ display: 'block', marginTop: '2px' }}>
-                      XのOAuth 2.0認証を経由してログインした場合、Xプラットフォームから提供される「メールアドレス」「表示名」のみを取得します。パスワードは本サービスでは一切保持・管理いたしません。
+                      本サービスはX（Twitter）のOAuth認証を利用しています。ログイン時にプラットフォームから提供される「メールアドレス」「氏名（表示名）」「プロフィール画像」のみを取得します。※ユーザーのパスワードは本サービスでは一切保持・管理いたしません。
                     </span>
                   </div>
                   <div>
                     <strong style={{ color: 'var(--text-main)', display: 'block', fontSize: '12.5px' }}>● 位置情報（GPSデータ）：</strong>
                     <span style={{ display: 'block', marginTop: '2px' }}>
-                      「チェックイン機能」を利用する際、ユーザーの現在地情報を一時的に取得します。この情報はチェックイン対象スポットとの距離判定にのみ使用され、移動履歴としてサーバーに保存・追跡されることはありません。
+                      聖地での「チェックイン機能」を利用する際、ユーザーの現在地情報を取得します。この情報は、チェックイン対象スポットとの距離判定にのみ一時的に使用され、ユーザーの移動履歴としてサーバーに保存・追跡されることはありません。
                     </span>
                   </div>
                   <div>
-                    <strong style={{ color: 'var(--text-main)', display: 'block', fontSize: '12.5px' }}>● チェックイン記録・利用データ：</strong>
+                    <strong style={{ color: 'var(--text-main)', display: 'block', fontSize: '12.5px' }}>● プロフィール・利用データ：</strong>
                     <span style={{ display: 'block', marginTop: '2px' }}>
-                      チェックイン履歴（巡礼記録）は<strong>お使いの端末のブラウザ内（localStorage）にのみ保存</strong>されます。クラウドサーバーへの送信は行っておりません。端末の初期化やブラウザのデータ消去により削除される場合があります。
+                      獲得した称号（バッジ）、チェックイン履歴、ユーザーが提案・追加した聖地情報など、本サービス内でユーザーが生成したデータ。
                     </span>
                   </div>
                 </div>
@@ -1276,22 +1058,10 @@ ${window.location.origin + window.location.pathname}
                 <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
                   3. 情報の管理と外部サービスの利用
                 </h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '12px 14px' }}>
-                    <strong style={{ display: 'block', fontSize: '12px', color: 'var(--text-main)', marginBottom: '4px' }}>🔐 認証サービス：Supabase（Supabase Inc. / 米国）</strong>
-                    <ul style={{ margin: '4px 0 0 16px', padding: 0, display: 'flex', flexDirection: 'column', gap: '3px', fontSize: '11.5px' }}>
-                      <li>アカウント登録・ログイン認証の管理に使用しています。</li>
-                      <li>保存されるデータ：メールアドレス、ニックネーム、推しグループ、獲得称号</li>
-                      <li>データはSupabase Inc.の管理するサーバー（主に米国）に保存されます。</li>
-                      <li>Supabaseは業界標準のセキュリティ基準（SOC2 Type 2）に準拠しています。</li>
-                      <li>Supabaseのプライバシーポリシー：<a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer" style={{ color: '#ff6897' }}>https://supabase.com/privacy</a></li>
-                    </ul>
-                  </div>
-                  <ul style={{ margin: '0', padding: '0 0 0 20px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <li>法令に基づく場合を除き、ユーザーの同意を得ることなく第三者へ個人情報を提供することはありません。</li>
-                    <li>チェックイン記録（巡礼履歴）はお使いの端末内にのみ保存され、クラウドへの送信は行いません。</li>
-                  </ul>
-                </div>
+                <ul style={{ margin: '6px 0 0 20px', padding: 0, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <li>本サービスは、収集したデータを安全に管理するため、セキュリティ基準を満たした外部のクラウドデータベース（Supabase等）を利用してデータを保管しています。</li>
+                  <li>法令に基づく場合を除き、ユーザーの同意を得ることなく第三者へ個人情報を提供することはありません。</li>
+                </ul>
               </div>
 
               <div>
@@ -1316,17 +1086,7 @@ ${window.location.origin + window.location.pathname}
 
               <div>
                 <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  6. 広告・アクセス解析ツールの利用について
-                </h3>
-                <ul style={{ margin: '6px 0 0 20px', padding: 0, display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <li>当サービスは、第三者配信の広告サービス（Google AdSense等）を利用しています。これらの広告配信事業者は、ユーザーの興味に応じた広告を表示するためにCookieを使用することがあります。Cookieを無効にする設定およびGoogleアドセンスに関する詳細は「Googleポリシーと規約」をご確認ください。</li>
-                  <li>また、当サービスではトラフィックデータの収集のためにアクセス解析ツール（Google Analytics、Vercel Analytics等）を使用しています。これらはCookieを使用しますが、データは匿名で収集されており、個人を特定するものではありません。</li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  7. 本ポリシーの変更
+                  6. 本ポリシーの変更
                 </h3>
                 <p style={{ margin: 0 }}>
                   本サービスは、必要に応じて本プライバシーポリシーを変更することがあります。変更した場合は、本サービス内でお知らせいたします。
@@ -1335,7 +1095,7 @@ ${window.location.origin + window.location.pathname}
 
               <div>
                 <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  8. お問い合わせ
+                  7. お問い合わせ
                 </h3>
                 <p style={{ margin: 0 }}>
                   個人情報の取扱い、または本サービスに関するお問い合わせは、公式Discordコミュニティにて、お願いいたします。
@@ -1386,98 +1146,7 @@ ${window.location.origin + window.location.pathname}
 
   return (
     <div className="app-container">
-
-      {/* 🎓 初回チュートリアル ウォークスルー */}
-      {showTutorial && (() => {
-        const steps = [
-          {
-            emoji: '🗺️',
-            title: 'トリプルデートマップへようこそ！',
-            body: 'マップ上のピンをタップすると、その場所のMVをその場で再生して聖地を追体験できます。'
-          },
-          {
-            emoji: '📍',
-            title: '聖地に着いたらチェックイン！',
-            body: 'GPSを使ってチェックイン！実際に訪れた足跡を記録に残せます。'
-          },
-          {
-            emoji: '🏆',
-            title: 'ミッションをクリアして称号をGET！',
-            body: '様々なミッションをクリアしていくと、あなただけの特別な『称号』が解放されます！さっそくマップを探索してみましょう！'
-          }
-        ];
-        const step = steps[tutorialStep];
-        const isLast = tutorialStep === steps.length - 1;
-        return (
-          <div className="tutorial-overlay" onClick={(e) => { if (e.target === e.currentTarget) { setShowTutorial(false); localStorage.setItem('tdm_tutorial_done', 'true'); } }}>
-            <div className="tutorial-card">
-              <div className="tutorial-step-dots">
-                {steps.map((_, i) => (
-                  <div key={i} className={`tutorial-dot ${i === tutorialStep ? 'active' : ''}`} />
-                ))}
-              </div>
-              <span className="tutorial-emoji">{step.emoji}</span>
-              <h2 className="tutorial-title">{step.title}</h2>
-              <p className="tutorial-body">{step.body}</p>
-              <button
-                className="tutorial-btn-primary"
-                onClick={() => {
-                  if (isLast) {
-                    setShowTutorial(false);
-                    localStorage.setItem('tdm_tutorial_done', 'true');
-                  } else {
-                    setTutorialStep(s => s + 1);
-                  }
-                }}
-              >
-                {isLast ? '🚀 マップを探索する！' : '次へ →'}
-              </button>
-              <button
-                className="tutorial-btn-skip"
-                onClick={() => {
-                  setShowTutorial(false);
-                  localStorage.setItem('tdm_tutorial_done', 'true');
-                }}
-              >
-                スキップ
-              </button>
-            </div>
-          </div>
-        );
-      })()}
-
-      {/* 💝 支援お願いポップアップ */}
-      {showSupportModal && (
-        <div className="tutorial-overlay" onClick={(e) => { if (e.target === e.currentTarget) setShowSupportModal(false); }}>
-          <div className="support-modal-card">
-            <span style={{ fontSize: '44px', display: 'block', textAlign: 'center', marginBottom: '14px' }}>💖</span>
-            <h2 style={{ fontSize: '16px', fontWeight: '900', color: '#0f172a', textAlign: 'center', margin: '0 0 12px 0', lineHeight: '1.4' }}>
-              【開発・運営からのお願い】
-            </h2>
-            <p style={{ fontSize: '12.5px', color: '#475569', textAlign: 'center', lineHeight: '1.8', margin: '0 0 22px 0', fontWeight: '600' }}>
-              マップをご利用いただきありがとうございます！<br />
-              当アプリは<strong>完全無料・広告なしで自費運営</strong>しています。<br />
-              より多くの聖地追加やサーバー維持のため、もしよろしければ「OFUSE」よりご支援（カンパ）をいただけますと大変励みになります！
-            </p>
-            <a
-              className="support-modal-btn-primary"
-              href="https://ofuse.me/o?uid=180694"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setShowSupportModal(false)}
-            >
-              💖 OFUSEで応援する
-            </a>
-            <button
-              className="support-modal-btn-close"
-              onClick={() => setShowSupportModal(false)}
-            >
-              閉じる
-            </button>
-          </div>
-        </div>
-      )}
-
+      
       {/* 1. 上部パネル (Header) */}
       <header className="app-header">
         <div className="header-left">
@@ -1725,7 +1394,6 @@ ${window.location.origin + window.location.pathname}
             style={{ 
               position: 'relative',
               height: '100%',
-              flex: 1, // 高さが潰れるのを防止
               display: activeView === 'map' ? 'block' : 'none'
             }}
           >
@@ -1798,7 +1466,7 @@ ${window.location.origin + window.location.pathname}
               <Compass className={`w-5 h-5 stroke-[2.5] ${isGpsJumping ? 'text-violet-500 animate-spin' : 'text-slate-700'}`} />
             </button>
 
-            <div className="map-wrapper" style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}>
+            <div className="map-wrapper">
               <div 
                 id="map-canvas" 
                 style={{ width: '100%', height: '100%' }}
@@ -1810,7 +1478,6 @@ ${window.location.origin + window.location.pathname}
             className="spots-list-container" 
             style={{
               height: '100%',
-              flex: 1, // 高さが潰れるのを防止
               display: activeView === 'list' ? 'flex' : 'none',
               flexDirection: 'column',
               background: '#f8fafc',
@@ -1869,46 +1536,9 @@ ${window.location.origin + window.location.pathname}
                   )}
                 </div>
 
-                {/* 📍 都道府県・ミッションフィルター ＆ 📋 ソート並べ替え */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {/* ミッションセレクト */}
-                  <div style={{ position: 'relative' }}>
-                    <select
-                      value={listSelectedMission}
-                      onChange={(e) => {
-                        setListSelectedMission(e.target.value);
-                        setListLimit(20);
-                      }}
-                      style={{
-                        width: '100%',
-                        padding: '8px 24px 8px 10px',
-                        borderRadius: '10px',
-                        border: '2px solid #e2e8f0',
-                        fontSize: '11px',
-                        fontWeight: 'bold',
-                        color: '#475569',
-                        outline: 'none',
-                        background: '#ffffff',
-                        cursor: 'pointer',
-                        appearance: 'none',
-                        WebkitAppearance: 'none'
-                      }}
-                    >
-                      <option value="すべて">🏅 すべてのミッション・タグ</option>
-                      <option value="trigger">☁️ この空がトリガー (全12箇所)</option>
-                      <option value="recipe">🍳 笑顔のレシピ (全6箇所)</option>
-                      <option value="hawaiians">🌺 常夏のハワイアンズ (全1箇所)</option>
-                      <option value="hokkaido">🚄 超特Q北海道 (全4箇所)</option>
-                      <option value="fighter">🥊 排他的ファイター (全3箇所)</option>
-                      <option value="kyunkawa">🎀 きゅんかわ人生 (全4箇所)</option>
-                      <option value="shokori">🌸 しょこりさんぽ (全2箇所)</option>
-                      <option value="byun">✈️ 大空、ビュンと (全7箇所)</option>
-                    </select>
-                    <div style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', fontSize: '9px', color: '#94a3b8' }}>▼</div>
-                  </div>
-
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    {/* 都道府県セレクト */}
+                {/* 📍 都道府県フィルター ＆ 📋 ソート並べ替え */}
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  {/* 都道府県セレクト */}
                   <div style={{ flex: 1, position: 'relative' }}>
                     <select
                       value={listSelectedArea}
@@ -1969,7 +1599,6 @@ ${window.location.origin + window.location.pathname}
                     </select>
                     <div style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', fontSize: '9px', color: '#94a3b8' }}>▼</div>
                   </div>
-                </div>
                 </div>
 
                 {/* グループ別フィルタータブ */}
@@ -2237,7 +1866,6 @@ ${window.location.origin + window.location.pathname}
                     )}
                   </>
                 )}
-                <AdBanner slot="XXXXXXXXXX" />
               </div>
             </div>
 
@@ -2347,36 +1975,34 @@ ${window.location.origin + window.location.pathname}
           
           {/* ☕️ 開発者支援（カンパ）導線最優先枠 */}
           <div style={{
-            padding: '14px 16px 10px 16px',
+            padding: '12px 12px 8px 12px',
             borderBottom: '1px dashed #e2e8f0',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
             width: '100%',
-            gap: '6px'
+            minHeight: '64px'
           }}>
-            <a
-              className="ofuse-support-btn"
-              href="https://ofuse.me/o?uid=180694"
-              target="_blank"
-              rel="noopener noreferrer"
+            <a 
               data-ofuse-widget-button="true"
-              data-ofuse-id="180694"
-              data-ofuse-size="large"
-              data-ofuse-color="pink"
-              data-ofuse-text="開発費用を支援する"
+              href="https://ofuse.me/o?uid=180694" 
+              data-ofuse-id="180694" 
+              data-ofuse-size="large" 
+              data-ofuse-color="pink" 
+              data-ofuse-text="開発費用を支援する" 
               data-ofuse-style="rectangle"
             >
-              💖 OFUSEで開発を応援する
+              開発費用を支援する
             </a>
             <span style={{ 
               fontSize: '9.5px', 
               color: 'var(--text-muted)', 
+              marginTop: '8px',
               textAlign: 'center',
               fontWeight: '700'
             }}>
-              無料・広告なしで運営中 ✨ 支援が大きな励みになります
+              ※有料サーバー維持のためのOFUSE支援ページが開きます
             </span>
           </div>
 
@@ -2789,1069 +2415,6 @@ ${window.location.origin + window.location.pathname}
                     );
                   })()}
 
-                  {/* 🌟 ノイミー学園クエストシリーズ：ミッションA (ハワイアンズ) */}
-                  {(() => {
-                    const hawaiianSpots = spots.filter(s => s.tags && s.tags.includes("ハワイアンズ巡礼"));
-                    const checkedHawaiianSpots = checkins.filter(c => {
-                      const spot = spots.find(s => s.id === c.spot_id);
-                      return spot && spot.tags && spot.tags.includes("ハワイアンズ巡礼");
-                    });
-                    const uniqueCheckedCount = new Set(checkedHawaiianSpots.map(c => c.spot_id)).size;
-                    const totalCount = hawaiianSpots.length || 1;
-                    const percent = Math.min(100, Math.round((uniqueCheckedCount / totalCount) * 100));
-                    const isCompleted = uniqueCheckedCount === totalCount;
-
-                    return (
-                      <div className="pop-panel" style={{
-                        borderRadius: '16px',
-                        border: '2px solid #e2e8f0',
-                        overflow: 'hidden',
-                        boxShadow: 'var(--shadow-panel)',
-                        marginTop: '16px'
-                      }}>
-                        {/* アコーディオンヘッダー */}
-                        <div 
-                          onClick={() => setHawaiiansMissionExpanded(!hawaiiansMissionExpanded)}
-                          style={{
-                            padding: '16px',
-                            background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)', // 爽やかなブルー系グラデーション
-                            borderBottom: '1px solid #e2e8f0',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center'
-                          }}
-                        >
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                            {/* 🏷️ メインタイトル（小見出し）：バッジ風装飾 */}
-                            <span style={{
-                              alignSelf: 'flex-start',
-                              fontSize: '9px',
-                              fontWeight: '900',
-                              color: '#3b82f6',
-                              background: '#dbeafe',
-                              padding: '2px 8px',
-                              borderRadius: '6px',
-                              letterSpacing: '0.02em',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '3px'
-                            }}>
-                              🏷️ ノイミー学園クエストシリーズ
-                            </span>
-                            {/* 👑 サブタイトル（大見出し）：エモいタイトル */}
-                            <span style={{
-                              fontSize: '15px',
-                              fontWeight: '900',
-                              color: '#1e293b',
-                              letterSpacing: '-0.02em',
-                              lineHeight: '1.2',
-                              marginTop: '2px'
-                            }}>
-                              『ハワイアーンなリゾート地！』
-                            </span>
-                            {/* 📊 進行状況 */}
-                            <span style={{ fontSize: '9.5px', color: 'var(--text-muted)', fontWeight: '800', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '3px' }}>
-                              🧭 進行状況: {uniqueCheckedCount} / {totalCount} 箇所 ({percent}%)
-                            </span>
-                          </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            {isCompleted ? (
-                              <span style={{ fontSize: '10px', fontWeight: '900', color: '#3b82f6', background: '#ffffff', padding: '2px 8px', borderRadius: '9999px', border: '1px solid rgba(59,130,246,0.2)' }}>達成！</span>
-                            ) : (
-                              <ChevronRight className="w-4 h-4 text-slate-400" style={{ transform: hawaiiansMissionExpanded ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
-                            )}
-                          </div>
-                        </div>
-
-                        {/* アコーディオンの中身 */}
-                        {hawaiiansMissionExpanded && (
-                          <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', backgroundColor: '#ffffff' }}>
-                            {/* プログレスバー */}
-                            <div style={{ padding: '4px 6px 10px 6px' }}>
-                              <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '9999px', overflow: 'hidden' }}>
-                                <div style={{ width: `${percent}%`, height: '100%', background: 'linear-gradient(90deg, #60a5fa 0%, #3b82f6 100%)', transition: 'width 0.4s ease-out' }}></div>
-                              </div>
-                            </div>
-
-                            {/* スポットリスト */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                              {hawaiianSpots.map(spot => {
-                                const isSpotChecked = checkins.some(c => c.spot_id === spot.id);
-                                return (
-                                  <div 
-                                    key={spot.id} 
-                                    onClick={() => {
-                                      handleFocusSpotOnMap(spot);
-                                      setSelectedSpot(spot);
-                                      setRightPanelTab('detail');
-                                    }}
-                                    style={{
-                                      display: 'flex',
-                                      justifyContent: 'space-between',
-                                      alignItems: 'center',
-                                      padding: '8px 10px',
-                                      borderRadius: '10px',
-                                      background: isSpotChecked ? '#f0fdf4' : '#f8fafc',
-                                      border: isSpotChecked ? '1px solid rgba(74,222,128,0.2)' : '1px solid #f1f5f9',
-                                      cursor: 'pointer',
-                                      transition: 'all 0.2s'
-                                    }}
-                                  >
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                                      <span style={{ fontSize: '11px', fontWeight: '800', color: isSpotChecked ? '#16a34a' : '#334155' }}>
-                                        {spot.name}
-                                      </span>
-                                      <span style={{ fontSize: '8px', color: '#94a3b8' }}>
-                                        📍 福島県いわき市
-                                      </span>
-                                    </div>
-                                    <div>
-                                      {isSpotChecked ? (
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#dcfce7', color: '#16a34a', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '900' }}>
-                                          行った！
-                                        </div>
-                                      ) : (
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#ffffff', color: '#94a3b8', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '800', border: '1px solid #e2e8f0' }}>
-                                          未チェック
-                                        </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                );
-                              })}
-                            </div>
-
-                            {/* 称号獲得の通知報酬枠 */}
-                            <div style={{
-                              marginTop: '8px',
-                              padding: '10px',
-                              borderRadius: '10px',
-                              background: isCompleted ? 'linear-gradient(135deg, rgba(59,130,246,0.06) 0%, rgba(37,99,235,0.06) 100%)' : '#f8fafc',
-                              border: isCompleted ? '1px dashed #3b82f6' : '1px dashed #cbd5e1',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '8px'
-                            }}>
-                              <div style={{
-                                width: '28px',
-                                height: '28px',
-                                borderRadius: '50%',
-                                background: isCompleted ? 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)' : '#e2e8f0',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                flexShrink: 0
-                              }}>
-                                <Award className="w-4 h-4 text-white" />
-                              </div>
-                              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                                <span style={{ fontSize: '10px', fontWeight: '900', color: isCompleted ? '#2563eb' : '#64748b' }}>称号報酬: 常夏のハワイアンズ</span>
-                                <span style={{ fontSize: '8px', color: '#94a3b8' }}>
-                                  {isCompleted ? '🎉 常夏のハワイアンズの称号を獲得！マイページでバッジが輝いています。' : 'スパリゾートハワイアンズを訪れてチェックインすると「常夏のハワイアンズ」の称号が解放されます。'}
-                                </span>
-                              </div>
-                            </div>
-
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })()}
-
-                  {/* 🌟 ノイミー学園クエストシリーズ：ミッションB (超特Q北海道) */}
-                  {(() => {
-                    const hokkaidoSpots = spots.filter(s => s.tags && s.tags.includes("超特Q北海道巡礼"));
-                    const checkedHokkaidoSpots = checkins.filter(c => {
-                      const spot = spots.find(s => s.id === c.spot_id);
-                      return spot && spot.tags && spot.tags.includes("超特Q北海道巡礼");
-                    });
-                    const uniqueCheckedCount = new Set(checkedHokkaidoSpots.map(c => c.spot_id)).size;
-                    const totalCount = hokkaidoSpots.length || 4;
-                    const percent = Math.min(100, Math.round((uniqueCheckedCount / totalCount) * 100));
-                    const isCompleted = uniqueCheckedCount === totalCount;
-
-                    return (
-                      <div className="pop-panel" style={{
-                        borderRadius: '16px',
-                        border: '2px solid #e2e8f0',
-                        overflow: 'hidden',
-                        boxShadow: 'var(--shadow-panel)',
-                        marginTop: '16px'
-                      }}>
-                        {/* アコーディオンヘッダー */}
-                        <div 
-                          onClick={() => setHokkaidoMissionExpanded(!hokkaidoMissionExpanded)}
-                          style={{
-                            padding: '16px',
-                            background: 'linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%)', // 爽やかなパープル系グラデーション
-                            borderBottom: '1px solid #e2e8f0',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center'
-                          }}
-                        >
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                            {/* 🏷️ メインタイトル（小見出し）：バッジ風装飾 */}
-                            <span style={{
-                              alignSelf: 'flex-start',
-                              fontSize: '9px',
-                              fontWeight: '900',
-                              color: '#7c3aed',
-                              background: '#ede9fe',
-                              padding: '2px 8px',
-                              borderRadius: '6px',
-                              letterSpacing: '0.02em',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '3px'
-                            }}>
-                              🏷️ ノイミー学園クエストシリーズ
-                            </span>
-                            {/* 👑 サブタイトル（大見出し）：エモいタイトル */}
-                            <span style={{
-                              fontSize: '15px',
-                              fontWeight: '900',
-                              color: '#1e293b',
-                              letterSpacing: '-0.02em',
-                              lineHeight: '1.2',
-                              marginTop: '2px'
-                            }}>
-                              『超特Qな雪遊び！？』
-                            </span>
-                            {/* 📊 進行状況 */}
-                            <span style={{ fontSize: '9.5px', color: 'var(--text-muted)', fontWeight: '800', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '3px' }}>
-                              🧭 進行状況: {uniqueCheckedCount} / {totalCount} 箇所 ({percent}%)
-                            </span>
-                          </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            {isCompleted ? (
-                              <span style={{ fontSize: '10px', fontWeight: '900', color: '#7c3aed', background: '#ffffff', padding: '2px 8px', borderRadius: '9999px', border: '1px solid rgba(124,58,237,0.2)' }}>達成！</span>
-                            ) : (
-                              <ChevronRight className="w-4 h-4 text-slate-400" style={{ transform: hokkaidoMissionExpanded ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
-                            )}
-                          </div>
-                        </div>
-
-                        {/* アコーディオンの中身 */}
-                        {hokkaidoMissionExpanded && (
-                          <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', backgroundColor: '#ffffff' }}>
-                            {/* プログレスバー */}
-                            <div style={{ padding: '4px 6px 10px 6px' }}>
-                              <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '9999px', overflow: 'hidden' }}>
-                                <div style={{ width: `${percent}%`, height: '100%', background: 'linear-gradient(90deg, #a78bfa 0%, #7c3aed 100%)', transition: 'width 0.4s ease-out' }}></div>
-                              </div>
-                            </div>
-
-                            {/* スポットリスト */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                              {hokkaidoSpots.map(spot => {
-                                const isSpotChecked = checkins.some(c => c.spot_id === spot.id);
-                                return (
-                                  <div 
-                                    key={spot.id} 
-                                    onClick={() => {
-                                      handleFocusSpotOnMap(spot);
-                                      setSelectedSpot(spot);
-                                      setRightPanelTab('detail');
-                                    }}
-                                    style={{
-                                      display: 'flex',
-                                      justifyContent: 'space-between',
-                                      alignItems: 'center',
-                                      padding: '8px 10px',
-                                      borderRadius: '10px',
-                                      background: isSpotChecked ? '#f0fdf4' : '#f8fafc',
-                                      border: isSpotChecked ? '1px solid rgba(74,222,128,0.2)' : '1px solid #f1f5f9',
-                                      cursor: 'pointer',
-                                      transition: 'all 0.2s'
-                                    }}
-                                  >
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                                      <span style={{ fontSize: '11px', fontWeight: '800', color: isSpotChecked ? '#16a34a' : '#334155' }}>
-                                        {spot.name}
-                                      </span>
-                                      <span style={{ fontSize: '8px', color: '#94a3b8' }}>
-                                        {spot.name === 'IORI' ? '📍 北海道千歳市' : '📍 北海道札幌市'}
-                                      </span>
-                                    </div>
-                                    <div>
-                                      {isSpotChecked ? (
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#dcfce7', color: '#16a34a', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '900' }}>
-                                          行った！
-                                        </div>
-                                      ) : (
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#ffffff', color: '#94a3b8', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '800', border: '1px solid #e2e8f0' }}>
-                                          未チェック
-                                        </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                );
-                              })}
-                            </div>
-
-                            {/* 称号獲得の通知報酬枠 */}
-                            <div style={{
-                              marginTop: '8px',
-                              padding: '10px',
-                              borderRadius: '10px',
-                              background: isCompleted ? 'linear-gradient(135deg, rgba(124,58,237,0.06) 0%, rgba(109,40,217,0.06) 100%)' : '#f8fafc',
-                              border: isCompleted ? '1px dashed #7c3aed' : '1px dashed #cbd5e1',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '8px'
-                            }}>
-                              <div style={{
-                                width: '28px',
-                                height: '28px',
-                                borderRadius: '50%',
-                                background: isCompleted ? 'linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%)' : '#e2e8f0',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                flexShrink: 0
-                              }}>
-                                <Award className="w-4 h-4 text-white" />
-                              </div>
-                              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                                <span style={{ fontSize: '10px', fontWeight: '900', color: isCompleted ? '#6d28d9' : '#64748b' }}>称号報酬: 超特Qなクイズ王</span>
-                                <span style={{ fontSize: '8px', color: '#94a3b8' }}>
-                                  {isCompleted ? '🎉 超特Qなクイズ王の称号を獲得！マイページでバッジが輝いています。' : '「超特Q 北海道行き」の聖地4箇所すべてを巡ると「超特Qなクイズ王」の称号が解放されます。'}
-                                </span>
-                              </div>
-                            </div>
-
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })()}
-
-                  {/* 🌟 排他的ファイター 巡礼ミッション */}
-                  {(() => {
-                    const fighterSpots = spots.filter(s => s.tags && (s.tags.includes("排彼のファイター巡礼") || s.tags.includes("排彼のファイター巡礼") || s.tags.includes("排彼のファイター巡礼") || s.tags.includes("排他的ファイター巡礼")));
-                    const checkedFighterSpots = checkins.filter(c => {
-                      const spot = spots.find(s => s.id === c.spot_id);
-                      return spot && spot.tags && (spot.tags.includes("排彼のファイター巡礼") || spot.tags.includes("排他的ファイター巡礼"));
-                    });
-                    const uniqueCheckedCount = new Set(checkedFighterSpots.map(c => c.spot_id)).size;
-                    const totalCount = fighterSpots.length || 3;
-                    const percent = Math.min(100, Math.round((uniqueCheckedCount / totalCount) * 100));
-                    const isCompleted = uniqueCheckedCount === totalCount;
-
-                    return (
-                      <div className="pop-panel" style={{
-                        borderRadius: '16px',
-                        border: '2px solid #e2e8f0',
-                        overflow: 'hidden',
-                        boxShadow: 'var(--shadow-panel)',
-                        marginTop: '16px'
-                      }}>
-                        {/* アコーディオンヘッダー */}
-                        <div 
-                          onClick={() => setFighterMissionExpanded(!fighterMissionExpanded)}
-                          style={{
-                            padding: '16px',
-                            background: 'linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%)', // クールで少し熱いピンク・レッド系グラデーション
-                            borderBottom: '1px solid #e2e8f0',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center'
-                          }}
-                        >
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                            {/* 🏷️ メインタイトル（小見出し）：バッジ風装飾 */}
-                            <span style={{
-                              alignSelf: 'flex-start',
-                              fontSize: '9px',
-                              fontWeight: '900',
-                              color: '#e11d48',
-                              background: '#ffe4e6',
-                              padding: '2px 8px',
-                              borderRadius: '6px',
-                              letterSpacing: '0.02em',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '3px'
-                            }}>
-                              🏷️ 排他的ファイター 巡礼ミッション
-                            </span>
-                            {/* 👑 サブタイトル（大見出し）：エモいタイトル */}
-                            <span style={{
-                              fontSize: '15px',
-                              fontWeight: '900',
-                              color: '#1e293b',
-                              letterSpacing: '-0.02em',
-                              lineHeight: '1.2',
-                              marginTop: '2px'
-                            }}>
-                              『輝け、僕の世界。』
-                            </span>
-                            {/* 📊 進行状況 */}
-                            <span style={{ fontSize: '9.5px', color: 'var(--text-muted)', fontWeight: '800', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '3px' }}>
-                              🧭 進行状況: {uniqueCheckedCount} / {totalCount} 箇所 ({percent}%)
-                            </span>
-                          </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            {isCompleted ? (
-                              <span style={{ fontSize: '10px', fontWeight: '900', color: '#e11d48', background: '#ffffff', padding: '2px 8px', borderRadius: '9999px', border: '1px solid rgba(225,29,72,0.2)' }}>達成！</span>
-                            ) : (
-                              <ChevronRight className="w-4 h-4 text-slate-400" style={{ transform: fighterMissionExpanded ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
-                            )}
-                          </div>
-                        </div>
-
-                        {/* アコーディオンの中身 */}
-                        {fighterMissionExpanded && (
-                          <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', backgroundColor: '#ffffff' }}>
-                            {/* プログレスバー */}
-                            <div style={{ padding: '4px 6px 10px 6px' }}>
-                              <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '9999px', overflow: 'hidden' }}>
-                                <div style={{ width: `${percent}%`, height: '100%', background: 'linear-gradient(90deg, #fda4af 0%, #f43f5e 100%)', transition: 'width 0.4s ease-out' }}></div>
-                              </div>
-                            </div>
-
-                            {/* スポットリスト */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                              {fighterSpots.map(spot => {
-                                const isSpotChecked = checkins.some(c => c.spot_id === spot.id);
-                                return (
-                                  <div 
-                                    key={spot.id} 
-                                    onClick={() => {
-                                      handleFocusSpotOnMap(spot);
-                                      setSelectedSpot(spot);
-                                      setRightPanelTab('detail');
-                                    }}
-                                    style={{
-                                      display: 'flex',
-                                      justifyContent: 'space-between',
-                                      alignItems: 'center',
-                                      padding: '8px 10px',
-                                      borderRadius: '10px',
-                                      background: isSpotChecked ? '#f0fdf4' : '#f8fafc',
-                                      border: isSpotChecked ? '1px solid rgba(74,222,128,0.2)' : '1px solid #f1f5f9',
-                                      cursor: 'pointer',
-                                      transition: 'all 0.2s'
-                                    }}
-                                  >
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                                      <span style={{ fontSize: '11px', fontWeight: '800', color: isSpotChecked ? '#16a34a' : '#334155' }}>
-                                        {spot.name}
-                                      </span>
-                                      <span style={{ fontSize: '8px', color: '#94a3b8' }}>
-                                        {spot.name === '芸能花伝舎' ? '📍 東京都新宿区' : spot.name === 'GOBLIN. 海岸HALL店' ? '📍 東京都港区' : '📍 東京都江東区'}
-                                      </span>
-                                    </div>
-                                    <div>
-                                      {isSpotChecked ? (
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#dcfce7', color: '#16a34a', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '900' }}>
-                                          行った！
-                                        </div>
-                                      ) : (
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#ffffff', color: '#94a3b8', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '800', border: '1px solid #e2e8f0' }}>
-                                          未チェック
-                                        </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                );
-                              })}
-                            </div>
-
-                            {/* 称号獲得の通知報酬枠 */}
-                            <div style={{
-                              marginTop: '8px',
-                              padding: '10px',
-                              borderRadius: '10px',
-                              background: isCompleted ? 'linear-gradient(135deg, rgba(244,63,94,0.06) 0%, rgba(225,29,72,0.06) 100%)' : '#f8fafc',
-                              border: isCompleted ? '1px dashed #f43f5e' : '1px dashed #cbd5e1',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '8px'
-                            }}>
-                              <div style={{
-                                width: '28px',
-                                height: '28px',
-                                borderRadius: '50%',
-                                background: isCompleted ? 'linear-gradient(135deg, #fda4af 0%, #f43f5e 100%)' : '#e2e8f0',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                flexShrink: 0
-                              }}>
-                                <Award className="w-4 h-4 text-white" />
-                              </div>
-                              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                                <span style={{ fontSize: '10px', fontWeight: '900', color: isCompleted ? '#e11d48' : '#64748b' }}>称号報酬: 孤高のファイター</span>
-                                <span style={{ fontSize: '8px', color: '#94a3b8' }}>
-                                  {isCompleted ? '🎉 孤高のファイターの称号を獲得！マイページでバッジが輝いています。' : '「排他的ファイター」の聖地3箇所すべてを巡ると「孤高のファイター」の称号が解放されます。'}
-                                </span>
-                              </div>
-                            </div>
-
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })()}
-
-                  {/* 🌟 きゅんかわ人生 巡礼ミッション */}
-                  {(() => {
-                    const kyunkawaSpots = spots.filter(s => s.tags && s.tags.includes("きゅんかわ人生巡礼"));
-                    const checkedKyunkawaSpots = checkins.filter(c => {
-                      const spot = spots.find(s => s.id === c.spot_id);
-                      return spot && spot.tags && spot.tags.includes("きゅんかわ人生巡礼");
-                    });
-                    const uniqueCheckedCount = new Set(checkedKyunkawaSpots.map(c => c.spot_id)).size;
-                    const totalCount = kyunkawaSpots.length || 4;
-                    const percent = Math.min(100, Math.round((uniqueCheckedCount / totalCount) * 100));
-                    const isCompleted = uniqueCheckedCount === totalCount;
-
-                    return (
-                      <div className="pop-panel" style={{
-                        borderRadius: '16px',
-                        border: '2px solid #e2e8f0',
-                        overflow: 'hidden',
-                        boxShadow: 'var(--shadow-panel)',
-                        marginTop: '16px'
-                      }}>
-                        {/* アコーディオンヘッダー */}
-                        <div 
-                          onClick={() => setKyunkawaMissionExpanded(!kyunkawaMissionExpanded)}
-                          style={{
-                            padding: '16px',
-                            background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)', // ≒JOYのイメージカラーでもある、爽やかで明るい黄緑・グリーン系グラデーション
-                            borderBottom: '1px solid #e2e8f0',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center'
-                          }}
-                        >
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                            {/* 🏷️ メインタイトル（小見出し）：バッジ風装飾 */}
-                            <span style={{
-                              alignSelf: 'flex-start',
-                              fontSize: '9px',
-                              fontWeight: '900',
-                              color: '#16a34a',
-                              background: '#dcfce7',
-                              padding: '2px 8px',
-                              borderRadius: '6px',
-                              letterSpacing: '0.02em',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '3px'
-                            }}>
-                              🏷️ きゅんかわ人生 巡礼ミッション
-                            </span>
-                            {/* 👑 サブタイトル（大見出し）：エモいタイトル */}
-                            <span style={{
-                              fontSize: '15px',
-                              fontWeight: '900',
-                              color: '#1e293b',
-                              letterSpacing: '-0.02em',
-                              lineHeight: '1.2',
-                              marginTop: '2px'
-                            }}>
-                              『きゅんかわアイドルどこですか!?』
-                            </span>
-                            {/* 📊 進行状況 */}
-                            <span style={{ fontSize: '9.5px', color: 'var(--text-muted)', fontWeight: '800', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '3px' }}>
-                              🧭 進行状況: {uniqueCheckedCount} / {totalCount} 箇所 ({percent}%)
-                            </span>
-                          </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            {isCompleted ? (
-                              <span style={{ fontSize: '10px', fontWeight: '900', color: '#16a34a', background: '#ffffff', padding: '2px 8px', borderRadius: '9999px', border: '1px solid rgba(22,163,74,0.2)' }}>達成！</span>
-                            ) : (
-                              <ChevronRight className="w-4 h-4 text-slate-400" style={{ transform: kyunkawaMissionExpanded ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
-                            )}
-                          </div>
-                        </div>
-
-                        {/* アコーディオンの中身 */}
-                        {kyunkawaMissionExpanded && (
-                          <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', backgroundColor: '#ffffff' }}>
-                            {/* プログレスバー */}
-                            <div style={{ padding: '4px 6px 10px 6px' }}>
-                              <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '9999px', overflow: 'hidden' }}>
-                                <div style={{ width: `${percent}%`, height: '100%', background: 'linear-gradient(90deg, #4ade80 0%, #16a34a 100%)', transition: 'width 0.4s ease-out' }}></div>
-                              </div>
-                            </div>
-
-                            {/* スポットリスト */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                              {kyunkawaSpots.map(spot => {
-                                const isSpotChecked = checkins.some(c => c.spot_id === spot.id);
-                                return (
-                                  <div 
-                                    key={spot.id} 
-                                    onClick={() => {
-                                      handleFocusSpotOnMap(spot);
-                                      setSelectedSpot(spot);
-                                      setRightPanelTab('detail');
-                                    }}
-                                    style={{
-                                      display: 'flex',
-                                      justifyContent: 'space-between',
-                                      alignItems: 'center',
-                                      padding: '8px 10px',
-                                      borderRadius: '10px',
-                                      background: isSpotChecked ? '#f0fdf4' : '#f8fafc',
-                                      border: isSpotChecked ? '1px solid rgba(74,222,128,0.2)' : '1px solid #f1f5f9',
-                                      cursor: 'pointer',
-                                      transition: 'all 0.2s'
-                                    }}
-                                  >
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                                      <span style={{ fontSize: '11px', fontWeight: '800', color: isSpotChecked ? '#16a34a' : '#334155' }}>
-                                        {spot.name}
-                                      </span>
-                                      <span style={{ fontSize: '8px', color: '#94a3b8' }}>
-                                        📍 千葉県千葉市美浜区
-                                      </span>
-                                    </div>
-                                    <div>
-                                      {isSpotChecked ? (
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#dcfce7', color: '#16a34a', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '900' }}>
-                                          行った！
-                                        </div>
-                                      ) : (
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#ffffff', color: '#94a3b8', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '800', border: '1px solid #e2e8f0' }}>
-                                          未チェック
-                                        </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                );
-                              })}
-                            </div>
-
-                            {/* 称号獲得の通知報酬枠 */}
-                            <div style={{
-                              marginTop: '8px',
-                              padding: '10px',
-                              borderRadius: '10px',
-                              background: isCompleted ? 'linear-gradient(135deg, rgba(74,222,128,0.06) 0%, rgba(22,163,74,0.06) 100%)' : '#f8fafc',
-                              border: isCompleted ? '1px dashed #16a34a' : '1px dashed #cbd5e1',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '8px'
-                            }}>
-                              <div style={{
-                                width: '28px',
-                                height: '28px',
-                                borderRadius: '50%',
-                                background: isCompleted ? 'linear-gradient(135deg, #4ade80 0%, #16a34a 100%)' : '#e2e8f0',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                flexShrink: 0
-                              }}>
-                                <Award className="w-4 h-4 text-white" />
-                              </div>
-                              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                                <span style={{ fontSize: '10px', fontWeight: '900', color: isCompleted ? '#16a34a' : '#64748b' }}>称号報酬: きゅんかわマスター</span>
-                                <span style={{ fontSize: '8px', color: '#94a3b8' }}>
-                                  {isCompleted ? '🎉 きゅんかわマスターの称号を獲得！マイページでバッジが輝いています。' : '「きゅんかわ人生」の聖地4箇所すべてを巡ると「きゅんかわマスター」の称号が解放されます。'}
-                                </span>
-                              </div>
-                            </div>
-
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })()}
-
-                  {/* 🌟 しょこりさんぽ 巡礼ミッション (ルート解放型) */}
-                  {(() => {
-                    const shokoriSpots = spots.filter(s => s.tags && s.tags.includes("しょこりさんぽ巡礼"));
-                    // ゴール地点の判定
-                    const checkedShokoriSpots = checkins.filter(c => c.spot_id === "spot-shokori-goal");
-                    const isCompleted = checkedShokoriSpots.length > 0;
-                    const percent = isCompleted ? 100 : (shokoriMissionStarted ? 50 : 0);
-
-                    return (
-                      <div className="pop-panel" style={{
-                        borderRadius: '16px',
-                        border: '2px solid #e2e8f0',
-                        overflow: 'hidden',
-                        boxShadow: 'var(--shadow-panel)',
-                        marginTop: '16px'
-                      }}>
-                        {/* アコーディオンヘッダー */}
-                        <div 
-                          onClick={() => setShokoriMissionExpanded(!shokoriMissionExpanded)}
-                          style={{
-                            padding: '16px',
-                            background: 'linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%)', // ピンク系
-                            borderBottom: '1px solid #e2e8f0',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center'
-                          }}
-                        >
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                            {/* 🏷️ メインタイトル */}
-                            <span style={{
-                              alignSelf: 'flex-start',
-                              fontSize: '9px',
-                              fontWeight: '900',
-                              color: '#db2777',
-                              background: '#fbcfe8',
-                              padding: '2px 8px',
-                              borderRadius: '6px',
-                              letterSpacing: '0.02em',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '3px'
-                            }}>
-                              🏷️ しょこりさんぽ 巡礼ミッション
-                            </span>
-                            {/* 👑 サブタイトル */}
-                            <span style={{
-                              fontSize: '15px',
-                              fontWeight: '900',
-                              color: '#1e293b',
-                              letterSpacing: '-0.02em',
-                              lineHeight: '1.2',
-                              marginTop: '2px'
-                            }}>
-                              『鯉さん元気！？しょこりさんぽ』
-                            </span>
-                            {/* 📊 進行状況 */}
-                            <span style={{ fontSize: '9.5px', color: 'var(--text-muted)', fontWeight: '800', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '3px' }}>
-                              🧭 進行状況: {isCompleted ? 'クリア！' : (shokoriMissionStarted ? '探索中...' : '未開始')}
-                            </span>
-                          </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            {isCompleted ? (
-                              <span style={{ fontSize: '10px', fontWeight: '900', color: '#db2777', background: '#ffffff', padding: '2px 8px', borderRadius: '9999px', border: '1px solid rgba(219,39,119,0.2)' }}>達成！</span>
-                            ) : (
-                              <ChevronRight className="w-4 h-4 text-slate-400" style={{ transform: shokoriMissionExpanded ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
-                            )}
-                          </div>
-                        </div>
-
-                        {/* アコーディオンの中身 */}
-                        {shokoriMissionExpanded && (
-                          <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', backgroundColor: '#ffffff' }}>
-                            {/* ルート解放ボタン */}
-                            {!shokoriMissionStarted && (
-                              <div style={{ padding: '16px', textAlign: 'center', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px dashed #cbd5e1' }}>
-                                <div style={{ fontSize: '11px', fontWeight: 'bold', color: '#475569', marginBottom: '8px' }}>
-                                  しょこりさの思い出のルートを辿ろう！<br/>ミッションを開始すると、隠されたゴール地点がマップ上に解放されます。
-                                </div>
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setShokoriMissionStarted(true);
-                                    localStorage.setItem('tdm_shokori_started', 'true');
-                                  }}
-                                  style={{
-                                    background: 'linear-gradient(135deg, #f472b6 0%, #db2777 100%)',
-                                    color: 'white',
-                                    fontWeight: 'bold',
-                                    fontSize: '12px',
-                                    padding: '8px 16px',
-                                    borderRadius: '9999px',
-                                    border: 'none',
-                                    cursor: 'pointer',
-                                    boxShadow: '0 4px 10px rgba(219, 39, 119, 0.3)'
-                                  }}
-                                >
-                                  ▶️ ミッション開始
-                                </button>
-                              </div>
-                            )}
-
-                            {/* プログレスバー */}
-                            {shokoriMissionStarted && (
-                              <div style={{ padding: '4px 6px 10px 6px' }}>
-                                <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '9999px', overflow: 'hidden' }}>
-                                  <div style={{ width: `${percent}%`, height: '100%', background: 'linear-gradient(90deg, #f472b6 0%, #db2777 100%)', transition: 'width 0.4s ease-out' }}></div>
-                                </div>
-                              </div>
-                            )}
-
-                            {/* スポットリスト */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                              {shokoriSpots.map(spot => {
-                                // ミッション未開始の場合はゴールを表示しない
-                                if (!shokoriMissionStarted && spot.id === 'spot-shokori-goal') return null;
-
-                                const isSpotChecked = checkins.some(c => c.spot_id === spot.id);
-                                return (
-                                  <div 
-                                    key={spot.id} 
-                                    onClick={() => {
-                                      handleFocusSpotOnMap(spot);
-                                      setSelectedSpot(spot);
-                                      setRightPanelTab('detail');
-                                    }}
-                                    style={{
-                                      display: 'flex',
-                                      justifyContent: 'space-between',
-                                      alignItems: 'center',
-                                      padding: '8px 10px',
-                                      borderRadius: '10px',
-                                      background: isSpotChecked ? '#fdf2f8' : '#f8fafc',
-                                      border: isSpotChecked ? '1px solid rgba(244,114,182,0.2)' : '1px solid #f1f5f9',
-                                      cursor: 'pointer',
-                                      transition: 'all 0.2s'
-                                    }}
-                                  >
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                                      <span style={{ fontSize: '11px', fontWeight: '800', color: isSpotChecked ? '#db2777' : '#334155' }}>
-                                        {spot.name === '東京駅八重洲南口 グランルーフ 歩行者デッキ' ? '🏁 スタート: 東京駅' : '🎯 ゴール: 錦鯉の泳ぐ池'}
-                                      </span>
-                                      <span style={{ fontSize: '8px', color: '#94a3b8' }}>
-                                        📍 東京都千代田区
-                                      </span>
-                                    </div>
-                                    <div>
-                                      {isSpotChecked ? (
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#fce7f3', color: '#db2777', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '900' }}>
-                                          行った！
-                                        </div>
-                                      ) : (
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#ffffff', color: '#94a3b8', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '800', border: '1px solid #e2e8f0' }}>
-                                          未チェック
-                                        </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                );
-                              })}
-                            </div>
-
-                            {/* 称号獲得の通知報酬枠 */}
-                            <div style={{
-                              marginTop: '8px',
-                              padding: '10px',
-                              borderRadius: '10px',
-                              background: isCompleted ? 'linear-gradient(135deg, rgba(244,114,182,0.06) 0%, rgba(219,39,119,0.06) 100%)' : '#f8fafc',
-                              border: isCompleted ? '1px dashed #db2777' : '1px dashed #cbd5e1',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '8px'
-                            }}>
-                              <div style={{
-                                width: '28px',
-                                height: '28px',
-                                borderRadius: '50%',
-                                background: isCompleted ? 'linear-gradient(135deg, #f472b6 0%, #db2777 100%)' : '#e2e8f0',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                flexShrink: 0
-                              }}>
-                                <Award className="w-4 h-4 text-white" />
-                              </div>
-                              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                                <span style={{ fontSize: '10px', fontWeight: '900', color: isCompleted ? '#db2777' : '#64748b' }}>称号報酬: しょこりさ推し！</span>
-                                <span style={{ fontSize: '8px', color: '#94a3b8' }}>
-                                  {isCompleted ? '🎉 しょこりさ推し！の称号を獲得！マイページでバッジが輝いています。' : 'ミッションを開始し、隠されたゴール地点にチェックインすると「しょこりさ推し！」の称号が解放されます。'}
-                                </span>
-                              </div>
-                            </div>
-
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })()}
-
-                  {/* 🌟 大空、ビュンと 巡礼ミッション (順次解放型) */}
-                  {(() => {
-                    const byunSpotsOrder = [
-                      "spot-joy-byun1", "spot-joy-byun2", "spot-joy-byun3", 
-                      "spot-joy-byun4", "spot-joy-byun5", "spot-joy-byun6", "spot-joy-byun7"
-                    ];
-                    const byunSpots = byunSpotsOrder.map(id => spots.find(s => s.id === id)).filter(Boolean) as Spot[];
-                    let unlockedCount = 1;
-                    for (let i = 0; i < byunSpotsOrder.length; i++) {
-                      if (checkins.some(c => c.spot_id === byunSpotsOrder[i])) {
-                        unlockedCount = i + 2; // 次のスポットまで解放
-                      } else {
-                        break;
-                      }
-                    }
-                    if (unlockedCount > byunSpotsOrder.length) unlockedCount = byunSpotsOrder.length;
-                    
-                    const checkedCount = byunSpotsOrder.filter(id => checkins.some(c => c.spot_id === id)).length;
-                    const isCompleted = checkedCount === byunSpotsOrder.length;
-                    const percent = Math.round((checkedCount / byunSpotsOrder.length) * 100);
-
-                    return (
-                      <div className="pop-panel" style={{
-                        borderRadius: '16px',
-                        border: '2px solid #e2e8f0',
-                        overflow: 'hidden',
-                        boxShadow: 'var(--shadow-panel)',
-                        marginTop: '16px'
-                      }}>
-                        {/* アコーディオンヘッダー */}
-                        <div 
-                          onClick={() => setByunMissionExpanded(!byunMissionExpanded)}
-                          style={{
-                            padding: '16px',
-                            background: 'linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%)', // 空色グラデーション
-                            borderBottom: '1px solid #e2e8f0',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center'
-                          }}
-                        >
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                            {/* 🏷️ メインタイトル */}
-                            <span style={{
-                              alignSelf: 'flex-start',
-                              fontSize: '9px',
-                              fontWeight: '900',
-                              color: '#0284c7',
-                              background: '#e0f2fe',
-                              padding: '2px 8px',
-                              borderRadius: '6px',
-                              letterSpacing: '0.02em',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '3px'
-                            }}>
-                              🏷️ 大空、ビュンと 巡礼ミッション
-                            </span>
-                            {/* 👑 サブタイトル */}
-                            <span style={{
-                              fontSize: '15px',
-                              fontWeight: '900',
-                              color: '#1e293b',
-                              letterSpacing: '-0.02em',
-                              lineHeight: '1.2',
-                              marginTop: '2px'
-                            }}>
-                              『ビュン、と飛んだ日』
-                            </span>
-                            {/* 📊 進行状況 */}
-                            <span style={{ fontSize: '9.5px', color: 'var(--text-muted)', fontWeight: '800', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '3px' }}>
-                              🧭 進行状況: {checkedCount} / {byunSpotsOrder.length} 箇所 ({percent}%)
-                            </span>
-                          </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            {isCompleted ? (
-                              <span style={{ fontSize: '10px', fontWeight: '900', color: '#0284c7', background: '#ffffff', padding: '2px 8px', borderRadius: '9999px', border: '1px solid rgba(2,132,199,0.2)' }}>達成！</span>
-                            ) : (
-                              <ChevronRight className="w-4 h-4 text-slate-400" style={{ transform: byunMissionExpanded ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
-                            )}
-                          </div>
-                        </div>
-
-                        {/* アコーディオンの中身 */}
-                        {byunMissionExpanded && (
-                          <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', backgroundColor: '#ffffff' }}>
-                            {/* プログレスバー */}
-                            <div style={{ padding: '4px 6px 10px 6px' }}>
-                              <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '9999px', overflow: 'hidden' }}>
-                                <div style={{ width: `${percent}%`, height: '100%', background: 'linear-gradient(90deg, #38bdf8 0%, #0284c7 100%)', transition: 'width 0.4s ease-out' }}></div>
-                              </div>
-                            </div>
-
-                            {/* スポットリスト */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                              {byunSpots.map((spot, index) => {
-                                // 未解放スポットは非表示
-                                if (index >= unlockedCount) return null;
-
-                                const isSpotChecked = checkins.some(c => c.spot_id === spot.id);
-                                return (
-                                  <div 
-                                    key={spot.id} 
-                                    onClick={() => {
-                                      handleFocusSpotOnMap(spot);
-                                      setSelectedSpot(spot);
-                                      setRightPanelTab('detail');
-                                    }}
-                                    style={{
-                                      display: 'flex',
-                                      justifyContent: 'space-between',
-                                      alignItems: 'center',
-                                      padding: '8px 10px',
-                                      borderRadius: '10px',
-                                      background: isSpotChecked ? '#f0f9ff' : '#f8fafc',
-                                      border: isSpotChecked ? '1px solid rgba(56,189,248,0.2)' : '1px solid #f1f5f9',
-                                      cursor: 'pointer',
-                                      transition: 'all 0.2s'
-                                    }}
-                                  >
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                                      <span style={{ fontSize: '11px', fontWeight: '800', color: isSpotChecked ? '#0284c7' : '#334155' }}>
-                                        {index + 1}. {spot.name}
-                                      </span>
-                                      <span style={{ fontSize: '8px', color: '#94a3b8' }}>
-                                        📍 {spot.name.includes('茨城') ? '茨城県小美玉市' : '東京都'}
-                                      </span>
-                                    </div>
-                                    <div>
-                                      {isSpotChecked ? (
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#e0f2fe', color: '#0284c7', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '900' }}>
-                                          行った！
-                                        </div>
-                                      ) : (
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#ffffff', color: '#94a3b8', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '800', border: '1px solid #e2e8f0' }}>
-                                          未チェック
-                                        </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                );
-                              })}
-                            </div>
-
-                            {/* 称号獲得の通知報酬枠 */}
-                            <div style={{
-                              marginTop: '8px',
-                              padding: '10px',
-                              borderRadius: '10px',
-                              background: isCompleted ? 'linear-gradient(135deg, rgba(56,189,248,0.06) 0%, rgba(2,132,199,0.06) 100%)' : '#f8fafc',
-                              border: isCompleted ? '1px dashed #0284c7' : '1px dashed #cbd5e1',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '8px'
-                            }}>
-                              <div style={{
-                                width: '28px',
-                                height: '28px',
-                                borderRadius: '50%',
-                                background: isCompleted ? 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)' : '#e2e8f0',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                flexShrink: 0
-                              }}>
-                                <Award className="w-4 h-4 text-white" />
-                              </div>
-                              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                                <span style={{ fontSize: '10px', fontWeight: '900', color: isCompleted ? '#0284c7' : '#64748b' }}>称号報酬: 大空を駆ける者</span>
-                                <span style={{ fontSize: '8px', color: '#94a3b8' }}>
-                                  {isCompleted ? '🎉 大空を駆ける者の称号を獲得！マイページでバッジが輝いています。' : 'チェックインごとに新しいスポットが解放されます。最後まで到達すると「大空を駆ける者」の称号が解放されます。'}
-                                </span>
-                              </div>
-                            </div>
-
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })()}
-
-
                 </div>
               </div>
             )}
@@ -3927,8 +2490,6 @@ ${window.location.origin + window.location.pathname}
                         {selectedSpot.description}
                       </p>
                     </div>
-
-
 
                     {/* YouTube動画自動埋め込み */}
                     {selectedSpot.youtube_url && (() => {
@@ -5080,11 +3641,6 @@ ${window.location.origin + window.location.pathname}
               </div>
             )}
 
-            {/* 広告コンポーネント (フッター上) */}
-            <div style={{ margin: '16px 0', padding: '0 16px' }}>
-              <AdBanner slot="XXXXXXXXXX" />
-            </div>
-
             {/* 📜 フッターリンク (利用規約・プライバシーポリシー・お問い合わせ) */}
             <div style={{
               marginTop: '12px',
@@ -5149,7 +3705,7 @@ ${window.location.origin + window.location.pathname}
                 gap: '10px',
                 flexWrap: 'wrap'
               }}>
-                {/* 📜 利用規約・プライバシーポリシー・お問い合わせリンク */}
+                {/* 📜 利用規約リンク (将来的に個別ページ /terms に書き換える場合はここを a タグに置き換え) */}
                 <button
                   type="button"
                   onClick={() => {
@@ -5157,34 +3713,50 @@ ${window.location.origin + window.location.pathname}
                     setIsMobileMenuOpen(false);
                   }}
                   style={{
-                    background: 'none', border: 'none', fontSize: '9px', color: 'var(--text-muted)', fontWeight: '900', textDecoration: 'underline', cursor: 'pointer'
+                    background: 'none',
+                    border: 'none',
+                    fontSize: '9px',
+                    color: 'var(--text-muted)',
+                    fontWeight: '900',
+                    textDecoration: 'underline',
+                    cursor: 'pointer'
                   }}
                 >
                   利用規約
                 </button>
-                <span style={{ fontSize: '9px', color: '#cbd5e1' }}>|</span>
+                <span style={{ fontSize: '8px', color: '#cbd5e1' }}>•</span>
+                {/* 📄 プライバシーポリシーリンク */}
                 <button
                   type="button"
-                  onClick={(e) => navigateToPrivacy(e)}
+                  onClick={navigateToPrivacy}
                   style={{
-                    background: 'none', border: 'none', fontSize: '9px', color: 'var(--text-muted)', fontWeight: '900', textDecoration: 'underline', cursor: 'pointer'
+                    background: 'none',
+                    border: 'none',
+                    fontSize: '9px',
+                    color: 'var(--text-muted)',
+                    fontWeight: '900',
+                    textDecoration: 'underline',
+                    cursor: 'pointer'
                   }}
                 >
                   プライバシーポリシー
                 </button>
-                <span style={{ fontSize: '9px', color: '#cbd5e1' }}>|</span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowContactModal(true);
-                    setIsMobileMenuOpen(false);
-                  }}
+                <span style={{ fontSize: '8px', color: '#cbd5e1' }}>•</span>
+                {/* ✉️ お問い合わせリンク */}
+                <a
+                  href="https://discord.gg/QBhyDJ5hF"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
-                    background: 'none', border: 'none', fontSize: '9px', color: 'var(--text-muted)', fontWeight: '900', textDecoration: 'underline', cursor: 'pointer'
+                    fontSize: '9px',
+                    color: 'var(--text-muted)',
+                    fontWeight: '900',
+                    textDecoration: 'underline',
+                    cursor: 'pointer'
                   }}
                 >
-                  お問い合わせ
-                </button>
+                  お問い合わせ (Discord)
+                </a>
               </div>
               <span style={{ fontSize: '8.5px', color: '#94a3b8', fontWeight: 'bold' }}>
                 本サービスは非公式ファンサービスです
@@ -5641,12 +4213,7 @@ ${window.location.origin + window.location.pathname}
                     setAuthEmail('');
                     setAuthPassword('');
                     setAuthUsername('');
-                    // 確認メール送信時（Email Confirmations: ON）と即時ログイン時でメッセージを分岐
-                    if (res.error && res.error.includes('確認メール')) {
-                      alert(res.error);
-                    } else {
-                      alert("✨ アカウントの作成に成功しました！巡礼の旅へようこそ！");
-                    }
+                    alert("✨ アカウントの作成に成功し、ログインしました！");
                   } else {
                     setAuthError(res.error || '新規登録に失敗しました。');
                   }
@@ -6120,8 +4687,6 @@ ${window.location.origin + window.location.pathname}
                 </p>
               </div>
 
-
-
               {/* YouTube動画自動埋め込み (完全再現) */}
               {selectedSpot.youtube_url && (() => {
                 const isIframe = selectedSpot.youtube_url.includes('<iframe');
@@ -6473,27 +5038,6 @@ ${window.location.origin + window.location.pathname}
             >
               内容を理解し同意しました
             </button>
-          </div>
-        </div>
-      )}
-
-      {/* 📜 お問い合わせモーダル */}
-      {showContactModal && (
-        <div style={{
-          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
-          backgroundColor: 'rgba(15, 23, 42, 0.7)', backdropFilter: 'blur(8px)', zIndex: 3000,
-          display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px'
-        }}>
-          <div style={{ background: '#ffffff', borderRadius: '24px', width: '100%', maxWidth: '400px', maxHeight: '90vh', overflowY: 'auto', padding: '24px', position: 'relative' }}>
-            <button onClick={() => setShowContactModal(false)} style={{ position: 'absolute', top: '16px', right: '16px', border: 'none', background: '#f1f5f9', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-              <X size={16} />
-            </button>
-            <h2 style={{ fontSize: '18px', fontWeight: '900', marginBottom: '16px' }}>お問い合わせ</h2>
-            <div style={{ fontSize: '12px', lineHeight: '1.8', color: '#475569', marginBottom: '24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <p>本アプリに関するご質問やご要望、聖地情報の誤りなどは以下の窓口からご連絡ください。</p>
-              <a href="https://discord.gg/QBhyDJ5hF" target="_blank" rel="noopener noreferrer" style={{ display: 'block', textAlign: 'center', background: '#5865F2', color: 'white', padding: '10px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold' }}>公式Discordサーバー</a>
-            </div>
-            <button onClick={() => setShowContactModal(false)} className="pop-button font-black" style={{ background: '#e2e8f0', color: '#475569', border: 'none', padding: '12px', borderRadius: '14px', width: '100%', cursor: 'pointer' }}>閉じる</button>
           </div>
         </div>
       )}
