@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 
-// AdSenseの型定義
 declare global {
   interface Window {
     adsbygoogle: any[];
@@ -13,8 +12,8 @@ interface AdBannerProps {
   responsive?: boolean;
 }
 
-export const AdBanner: React.FC<AdBannerProps> = ({ 
-  slot = 'XXXXXXXXXXXXXXXX', // ※後で設定
+export const AdBanner: React.FC<AdBannerProps> = React.memo(({ 
+  slot = 'XXXXXXXXXXXXXXXX',
   format = 'auto',
   responsive = true
 }) => {
@@ -22,16 +21,31 @@ export const AdBanner: React.FC<AdBannerProps> = ({
   
   useEffect(() => {
     try {
-      // 開発環境ではエラーを防ぐため実行しない場合もあるが、Viteで安全に処理する
-      const isAdLoaded = adContainerRef.current?.querySelector('iframe');
-      
-      if (!isAdLoaded && typeof window !== 'undefined') {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      const container = adContainerRef.current;
+      if (!container) return;
+
+      // ReactのDOM Diffエラー（removeChild例外）を防ぐため、
+      // 広告用 <ins> タグをReactツリー外のピュアDOMとして動的生成して注入する。
+      if (container.children.length === 0) {
+        const ins = document.createElement('ins');
+        ins.className = 'adsbygoogle';
+        ins.style.display = 'block';
+        ins.style.width = '100%';
+        ins.setAttribute('data-ad-client', 'ca-pub-XXXXXXXXXXXXXXXX');
+        ins.setAttribute('data-ad-slot', slot);
+        ins.setAttribute('data-ad-format', format);
+        ins.setAttribute('data-full-width-responsive', responsive ? "true" : "false");
+        
+        container.appendChild(ins);
+
+        if (typeof window !== 'undefined') {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        }
       }
     } catch (err: any) {
       console.warn('AdSense error:', err.message);
     }
-  }, []);
+  }, [slot, format, responsive]);
 
   return (
     <div 
@@ -43,17 +57,8 @@ export const AdBanner: React.FC<AdBannerProps> = ({
         display: 'flex', 
         justifyContent: 'center',
         margin: '16px 0',
-        minHeight: '50px' // CLS（Cumulative Layout Shift）対策: 最低限の高さを確保
+        minHeight: '50px' // CLS対策
       }}
-    >
-      <ins
-        className="adsbygoogle"
-        style={{ display: 'block', width: '100%' }}
-        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-        data-ad-slot={slot}
-        data-ad-format={format}
-        data-full-width-responsive={responsive ? "true" : "false"}
-      />
-    </div>
+    />
   );
-};
+});
