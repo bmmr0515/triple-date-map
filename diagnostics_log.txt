@@ -1,0 +1,33 @@
+=== GIT ENV DIAGNOSTICS ===
+
+> git branch -a
+* main
+  remotes/origin/main
+
+> git remote -v
+origin	https://github.com/bmmr0515/triple-date-map.git (fetch)
+origin	https://github.com/bmmr0515/triple-date-map.git (push)
+
+> git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   src/db.ts
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	check_branches.cjs
+	patch_reset.cjs
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+> git log -n 5 --oneline
+751a94c feat: 聖地リストの都道府県別フィルター・ソート機能および既読連携お知らせ通知UIの追加
+4bf6b77 fix: activeViewエフェクトの二重発火を修正し、ピン・クラスタ押下時の意図しないズームアウトを完全に根絶
+8f72663 fix: クラスタの競合自動ズームをOFFにし、Math.maxによるズームイン状態でのピン押下時の縮小バグを完全解消
+1784abb fix: ピンおよびクラスタクリック時のズームレベル算出を修正し、ズームアウトバグを解消
+e9b1f4f fix: 聖地リストから地図表示切り替え時にLeafletのDOMが破壊・未描画になるバグをdisplay制御とinvalidateSizeで解消
+

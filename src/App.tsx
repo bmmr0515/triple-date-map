@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { db, Spot, User, CheckIn, GroupType } from './db';
 import { authService, AuthSession } from './auth';
+import { AdBanner } from './components/AdBanner';
 
 // 🔔 アプリ内新着お知らせのインターフェースとデータ定義
 export interface Notice {
@@ -161,6 +162,7 @@ export default function App() {
 
   // 📜 利用規約・免責事項のステート
   const [showTermsModal, setShowTermsModal] = useState<boolean>(false);
+  const [showContactModal, setShowContactModal] = useState<boolean>(false);
   const [agreeTermsSignup, setAgreeTermsSignup] = useState<boolean>(false);
   const [agreeTermsBlock, setAgreeTermsBlock] = useState<boolean>(false);
   
@@ -1314,7 +1316,17 @@ ${window.location.origin + window.location.pathname}
 
               <div>
                 <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  6. 本ポリシーの変更
+                  6. 広告・アクセス解析ツールの利用について
+                </h3>
+                <ul style={{ margin: '6px 0 0 20px', padding: 0, display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <li>当サービスは、第三者配信の広告サービス（Google AdSense等）を利用しています。これらの広告配信事業者は、ユーザーの興味に応じた広告を表示するためにCookieを使用することがあります。Cookieを無効にする設定およびGoogleアドセンスに関する詳細は「Googleポリシーと規約」をご確認ください。</li>
+                  <li>また、当サービスではトラフィックデータの収集のためにアクセス解析ツール（Google Analytics、Vercel Analytics等）を使用しています。これらはCookieを使用しますが、データは匿名で収集されており、個人を特定するものではありません。</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
+                  7. 本ポリシーの変更
                 </h3>
                 <p style={{ margin: 0 }}>
                   本サービスは、必要に応じて本プライバシーポリシーを変更することがあります。変更した場合は、本サービス内でお知らせいたします。
@@ -1323,7 +1335,7 @@ ${window.location.origin + window.location.pathname}
 
               <div>
                 <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  7. お問い合わせ
+                  8. お問い合わせ
                 </h3>
                 <p style={{ margin: 0 }}>
                   個人情報の取扱い、または本サービスに関するお問い合わせは、公式Discordコミュニティにて、お願いいたします。
@@ -2223,6 +2235,7 @@ ${window.location.origin + window.location.pathname}
                     )}
                   </>
                 )}
+                <AdBanner slot="XXXXXXXXXX" />
               </div>
             </div>
 
@@ -5065,6 +5078,11 @@ ${window.location.origin + window.location.pathname}
               </div>
             )}
 
+            {/* 広告コンポーネント (フッター上) */}
+            <div style={{ margin: '16px 0', padding: '0 16px' }}>
+              <AdBanner slot="XXXXXXXXXX" />
+            </div>
+
             {/* 📜 フッターリンク (利用規約・プライバシーポリシー・お問い合わせ) */}
             <div style={{
               marginTop: '12px',
@@ -5129,7 +5147,7 @@ ${window.location.origin + window.location.pathname}
                 gap: '10px',
                 flexWrap: 'wrap'
               }}>
-                {/* 📜 利用規約リンク (将来的に個別ページ /terms に書き換える場合はここを a タグに置き換え) */}
+                {/* 📜 利用規約・プライバシーポリシー・お問い合わせリンク */}
                 <button
                   type="button"
                   onClick={() => {
@@ -5137,50 +5155,34 @@ ${window.location.origin + window.location.pathname}
                     setIsMobileMenuOpen(false);
                   }}
                   style={{
-                    background: 'none',
-                    border: 'none',
-                    fontSize: '9px',
-                    color: 'var(--text-muted)',
-                    fontWeight: '900',
-                    textDecoration: 'underline',
-                    cursor: 'pointer'
+                    background: 'none', border: 'none', fontSize: '9px', color: 'var(--text-muted)', fontWeight: '900', textDecoration: 'underline', cursor: 'pointer'
                   }}
                 >
                   利用規約
                 </button>
-                <span style={{ fontSize: '8px', color: '#cbd5e1' }}>•</span>
-                {/* 📄 プライバシーポリシーリンク */}
+                <span style={{ fontSize: '9px', color: '#cbd5e1' }}>|</span>
                 <button
                   type="button"
-                  onClick={navigateToPrivacy}
+                  onClick={(e) => navigateToPrivacy(e)}
                   style={{
-                    background: 'none',
-                    border: 'none',
-                    fontSize: '9px',
-                    color: 'var(--text-muted)',
-                    fontWeight: '900',
-                    textDecoration: 'underline',
-                    cursor: 'pointer'
+                    background: 'none', border: 'none', fontSize: '9px', color: 'var(--text-muted)', fontWeight: '900', textDecoration: 'underline', cursor: 'pointer'
                   }}
                 >
                   プライバシーポリシー
                 </button>
-                <span style={{ fontSize: '8px', color: '#cbd5e1' }}>•</span>
-                {/* ✉️ お問い合わせリンク */}
-                <a
-                  href="https://discord.gg/QBhyDJ5hF"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <span style={{ fontSize: '9px', color: '#cbd5e1' }}>|</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowContactModal(true);
+                    setIsMobileMenuOpen(false);
+                  }}
                   style={{
-                    fontSize: '9px',
-                    color: 'var(--text-muted)',
-                    fontWeight: '900',
-                    textDecoration: 'underline',
-                    cursor: 'pointer'
+                    background: 'none', border: 'none', fontSize: '9px', color: 'var(--text-muted)', fontWeight: '900', textDecoration: 'underline', cursor: 'pointer'
                   }}
                 >
-                  お問い合わせ (Discord)
-                </a>
+                  お問い合わせ
+                </button>
               </div>
               <span style={{ fontSize: '8.5px', color: '#94a3b8', fontWeight: 'bold' }}>
                 本サービスは非公式ファンサービスです
@@ -6469,6 +6471,27 @@ ${window.location.origin + window.location.pathname}
             >
               内容を理解し同意しました
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* 📜 お問い合わせモーダル */}
+      {showContactModal && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+          backgroundColor: 'rgba(15, 23, 42, 0.7)', backdropFilter: 'blur(8px)', zIndex: 3000,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px'
+        }}>
+          <div style={{ background: '#ffffff', borderRadius: '24px', width: '100%', maxWidth: '400px', maxHeight: '90vh', overflowY: 'auto', padding: '24px', position: 'relative' }}>
+            <button onClick={() => setShowContactModal(false)} style={{ position: 'absolute', top: '16px', right: '16px', border: 'none', background: '#f1f5f9', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+              <X size={16} />
+            </button>
+            <h2 style={{ fontSize: '18px', fontWeight: '900', marginBottom: '16px' }}>お問い合わせ</h2>
+            <div style={{ fontSize: '12px', lineHeight: '1.8', color: '#475569', marginBottom: '24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <p>本アプリに関するご質問やご要望、聖地情報の誤りなどは以下の窓口からご連絡ください。</p>
+              <a href="https://discord.gg/QBhyDJ5hF" target="_blank" rel="noopener noreferrer" style={{ display: 'block', textAlign: 'center', background: '#5865F2', color: 'white', padding: '10px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold' }}>公式Discordサーバー</a>
+            </div>
+            <button onClick={() => setShowContactModal(false)} className="pop-button font-black" style={{ background: '#e2e8f0', color: '#475569', border: 'none', padding: '12px', borderRadius: '14px', width: '100%', cursor: 'pointer' }}>閉じる</button>
           </div>
         </div>
       )}
