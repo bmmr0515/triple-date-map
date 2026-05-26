@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { db, Spot, User, CheckIn, GroupType } from './db';
 import { authService, AuthSession } from './auth';
+import { AdBanner } from './components/AdBanner';
 
 // 🔔 アプリ内新着お知らせのインターフェースとデータ定義
 export interface Notice {
@@ -2234,6 +2235,7 @@ ${window.location.origin + window.location.pathname}
                     )}
                   </>
                 )}
+                <AdBanner slot="XXXXXXXXXX" />
               </div>
             </div>
 
@@ -5075,6 +5077,11 @@ ${window.location.origin + window.location.pathname}
                 />
               </div>
             )}
+
+            {/* 広告コンポーネント (フッター上) */}
+            <div style={{ margin: '16px 0', padding: '0 16px' }}>
+              <AdBanner slot="XXXXXXXXXX" />
+            </div>
 
             {/* 📜 フッターリンク (利用規約・プライバシーポリシー・お問い合わせ) */}
             <div style={{
