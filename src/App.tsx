@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { 
   Calendar, 
   ChevronRight, 
@@ -18,6 +18,7 @@ import {
   Bell,
   Search
 } from 'lucide-react';
+import Fuse from 'fuse.js';
 import { db, Spot, User, CheckIn, GroupType } from './db';
 import { authService, AuthSession } from './auth';
 import { SupportSection } from './components/SupportSection';
@@ -238,6 +239,7 @@ export default function App() {
   const [shokoriMissionStarted, setShokoriMissionStarted] = useState<boolean>(
     localStorage.getItem('tdm_shokori_started') === 'true'
   );
+  const [searchSuggestion, setSearchSuggestion] = useState<string | null>(null);
 
   // 🎓 チュートリアル（初回ウォークスルー）
   const [showTutorial, setShowTutorial] = useState<boolean>(
@@ -309,76 +311,173 @@ export default function App() {
   // データベース上の登録聖地から、存在する都道府県のみを動的に抽出
   const availableAreas = Array.from(new Set(spots.map(extractArea))).filter(a => a !== '');
 
+  // Fuse.js あいまい検索用のインスタンス作成
+  const listFuse = useMemo(() => {
+    return new Fuse<Spot>(spots, {
+      keys: [
+        { name: 'name', weight: 0.4 },
+        { name: 'reward_title', weight: 0.3 },
+        { name: 'group', weight: 0.15 },
+        { name: 'category', weight: 0.15 },
+        { name: 'description', weight: 0.1 }
+      ],
+      includeScore: true,
+      includeMatches: true,
+      threshold: 0.55
+    });
+  }, [spots]);
+
+  // 「もしかして」の提案キーワード判定
+  useEffect(() => {
+    const keyword = listSearchKeyword.trim();
+    if (!keyword) {
+      setSearchSuggestion(null);
+      return;
+    }
+
+    // 1. 通常の部分一致でヒットするものがあるか調べる
+    const hasNormalMatch = spots.some(spot => {
+      const k = keyword.toLowerCase();
+      return (
+        spot.name.toLowerCase().includes(k) ||
+        (spot.reward_title && spot.reward_title.toLowerCase().includes(k)) ||
+        spot.group.toLowerCase().includes(k) ||
+        spot.category.toLowerCase().includes(k)
+      );
+    });
+
+    // 2. 部分一致で0件の場合、Fuse.js であいまい検索を実行
+    if (!hasNormalMatch) {
+      const searchResults = listFuse.search(keyword);
+      if (searchResults.length > 0) {
+        const bestResult = searchResults[0];
+        if (bestResult.score !== undefined && bestResult.score < 0.55) {
+          const matches = bestResult.matches;
+          let bestMatchValue = '';
+          
+          if (matches && matches.length > 0) {
+            const nameMatch = matches.find(m => m.key === 'name');
+            const rewardMatch = matches.find(m => m.key === 'reward_title');
+            const categoryMatch = matches.find(m => m.key === 'category');
+            const groupMatch = matches.find(m => m.key === 'group');
+            
+            if (nameMatch) bestMatchValue = nameMatch.value || '';
+            else if (rewardMatch) bestMatchValue = rewardMatch.value || '';
+            else if (categoryMatch) bestMatchValue = categoryMatch.value || '';
+            else if (groupMatch) bestMatchValue = groupMatch.value || '';
+            else bestMatchValue = matches[0].value || '';
+          }
+          
+          if (!bestMatchValue) {
+            bestMatchValue = bestResult.item.name;
+          }
+
+          let displayValue = bestMatchValue;
+          if (bestResult.item.reward_title && bestMatchValue === bestResult.item.reward_title) {
+            displayValue = bestResult.item.reward_title
+              .replace("の証言者", "")
+              .replace("の約束人", "")
+              .replace("の旅人", "")
+              .replace("の恋人", "")
+              .replace("の漂流者", "")
+              .replace("の語り部", "")
+              .replace("のダンサー", "")
+              .replace("の走者", "")
+              .replace("の虜", "");
+          }
+
+          if (displayValue.toLowerCase() !== keyword.toLowerCase()) {
+            setSearchSuggestion(displayValue);
+            return;
+          }
+        }
+      }
+    }
+    setSearchSuggestion(null);
+  }, [listSearchKeyword, spots, listFuse]);
+
   // 📋 聖地リスト用フィルターリング＆並べ替えソート処理
-  const filteredListSpots = spots.filter(spot => {
-    // ルート解放型ミッションの未解放ゴール地点は非表示
-    if (!shokoriMissionStarted && spot.id === 'spot-shokori-goal') {
-      return false;
-    }
-
-    // 大空、ビュンと 順次解放ロジック
-    const byunSpotsOrder = [
-      "spot-joy-byun1", "spot-joy-byun2", "spot-joy-byun3", 
-      "spot-joy-byun4", "spot-joy-byun5", "spot-joy-byun6", "spot-joy-byun7"
-    ];
-    const spotByunIndex = byunSpotsOrder.indexOf(spot.id);
-    if (spotByunIndex > 0) {
-      // 直前のスポットがチェックインされているか確認
-      const prevSpotId = byunSpotsOrder[spotByunIndex - 1];
-      const isPrevChecked = checkins.some(c => c.spot_id === prevSpotId);
-      // 直前のスポットがチェックインされていなければ、このスポットは非表示（未解放）
-      if (!isPrevChecked) {
+  const filteredListSpots = useMemo(() => {
+    // 基本的な絞り込み条件（キーワード以外）をまず適用
+    const baseFiltered = spots.filter(spot => {
+      if (!shokoriMissionStarted && spot.id === 'spot-shokori-goal') {
         return false;
       }
-    }
 
-    // グループ別
-    if (listSearchGroup !== 'すべて' && spot.group !== listSearchGroup) {
-      return false;
-    }
-    
-    // 都道府県/エリア別
-    if (listSelectedArea !== 'すべて') {
-      const spotArea = extractArea(spot);
-      if (spotArea !== listSelectedArea) {
+      const byunSpotsOrder = [
+        "spot-joy-byun1", "spot-joy-byun2", "spot-joy-byun3", 
+        "spot-joy-byun4", "spot-joy-byun5", "spot-joy-byun6", "spot-joy-byun7"
+      ];
+      const spotByunIndex = byunSpotsOrder.indexOf(spot.id);
+      if (spotByunIndex > 0) {
+        const prevSpotId = byunSpotsOrder[spotByunIndex - 1];
+        const isPrevChecked = checkins.some(c => c.spot_id === prevSpotId);
+        if (!isPrevChecked) {
+          return false;
+        }
+      }
+
+      if (listSearchGroup !== 'すべて' && spot.group !== listSearchGroup) {
         return false;
       }
+      
+      if (listSelectedArea !== 'すべて') {
+        const spotArea = extractArea(spot);
+        if (spotArea !== listSelectedArea) {
+          return false;
+        }
+      }
+
+      if (listSelectedMission !== 'すべて') {
+        const hasMission = spot.tags && spot.tags.some(tag => {
+          if (listSelectedMission === 'trigger') return tag.includes('トリガー巡礼');
+          if (listSelectedMission === 'recipe') return tag.includes('笑顔のレシピ巡礼');
+          if (listSelectedMission === 'hawaiians') return tag.includes('ハワイアンズ巡礼');
+          if (listSelectedMission === 'hokkaido') return tag.includes('超特Q北海道巡礼');
+          if (listSelectedMission === 'fighter') return tag.includes('排他的ファイター巡礼') || tag.includes('排彼のファイター巡礼');
+          if (listSelectedMission === 'kyunkawa') return tag.includes('きゅんかわ人生巡礼');
+          if (listSelectedMission === 'shokori') return tag.includes('しょこりさんぽ巡礼');
+          if (listSelectedMission === 'byun') return tag.includes('大空、ビュンと巡礼');
+          if (listSelectedMission === 'mermaid') return tag.includes('真夜中マーメイド巡礼');
+          return false;
+        });
+        if (!hasMission) {
+          return false;
+        }
+      }
+      return true;
+    });
+
+    if (!listSearchKeyword.trim()) {
+      return baseFiltered;
     }
 
-    // ミッション別
-    if (listSelectedMission !== 'すべて') {
-      const hasMission = spot.tags && spot.tags.some(tag => {
-        if (listSelectedMission === 'trigger') return tag.includes('トリガー巡礼');
-        if (listSelectedMission === 'recipe') return tag.includes('笑顔のレシピ巡礼');
-        if (listSelectedMission === 'hawaiians') return tag.includes('ハワイアンズ巡礼');
-        if (listSelectedMission === 'hokkaido') return tag.includes('超特Q北海道巡礼');
-        if (listSelectedMission === 'fighter') return tag.includes('排他的ファイター巡礼') || tag.includes('排彼のファイター巡礼');
-        if (listSelectedMission === 'kyunkawa') return tag.includes('きゅんかわ人生巡礼');
-        if (listSelectedMission === 'shokori') return tag.includes('しょこりさんぽ巡礼');
-        if (listSelectedMission === 'byun') return tag.includes('大空、ビュンと巡礼');
-        if (listSelectedMission === 'mermaid') return tag.includes('真夜中マーメイド巡礼');
-        return false;
-      });
-      if (!hasMission) {
-        return false;
-      }
-    }
-    
-    // キーワード検索（名称、説明、カテゴリ、タグ、関連曲）
-    if (listSearchKeyword.trim()) {
-      const keyword = listSearchKeyword.toLowerCase();
+    const keyword = listSearchKeyword.toLowerCase();
+
+    // 1. 部分一致での検索を試みる
+    const normalFiltered = baseFiltered.filter(spot => {
       const nameMatch = spot.name.toLowerCase().includes(keyword);
       const descMatch = spot.description.toLowerCase().includes(keyword);
       const categoryMatch = spot.category.toLowerCase().includes(keyword);
       const rewardMatch = spot.reward_title?.toLowerCase().includes(keyword) || false;
       const tagMatch = spot.tags?.some(t => t.toLowerCase().includes(keyword)) || false;
       
-      if (!nameMatch && !descMatch && !categoryMatch && !rewardMatch && !tagMatch) {
-        return false;
-      }
+      return nameMatch || descMatch || categoryMatch || rewardMatch || tagMatch;
+    });
+
+    if (normalFiltered.length > 0) {
+      return normalFiltered;
     }
-    return true;
-  });
+
+    // 2. あいまい検索のフォールバック
+    const searchResults = listFuse.search(listSearchKeyword);
+    const fuzzySpots = searchResults
+      .filter(res => res.score !== undefined && res.score < 0.6)
+      .map(res => res.item)
+      .filter(spot => baseFiltered.some(bs => bs.id === spot.id));
+
+    return fuzzySpots;
+  }, [spots, listSearchKeyword, listSearchGroup, listSelectedArea, listSelectedMission, shokoriMissionStarted, checkins, listFuse]);
 
   // ソートロジックの適用
   const sortedListSpots = [...filteredListSpots].sort((a, b) => {
@@ -1895,6 +1994,47 @@ ${window.location.origin + window.location.pathname}
                   )}
                 </div>
 
+                {/* あいまい検索サジェスト (もしかして) */}
+                {searchSuggestion && (
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '8px 12px',
+                    background: '#f0fdf4',
+                    border: '1px solid #bbf7d0',
+                    borderRadius: '10px',
+                    fontSize: '11px',
+                    color: '#166534',
+                    marginTop: '-4px'
+                  }}>
+                    <span>💡 もしかして：</span>
+                    <button
+                      onClick={() => {
+                        setListSearchKeyword(searchSuggestion);
+                        setListLimit(20);
+                      }}
+                      style={{
+                        background: '#e8f5e9',
+                        border: '1px solid #a5d6a7',
+                        borderRadius: '6px',
+                        padding: '2px 8px',
+                        color: '#2e7d32',
+                        fontWeight: 'bold',
+                        cursor: 'pointer',
+                        fontSize: '11px',
+                        transition: 'all 0.2s',
+                        display: 'inline-flex',
+                        alignItems: 'center'
+                      }}
+                      className="pop-button"
+                    >
+                      {searchSuggestion}
+                    </button>
+                    <span>？</span>
+                  </div>
+                )}
+
                 {/* 📍 都道府県・ミッションフィルター ＆ 📋 ソート並べ替え */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {/* ミッションセレクト */}
@@ -2079,112 +2219,145 @@ ${window.location.origin + window.location.pathname}
                           key={spot.id}
                           style={{
                             background: '#ffffff',
-                            border: isVisited ? '2px solid #bef264' : '1px solid #e2e8f0',
-                            borderRadius: '16px',
-                            padding: '16px',
+                            border: isVisited ? '2px solid #84cc16' : '1px solid #e2e8f0',
+                            borderRadius: '20px',
+                            padding: '18px',
                             display: 'flex',
                             flexDirection: 'column',
-                            gap: '10px',
-                            transition: 'all 0.2s',
+                            gap: '12px',
+                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                             position: 'relative',
-                            boxShadow: '0 4px 12px rgba(0,0,0,0.02)'
+                            boxShadow: isVisited 
+                              ? '0 10px 20px -5px rgba(132, 204, 22, 0.1), 0 4px 6px -2px rgba(132, 204, 22, 0.05)'
+                              : '0 10px 25px -5px rgba(0,0,0,0.03), 0 8px 10px -6px rgba(0,0,0,0.03)'
                           }}
                           className="list-spot-card"
                         >
+                          {/* 最上部バッジ行 */}
                           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', alignItems: 'center' }}>
                             <span style={{
-                              fontSize: '9px',
-                              fontWeight: '950',
+                              fontSize: '10px',
+                              fontWeight: 900,
                               color: groupColor,
                               background: groupBg,
-                              padding: '2px 8px',
-                              borderRadius: '6px'
+                              padding: '3px 9px',
+                              borderRadius: '8px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '3px',
+                              boxShadow: '0 1px 2px rgba(0,0,0,0.02)'
                             }}>
-                              {spot.group}
+                              ✨ {spot.group}
                             </span>
                             
                             <span style={{
-                              fontSize: '9px',
+                              fontSize: '10px',
                               fontWeight: 'bold',
-                              color: '#64748b',
+                              color: '#475569',
                               background: '#f1f5f9',
-                              padding: '2px 8px',
-                              borderRadius: '6px'
+                              padding: '3px 9px',
+                              borderRadius: '8px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '3px'
                             }}>
                               📍 {area}
                             </span>
 
                             <span style={{
-                              fontSize: '9px',
+                              fontSize: '10px',
                               fontWeight: 'bold',
-                              color: '#a855f7',
-                              background: '#f3e8ff',
-                              padding: '2px 8px',
-                              borderRadius: '6px'
+                              color: '#7c3aed',
+                              background: '#f5f3ff',
+                              padding: '3px 9px',
+                              borderRadius: '8px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '3px'
                             }}>
-                              🏷️ {spot.category}
+                              🎬 {spot.category}
                             </span>
 
                             {isVisited ? (
                               <span style={{
                                 marginLeft: 'auto',
-                                fontSize: '9px',
-                                fontWeight: 'bold',
-                                color: '#65a30d',
-                                background: '#ecfccb',
-                                padding: '2px 8px',
-                                borderRadius: '6px',
+                                fontSize: '10px',
+                                fontWeight: 800,
+                                color: '#16a34a',
+                                background: '#dcfce7',
+                                padding: '3px 9px',
+                                borderRadius: '8px',
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: '2px'
+                                gap: '3px',
+                                boxShadow: '0 1px 2px rgba(22, 163, 74, 0.1)'
                               }}>
                                 ✅ 巡礼完了
                               </span>
                             ) : (
                               <span style={{
                                 marginLeft: 'auto',
-                                fontSize: '9px',
+                                fontSize: '10px',
                                 fontWeight: 'bold',
-                                color: '#94a3b8',
+                                color: '#64748b',
                                 background: '#f8fafc',
-                                padding: '2px 8px',
-                                borderRadius: '6px'
+                                padding: '3px 9px',
+                                borderRadius: '8px'
                               }}>
                                 未訪問
                               </span>
                             )}
                           </div>
 
+                          {/* 聖地場所名 */}
                           <h3 style={{
-                            fontSize: '14px',
+                            fontSize: '16px',
                             fontWeight: 900,
-                            color: 'var(--text-main)',
+                            color: '#0f172a',
                             margin: 0,
-                            lineHeight: 1.4
+                            lineHeight: 1.35,
+                            letterSpacing: '-0.02em'
                           }}>
                             {spot.name}
                           </h3>
 
+                          {/* 関連曲プレート */}
                           {spot.reward_title && (
                             <div style={{
-                              fontSize: '10px',
-                              color: '#64748b',
+                              fontSize: '11px',
+                              color: '#581c87',
                               display: 'flex',
                               alignItems: 'center',
-                              gap: '4px',
-                              background: '#f8fafc',
-                              padding: '5px 8px',
-                              borderRadius: '6px'
+                              gap: '6px',
+                              background: 'linear-gradient(135deg, #f5f3ff 0%, #fae8ff 100%)',
+                              border: '1px solid #edd8fc',
+                              padding: '6px 12px',
+                              borderRadius: '10px',
+                              boxShadow: '0 1px 3px rgba(0,0,0,0.01)'
                             }}>
-                              🎵 <span style={{ fontWeight: 'bold' }}>{spot.reward_title.replace("の証言者", "").replace("の約束人", "").replace("の旅人", "").replace("の恋人", "").replace("の漂流者", "").replace("の語り部", "").replace("のダンサー", "").replace("の走者", "").replace("の虜", "")}</span> 関連
+                              <span style={{ fontSize: '12px' }}>🎵</span>
+                              <span>関連曲：</span>
+                              <span style={{ fontWeight: 900 }}>
+                                {spot.reward_title
+                                  .replace("の証言者", "")
+                                  .replace("の約束人", "")
+                                  .replace("の旅人", "")
+                                  .replace("の恋人", "")
+                                  .replace("の漂流者", "")
+                                  .replace("の語り部", "")
+                                  .replace("のダンサー", "")
+                                  .replace("の走者", "")
+                                  .replace("の虜", "")}
+                              </span>
                             </div>
                           )}
 
+                          {/* 説明文 */}
                           <p style={{
-                            fontSize: '11px',
-                            color: '#64748b',
+                            fontSize: '12px',
+                            color: '#475569',
                             margin: 0,
-                            lineHeight: 1.5,
+                            lineHeight: 1.55,
                             display: '-webkit-box',
                             WebkitLineClamp: 2,
                             WebkitBoxOrient: 'vertical',
@@ -2193,24 +2366,26 @@ ${window.location.origin + window.location.pathname}
                             {spot.description}
                           </p>
 
-                          <div style={{ display: 'flex', gap: '8px', marginTop: '2px' }}>
+                          {/* 下部アクションボタン */}
+                          <div style={{ display: 'flex', gap: '10px', marginTop: '4px' }}>
                             <button
                               onClick={() => handleViewOnMap(spot)}
                               style={{
                                 flex: 1,
-                                background: 'linear-gradient(135deg, #a78bfa 0%, #818cf8 100%)',
+                                background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)',
                                 color: '#ffffff',
                                 border: 'none',
-                                borderRadius: '8px',
-                                padding: '6px 12px',
-                                fontSize: '10px',
-                                fontWeight: 'black',
+                                borderRadius: '12px',
+                                padding: '8px 16px',
+                                fontSize: '11px',
+                                fontWeight: 900,
                                 cursor: 'pointer',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                gap: '4px',
-                                transition: 'all 0.2s'
+                                gap: '6px',
+                                transition: 'all 0.2s',
+                                boxShadow: '0 4px 10px rgba(99, 102, 241, 0.2)'
                               }}
                               className="pop-button"
                             >
@@ -2224,15 +2399,17 @@ ${window.location.origin + window.location.pathname}
                               }}
                               style={{
                                 background: '#f1f5f9',
-                                color: '#475569',
+                                color: '#334155',
                                 border: 'none',
-                                borderRadius: '8px',
-                                padding: '6px 12px',
-                                fontSize: '10px',
+                                borderRadius: '12px',
+                                padding: '8px 16px',
+                                fontSize: '11.5px',
                                 fontWeight: 'bold',
                                 cursor: 'pointer',
-                                transition: 'background 0.2s'
+                                transition: 'all 0.2s',
+                                borderLeft: '1px solid #e2e8f0'
                               }}
+                              className="pop-button"
                             >
                               詳細 ➔
                             </button>
