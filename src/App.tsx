@@ -22,7 +22,6 @@ import Fuse from 'fuse.js';
 import { db, Spot, User, CheckIn, GroupType } from './db';
 import { authService, AuthSession } from './auth';
 import { SupportSection } from './components/SupportSection';
-import { AffiliateCard } from './components/AffiliateCard';
 import { AdPlaceholder } from './components/AdPlaceholder';
 
 // 🔔 アプリ内新着お知らせのインターフェースとデータ定義
@@ -4337,13 +4336,6 @@ ${window.location.origin + window.location.pathname}
                       </p>
                     </div>
 
-                    {/* 公式グッズ導線 (アフィリエイト) */}
-                    {selectedSpot.affiliateLink && (
-                      <div className="animate-fade-in-up">
-                        <AffiliateCard data={selectedSpot.affiliateLink} />
-                      </div>
-                    )}
-
 
 
                     {/* YouTube動画自動埋め込み */}
@@ -6532,13 +6524,6 @@ ${window.location.origin + window.location.pathname}
                   {selectedSpot.description}
                 </p>
               </div>
-
-              {/* 公式グッズ導線 (アフィリエイト) */}
-              {selectedSpot.affiliateLink && (
-                <div className="animate-fade-in-up">
-                  <AffiliateCard data={selectedSpot.affiliateLink} />
-                </div>
-              )}
 
 
 

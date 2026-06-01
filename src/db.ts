@@ -1,5 +1,3 @@
-import { AffiliateData } from './components/AffiliateCard';
-
 export interface Spot {
   id: string;
   name: string;
@@ -14,7 +12,6 @@ export interface Spot {
   tags?: string[];
   reward_title?: string;
   memorial_date?: string;
-  affiliateLink?: AffiliateData;
 }
 
 export interface User {
@@ -57,14 +54,7 @@ const INITIAL_SPOTS: Spot[] = [
     event_date: "2017-04-29",
     youtube_title: "🎥 関連映像: Documentary of =LOVE -Episode0-",
     youtube_url: "https://www.youtube.com/embed/zXR_xhihDOQ?si=4ram6tzvtxIfDN8t",
-    reward_title: "すべての始まりの目撃者",
-    affiliateLink: {
-      title: "=LOVE 1stコンサート「初めまして、＝LOVEです。」",
-      url: "https://amazon.co.jp/...",
-      imageUrl: "https://m.media-amazon.com/images/I/71YyM9l7xTL._AC_SL1500_.jpg",
-      description: "原点となる初期の姿を振り返りたい方に。",
-      type: "Live"
-    }
+    reward_title: "すべての始まりの目撃者"
   },
   {
     id: "spot-real-tsunoshima",
