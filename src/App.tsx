@@ -3841,15 +3841,39 @@ ${window.location.origin + window.location.pathname}
             {!isMobile && rightPanelTab === 'detail' && (
               <div style={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
                 {!selectedSpot ? (
-                  // デフォルト表示：「ピンをタップして詳細を表示」
-                  <div className="welcome-container">
-                    <div className="welcome-icon-box">
-                      <Compass className="w-9 h-9 text-slate-300 stroke-[1.5]" />
+                  // デフォルト表示：ウェルカムメッセージ ＋ 支援セクション（スクロール可能）
+                  <div className="info-scroll-area">
+                    <div className="welcome-container" style={{ flexShrink: 0, height: 'auto', padding: '16px', background: 'none' }}>
+                      <div className="welcome-icon-box">
+                        <Compass className="w-9 h-9 text-slate-300 stroke-[1.5]" />
+                      </div>
+                      <div>
+                        <h3 className="welcome-title">聖地巡礼ステーション</h3>
+                        <p className="welcome-desc">
+                          左の地図上のピンをタップすると、イコノイジョイの聖地詳細やエピソードがここに表示されます！
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="welcome-title">聖地巡礼ステーション</h3>
-                      <p className="welcome-desc">
-                        左の地図上のピンをタップすると、イコノイジョイの聖地詳細やエピソードがここに表示されます！
+                    
+                    {/* 💖 OFUSE 支援・運営コスト可視化セクション */}
+                    <div style={{ marginTop: '12px' }}>
+                      <SupportSection />
+                    </div>
+
+                    {/* 広告コンポーネント */}
+                    <AdPlaceholder />
+
+                    {/* 非公式であることの強い明記 */}
+                    <div style={{ 
+                      background: '#fef2f2', 
+                      border: '1px solid #fecaca', 
+                      borderRadius: '12px', 
+                      padding: '16px', 
+                      textAlign: 'center' 
+                    }}>
+                      <p style={{ fontSize: '11px', fontWeight: 'bold', color: '#b91c1c', margin: 0, lineHeight: 1.5 }}>
+                        本サービスは、=LOVE / ≠ME / ≒JOY の非公式ファンサービスです。<br/>
+                        所属事務所・運営会社・権利者とは一切関係ありません。
                       </p>
                     </div>
                   </div>
@@ -5068,28 +5092,7 @@ ${window.location.origin + window.location.pathname}
               </div>
             )}
 
-            {/* 💖 OFUSE 支援・運営コスト可視化セクション */}
-            <div style={{ marginTop: '32px' }}>
-              <SupportSection />
-            </div>
 
-            {/* 広告コンポーネント (フッター上) */}
-            <AdPlaceholder />
-
-            {/* 非公式であることの強い明記 */}
-            <div style={{ 
-              background: '#fef2f2', 
-              border: '1px solid #fecaca', 
-              borderRadius: '12px', 
-              padding: '16px', 
-              margin: '24px 0 16px', 
-              textAlign: 'center' 
-            }}>
-              <p style={{ fontSize: '11px', fontWeight: 'bold', color: '#b91c1c', margin: 0, lineHeight: 1.5 }}>
-                本サービスは、=LOVE / ≠ME / ≒JOY の非公式ファンサービスです。<br/>
-                所属事務所・運営会社・権利者とは一切関係ありません。
-              </p>
-            </div>
 
             {/* 📜 フッターリンク (利用規約・プライバシーポリシー・お問い合わせ) */}
             <div style={{
