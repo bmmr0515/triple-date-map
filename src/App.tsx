@@ -35,6 +35,13 @@ export interface Notice {
 
 export const APP_NOTICES: Notice[] = [
   {
+    id: 'notice-20260602-mermaid-lemontea',
+    date: '2026/06/02',
+    title: '🧜 【新スポット＆ミッション】『真夜中マーメイド』『海とレモンティー』『夏祭り恋慕う』のロケ地追加と新ミッション公開！',
+    content: '【新規聖地追加＆新ミッション始動のお知らせ】\nリクエストにお応えして『海とレモンティー』『夏祭り恋慕う』『真夜中マーメイド』のMVロケ地を追加し、新ミッション『今すぐ海へと連れ去って』を公開しました！\n\n■ 追加スポット（計6箇所）\n・『海とレモンティー』：太東海水浴場、海の家 おおたに\n・『夏祭り恋慕う』：西部スマイルパーク西部競輪場駐車場\n・『真夜中マーメイド』：原岡桟橋、上総湊海水浴場（湊752番2）、上総湊海水浴場（湊６１０−９）\n\n■ 新ミッション：『今すぐ海へと連れ去って』\n『真夜中マーメイド』のロケ地3箇所をすべて巡ってチェックインを達成すると、限定のプレミアム称号「真夜中のマーメイド」が解放されます！\n\nぜひ新しい聖地を巡り、美しい海風を感じる巡礼の旅をお楽しみください！',
+    type: 'update'
+  },
+  {
     id: 'notice-20260601-osakakyoto',
     date: '2026/06/01',
     title: '📍 【新スポット追加】=LOVE 公式YouTube『大阪&京都旅』の聖地（USJ、清水寺、錦市場など計9箇所）を追加！',
@@ -191,6 +198,7 @@ export default function App() {
   const [kyunkawaMissionExpanded, setKyunkawaMissionExpanded] = useState<boolean>(true);
   const [shokoriMissionExpanded, setShokoriMissionExpanded] = useState<boolean>(true);
   const [byunMissionExpanded, setByunMissionExpanded] = useState<boolean>(true);
+  const [mermaidMissionExpanded, setMermaidMissionExpanded] = useState<boolean>(true);
 
   // 📱 スマホレスポンシブ判定用ステートとリサイズ監視
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
@@ -348,6 +356,7 @@ export default function App() {
         if (listSelectedMission === 'kyunkawa') return tag.includes('きゅんかわ人生巡礼');
         if (listSelectedMission === 'shokori') return tag.includes('しょこりさんぽ巡礼');
         if (listSelectedMission === 'byun') return tag.includes('大空、ビュンと巡礼');
+        if (listSelectedMission === 'mermaid') return tag.includes('真夜中マーメイド巡礼');
         return false;
       });
       if (!hasMission) {
@@ -635,6 +644,15 @@ export default function App() {
     if (checkedSpotIds.has("spot-joy-byun7")) {
       if (!currentAcquired.includes(byunTitle) && !newlyEarnedTitles.includes(byunTitle)) {
         newlyEarnedTitles.push(byunTitle);
+      }
+    }
+
+    // 12. 真夜中のマーメイド (真夜中マーメイド巡礼完遂時)
+    const mermaidSpots = spots.filter(s => s.tags && s.tags.includes("真夜中マーメイド巡礼"));
+    const mermaidTitle = "真夜中のマーメイド";
+    if (mermaidSpots.length > 0 && mermaidSpots.every(s => checkedSpotIds.has(s.id))) {
+      if (!currentAcquired.includes(mermaidTitle) && !newlyEarnedTitles.includes(mermaidTitle)) {
+        newlyEarnedTitles.push(mermaidTitle);
       }
     }
 
@@ -1911,6 +1929,7 @@ ${window.location.origin + window.location.pathname}
                       <option value="kyunkawa">🎀 きゅんかわ人生 (全4箇所)</option>
                       <option value="shokori">🌸 しょこりさんぽ (全2箇所)</option>
                       <option value="byun">✈️ 大空、ビュンと (全7箇所)</option>
+                      <option value="mermaid">🧜 今すぐ海へと連れ去って (全3箇所)</option>
                     </select>
                     <div style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', fontSize: '9px', color: '#94a3b8' }}>▼</div>
                   </div>
@@ -3869,6 +3888,177 @@ ${window.location.origin + window.location.pathname}
                     );
                   })()}
 
+                  {/* 🌟 真夜中マーメイド巡礼ミッションの進捗カード */}
+                  {(() => {
+                    const mermaidSpots = spots.filter(s => s.tags && s.tags.includes("真夜中マーメイド巡礼"));
+                    const checkedMermaidSpots = checkins.filter(c => {
+                      const spot = spots.find(s => s.id === c.spot_id);
+                      return spot && spot.tags && spot.tags.includes("真夜中マーメイド巡礼");
+                    });
+                    const uniqueCheckedCount = new Set(checkedMermaidSpots.map(c => c.spot_id)).size;
+                    const totalMermaidCount = mermaidSpots.length || 3;
+                    const percent = Math.min(100, Math.round((uniqueCheckedCount / totalMermaidCount) * 100));
+                    const isCompleted = uniqueCheckedCount === totalMermaidCount;
+
+                    return (
+                      <div className="pop-panel" style={{
+                        borderRadius: '16px',
+                        border: '2px solid #e2e8f0',
+                        overflow: 'hidden',
+                        boxShadow: 'var(--shadow-panel)',
+                        marginTop: '16px'
+                      }}>
+                        {/* アコーディオンヘッダー */}
+                        <div 
+                          onClick={() => setMermaidMissionExpanded(!mermaidMissionExpanded)}
+                          style={{
+                            padding: '16px',
+                            background: 'linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%)', // 海を連想させる薄いブルーのグラデーション
+                            borderBottom: '1px solid #e2e8f0',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                            {/* 🏷️ メインタイトル */}
+                            <span style={{
+                              alignSelf: 'flex-start',
+                              fontSize: '9px',
+                              fontWeight: '900',
+                              color: '#0284c7',
+                              background: '#e0f2fe',
+                              padding: '2px 8px',
+                              borderRadius: '6px',
+                              letterSpacing: '0.02em',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '3px'
+                            }}>
+                              🏷️ 真夜中マーメイド 巡礼ミッション
+                            </span>
+                            {/* 👑 サブタイトル */}
+                            <span style={{
+                              fontSize: '15px',
+                              fontWeight: '900',
+                              color: '#1e293b',
+                              letterSpacing: '-0.02em',
+                              lineHeight: '1.2',
+                              marginTop: '2px'
+                            }}>
+                              「今すぐ海へと連れ去って」
+                            </span>
+                            {/* 📊 進行状況 */}
+                            <span style={{ fontSize: '9.5px', color: 'var(--text-muted)', fontWeight: '800', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                              🧭 進行状況: {uniqueCheckedCount} / {totalMermaidCount} 箇所 ({percent}%)
+                            </span>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            {isCompleted ? (
+                              <span style={{ fontSize: '10px', fontWeight: '900', color: '#0284c7', background: '#ffffff', padding: '2px 8px', borderRadius: '9999px', border: '1px solid rgba(2,132,199,0.2)' }}>達成！</span>
+                            ) : (
+                              <ChevronRight className="w-4 h-4 text-slate-400" style={{ transform: mermaidMissionExpanded ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
+                            )}
+                          </div>
+                        </div>
+
+                        {/* アコーディオンの中身 */}
+                        {mermaidMissionExpanded && (
+                          <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', backgroundColor: '#ffffff' }}>
+                            
+                            {/* プログレスバー */}
+                            <div style={{ padding: '4px 6px 10px 6px' }}>
+                              <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '9999px', overflow: 'hidden' }}>
+                                <div style={{ width: `${percent}%`, height: '100%', background: 'linear-gradient(90deg, #38bdf8 0%, #0284c7 100%)', transition: 'width 0.4s ease-out' }}></div>
+                              </div>
+                            </div>
+
+                            {/* 3箇所のリスト */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                              {mermaidSpots.map(spot => {
+                                const isSpotChecked = checkins.some(c => c.spot_id === spot.id);
+                                return (
+                                  <div 
+                                    key={spot.id} 
+                                    onClick={() => {
+                                      handleFocusSpotOnMap(spot);
+                                      setSelectedSpot(spot);
+                                      setRightPanelTab('detail');
+                                    }}
+                                    style={{
+                                      display: 'flex',
+                                      justifyContent: 'space-between',
+                                      alignItems: 'center',
+                                      padding: '10px 12px',
+                                      borderRadius: '10px',
+                                      background: isSpotChecked ? '#f0f9ff' : '#f8fafc',
+                                      border: isSpotChecked ? '1px solid rgba(56, 189, 248, 0.2)' : '1px solid #e2e8f0',
+                                      cursor: 'pointer',
+                                      transition: 'all 0.2s'
+                                    }}
+                                    className="mission-spot-item"
+                                  >
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', overflow: 'hidden', paddingRight: '12px' }}>
+                                      <span style={{ fontSize: '11px', fontWeight: '800', color: isSpotChecked ? 'var(--text-main)' : 'var(--text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                        {spot.name}
+                                      </span>
+                                      <span style={{ fontSize: '8px', color: '#94a3b8' }}>{spot.category}</span>
+                                    </div>
+                                    <div style={{ flexShrink: 0 }}>
+                                      {isSpotChecked ? (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#ffffff', color: '#0284c7', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '900', border: '1px solid rgba(2,132,199,0.2)' }}>
+                                          <CheckCircle2 className="w-3 h-3 text-[#0284c7]" />
+                                          行った！
+                                        </div>
+                                      ) : (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#ffffff', color: '#94a3b8', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '800', border: '1px solid #e2e8f0' }}>
+                                          未チェック
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+
+                            {/* 称号獲得の通知報酬枠 */}
+                            <div style={{
+                              marginTop: '8px',
+                              padding: '10px',
+                              borderRadius: '10px',
+                              background: isCompleted ? 'linear-gradient(135deg, rgba(56,189,248,0.06) 0%, rgba(2,132,199,0.06) 100%)' : '#f8fafc',
+                              border: isCompleted ? '1px dashed #0284c7' : '1px dashed #cbd5e1',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '8px'
+                            }}>
+                              <div style={{
+                                width: '28px',
+                                height: '28px',
+                                borderRadius: '50%',
+                                background: isCompleted ? 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)' : '#e2e8f0',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyItems: 'center',
+                                justifyContent: 'center',
+                                flexShrink: 0
+                              }}>
+                                <Award className="w-4 h-4 text-white" />
+                              </div>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                <span style={{ fontSize: '10px', fontWeight: '900', color: isCompleted ? '#0284c7' : '#64748b' }}>称号報酬: 真夜中のマーメイド</span>
+                                <span style={{ fontSize: '8px', color: '#94a3b8' }}>
+                                  {isCompleted ? '🎉 真夜中のマーメイドの称号を獲得！マイページでバッジが輝いています。' : '真夜中マーメイドの聖地3箇所すべてを巡ると「真夜中のマーメイド」の称号が解放されます。'}
+                                </span>
+                              </div>
+                            </div>
+
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
 
                 </div>
               </div>

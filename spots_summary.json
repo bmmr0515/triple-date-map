@@ -425,5 +425,47 @@
     "category": "飲食店・その他",
     "songOrEvent": "『大阪&京都旅』",
     "reward_title": "京風お好み焼きの晩餐会"
+  },
+  {
+    "name": "太東海水浴場",
+    "group": "=LOVE",
+    "category": "飲食店・その他",
+    "songOrEvent": "『海とレモンティー』",
+    "reward_title": "甘酸っぱいレモンティー"
+  },
+  {
+    "name": "海の家 おおたに",
+    "group": "=LOVE",
+    "category": "飲食店・その他",
+    "songOrEvent": "『海とレモンティー』",
+    "reward_title": "海の家の看板娘・看板息子"
+  },
+  {
+    "name": "西部スマイルパーク西部競輪場駐車場",
+    "group": "=LOVE",
+    "category": "飲食店・その他",
+    "songOrEvent": "『夏祭り恋慕う』",
+    "reward_title": "夏祭りの夜の夢"
+  },
+  {
+    "name": "上総湊海水浴場（湊752番2）",
+    "group": "=LOVE",
+    "category": "飲食店・その他",
+    "songOrEvent": "『真夜中マーメイド』",
+    "reward_title": "海辺 of ダンスパートナー"
+  },
+  {
+    "name": "原岡桟橋（岡本桟橋）",
+    "group": "=LOVE",
+    "category": "飲食店・その他",
+    "songOrEvent": "『真夜中マーメイド』",
+    "reward_title": "桟橋のマーメイド"
+  },
+  {
+    "name": "上総湊海水浴場（湊６１０−９）",
+    "group": "=LOVE",
+    "category": "飲食店・その他",
+    "songOrEvent": "『真夜中マーメイド』",
+    "reward_title": "潮風の歌姫・歌手"
   }
 ]
