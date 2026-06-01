@@ -20,6 +20,9 @@ import {
 } from 'lucide-react';
 import { db, Spot, User, CheckIn, GroupType } from './db';
 import { authService, AuthSession } from './auth';
+import { SupportSection } from './components/SupportSection';
+import { AffiliateCard } from './components/AffiliateCard';
+import { AdPlaceholder } from './components/AdPlaceholder';
 
 // 🔔 アプリ内新着お知らせのインターフェースとデータ定義
 export interface Notice {
@@ -31,6 +34,13 @@ export interface Notice {
 }
 
 export const APP_NOTICES: Notice[] = [
+  {
+    id: 'notice-20260601-osakakyoto',
+    date: '2026/06/01',
+    title: '📍 【新スポット追加】=LOVE 公式YouTube『大阪&京都旅』の聖地（USJ、清水寺、錦市場など計9箇所）を追加！',
+    content: '【新規聖地追加のお知らせ】\n=LOVE 公式YouTube『大阪&京都旅』の聖地（USJ、清水寺、錦市場など計9箇所）を一挙追加しました！\n\n動画タイトル：メンバーだけで旅行に行ってきました！！！【大阪&京都旅】\nYouTubeの楽しそうな旅の様子を見ながら、メンバーが訪れたスポット（ユニバーサル・スタジオ・ジャパン、清水寺、錦市場など計9箇所）へ聖地巡礼してみましょう！\n\n■ 追加スポット\n① ユニバーサル・スタジオ・ジャパン\n② 清水順正 おかべ家\n③ 錦市場\n④ 八坂神社 西楼門\n⑤ 金剛寺 八坂庚申堂\n⑥ 芋ぴっぴ。京都祇園店\n⑦ 錦まるん\n⑧ 清水寺\n⑨ いっかくじゅう 四条新町店',
+    type: 'update'
+  },
   {
     id: 'notice-20260523-marshmallow',
     date: '2026/05/23',
@@ -1455,8 +1465,9 @@ ${window.location.origin + window.location.pathname}
             </h2>
             <p style={{ fontSize: '12.5px', color: '#475569', textAlign: 'center', lineHeight: '1.8', margin: '0 0 22px 0', fontWeight: '600' }}>
               マップをご利用いただきありがとうございます！<br />
-              当アプリは<strong>完全無料・広告なしで自費運営</strong>しています。<br />
-              より多くの聖地追加やサーバー維持のため、もしよろしければ「OFUSE」よりご支援（カンパ）をいただけますと大変励みになります！
+              当アプリは<strong>個人開発で運営</strong>しています。<br />
+              アクセス増加に伴いサーバーを増強しました🙏<br />
+              長く巡礼文化を残していくため、応援していただけると励みになります。
             </p>
             <a
               className="support-modal-btn-primary"
@@ -2345,35 +2356,9 @@ ${window.location.origin + window.location.pathname}
           <div style={{
             padding: '14px 16px 10px 16px',
             borderBottom: '1px dashed #e2e8f0',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
-            gap: '6px'
+            width: '100%'
           }}>
-            <a
-              className="ofuse-support-btn"
-              href="https://ofuse.me/o?uid=180694"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-ofuse-widget-button="true"
-              data-ofuse-id="180694"
-              data-ofuse-size="large"
-              data-ofuse-color="pink"
-              data-ofuse-text="開発費用を支援する"
-              data-ofuse-style="rectangle"
-            >
-              💖 OFUSEで開発を応援する
-            </a>
-            <span style={{ 
-              fontSize: '9.5px', 
-              color: 'var(--text-muted)', 
-              textAlign: 'center',
-              fontWeight: '700'
-            }}>
-              無料・広告なしで運営中 ✨ 支援が大きな励みになります
-            </span>
+            <SupportSection ofuseUrl="https://ofuse.me/o?uid=180694" />
           </div>
 
           {/* ミニタブセレクター (ぷっくり角丸ボタン) */}
@@ -3924,6 +3909,13 @@ ${window.location.origin + window.location.pathname}
                       </p>
                     </div>
 
+                    {/* 公式グッズ導線 (アフィリエイト) */}
+                    {selectedSpot.affiliateLink && (
+                      <div className="animate-fade-in-up">
+                        <AffiliateCard data={selectedSpot.affiliateLink} />
+                      </div>
+                    )}
+
 
 
                     {/* YouTube動画自動埋め込み */}
@@ -5076,6 +5068,29 @@ ${window.location.origin + window.location.pathname}
               </div>
             )}
 
+            {/* 💖 OFUSE 支援・運営コスト可視化セクション */}
+            <div style={{ marginTop: '32px' }}>
+              <SupportSection />
+            </div>
+
+            {/* 広告コンポーネント (フッター上) */}
+            <AdPlaceholder />
+
+            {/* 非公式であることの強い明記 */}
+            <div style={{ 
+              background: '#fef2f2', 
+              border: '1px solid #fecaca', 
+              borderRadius: '12px', 
+              padding: '16px', 
+              margin: '24px 0 16px', 
+              textAlign: 'center' 
+            }}>
+              <p style={{ fontSize: '11px', fontWeight: 'bold', color: '#b91c1c', margin: 0, lineHeight: 1.5 }}>
+                本サービスは、=LOVE / ≠ME / ≒JOY の非公式ファンサービスです。<br/>
+                所属事務所・運営会社・権利者とは一切関係ありません。
+              </p>
+            </div>
+
             {/* 📜 フッターリンク (利用規約・プライバシーポリシー・お問い合わせ) */}
             <div style={{
               marginTop: '12px',
@@ -6110,6 +6125,13 @@ ${window.location.origin + window.location.pathname}
                   {selectedSpot.description}
                 </p>
               </div>
+
+              {/* 公式グッズ導線 (アフィリエイト) */}
+              {selectedSpot.affiliateLink && (
+                <div className="animate-fade-in-up">
+                  <AffiliateCard data={selectedSpot.affiliateLink} />
+                </div>
+              )}
 
 
 

@@ -1,3 +1,5 @@
+import { AffiliateData } from './components/AffiliateCard';
+
 export interface Spot {
   id: string;
   name: string;
@@ -12,6 +14,7 @@ export interface Spot {
   tags?: string[];
   reward_title?: string;
   memorial_date?: string;
+  affiliateLink?: AffiliateData;
 }
 
 export interface User {
@@ -54,7 +57,14 @@ const INITIAL_SPOTS: Spot[] = [
     event_date: "2017-04-29",
     youtube_title: "🎥 関連映像: Documentary of =LOVE -Episode0-",
     youtube_url: "https://www.youtube.com/embed/zXR_xhihDOQ?si=4ram6tzvtxIfDN8t",
-    reward_title: "すべての始まりの目撃者"
+    reward_title: "すべての始まりの目撃者",
+    affiliateLink: {
+      title: "=LOVE 1stコンサート「初めまして、＝LOVEです。」",
+      url: "https://amazon.co.jp/...",
+      imageUrl: "https://m.media-amazon.com/images/I/71YyM9l7xTL._AC_SL1500_.jpg",
+      description: "原点となる初期の姿を振り返りたい方に。",
+      type: "Live"
+    }
   },
   {
     id: "spot-real-tsunoshima",
@@ -1336,6 +1346,132 @@ const INITIAL_SPOTS: Spot[] = [
     memorial_date: "2023-04-17",
     youtube_title: "🎥 関連映像: 『マシュマロフロート』公式MV",
     youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/Vn0CYp7_MNs?si=EUm7u-eBNVRDdkXm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+  {
+    id: "spot-osakakyoto-usj",
+    name: "ユニバーサル・スタジオ・ジャパン",
+    group: "=LOVE",
+    category: "飲食店・その他",
+    description: "イコノイジョイ大運動会の優勝賞品として贈られた国内旅行で、メンバー全員で訪れた大人気テーマパークです。動画内では、みんなでカチューシャを選んだり、アトラクションを全力で楽しむ姿が見られました。メンバーたちが味わった興奮とハッピーな空間をぜひ現地で満喫してください！\n【住所】〒554-0031 大阪府大阪市此花区桜島２丁目１−３３",
+    latitude: 34.6654,
+    longitude: 135.4323,
+    event_date: "2023-09-23",
+    memorial_date: "2023-09-23",
+    youtube_title: "🎥 関連映像: メンバーだけで旅行に行ってきました！！！【大阪&京都旅】",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/YgOd8ZpFaUU?si=ST1XqCF26DF5Of94" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "なにわのハリポタアイドル"
+  },
+  {
+    id: "spot-osakakyoto-okabeya",
+    name: "清水順正 おかべ家",
+    group: "=LOVE",
+    category: "飲食店・その他",
+    description: "京都の伝統的な湯豆腐が味わえる名店です。和の情緒あふれる店内で、メンバーたちが美味しそうに京都グルメを堪能していました。清水寺参拝のルートにも組み込みやすく、推しと同じお豆腐料理を味わう贅沢な巡礼が楽しめます。\n【住所】〒605-0862 京都府京都市東山区清水２丁目２３９",
+    latitude: 34.9960,
+    longitude: 135.7811,
+    event_date: "2023-09-23",
+    memorial_date: "2023-09-23",
+    youtube_title: "🎥 関連映像: メンバーだけで旅行に行ってきました！！！【大阪&京都旅】",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/YgOd8ZpFaUU?si=ST1XqCF26DF5Of94" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "京都湯豆腐の美食家"
+  },
+  {
+    id: "spot-osakakyoto-nishiki",
+    name: "錦市場",
+    group: "=LOVE",
+    category: "飲食店・その他",
+    description: "「京都の台所」として有名な錦市場です。佐々木舞香さん、諸橋紗夏さん、山本杏奈さん、齊藤なぎささん、大谷映美里さん、音嶋莉沙さん、野口衣織さんのメンバーで食べ歩きを楽しみました。賑やかな商店街で、メンバーたちが何を食べたのか探しながら歩くのがおすすめです。\n【住所】〒604-8055 京都府京都市中京区東魚屋町",
+    latitude: 35.0050,
+    longitude: 135.7660,
+    event_date: "2023-09-23",
+    memorial_date: "2023-09-23",
+    youtube_title: "🎥 関連映像: メンバーだけで旅行に行ってきました！！！【大阪&京都旅】",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/YgOd8ZpFaUU?si=ST1XqCF26DF5Of94" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "錦市場の食べ歩き達人"
+  },
+  {
+    id: "spot-osakakyoto-yasakaroumon",
+    name: "八坂神社 西楼門",
+    group: "=LOVE",
+    category: "飲食店・その他",
+    description: "祇園の象徴ともいえる鮮やかな朱塗りの門です。京都旅の定番スポットとしてメンバーたちも訪れ、美しい景観をバックに楽しんでいました。周辺には推し活にぴったりなお店も多く、京都巡礼の起点にふさわしい場所です。\n【住所】〒605-0073 京都府京都市東山区祇園町北側６２５",
+    latitude: 35.0036,
+    longitude: 135.7786,
+    event_date: "2023-09-23",
+    memorial_date: "2023-09-23",
+    youtube_title: "🎥 関連映像: メンバーだけで旅行に行ってきました！！！【大阪&京都旅】",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/YgOd8ZpFaUU?si=ST1XqCF26DF5Of94" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "朱塗りの西楼門でポーズ"
+  },
+  {
+    id: "spot-osakakyoto-yasakakoushindou",
+    name: "金剛寺 八坂庚申堂",
+    group: "=LOVE",
+    category: "飲食店・その他",
+    description: "カラフルな「くくり猿」がSNSでも大人気の映えスポットです。メンバーたちも色鮮やかなお堂の前で、京都らしい華やかな雰囲気を楽しんでいました。ぜひお気に入りのアクスタや生写真を持って、同じ画角で記念撮影をしてみてください。\n【住所】〒605-0828 京都府京都市東山区金園町３９０",
+    latitude: 34.9983,
+    longitude: 135.7787,
+    event_date: "2023-09-23",
+    memorial_date: "2023-09-23",
+    youtube_title: "🎥 関連映像: メンバーだけで旅行に行ってきました！！！【大阪&京都旅】",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/YgOd8ZpFaUU?si=ST1XqCF26DF5Of94" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "くくり猿と映えるオタク"
+  },
+  {
+    id: "spot-osakakyoto-imopippi",
+    name: "芋ぴっぴ。京都祇園店",
+    group: "=LOVE",
+    category: "飲食店・その他",
+    description: "祇園でおすすめの焼き芋スイーツ専門店です。動画内でメンバーたちが立ち寄り、美味しそうなスイーツに目を輝かせていました。食べ歩きにもぴったりで、甘いお芋を片手に祇園の街並みを散策するのが最高の推し活ルートです。\n【住所】〒605-0074 京都府京都市東山区祇園町南側５２４ ギオン和喜ビル 2階",
+    latitude: 35.0023,
+    longitude: 135.7772,
+    event_date: "2023-09-23",
+    memorial_date: "2023-09-23",
+    youtube_title: "🎥 関連映像: メンバーだけで旅行に行ってきました！！！【大阪&京都旅】",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/YgOd8ZpFaUU?si=ST1XqCF26DF5Of94" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "祇園の甘いお芋ちゃん"
+  },
+  {
+    id: "spot-osakakyoto-nishikimarun",
+    name: "錦まるん",
+    group: "=LOVE",
+    category: "飲食店・その他",
+    description: "錦市場にある、可愛らしいお菓子や京都雑貨が並ぶお店です。お土産選びをしながらメンバーたちが楽しそうに過ごしていた空間です。カラフルで可愛い金平糖や京菓子など、巡礼の思い出になるお土産を探してみてください。\n【住所】〒604-8055 京都府京都市中京区東魚屋町 錦小路柳馬場東入東魚屋180",
+    latitude: 35.0050,
+    longitude: 135.7646,
+    event_date: "2023-09-23",
+    memorial_date: "2023-09-23",
+    youtube_title: "🎥 関連映像: メンバーだけで旅行に行ってきました！！！【大阪&京都旅】",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/YgOd8ZpFaUU?si=ST1XqCF26DF5Of94" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "まるんでお土産ハンター"
+  },
+  {
+    id: "spot-osakakyoto-kiyomizudera",
+    name: "清水寺",
+    group: "=LOVE",
+    category: "飲食店・その他",
+    description: "世界遺産にも登録されている、京都を代表する寺院です。ここでは髙松瞳さん、瀧脇笙古さん、齋藤樹愛羅さんのチームが訪れ、「清水の舞台」からの絶景を堪能したり、境内を仲良く散策していました。四季折々の美しい景色とともに、3人の足跡を辿ってみてください。\n【住所】〒605-0862 京都府京都市東山区清水１丁目２９４",
+    latitude: 34.9948,
+    longitude: 135.7850,
+    event_date: "2023-09-23",
+    memorial_date: "2023-09-23",
+    youtube_title: "🎥 関連映像: メンバーだけで旅行に行ってきました！！！【大阪&京都旅】",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/YgOd8ZpFaUU?si=ST1XqCF26DF5Of94" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "清水の舞台からの絶景者"
+  },
+  {
+    id: "spot-osakakyoto-ikkakuju",
+    name: "いっかくじゅう 四条新町店",
+    group: "=LOVE",
+    category: "飲食店・その他",
+    description: "京都旅の締めくくりに、メンバー全員集合で絶品のお好み焼きや京風鉄板焼きを囲んで晩御飯を食べたお店です。動画のラストで楽しそうに旅の思い出を語り合っていたエモーショナルな場所。聖地巡礼のディナーにこれ以上ない特別なロケーションです。\n【住所】〒604-8223 京都府京都市中京区新町通錦小路下ル小結棚町４３５ ジェイブライド四条烏丸1F",
+    latitude: 35.0047,
+    longitude: 135.7574,
+    event_date: "2023-09-23",
+    memorial_date: "2023-09-23",
+    youtube_title: "🎥 関連映像: メンバーだけで旅行に行ってきました！！！【大阪&京都旅】",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/YgOd8ZpFaUU?si=ST1XqCF26DF5Of94" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "京風お好み焼きの晩餐会"
   }
 ];
 

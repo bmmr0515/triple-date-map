@@ -362,5 +362,68 @@
     "category": "飲食店・その他",
     "songOrEvent": "『絶対アイドル辞めないで』",
     "reward_title": "MIYASHITAのアイドル"
+  },
+  {
+    "name": "ユニバーサル・スタジオ・ジャパン",
+    "group": "=LOVE",
+    "category": "飲食店・その他",
+    "songOrEvent": "『大阪&京都旅』",
+    "reward_title": "なにわのハリポタアイドル"
+  },
+  {
+    "name": "清水順正 おかべ家",
+    "group": "=LOVE",
+    "category": "飲食店・その他",
+    "songOrEvent": "『大阪&京都旅』",
+    "reward_title": "京都湯豆腐の美食家"
+  },
+  {
+    "name": "錦市場",
+    "group": "=LOVE",
+    "category": "飲食店・その他",
+    "songOrEvent": "『大阪&京都旅』",
+    "reward_title": "錦市場の食べ歩き達人"
+  },
+  {
+    "name": "八坂神社 西楼門",
+    "group": "=LOVE",
+    "category": "飲食店・その他",
+    "songOrEvent": "『大阪&京都旅』",
+    "reward_title": "朱塗りの西楼門でポーズ"
+  },
+  {
+    "name": "金剛寺 八坂庚申堂",
+    "group": "=LOVE",
+    "category": "飲食店・その他",
+    "songOrEvent": "『大阪&京都旅』",
+    "reward_title": "くくり猿と映えるオタク"
+  },
+  {
+    "name": "芋ぴっぴ。京都祇園店",
+    "group": "=LOVE",
+    "category": "飲食店・その他",
+    "songOrEvent": "『大阪&京都旅』",
+    "reward_title": "祇園の甘いお芋ちゃん"
+  },
+  {
+    "name": "錦まるん",
+    "group": "=LOVE",
+    "category": "飲食店・その他",
+    "songOrEvent": "『大阪&京都旅』",
+    "reward_title": "まるんでお土産ハンター"
+  },
+  {
+    "name": "清水寺",
+    "group": "=LOVE",
+    "category": "飲食店・その他",
+    "songOrEvent": "『大阪&京都旅』",
+    "reward_title": "清水の舞台からの絶景者"
+  },
+  {
+    "name": "いっかくじゅう 四条新町店",
+    "group": "=LOVE",
+    "category": "飲食店・その他",
+    "songOrEvent": "『大阪&京都旅』",
+    "reward_title": "京風お好み焼きの晩餐会"
   }
 ]
