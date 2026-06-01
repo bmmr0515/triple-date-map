@@ -2352,13 +2352,50 @@ ${window.location.origin + window.location.pathname}
             </div>
           </div>
           
-          {/* ☕️ 開発者支援（カンパ）導線最優先枠 */}
+
+
+          {/* ☕️ 開発者支援（カンパ）導線最優先枠 (コンパクト版) */}
           <div style={{
-            padding: '14px 16px 10px 16px',
+            padding: '10px 16px 8px 16px',
             borderBottom: '1px dashed #e2e8f0',
-            width: '100%'
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+            gap: '4px'
           }}>
-            <SupportSection ofuseUrl="https://ofuse.me/o?uid=180694" />
+            <a
+              className="ofuse-support-btn"
+              href="https://ofuse.me/o?uid=180694"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                background: '#ff6897',
+                color: 'white',
+                padding: '6px 16px',
+                borderRadius: '9999px',
+                textDecoration: 'none',
+                fontSize: '11px',
+                fontWeight: '900',
+                boxShadow: '0 2px 8px rgba(255, 104, 151, 0.2)',
+                cursor: 'pointer'
+              }}
+            >
+              💖 OFUSEで開発を応援する
+            </a>
+            <span style={{ 
+              fontSize: '9px', 
+              color: 'var(--text-muted)', 
+              textAlign: 'center',
+              fontWeight: '700'
+            }}>
+              無料・広告なしで運営中 ✨ 支援が大きな励みになります
+            </span>
           </div>
 
           {/* ミニタブセレクター (ぷっくり角丸ボタン) */}
