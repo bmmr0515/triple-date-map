@@ -35,6 +35,13 @@ export interface Notice {
 
 export const APP_NOTICES: Notice[] = [
   {
+    id: 'notice-20260602-escape-express',
+    date: '2026/06/02',
+    title: '🏃 【新スポット＆ミッション】=LOVE『超特急逃走中』のMVロケ地5箇所を追加し、新ミッション『君は超特急で逃走中！』公開！',
+    content: '【新規聖地追加＆新ミッション始動のお知らせ】\n=LOVE『超特急逃走中』のMVロケ地（日本大学理工学部 船橋キャンパス内の5スポット）を追加し、新ミッション『君は超特急で逃走中！』を公開しました！\n\n■ 追加スポット（計5箇所・MVロケ地）\n・日本大学理工学部 船橋キャンパス（プラザ習志野）\n・日本大学理工学部 船橋キャンパス（中央庭園）\n・日本大学理工学部 船橋キャンパス（テクノプレース15 西側）\n・日本大学理工学部 船橋キャンパス（理工学部スポーツホール）\n・日本大学理工学部 船橋キャンパス（交通総合試験路）\n\n■ 新ミッション：『君は超特急で逃走中！』\n『超特急逃走中』のロケ地5箇所をすべて巡ってチェックインを達成すると、限定のプレミアム称号「超特急な逃走者」が解放されます！\n\n【⚠️重要なお願い】\nこちらは現在も学生が通う現役の大学キャンパスです。時期や時間帯によっては関係者以外の立ち入りが制限されている場合があります。敷地内に入る際は、必ず正門の警備員や窓口等で見学の許可を取るようにしてください。また、授業や学生生活の妨げにならないよう、マナーとモラルを厳守した節度ある行動をお願いいたします。\n\nぜひルールとマナーを守って、疾走感あふれる聖地巡礼の旅をお楽しみください！',
+    type: 'update'
+  },
+  {
     id: 'notice-20260602-mermaid-lemontea',
     date: '2026/06/02',
     title: '🧜 【新スポット＆ミッション】『真夜中マーメイド』『海とレモンティー』『夏祭り恋慕う』のロケ地追加と新ミッション公開！',
@@ -199,6 +206,7 @@ export default function App() {
   const [shokoriMissionExpanded, setShokoriMissionExpanded] = useState<boolean>(true);
   const [byunMissionExpanded, setByunMissionExpanded] = useState<boolean>(true);
   const [mermaidMissionExpanded, setMermaidMissionExpanded] = useState<boolean>(true);
+  const [escapeMissionExpanded, setEscapeMissionExpanded] = useState<boolean>(true);
 
   // 📱 スマホレスポンシブ判定用ステートとリサイズ監視
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
@@ -342,6 +350,45 @@ export default function App() {
     return "";
   };
 
+  // 📝 聖地説明文の警告テキスト強調用レンダリングヘルパー
+  const renderDescription = (desc: string) => {
+    if (desc.includes('⚠️聖地巡礼に関する重要なお願い')) {
+      const parts = desc.split('⚠️聖地巡礼に関する重要なお願い');
+      const mainDesc = parts[0];
+      const warningText = parts[1];
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <p className="episode-text" style={{ margin: 0, fontSize: '12.5px', lineHeight: '1.6', color: '#334155', whiteSpace: 'pre-wrap' }}>
+            {mainDesc.trim()}
+          </p>
+          <div style={{
+            padding: '14px 16px',
+            background: '#fff5f5',
+            border: '2px solid #feb2b2',
+            borderRadius: '14px',
+            fontSize: '11.5px',
+            color: '#9b2c2c',
+            lineHeight: '1.55',
+            fontWeight: 'bold',
+            boxShadow: '0 4px 6px -1px rgba(155, 44, 44, 0.03)'
+          }}>
+            <span style={{ fontSize: '13px', display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '6px', color: '#c53030', fontWeight: '900' }}>
+              ⚠️ 聖地巡礼に関する重要なお願い
+            </span>
+            <span style={{ display: 'block', whiteSpace: 'pre-wrap' }}>
+              {warningText.trim()}
+            </span>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <p className="episode-text" style={{ margin: 0, fontSize: '12.5px', lineHeight: '1.6', color: '#334155', whiteSpace: 'pre-wrap' }}>
+        {desc}
+      </p>
+    );
+  };
+
   // データベース上の登録聖地から、存在する都道府県のみを動的に抽出
   const availableAreas = Array.from(new Set(spots.map(extractArea))).filter(a => a !== '');
 
@@ -473,6 +520,7 @@ export default function App() {
           if (listSelectedMission === 'shokori') return tag.includes('しょこりさんぽ巡礼');
           if (listSelectedMission === 'byun') return tag.includes('大空、ビュンと巡礼');
           if (listSelectedMission === 'mermaid') return tag.includes('真夜中マーメイド巡礼');
+          if (listSelectedMission === 'escape') return tag.includes('超特急逃走中巡礼');
           return false;
         });
         if (!hasMission) {
@@ -786,6 +834,15 @@ export default function App() {
     if (mermaidSpots.length > 0 && mermaidSpots.every(s => checkedSpotIds.has(s.id))) {
       if (!currentAcquired.includes(mermaidTitle) && !newlyEarnedTitles.includes(mermaidTitle)) {
         newlyEarnedTitles.push(mermaidTitle);
+      }
+    }
+
+    // 13. 超特急な逃走者 (超特急逃走中巡礼完遂時)
+    const escapeSpots = spots.filter(s => s.tags && s.tags.includes("超特急逃走中巡礼"));
+    const escapeTitle = "超特急な逃走者";
+    if (escapeSpots.length > 0 && escapeSpots.every(s => checkedSpotIds.has(s.id))) {
+      if (!currentAcquired.includes(escapeTitle) && !newlyEarnedTitles.includes(escapeTitle)) {
+        newlyEarnedTitles.push(escapeTitle);
       }
     }
 
@@ -2104,6 +2161,7 @@ ${window.location.origin + window.location.pathname}
                       <option value="shokori">🌸 しょこりさんぽ (全2箇所)</option>
                       <option value="byun">✈️ 大空、ビュンと (全7箇所)</option>
                       <option value="mermaid">🧜 今すぐ海へと連れ去って (全3箇所)</option>
+                      <option value="escape">🏃 君は超特急で逃走中！ (全5箇所)</option>
                     </select>
                     <div style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', fontSize: '9px', color: '#94a3b8' }}>▼</div>
                   </div>
@@ -4262,6 +4320,178 @@ ${window.location.origin + window.location.pathname}
                     );
                   })()}
 
+                  {/* 🌟 超特急逃走中巡礼ミッションの進捗カード */}
+                  {(() => {
+                    const escapeSpots = spots.filter(s => s.tags && s.tags.includes("超特急逃走中巡礼"));
+                    const checkedEscapeSpots = checkins.filter(c => {
+                      const spot = spots.find(s => s.id === c.spot_id);
+                      return spot && spot.tags && spot.tags.includes("超特急逃走中巡礼");
+                    });
+                    const uniqueCheckedCount = new Set(checkedEscapeSpots.map(c => c.spot_id)).size;
+                    const totalEscapeCount = escapeSpots.length || 5;
+                    const percent = Math.min(100, Math.round((uniqueCheckedCount / totalEscapeCount) * 100));
+                    const isCompleted = uniqueCheckedCount === totalEscapeCount;
+
+                    return (
+                      <div className="pop-panel" style={{
+                        borderRadius: '16px',
+                        border: '2px solid #e2e8f0',
+                        overflow: 'hidden',
+                        boxShadow: 'var(--shadow-panel)',
+                        marginTop: '16px'
+                      }}>
+                        {/* アコーディオンヘッダー */}
+                        <div 
+                          onClick={() => setEscapeMissionExpanded(!escapeMissionExpanded)}
+                          style={{
+                            padding: '16px',
+                            background: 'linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%)',
+                            borderBottom: '1px solid #e2e8f0',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                            {/* 🏷️ メインタイトル */}
+                            <span style={{
+                              alignSelf: 'flex-start',
+                              fontSize: '9px',
+                              fontWeight: '900',
+                              color: '#db2777',
+                              background: '#fdf2f8',
+                              padding: '2px 8px',
+                              borderRadius: '6px',
+                              letterSpacing: '0.02em',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '3px'
+                            }}>
+                              🏃 超特急逃走中 巡礼ミッション
+                            </span>
+                            {/* 👑 サブタイトル */}
+                            <span style={{
+                              fontSize: '15px',
+                              fontWeight: '900',
+                              color: '#1e293b',
+                              letterSpacing: '-0.02em',
+                              lineHeight: '1.2',
+                              marginTop: '2px'
+                            }}>
+                              「君は超特急で逃走中！」
+                            </span>
+                            {/* 📊 進行状況 */}
+                            <span style={{ fontSize: '9.5px', color: 'var(--text-muted)', fontWeight: '800', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                              🧭 進行状況: {uniqueCheckedCount} / {totalEscapeCount} 箇所 ({percent}%)
+                            </span>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            {isCompleted ? (
+                              <span style={{ fontSize: '10px', fontWeight: '900', color: '#db2777', background: '#ffffff', padding: '2px 8px', borderRadius: '9999px', border: '1px solid rgba(219,39,119,0.2)' }}>達成！</span>
+                            ) : (
+                              <ChevronRight className="w-4 h-4 text-slate-400" style={{ transform: escapeMissionExpanded ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
+                            )}
+                          </div>
+                        </div>
+
+                        {/* アコーディオンの中身 */}
+                        {escapeMissionExpanded && (
+                          <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', backgroundColor: '#ffffff' }}>
+                            
+                            {/* プログレスバー */}
+                            <div style={{ padding: '4px 6px 10px 6px' }}>
+                              <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '9999px', overflow: 'hidden' }}>
+                                <div style={{ width: `${percent}%`, height: '100%', background: 'linear-gradient(90deg, #f472b6 0%, #db2777 100%)', transition: 'width 0.4s ease-out' }}></div>
+                              </div>
+                            </div>
+
+                            {/* 5箇所のリスト */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                              {escapeSpots.map(spot => {
+                                const isSpotChecked = checkins.some(c => c.spot_id === spot.id);
+                                return (
+                                  <div 
+                                    key={spot.id} 
+                                    onClick={() => {
+                                      handleFocusSpotOnMap(spot);
+                                      setSelectedSpot(spot);
+                                      setRightPanelTab('detail');
+                                    }}
+                                    style={{
+                                      display: 'flex',
+                                      justifyContent: 'space-between',
+                                      alignItems: 'center',
+                                      padding: '10px 12px',
+                                      borderRadius: '10px',
+                                      background: isSpotChecked ? '#fdf2f8' : '#f8fafc',
+                                      border: isSpotChecked ? '1px solid rgba(244, 114, 182, 0.2)' : '1px solid #e2e8f0',
+                                      cursor: 'pointer',
+                                      transition: 'all 0.2s'
+                                    }}
+                                    className="mission-spot-item"
+                                  >
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', overflow: 'hidden', paddingRight: '12px' }}>
+                                      <span style={{ fontSize: '11px', fontWeight: '800', color: isSpotChecked ? 'var(--text-main)' : 'var(--text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                        {spot.name}
+                                      </span>
+                                      <span style={{ fontSize: '8px', color: '#94a3b8' }}>{spot.category}</span>
+                                    </div>
+                                    <div style={{ flexShrink: 0 }}>
+                                      {isSpotChecked ? (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#ffffff', color: '#db2777', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '900', border: '1px solid rgba(219,39,119,0.2)' }}>
+                                          <CheckCircle2 className="w-3 h-3 text-[#db2777]" />
+                                          行った！
+                                        </div>
+                                      ) : (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#ffffff', color: '#94a3b8', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '800', border: '1px solid #e2e8f0' }}>
+                                          未チェック
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+
+                            {/* 称号獲得の通知報酬枠 */}
+                            <div style={{
+                              marginTop: '8px',
+                              padding: '10px',
+                              borderRadius: '10px',
+                              background: isCompleted ? 'linear-gradient(135deg, rgba(244,114,182,0.06) 0%, rgba(219,39,119,0.06) 100%)' : '#f8fafc',
+                              border: isCompleted ? '1px dashed #db2777' : '1px dashed #cbd5e1',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '8px'
+                            }}>
+                              <div style={{
+                                width: '28px',
+                                height: '28px',
+                                borderRadius: '50%',
+                                background: isCompleted ? 'linear-gradient(135deg, #f472b6 0%, #db2777 100%)' : '#e2e8f0',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyItems: 'center',
+                                justifyContent: 'center',
+                                flexShrink: 0
+                              }}>
+                                <Award className="w-4 h-4 text-white" />
+                              </div>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                <span style={{ fontSize: '10px', fontWeight: '900', color: isCompleted ? '#db2777' : '#64748b' }}>称号報酬: 超特急な逃走者</span>
+                                <span style={{ fontSize: '8px', color: '#94a3b8' }}>
+                                  {isCompleted ? '🎉 超特急な逃走者の称号を獲得！マイページでバッジが輝いています。' : '超特急逃走中の聖地5箇所すべてを巡ると「超特急な逃走者」の称号が解放されます。'}
+                                </span>
+                              </div>
+                            </div>
+
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
+
                 </div>
               </div>
             )}
@@ -4357,9 +4587,7 @@ ${window.location.origin + window.location.pathname}
                       <h4 className="detail-meta-label">
                         聖地のエピソード
                       </h4>
-                      <p className="episode-text">
-                        {selectedSpot.description}
-                      </p>
+                      {renderDescription(selectedSpot.description)}
                     </div>
 
 
@@ -6546,9 +6774,7 @@ ${window.location.origin + window.location.pathname}
               {/* 聖地エピソード */}
               <div className="episode-container animate-fade-in-up" style={{ marginTop: '16px' }}>
                 <h4 className="detail-meta-label">聖地のエピソード</h4>
-                <p className="episode-text" style={{ fontSize: '12px', lineHeight: '1.6', color: 'var(--text-main)' }}>
-                  {selectedSpot.description}
-                </p>
+                {renderDescription(selectedSpot.description)}
               </div>
 
 
