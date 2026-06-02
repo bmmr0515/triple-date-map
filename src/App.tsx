@@ -307,6 +307,41 @@ export default function App() {
     return areaMatch ? areaMatch[0] : '';
   };
 
+  // 🎵 聖地データから正確な曲名または動画タイトルを抽出するヘルパー
+  const getSpotSongOrVideoTitle = (spot: Spot): string => {
+    if (spot.youtube_title) {
+      let title = spot.youtube_title;
+      title = title.replace("🎥 関連映像: ", "").replace("🎥 関連映像：", "");
+      
+      const doubleBracketsMatch = title.match(/『(.*?)』/);
+      if (doubleBracketsMatch) return doubleBracketsMatch[1];
+      
+      const singleBracketsMatch = title.match(/「(.*?)」/);
+      if (singleBracketsMatch) return singleBracketsMatch[1];
+
+      const squareBracketsMatch = title.match(/【(.*?)】/);
+      if (squareBracketsMatch) return squareBracketsMatch[1];
+      
+      title = title.replace("公式MV", "").replace("公式PV", "").replace("Music Video", "").replace("MV", "");
+      return title.trim();
+    }
+    
+    if (spot.reward_title) {
+      return spot.reward_title
+        .replace("の証言者", "")
+        .replace("の約束人", "")
+        .replace("の旅人", "")
+        .replace("の恋人", "")
+        .replace("の漂流者", "")
+        .replace("の語り部", "")
+        .replace("のダンサー", "")
+        .replace("の走者", "")
+        .replace("の虜", "")
+        .replace("のサバイバー", "");
+    }
+    return "";
+  };
+
   // データベース上の登録聖地から、存在する都道府県のみを動的に抽出
   const availableAreas = Array.from(new Set(spots.map(extractArea))).filter(a => a !== '');
 
@@ -2320,8 +2355,8 @@ ${window.location.origin + window.location.pathname}
                             {spot.name}
                           </h3>
 
-                          {/* 関連曲プレート */}
-                          {spot.reward_title && (
+                          {/* 曲名 / 動画タイトル プレート */}
+                          {getSpotSongOrVideoTitle(spot) && (
                             <div style={{
                               fontSize: '11px',
                               color: '#581c87',
@@ -2335,18 +2370,9 @@ ${window.location.origin + window.location.pathname}
                               boxShadow: '0 1px 3px rgba(0,0,0,0.01)'
                             }}>
                               <span style={{ fontSize: '12px' }}>🎵</span>
-                              <span>関連曲：</span>
+                              <span>曲名：</span>
                               <span style={{ fontWeight: 900 }}>
-                                {spot.reward_title
-                                  .replace("の証言者", "")
-                                  .replace("の約束人", "")
-                                  .replace("の旅人", "")
-                                  .replace("の恋人", "")
-                                  .replace("の漂流者", "")
-                                  .replace("の語り部", "")
-                                  .replace("のダンサー", "")
-                                  .replace("の走者", "")
-                                  .replace("の虜", "")}
+                                {getSpotSongOrVideoTitle(spot)}
                               </span>
                             </div>
                           )}
