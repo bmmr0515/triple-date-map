@@ -35,6 +35,13 @@ export interface Notice {
 
 export const APP_NOTICES: Notice[] = [
   {
+    id: 'notice-20260604-stadium-board',
+    date: '2026/06/04',
+    title: '🏟️ 【特設】国立競技場のデジタル寄せ書きボードを公開しました！',
+    content: '【=LOVE 国立競技場スペシャルライブ応援企画】\n国立競技場ライブの開催を記念して、アプリ内に「デジタル寄せ書きボード」を特設しました！\n\nマップ上のゴールドに優しく光る「国立競技場ピン」をタップすると、寄せ書きモーダルが開きます。\nお一人様1回限定で、推しメンのメンバーカラーを選択して応援メッセージを届けることができます。\n\nライブに向けて、みんなの熱い想いで寄せ書きボードをカラフルに彩り、当日を一緒に盛り上げましょう！',
+    type: 'update'
+  },
+  {
     id: 'notice-20260602-escape-express',
     date: '2026/06/02',
     title: '🏃 【新スポット＆ミッション】=LOVE『超特急逃走中』のMVロケ地5箇所を追加し、新ミッション『君は超特急で逃走中！』公開！',
@@ -214,9 +221,10 @@ export default function App() {
   const [isLoadingMessages, setIsLoadingMessages] = useState<boolean>(false);
   const [postName, setPostName] = useState<string>('');
   const [postMessage, setPostMessage] = useState<string>('');
-  const [postColor, setPostColor] = useState<string>('#ff6897');
+  const [postColor, setPostColor] = useState<string>('#e9d5ff');
   const [postCooldown, setPostCooldown] = useState<number>(0);
   const [deviceId, setDeviceId] = useState<string>('');
+  const [showStadiumWelcomeModal, setShowStadiumWelcomeModal] = useState<boolean>(false);
 
   useEffect(() => {
     let id = localStorage.getItem('tdm_device_id');
@@ -225,6 +233,16 @@ export default function App() {
       localStorage.setItem('tdm_device_id', id);
     }
     setDeviceId(id);
+  }, []);
+
+  useEffect(() => {
+    const shown = localStorage.getItem('tdm_stadium_welcome_shown');
+    if (!shown) {
+      const timer = setTimeout(() => {
+        setShowStadiumWelcomeModal(true);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   // 📱 スマホレスポンシブ判定用ステートとリサイズ監視
@@ -332,6 +350,16 @@ export default function App() {
     // 日本の47都道府県名のみを厳密にマッチング
     const areaMatch = spot.description.match(/(東京都|北海道|京都府|大阪府|神奈川県|千葉県|埼玉県|愛知県|兵庫県|福岡県|静岡県|茨城県|広島県|宮城県|新潟県|長野県|栃木県|群馬県|熊本県|岡山県|三重県|鹿児島県|山口県|愛媛県|福島県|滋賀県|青森県|山形県|石川県|秋田県|香川県|和歌山県|宮崎県|富山県|佐賀県|鳥取県|徳島県|高知県|島根県|岩手県|山梨県|長崎県|大分県|沖縄県|奈良県|福井県|岐阜県)/);
     return areaMatch ? areaMatch[0] : '';
+  };
+
+  // 🎨 背景色からコントラストの高いテキスト色(黒または白)を自動判定するヘルパー
+  const getContrastTextColor = (hexColor: string): string => {
+    const hex = hexColor.replace('#', '');
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    return luminance > 0.65 ? '#1e293b' : '#ffffff';
   };
 
   // 🎵 聖地データから正確な曲名または動画タイトルを抽出するヘルパー
@@ -973,6 +1001,16 @@ export default function App() {
     } catch (err) {
       console.error('Failed to post stadium message:', err);
       alert('メッセージの送信に失敗しました。既に投稿されている可能性があります。');
+    }
+  };
+
+  // 🏟️ 国立競技場の特別ピンにマップカメラをフォーカスする
+  const focusOnNationalStadium = () => {
+    const stadiumSpot = spots.find(s => s.id === 'spot-special-national-stadium');
+    if (stadiumSpot && mapRef.current) {
+      setSelectedSpot(stadiumSpot);
+      setRightPanelTab('detail');
+      mapRef.current.setView([stadiumSpot.latitude, stadiumSpot.longitude], 16, { animate: true });
     }
   };
 
@@ -7476,16 +7514,16 @@ ${window.location.origin + window.location.pathname}
                           </label>
                           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                             {[
-                              { name: '大谷 映美里 (白/ピンク)', color: '#ffd1dc' },
-                              { name: '大場 花菜 (オレンジ/青)', color: '#f97316' },
-                              { name: '音嶋 莉沙 (ピンク/水色)', color: '#f472b6' },
-                              { name: '齋藤 樹愛羅 (ピンク/白)', color: '#ff007f' },
-                              { name: '佐々木 舞香 (白)', color: '#cbd5e1' },
+                              { name: '大谷 映美里 (薄紫)', color: '#e9d5ff' },
+                              { name: '大場 花菜 (オレンジ)', color: '#f97316' },
+                              { name: '音嶋 莉沙 (水色)', color: '#38bdf8' },
+                              { name: '齋藤 樹愛羅 (薄ピンク)', color: '#fbcfe8' },
+                              { name: '佐々木 舞香 (白)', color: '#ffffff' },
                               { name: '髙松 瞳 (赤)', color: '#ef4444' },
-                              { name: '瀧脇 笙古 (黄/オレンジ)', color: '#eab308' },
+                              { name: '瀧脇 笙古 (黄色)', color: '#facc15' },
                               { name: '野口 衣織 (紫)', color: '#a855f7' },
-                              { name: '諸橋 沙夏 (緑)', color: '#22c55e' },
-                              { name: '山本 杏奈 (青/黄)', color: '#3b82f6' }
+                              { name: '諸橋 沙夏 (黄緑)', color: '#84cc16' },
+                              { name: '山本 杏奈 (青)', color: '#3b82f6' }
                             ].map((item) => (
                               <button
                                 key={item.name}
@@ -7535,11 +7573,12 @@ ${window.location.origin + window.location.pathname}
                     {/* 2. 自分のメッセージ (ハイライト表示) */}
                     {myMessage && (
                       <div style={{
-                        background: 'linear-gradient(135deg, #fffbeb 0%, #ffffff 100%)',
+                        backgroundColor: myMessage.color,
+                        color: getContrastTextColor(myMessage.color),
                         border: '3px solid #fbbf24',
                         borderRadius: '20px',
                         padding: '16px',
-                        boxShadow: '0 10px 25px -5px rgba(251,191,36,0.15)',
+                        boxShadow: '0 10px 25px -5px rgba(251,191,36,0.25)',
                         animation: 'fadeInUp 0.4s ease',
                         position: 'relative'
                       }}>
@@ -7561,15 +7600,15 @@ ${window.location.origin + window.location.pathname}
                         </span>
                         
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', marginTop: '4px' }}>
-                          <span style={{ fontSize: '11px', fontWeight: '900', color: '#1e293b', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: myMessage.color }} />
+                          <span style={{ fontSize: '11px', fontWeight: '900', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: getContrastTextColor(myMessage.color), border: '1px solid currentColor' }} />
                             {myMessage.name || '匿名オタク'}
                           </span>
-                          <span style={{ fontSize: '8px', color: '#94a3b8', fontFamily: 'Outfit' }}>
+                          <span style={{ fontSize: '8px', opacity: 0.8, fontFamily: 'Outfit' }}>
                             {new Date(myMessage.created_at).toLocaleDateString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
                           </span>
                         </div>
-                        <p style={{ fontSize: '13px', color: '#1e293b', margin: 0, lineHeight: '1.55', fontWeight: '800', whiteSpace: 'pre-wrap' }}>
+                        <p style={{ fontSize: '13px', margin: 0, lineHeight: '1.55', fontWeight: '900', whiteSpace: 'pre-wrap' }}>
                           {myMessage.message}
                         </p>
                       </div>
@@ -7599,27 +7638,29 @@ ${window.location.origin + window.location.pathname}
                             <div
                               key={msg.id}
                               style={{
-                                background: '#ffffff',
-                                border: `2px solid ${msg.color}`,
+                                backgroundColor: msg.color,
+                                color: getContrastTextColor(msg.color),
+                                border: msg.color === '#ffffff' ? '1.5px solid #e2e8f0' : '1px solid rgba(0, 0, 0, 0.08)',
                                 borderRadius: '16px',
                                 padding: '12px 16px',
-                                boxShadow: `0 4px 12px -2px rgba(0,0,0,0.02), 0 0 8px ${msg.color}15`,
+                                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.04)',
                                 display: 'flex',
                                 flexDirection: 'column',
                                 gap: '6px',
-                                position: 'relative'
+                                position: 'relative',
+                                textShadow: 'none'
                               }}
                             >
                               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <span style={{ fontSize: '11px', fontWeight: '900', color: '#1e293b', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: msg.color }} />
+                                <span style={{ fontSize: '11px', fontWeight: '900', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: getContrastTextColor(msg.color), border: '1px solid currentColor' }} />
                                   {msg.name || '匿名オタク'}
                                 </span>
-                                <span style={{ fontSize: '8px', color: '#94a3b8', fontFamily: 'Outfit' }}>
+                                <span style={{ fontSize: '8px', opacity: 0.8, fontFamily: 'Outfit' }}>
                                   {new Date(msg.created_at).toLocaleDateString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
                                 </span>
                               </div>
-                              <p style={{ fontSize: '12px', color: '#475569', margin: 0, lineHeight: '1.5', fontWeight: '800', whiteSpace: 'pre-wrap' }}>
+                              <p style={{ fontSize: '12px', margin: 0, lineHeight: '1.5', fontWeight: '800', whiteSpace: 'pre-wrap' }}>
                                 {msg.message}
                               </p>
                             </div>
@@ -7650,6 +7691,108 @@ ${window.location.origin + window.location.pathname}
                   fontSize: '12px',
                   fontWeight: 'bold',
                   cursor: 'pointer'
+                }}
+                className="pop-button"
+              >
+                閉じる
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+      {/* 🎊 国立競技場ライブ特設告知モーダル */}
+      {showStadiumWelcomeModal && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+          backgroundColor: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(8px)', zIndex: 3500,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px'
+        }} className="animate-fade-in-up">
+          <div style={{
+            background: '#ffffff',
+            borderRadius: '28px',
+            width: '100%',
+            maxWidth: '480px',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.3)',
+            overflow: 'hidden',
+            border: '3px solid #ffffff'
+          }}>
+            {/* 上部ゴールドグラデーションヘッダー */}
+            <div style={{
+              background: 'linear-gradient(135deg, #ffd700 0%, #f59e0b 50%, #db2777 100%)',
+              padding: '28px 24px',
+              textAlign: 'center',
+              color: '#ffffff'
+            }}>
+              <span style={{ fontSize: '28px', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.15))' }}>🏟️</span>
+              <h2 style={{ fontSize: '20px', fontWeight: '950', marginTop: '10px', marginBottom: '4px', letterSpacing: '0.02em', textShadow: '0 2px 4px rgba(0,0,0,0.15)' }}>
+                ＝LOVE 国立競技場ライブ特設
+              </h2>
+              <p style={{ fontSize: '12px', fontWeight: '800', opacity: 0.95, margin: 0, letterSpacing: '0.05em' }}>
+                デジタル寄せ書きボードオープン！
+              </p>
+            </div>
+
+            {/* モーダル本文 */}
+            <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <p style={{ fontSize: '13px', color: '#475569', lineHeight: '1.7', fontWeight: '800', margin: 0, textAlign: 'center' }}>
+                🎊 ＝LOVE 初の国立競技場ライブ開催を記念して、デジタル寄せ書きボードがオープンしました！ 🎊
+              </p>
+              <p style={{ fontSize: '12px', color: '#64748b', lineHeight: '1.6', margin: 0, background: '#f8fafc', padding: '14px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                メッセージの投稿は<strong style={{ color: '#db2777' }}>1人1回限定</strong>。メンバーそれぞれのメンバーカラーを選択して、あなたの想いを乗せたメッセージをカラフルに残すことができます！
+              </p>
+              <p style={{ fontSize: '12.5px', color: '#334155', lineHeight: '1.6', margin: 0, textAlign: 'center', fontWeight: '900' }}>
+                マップ上の「国立競技場ピン」からメッセージを書き込み、ライブをみんなで一緒に盛り上げましょう！
+              </p>
+            </div>
+
+            {/* アクションボタン */}
+            <div style={{
+              padding: '16px 24px 24px 24px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px'
+            }}>
+              <button
+                onClick={() => {
+                  setShowStadiumWelcomeModal(false);
+                  localStorage.setItem('tdm_stadium_welcome_shown', 'true');
+                  focusOnNationalStadium();
+                }}
+                style={{
+                  background: 'linear-gradient(135deg, #ffd700 0%, #f59e0b 50%, #db2777 100%)',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '14px',
+                  padding: '12px',
+                  fontSize: '12.5px',
+                  fontWeight: '900',
+                  cursor: 'pointer',
+                  boxShadow: '0 8px 20px rgba(245, 158, 11, 0.25)',
+                  transition: 'all 0.2s',
+                  textAlign: 'center'
+                }}
+                className="pop-button"
+              >
+                🏟️ マップで国立競技場を見る
+              </button>
+              
+              <button
+                onClick={() => {
+                  setShowStadiumWelcomeModal(false);
+                  localStorage.setItem('tdm_stadium_welcome_shown', 'true');
+                }}
+                style={{
+                  background: '#f1f5f9',
+                  color: '#475569',
+                  border: 'none',
+                  borderRadius: '14px',
+                  padding: '10px',
+                  fontSize: '12px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  textAlign: 'center',
+                  transition: 'all 0.2s'
                 }}
                 className="pop-button"
               >
