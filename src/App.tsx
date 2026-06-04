@@ -208,6 +208,15 @@ export default function App() {
   const [mermaidMissionExpanded, setMermaidMissionExpanded] = useState<boolean>(true);
   const [escapeMissionExpanded, setEscapeMissionExpanded] = useState<boolean>(true);
 
+  // 🏟️ 国立競技場デジタル寄せ書きボード状態
+  const [showStadiumBoardModal, setShowStadiumBoardModal] = useState<boolean>(false);
+  const [stadiumMessages, setStadiumMessages] = useState<any[]>([]);
+  const [isLoadingMessages, setIsLoadingMessages] = useState<boolean>(false);
+  const [postName, setPostName] = useState<string>('');
+  const [postMessage, setPostMessage] = useState<string>('');
+  const [postColor, setPostColor] = useState<string>('#ff6897');
+  const [postCooldown, setPostCooldown] = useState<number>(0);
+
   // 📱 スマホレスポンシブ判定用ステートとリサイズ監視
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
 
@@ -872,6 +881,77 @@ export default function App() {
     }
   }, [checkins, spots, currentUser, authSession]);
 
+  // 🏟️ 国立競技場デジタル寄せ書きボード機能のロード・投稿ロジック
+  const loadStadiumMessages = async () => {
+    setIsLoadingMessages(true);
+    try {
+      const msgs = await db.getStadiumMessages();
+      setStadiumMessages(msgs);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLoadingMessages(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showStadiumBoardModal) {
+      loadStadiumMessages();
+
+      const lastPostStr = localStorage.getItem('tdm_last_stadium_post');
+      if (lastPostStr) {
+        const lastPost = new Date(lastPostStr).getTime();
+        const diff = Date.now() - lastPost;
+        const limit = 5 * 60 * 1000; // 5分間の投稿制限
+        if (diff < limit) {
+          const remainingSec = Math.ceil((limit - diff) / 1000);
+          setPostCooldown(remainingSec);
+        }
+      }
+    }
+  }, [showStadiumBoardModal]);
+
+  // 投稿制限のクールダウンタイマー
+  useEffect(() => {
+    if (postCooldown <= 0) return;
+    const timer = setTimeout(() => {
+      setPostCooldown(prev => prev - 1);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [postCooldown]);
+
+  const handlePostMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!postName.trim() || !postMessage.trim()) {
+      alert('ニックネームとメッセージを入力してください。');
+      return;
+    }
+    if (postMessage.trim().length > 140) {
+      alert('メッセージは140文字以内で入力してください。');
+      return;
+    }
+    if (postCooldown > 0) {
+      alert(`連続投稿は制限されています。残り ${postCooldown} 秒お待ちください。`);
+      return;
+    }
+
+    try {
+      await db.addStadiumMessage(postName.trim(), postMessage.trim(), postColor);
+      setPostMessage('');
+      
+      // クールダウン設定
+      localStorage.setItem('tdm_last_stadium_post', new Date().toISOString());
+      setPostCooldown(5 * 60); // 5分クールダウン
+
+      // メッセージの再読込
+      loadStadiumMessages();
+      alert('寄せ書きメッセージを送信しました！');
+    } catch (err) {
+      console.error('Failed to post stadium message:', err);
+      alert('メッセージの送信に失敗しました。');
+    }
+  };
+
   // マップの初期セットアップ（CDN経由で読み込んだLをDOMにマウント）
   useEffect(() => {
     let mapInstance = null;
@@ -1070,7 +1150,11 @@ export default function App() {
       const marker = L.marker([spot.latitude, spot.longitude], { icon })
         .on('click', () => {
           setSelectedSpot(spot);
-          setRightPanelTab('detail'); // ピンをタップしたら自動的に「詳細」タブを表示
+          if (spot.id === 'spot-special-national-stadium') {
+            setShowStadiumBoardModal(true);
+          } else {
+            setRightPanelTab('detail'); // ピンをタップしたら自動的に「詳細」タブを表示
+          }
           
           // 既にズームイン（16以上）している状態でピンを押しても、ズームレベルを下げず（動かさず）に滑らかに中央移動のみ行います
           const currentZoom = map.getZoom();
@@ -4590,6 +4674,35 @@ ${window.location.origin + window.location.pathname}
                       {renderDescription(selectedSpot.description)}
                     </div>
 
+                    {/* 国立競技場特設イベントボタン */}
+                    {selectedSpot.id === 'spot-special-national-stadium' && (
+                      <div className="animate-fade-in-up" style={{ marginTop: '4px' }}>
+                        <button
+                          onClick={() => setShowStadiumBoardModal(true)}
+                          style={{
+                            width: '100%',
+                            background: 'linear-gradient(135deg, #ffd700 0%, #f59e0b 50%, #db2777 100%)',
+                            color: '#ffffff',
+                            border: 'none',
+                            borderRadius: '16px',
+                            padding: '14px',
+                            fontSize: '13px',
+                            fontWeight: '900',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '8px',
+                            boxShadow: '0 8px 20px rgba(245, 158, 11, 0.25)',
+                            transition: 'all 0.2s'
+                          }}
+                          className="pop-button"
+                        >
+                          🏟️ 寄せ書きメッセージを書く / 見る
+                        </button>
+                      </div>
+                    )}
+
 
 
                     {/* YouTube動画自動埋め込み */}
@@ -6777,6 +6890,35 @@ ${window.location.origin + window.location.pathname}
                 {renderDescription(selectedSpot.description)}
               </div>
 
+              {/* 国立競技場特設イベントボタン (モバイル) */}
+              {selectedSpot.id === 'spot-special-national-stadium' && (
+                <div className="animate-fade-in-up" style={{ marginTop: '12px' }}>
+                  <button
+                    onClick={() => setShowStadiumBoardModal(true)}
+                    style={{
+                      width: '100%',
+                      background: 'linear-gradient(135deg, #ffd700 0%, #f59e0b 50%, #db2777 100%)',
+                      color: '#ffffff',
+                      border: 'none',
+                      borderRadius: '16px',
+                      padding: '14px',
+                      fontSize: '13px',
+                      fontWeight: '900',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px',
+                      boxShadow: '0 8px 20px rgba(245, 158, 11, 0.25)',
+                      transition: 'all 0.2s'
+                    }}
+                    className="pop-button"
+                  >
+                    🏟️ 寄せ書きメッセージを書く / 見る
+                  </button>
+                </div>
+              )}
+
 
 
               {/* YouTube動画自動埋め込み (完全再現) */}
@@ -7151,6 +7293,271 @@ ${window.location.origin + window.location.pathname}
               <a href="https://discord.gg/QBhyDJ5hF" target="_blank" rel="noopener noreferrer" style={{ display: 'block', textAlign: 'center', background: '#5865F2', color: 'white', padding: '10px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold' }}>公式Discordサーバー</a>
             </div>
             <button onClick={() => setShowContactModal(false)} className="pop-button font-black" style={{ background: '#e2e8f0', color: '#475569', border: 'none', padding: '12px', borderRadius: '14px', width: '100%', cursor: 'pointer' }}>閉じる</button>
+          </div>
+        </div>
+      )}
+
+      {/* 🏟️ 国立競技場デジタル寄せ書きボードモーダル */}
+      {showStadiumBoardModal && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+          backgroundColor: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(8px)', zIndex: 3000,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px'
+        }} className="animate-fade-in-up">
+          <div style={{
+            background: '#ffffff',
+            borderRadius: '28px',
+            width: '100%',
+            maxWidth: '600px',
+            maxHeight: '90vh',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            position: 'relative'
+          }}>
+            {/* ヘッダー */}
+            <div style={{
+              background: 'linear-gradient(135deg, #ffd700 0%, #f59e0b 50%, #db2777 100%)',
+              padding: '24px',
+              color: '#ffffff',
+              position: 'relative'
+            }}>
+              <button 
+                onClick={() => setShowStadiumBoardModal(false)} 
+                style={{
+                  position: 'absolute', top: '16px', right: '16px',
+                  border: 'none', background: 'rgba(255,255,255,0.2)', color: '#ffffff',
+                  borderRadius: '50%', width: '32px', height: '32px',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+                className="pop-button"
+              >
+                <X size={16} />
+              </button>
+              <span style={{ fontSize: '9px', fontWeight: '900', background: 'rgba(255,255,255,0.25)', padding: '3px 8px', borderRadius: '6px', letterSpacing: '0.05em' }}>
+                🏟️ 国立競技場ライブ特設
+              </span>
+              <h2 style={{ fontSize: '20px', fontWeight: '900', marginTop: '6px', marginBottom: '2px', textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+                デジタル寄せ書きボード
+              </h2>
+              <p style={{ fontSize: '11px', opacity: 0.9, margin: 0 }}>
+                メンバーへの熱い応援メッセージを書いて届けましょう！
+              </p>
+            </div>
+
+            {/* コンテンツエリア (スクロール可能) */}
+            <div className="info-scroll-area" style={{ flex: 1, overflowY: 'auto', padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              
+              {/* 投稿フォーム */}
+              <form onSubmit={handlePostMessage} style={{
+                background: '#f8fafc',
+                border: '1.5px solid #e2e8f0',
+                borderRadius: '20px',
+                padding: '16px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px'
+              }}>
+                <h3 style={{ fontSize: '12px', fontWeight: '900', color: '#1e293b', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  ✍️ メッセージを投稿する
+                </h3>
+                
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <div style={{ flex: 1 }}>
+                    <label style={{ fontSize: '9px', fontWeight: '900', color: '#64748b', display: 'block', marginBottom: '4px' }}>ニックネーム</label>
+                    <input
+                      type="text"
+                      placeholder="匿名オタク"
+                      value={postName}
+                      onChange={(e) => setPostName(e.target.value)}
+                      maxLength={20}
+                      style={{
+                        width: '100%',
+                        padding: '8px 12px',
+                        borderRadius: '10px',
+                        border: '1.5px solid #cbd5e1',
+                        fontSize: '12px',
+                        fontWeight: '700',
+                        outline: 'none',
+                        background: '#ffffff'
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* メッセージ本文 */}
+                <div>
+                  <div style={{ display: 'flex', justifyItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+                    <label style={{ fontSize: '9px', fontWeight: '900', color: '#64748b' }}>メッセージ (最大140文字)</label>
+                    <span style={{ fontSize: '9px', fontWeight: '800', color: postMessage.length > 140 ? '#ef4444' : '#64748b' }}>
+                      {postMessage.length} / 140
+                    </span>
+                  </div>
+                  <textarea
+                    placeholder="国立競技場ライブおめでとう！大好き！"
+                    value={postMessage}
+                    onChange={(e) => setPostMessage(e.target.value)}
+                    maxLength={140}
+                    rows={3}
+                    style={{
+                      width: '100%',
+                      padding: '10px 12px',
+                      borderRadius: '12px',
+                      border: '1.5px solid #cbd5e1',
+                      fontSize: '12px',
+                      fontWeight: '700',
+                      outline: 'none',
+                      resize: 'none',
+                      background: '#ffffff',
+                      lineHeight: '1.5'
+                    }}
+                  />
+                </div>
+
+                {/* 推しメンカラー選択パレット */}
+                <div>
+                  <label style={{ fontSize: '9px', fontWeight: '900', color: '#64748b', display: 'block', marginBottom: '6px' }}>
+                    推しメンカラー
+                  </label>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                    {[
+                      { name: '大谷 映美里 (白/ピンク)', color: '#ffd1dc' },
+                      { name: '大場 花菜 (オレンジ/青)', color: '#f97316' },
+                      { name: '音嶋 莉沙 (ピンク/水色)', color: '#f472b6' },
+                      { name: '齋藤 樹愛羅 (ピンク/白)', color: '#ff007f' },
+                      { name: '佐々木 舞香 (白)', color: '#cbd5e1' },
+                      { name: '髙松 瞳 (赤)', color: '#ef4444' },
+                      { name: '瀧脇 笙古 (黄/オレンジ)', color: '#eab308' },
+                      { name: '野口 衣織 (紫)', color: '#a855f7' },
+                      { name: '諸橋 沙夏 (緑)', color: '#22c55e' },
+                      { name: '山本 杏奈 (青/黄)', color: '#3b82f6' }
+                    ].map((item) => (
+                      <button
+                        key={item.name}
+                        type="button"
+                        onClick={() => setPostColor(item.color)}
+                        title={item.name}
+                        style={{
+                          width: '26px',
+                          height: '26px',
+                          borderRadius: '50%',
+                          backgroundColor: item.color,
+                          border: postColor === item.color ? '3px solid #0f172a' : '2.5px solid #ffffff',
+                          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                          cursor: 'pointer',
+                          transform: postColor === item.color ? 'scale(1.15)' : 'none',
+                          transition: 'all 0.2s'
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* 送信ボタン */}
+                <button
+                  type="submit"
+                  disabled={postCooldown > 0}
+                  style={{
+                    background: postCooldown > 0 ? '#cbd5e1' : 'linear-gradient(135deg, #ffd700 0%, #db2777 100%)',
+                    color: '#ffffff',
+                    border: 'none',
+                    borderRadius: '12px',
+                    padding: '10px',
+                    fontSize: '12px',
+                    fontWeight: '900',
+                    cursor: postCooldown > 0 ? 'not-allowed' : 'pointer',
+                    boxShadow: postCooldown > 0 ? 'none' : '0 4px 10px rgba(219,39,119,0.15)',
+                    transition: 'all 0.2s',
+                    marginTop: '4px'
+                  }}
+                  className="pop-button"
+                >
+                  {postCooldown > 0 ? `連投制限中 (あと ${postCooldown} 秒)` : '📣 メッセージを送信'}
+                </button>
+              </form>
+
+              {/* メッセージ一覧 (閲覧エリア) */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <h3 style={{ fontSize: '13px', fontWeight: '900', color: '#1e293b', margin: '8px 0 0 0', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  💬 みんなの寄せ書き ({stadiumMessages.length}件)
+                </h3>
+
+                {isLoadingMessages ? (
+                  <div style={{ display: 'flex', justifyContent: 'center', padding: '24px', color: '#64748b', fontSize: '12px', fontWeight: 'bold' }}>
+                    読み込み中...
+                  </div>
+                ) : stadiumMessages.length === 0 ? (
+                  <div style={{ background: '#f8fafc', border: '1.5px dashed #cbd5e1', borderRadius: '16px', padding: '24px', textAlign: 'center', color: '#64748b', fontSize: '12px' }}>
+                    まだ寄せ書きがありません。最初のメッセージを投稿してみましょう！
+                  </div>
+                ) : (
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px'
+                  }}>
+                    {stadiumMessages.map((msg) => (
+                      <div
+                        key={msg.id}
+                        style={{
+                          background: '#ffffff',
+                          border: `2px solid ${msg.color}`,
+                          borderRadius: '16px',
+                          padding: '12px 16px',
+                          boxShadow: `0 4px 12px -2px rgba(0,0,0,0.02), 0 0 8px ${msg.color}15`,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '6px',
+                          position: 'relative'
+                        }}
+                      >
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <span style={{ fontSize: '11px', fontWeight: '900', color: '#1e293b', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: msg.color }} />
+                            {msg.name || '匿名オタク'}
+                          </span>
+                          <span style={{ fontSize: '8px', color: '#94a3b8', fontFamily: 'Outfit' }}>
+                            {new Date(msg.created_at).toLocaleDateString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
+                          </span>
+                        </div>
+                        <p style={{ fontSize: '12px', color: '#475569', margin: 0, lineHeight: '1.5', fontWeight: '800', whiteSpace: 'pre-wrap' }}>
+                          {msg.message}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+            </div>
+
+            {/* フッター */}
+            <div style={{
+              background: '#f8fafc',
+              borderTop: '1px solid #e2e8f0',
+              padding: '16px 24px',
+              textAlign: 'center'
+            }}>
+              <button
+                onClick={() => setShowStadiumBoardModal(false)}
+                style={{
+                  background: '#e2e8f0',
+                  color: '#475569',
+                  border: 'none',
+                  borderRadius: '12px',
+                  padding: '8px 24px',
+                  fontSize: '12px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer'
+                }}
+                className="pop-button"
+              >
+                閉じる
+              </button>
+            </div>
+
           </div>
         </div>
       )}

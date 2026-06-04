@@ -934,6 +934,78 @@ body {
   100% { transform: rotate(-45deg) scale(1.3) translateY(-4px); }
 }
 
+/* 🏟️ 国立競技場特別ピンパルス効果 */
+.pop-pin-container.special-national {
+  width: 50px;
+  height: 50px;
+}
+
+.pop-pin-container.special-national .pop-pin-balloon {
+  background: linear-gradient(135deg, #ffd700 0%, #f59e0b 50%, #db2777 100%) !important;
+  border-color: #ffd700 !important;
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.6), 0 0 5px rgba(251, 191, 36, 0.4) inset !important;
+  transform: rotate(-45deg) scale(1.1);
+  animation: floatSpecial 2s infinite ease-in-out alternate;
+}
+
+.pop-pin-container.special-national.active .pop-pin-balloon {
+  transform: rotate(-45deg) scale(1.3) translateY(-3px);
+  animation: floatSpecialActive 1.2s infinite ease-in-out alternate;
+}
+
+@keyframes floatSpecial {
+  0% { transform: rotate(-45deg) scale(1.1) translateY(0); }
+  100% { transform: rotate(-45deg) scale(1.1) translateY(-3px); }
+}
+
+@keyframes floatSpecialActive {
+  0% { transform: rotate(-45deg) scale(1.3) translateY(0); }
+  100% { transform: rotate(-45deg) scale(1.3) translateY(-4px); }
+}
+
+/* パルス波紋アニメーション */
+.pop-pin-container.special-national::before,
+.pop-pin-container.special-national::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  margin-top: -22px;
+  margin-left: -22px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2.5px solid #fbbf24;
+  box-shadow: 0 0 12px #fbbf24;
+  z-index: 1;
+  pointer-events: none;
+  transform: scale(0.6);
+  opacity: 0;
+  animation: specialPulse 2.4s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
+}
+
+.pop-pin-container.special-national::after {
+  animation-delay: 1.2s;
+}
+
+@keyframes specialPulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  80% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
 /* 訪問済みチェックバッジ */
 .pop-pin-stamp {
   position: absolute;

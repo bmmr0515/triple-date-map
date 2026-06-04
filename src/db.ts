@@ -1,3 +1,13 @@
+import { supabase } from './auth';
+
+export interface StadiumMessage {
+  id: string;
+  name: string;
+  message: string;
+  color: string;
+  created_at: string;
+}
+
 export interface Spot {
   id: string;
   name: string;
@@ -1627,6 +1637,20 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["超特急逃走中巡礼"],
     memorial_date: "2026-06-02",
     description: "『超特急逃走中』のMVを象徴する、交通総合試験路のロケ地です。まさに「超特急で逃走中」な疾走感あふれるシーンが撮影されました。広大なテストコースを背景に、スリルと楽しさが混ざり合う最高の推し活スポットです。\n\n⚠️聖地巡礼に関する重要なお願い\nこちらは現在も学生が通う現役の大学キャンパスです。時期や時間帯によっては関係者以外の立ち入りが制限されている場合があります。敷地内に入る際は、必ず正門の警備員や窓口等で見学の許可を取るようにしてください。また、授業や学生生活の妨げにならないよう、マナーとモラルを厳守した節度ある行動をお願いいたします。"
+  },
+  {
+    id: "spot-special-national-stadium",
+    name: "国立競技場",
+    group: "=LOVE",
+    category: "ライブ会場",
+    latitude: 35.6778,
+    longitude: 139.7145,
+    event_date: "2026-06-04",
+    youtube_title: "🏟️ =LOVE 国立競技場スペシャルライブ特設イベント会場",
+    reward_title: "国立寄せ書きの証人",
+    tags: ["国立競技場イベント"],
+    memorial_date: "2026-06-04",
+    description: "=LOVE初の「国立競技場スペシャルライブ」開催を記念した特設イベント会場です！\nみんなでデジタル寄せ書きボードに熱い応援メッセージを書き込んで、国立ライブを最高に盛り上げましょう！"
   }
 ];
 
@@ -1754,5 +1778,69 @@ export const db = {
     localStorage.removeItem('tdm_spots');
     localStorage.removeItem('tdm_user');
     localStorage.removeItem('tdm_checkins');
+  },
+
+  // 🏟️ 国立競技場寄せ書きメッセージ操作
+  async getStadiumMessages(): Promise<StadiumMessage[]> {
+    if (supabase) {
+      try {
+        const { data, error } = await supabase
+          .from('national_stadium_messages')
+          .select('*')
+          .order('created_at', { ascending: false });
+        if (!error && data) {
+          return data as StadiumMessage[];
+        }
+        console.error('Failed to fetch messages from Supabase:', error);
+      } catch (err) {
+        console.error('Error fetching messages from Supabase:', err);
+      }
+    }
+    
+    // ローカルストレージフォールバック
+    const local = localStorage.getItem('tdm_stadium_messages');
+    if (!local) return [];
+    try {
+      return JSON.parse(local) as StadiumMessage[];
+    } catch (e) {
+      return [];
+    }
+  },
+
+  async addStadiumMessage(name: string, message: string, color: string): Promise<StadiumMessage> {
+    const newMessage: StadiumMessage = {
+      id: generateUUID(),
+      name,
+      message,
+      color,
+      created_at: new Date().toISOString()
+    };
+
+    if (supabase) {
+      try {
+        const { data, error } = await supabase
+          .from('national_stadium_messages')
+          .insert([newMessage])
+          .select();
+        if (!error && data && data[0]) {
+          return data[0] as StadiumMessage;
+        }
+        console.error('Failed to insert message to Supabase, falling back to local:', error);
+      } catch (err) {
+        console.error('Error inserting message to Supabase:', err);
+      }
+    }
+
+    // ローカルストレージフォールバック
+    const local = localStorage.getItem('tdm_stadium_messages');
+    let messages: StadiumMessage[] = [];
+    if (local) {
+      try {
+        messages = JSON.parse(local);
+      } catch (e) {}
+    }
+    messages.unshift(newMessage);
+    localStorage.setItem('tdm_stadium_messages', JSON.stringify(messages));
+    return newMessage;
   }
 };
