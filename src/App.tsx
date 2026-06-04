@@ -19,7 +19,7 @@ import {
   Search
 } from 'lucide-react';
 import Fuse from 'fuse.js';
-import { db, Spot, User, CheckIn, GroupType } from './db';
+import { db, Spot, User, CheckIn, GroupType, validateStadiumMessage } from './db';
 import { authService, AuthSession } from './auth';
 import { SupportSection } from './components/SupportSection';
 import { AdPlaceholder } from './components/AdPlaceholder';
@@ -942,6 +942,13 @@ export default function App() {
     }
     if (postCooldown > 0) {
       alert(`連続投稿は制限されています。残り ${postCooldown} 秒お待ちください。`);
+      return;
+    }
+
+    // コンテンツモデレーション（画面側での検証）
+    const validationError = validateStadiumMessage(postMessage);
+    if (validationError) {
+      alert(validationError);
       return;
     }
 

@@ -9,6 +9,50 @@ export interface StadiumMessage {
   created_at: string;
 }
 
+// 🛡️ 不適切なメッセージを検知して弾くバリデーションヘルパー
+export const validateStadiumMessage = (message: string): string | null => {
+  const trimmed = message.trim();
+
+  // 最低文字数制限
+  if (trimmed.length < 3) {
+    return 'メッセージは3文字以上で入力してください。';
+  }
+
+  // URL・ドメインの検知（スパムリンク排除）
+  const urlPattern = /(https?:\/\/[^\s]+|www\.[^\s]+|\b[a-zA-Z0-9.-]+\.(com|net|org|jp|info|biz|cc|tv|xyz|icu|top|gq|cf|ml|tk|ga|club|online|site|store)\b)/gi;
+  if (urlPattern.test(trimmed)) {
+    return 'URLやドメインを含むメッセージは送信できません。';
+  }
+
+  // 同一文字の連続（例: 「あああああ」など5文字以上の連続）
+  const repeatPattern = /(.)\1{4,}/;
+  if (repeatPattern.test(trimmed)) {
+    return '同じ文字が過度に繰り返されているメッセージは送信できません。';
+  }
+
+  // 空白や改行が多すぎる不自然な投稿
+  const spaceCount = (trimmed.match(/[\s　]/g) || []).length;
+  if (spaceCount > trimmed.length * 0.6) {
+    return '空白や改行が多すぎるメッセージは送信できません。';
+  }
+
+  // 不適切なワード（NGワード）のフィルタリング
+  const NG_WORDS = [
+    '死ね', 'ころす', '殺す', 'キチガイ', 'ガイジ', '糞', 'クソ', 'ばか', 'バカ', '馬鹿', 
+    'アホ', '間抜け', '消えろ', 'ゴミ', 'ブス', 'デブ', 'ハゲ', 'カス', 'ちんこ', 'まんこ', 
+    'セックス', 'sex', '淫乱', '売春', 'キモい', 'きもい', '害悪', '死んで', '地獄に落ちろ',
+    '基地外', '白痴', '低能', '知的障害', 'キチ外', '死ねばいい', 'クタバレ', 'くたばれ'
+  ];
+  
+  for (const word of NG_WORDS) {
+    if (trimmed.includes(word)) {
+      return '不適切な表現が含まれているため送信できません。';
+    }
+  }
+
+  return null;
+};
+
 export interface Spot {
   id: string;
   name: string;
@@ -1809,6 +1853,12 @@ export const db = {
   },
 
   async addStadiumMessage(name: string, message: string, color: string, deviceId: string): Promise<StadiumMessage> {
+    // コンテンツモデレーション（サーバー/API側の検証）
+    const validationError = validateStadiumMessage(message);
+    if (validationError) {
+      throw new Error(validationError);
+    }
+
     const newMessage: StadiumMessage = {
       id: generateUUID(),
       name,

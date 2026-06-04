@@ -7,7 +7,15 @@ CREATE TABLE IF NOT EXISTS public.national_stadium_messages (
     message VARCHAR(140) NOT NULL,
     color VARCHAR(50) NOT NULL,
     device_id VARCHAR(255) UNIQUE NOT NULL, -- デバイスごとの一意ID (1人1回制限)
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+    
+    -- 🛡️ DBレベルの堅牢なコンテンツバリデーション制約
+    CONSTRAINT check_message_length CHECK (char_length(trim(message)) >= 3), -- 最低3文字以上
+    CONSTRAINT check_no_url CHECK (
+        message !~* 'https?://' AND 
+        message !~* 'www\.' AND
+        message !~* '\.[a-zA-Z]{2,6}\b'
+    ) -- スパムURL・ドメインの禁止
 );
 
 -- RLS (Row Level Security) の有効化 (任意)
