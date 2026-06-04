@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS public.national_stadium_messages (
     name VARCHAR(255) NOT NULL,
     message VARCHAR(140) NOT NULL,
     color VARCHAR(50) NOT NULL,
+    device_id VARCHAR(255) UNIQUE NOT NULL, -- デバイスごとの一意ID (1人1回制限)
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 

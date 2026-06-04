@@ -216,6 +216,16 @@ export default function App() {
   const [postMessage, setPostMessage] = useState<string>('');
   const [postColor, setPostColor] = useState<string>('#ff6897');
   const [postCooldown, setPostCooldown] = useState<number>(0);
+  const [deviceId, setDeviceId] = useState<string>('');
+
+  useEffect(() => {
+    let id = localStorage.getItem('tdm_device_id');
+    if (!id) {
+      id = 'device-' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      localStorage.setItem('tdm_device_id', id);
+    }
+    setDeviceId(id);
+  }, []);
 
   // 📱 スマホレスポンシブ判定用ステートとリサイズ監視
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
@@ -935,8 +945,15 @@ export default function App() {
       return;
     }
 
+    // すでに投稿済みか再度判定
+    const alreadyPosted = stadiumMessages.some(m => m.device_id === deviceId);
+    if (alreadyPosted) {
+      alert('応援メッセージは1人1回まで投稿可能です。');
+      return;
+    }
+
     try {
-      await db.addStadiumMessage(postName.trim(), postMessage.trim(), postColor);
+      await db.addStadiumMessage(postName.trim(), postMessage.trim(), postColor, deviceId);
       setPostMessage('');
       
       // クールダウン設定
@@ -948,7 +965,7 @@ export default function App() {
       alert('寄せ書きメッセージを送信しました！');
     } catch (err) {
       console.error('Failed to post stadium message:', err);
-      alert('メッセージの送信に失敗しました。');
+      alert('メッセージの送信に失敗しました。既に投稿されている可能性があります。');
     }
   };
 
@@ -7350,187 +7367,262 @@ ${window.location.origin + window.location.pathname}
             {/* コンテンツエリア (スクロール可能) */}
             <div className="info-scroll-area" style={{ flex: 1, overflowY: 'auto', padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
               
-              {/* 投稿フォーム */}
-              <form onSubmit={handlePostMessage} style={{
-                background: '#f8fafc',
-                border: '1.5px solid #e2e8f0',
-                borderRadius: '20px',
-                padding: '16px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '12px'
-              }}>
-                <h3 style={{ fontSize: '12px', fontWeight: '900', color: '#1e293b', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  ✍️ メッセージを投稿する
-                </h3>
-                
-                <div style={{ display: 'flex', gap: '10px' }}>
-                  <div style={{ flex: 1 }}>
-                    <label style={{ fontSize: '9px', fontWeight: '900', color: '#64748b', display: 'block', marginBottom: '4px' }}>ニックネーム</label>
-                    <input
-                      type="text"
-                      placeholder="匿名オタク"
-                      value={postName}
-                      onChange={(e) => setPostName(e.target.value)}
-                      maxLength={20}
-                      style={{
-                        width: '100%',
-                        padding: '8px 12px',
-                        borderRadius: '10px',
-                        border: '1.5px solid #cbd5e1',
-                        fontSize: '12px',
-                        fontWeight: '700',
-                        outline: 'none',
-                        background: '#ffffff'
-                      }}
-                    />
-                  </div>
-                </div>
+              {(() => {
+                const myMessage = stadiumMessages.find(m => m.device_id === deviceId);
+                const otherMessages = stadiumMessages.filter(m => m.device_id !== deviceId);
 
-                {/* メッセージ本文 */}
-                <div>
-                  <div style={{ display: 'flex', justifyItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
-                    <label style={{ fontSize: '9px', fontWeight: '900', color: '#64748b' }}>メッセージ (最大140文字)</label>
-                    <span style={{ fontSize: '9px', fontWeight: '800', color: postMessage.length > 140 ? '#ef4444' : '#64748b' }}>
-                      {postMessage.length} / 140
-                    </span>
-                  </div>
-                  <textarea
-                    placeholder="国立競技場ライブおめでとう！大好き！"
-                    value={postMessage}
-                    onChange={(e) => setPostMessage(e.target.value)}
-                    maxLength={140}
-                    rows={3}
-                    style={{
-                      width: '100%',
-                      padding: '10px 12px',
-                      borderRadius: '12px',
-                      border: '1.5px solid #cbd5e1',
-                      fontSize: '12px',
-                      fontWeight: '700',
-                      outline: 'none',
-                      resize: 'none',
-                      background: '#ffffff',
-                      lineHeight: '1.5'
-                    }}
-                  />
-                </div>
-
-                {/* 推しメンカラー選択パレット */}
-                <div>
-                  <label style={{ fontSize: '9px', fontWeight: '900', color: '#64748b', display: 'block', marginBottom: '6px' }}>
-                    推しメンカラー
-                  </label>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                    {[
-                      { name: '大谷 映美里 (白/ピンク)', color: '#ffd1dc' },
-                      { name: '大場 花菜 (オレンジ/青)', color: '#f97316' },
-                      { name: '音嶋 莉沙 (ピンク/水色)', color: '#f472b6' },
-                      { name: '齋藤 樹愛羅 (ピンク/白)', color: '#ff007f' },
-                      { name: '佐々木 舞香 (白)', color: '#cbd5e1' },
-                      { name: '髙松 瞳 (赤)', color: '#ef4444' },
-                      { name: '瀧脇 笙古 (黄/オレンジ)', color: '#eab308' },
-                      { name: '野口 衣織 (紫)', color: '#a855f7' },
-                      { name: '諸橋 沙夏 (緑)', color: '#22c55e' },
-                      { name: '山本 杏奈 (青/黄)', color: '#3b82f6' }
-                    ].map((item) => (
-                      <button
-                        key={item.name}
-                        type="button"
-                        onClick={() => setPostColor(item.color)}
-                        title={item.name}
-                        style={{
-                          width: '26px',
-                          height: '26px',
-                          borderRadius: '50%',
-                          backgroundColor: item.color,
-                          border: postColor === item.color ? '3px solid #0f172a' : '2.5px solid #ffffff',
-                          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                          cursor: 'pointer',
-                          transform: postColor === item.color ? 'scale(1.15)' : 'none',
-                          transition: 'all 0.2s'
-                        }}
-                      />
-                    ))}
-                  </div>
-                </div>
-
-                {/* 送信ボタン */}
-                <button
-                  type="submit"
-                  disabled={postCooldown > 0}
-                  style={{
-                    background: postCooldown > 0 ? '#cbd5e1' : 'linear-gradient(135deg, #ffd700 0%, #db2777 100%)',
-                    color: '#ffffff',
-                    border: 'none',
-                    borderRadius: '12px',
-                    padding: '10px',
-                    fontSize: '12px',
-                    fontWeight: '900',
-                    cursor: postCooldown > 0 ? 'not-allowed' : 'pointer',
-                    boxShadow: postCooldown > 0 ? 'none' : '0 4px 10px rgba(219,39,119,0.15)',
-                    transition: 'all 0.2s',
-                    marginTop: '4px'
-                  }}
-                  className="pop-button"
-                >
-                  {postCooldown > 0 ? `連投制限中 (あと ${postCooldown} 秒)` : '📣 メッセージを送信'}
-                </button>
-              </form>
-
-              {/* メッセージ一覧 (閲覧エリア) */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <h3 style={{ fontSize: '13px', fontWeight: '900', color: '#1e293b', margin: '8px 0 0 0', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  💬 みんなの寄せ書き ({stadiumMessages.length}件)
-                </h3>
-
-                {isLoadingMessages ? (
-                  <div style={{ display: 'flex', justifyContent: 'center', padding: '24px', color: '#64748b', fontSize: '12px', fontWeight: 'bold' }}>
-                    読み込み中...
-                  </div>
-                ) : stadiumMessages.length === 0 ? (
-                  <div style={{ background: '#f8fafc', border: '1.5px dashed #cbd5e1', borderRadius: '16px', padding: '24px', textAlign: 'center', color: '#64748b', fontSize: '12px' }}>
-                    まだ寄せ書きがありません。最初のメッセージを投稿してみましょう！
-                  </div>
-                ) : (
-                  <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '10px'
-                  }}>
-                    {stadiumMessages.map((msg) => (
-                      <div
-                        key={msg.id}
-                        style={{
-                          background: '#ffffff',
-                          border: `2px solid ${msg.color}`,
-                          borderRadius: '16px',
-                          padding: '12px 16px',
-                          boxShadow: `0 4px 12px -2px rgba(0,0,0,0.02), 0 0 8px ${msg.color}15`,
-                          display: 'flex',
-                          flexDirection: 'column',
-                          gap: '6px',
-                          position: 'relative'
-                        }}
-                      >
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontSize: '11px', fontWeight: '900', color: '#1e293b', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: msg.color }} />
-                            {msg.name || '匿名オタク'}
-                          </span>
-                          <span style={{ fontSize: '8px', color: '#94a3b8', fontFamily: 'Outfit' }}>
-                            {new Date(msg.created_at).toLocaleDateString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
-                          </span>
-                        </div>
-                        <p style={{ fontSize: '12px', color: '#475569', margin: 0, lineHeight: '1.5', fontWeight: '800', whiteSpace: 'pre-wrap' }}>
-                          {msg.message}
+                return (
+                  <>
+                    {/* 1. 投稿フォーム または サンクスメッセージ */}
+                    {myMessage ? (
+                      <div style={{
+                        background: 'linear-gradient(135deg, rgba(251, 191, 36, 0.08) 0%, rgba(219, 39, 119, 0.08) 100%)',
+                        border: '2.5px dashed #db2777',
+                        borderRadius: '20px',
+                        padding: '20px 16px',
+                        textAlign: 'center',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '6px',
+                        boxShadow: '0 4px 15px rgba(219,39,119,0.05)',
+                        animation: 'fadeInUp 0.4s ease'
+                      }}>
+                        <span style={{ fontSize: '28px', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }}>✨</span>
+                        <h3 style={{ fontSize: '14px', fontWeight: '900', color: '#db2777', margin: 0 }}>
+                          熱いメッセージをありがとうございます！
+                        </h3>
+                        <p style={{ fontSize: '11px', color: '#64748b', margin: 0, lineHeight: '1.6', fontWeight: '800' }}>
+                          ライブ当日を一緒に盛り上げましょう！
                         </p>
                       </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+                    ) : (
+                      <form onSubmit={handlePostMessage} style={{
+                        background: '#f8fafc',
+                        border: '1.5px solid #e2e8f0',
+                        borderRadius: '20px',
+                        padding: '16px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '12px'
+                      }}>
+                        <h3 style={{ fontSize: '12px', fontWeight: '900', color: '#1e293b', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          ✍️ メッセージを投稿する
+                        </h3>
+                        
+                        <div style={{ display: 'flex', gap: '10px' }}>
+                          <div style={{ flex: 1 }}>
+                            <label style={{ fontSize: '9px', fontWeight: '900', color: '#64748b', display: 'block', marginBottom: '4px' }}>ニックネーム</label>
+                            <input
+                              type="text"
+                              placeholder="匿名オタク"
+                              value={postName}
+                              onChange={(e) => setPostName(e.target.value)}
+                              maxLength={20}
+                              style={{
+                                width: '100%',
+                                padding: '8px 12px',
+                                borderRadius: '10px',
+                                border: '1.5px solid #cbd5e1',
+                                fontSize: '12px',
+                                fontWeight: '700',
+                                outline: 'none',
+                                background: '#ffffff'
+                              }}
+                            />
+                          </div>
+                        </div>
 
+                        {/* メッセージ本文 */}
+                        <div>
+                          <div style={{ display: 'flex', justifyItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+                            <label style={{ fontSize: '9px', fontWeight: '900', color: '#64748b' }}>メッセージ (最大140文字)</label>
+                            <span style={{ fontSize: '9px', fontWeight: '800', color: postMessage.length > 140 ? '#ef4444' : '#64748b' }}>
+                              {postMessage.length} / 140
+                            </span>
+                          </div>
+                          <textarea
+                            placeholder="国立競技場ライブおめでとう！大好き！"
+                            value={postMessage}
+                            onChange={(e) => setPostMessage(e.target.value)}
+                            maxLength={140}
+                            rows={3}
+                            style={{
+                              width: '100%',
+                              padding: '10px 12px',
+                              borderRadius: '12px',
+                              border: '1.5px solid #cbd5e1',
+                              fontSize: '12px',
+                              fontWeight: '700',
+                              outline: 'none',
+                              resize: 'none',
+                              background: '#ffffff',
+                              lineHeight: '1.5'
+                            }}
+                          />
+                        </div>
+
+                        {/* 推しメンカラー選択パレット */}
+                        <div>
+                          <label style={{ fontSize: '9px', fontWeight: '900', color: '#64748b', display: 'block', marginBottom: '6px' }}>
+                            推しメンカラー
+                          </label>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                            {[
+                              { name: '大谷 映美里 (白/ピンク)', color: '#ffd1dc' },
+                              { name: '大場 花菜 (オレンジ/青)', color: '#f97316' },
+                              { name: '音嶋 莉沙 (ピンク/水色)', color: '#f472b6' },
+                              { name: '齋藤 樹愛羅 (ピンク/白)', color: '#ff007f' },
+                              { name: '佐々木 舞香 (白)', color: '#cbd5e1' },
+                              { name: '髙松 瞳 (赤)', color: '#ef4444' },
+                              { name: '瀧脇 笙古 (黄/オレンジ)', color: '#eab308' },
+                              { name: '野口 衣織 (紫)', color: '#a855f7' },
+                              { name: '諸橋 沙夏 (緑)', color: '#22c55e' },
+                              { name: '山本 杏奈 (青/黄)', color: '#3b82f6' }
+                            ].map((item) => (
+                              <button
+                                key={item.name}
+                                type="button"
+                                onClick={() => setPostColor(item.color)}
+                                title={item.name}
+                                style={{
+                                  width: '26px',
+                                  height: '26px',
+                                  borderRadius: '50%',
+                                  backgroundColor: item.color,
+                                  border: postColor === item.color ? '3px solid #0f172a' : '2.5px solid #ffffff',
+                                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                                  cursor: 'pointer',
+                                  transform: postColor === item.color ? 'scale(1.15)' : 'none',
+                                  transition: 'all 0.2s'
+                                }}
+                              />
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* 送信ボタン */}
+                        <button
+                          type="submit"
+                          disabled={postCooldown > 0}
+                          style={{
+                            background: postCooldown > 0 ? '#cbd5e1' : 'linear-gradient(135deg, #ffd700 0%, #db2777 100%)',
+                            color: '#ffffff',
+                            border: 'none',
+                            borderRadius: '12px',
+                            padding: '10px',
+                            fontSize: '12px',
+                            fontWeight: '900',
+                            cursor: postCooldown > 0 ? 'not-allowed' : 'pointer',
+                            boxShadow: postCooldown > 0 ? 'none' : '0 4px 10px rgba(219,39,119,0.15)',
+                            transition: 'all 0.2s',
+                            marginTop: '4px'
+                          }}
+                          className="pop-button"
+                        >
+                          {postCooldown > 0 ? `連投制限中 (あと ${postCooldown} 秒)` : '📣 メッセージを送信'}
+                        </button>
+                      </form>
+                    )}
+
+                    {/* 2. 自分のメッセージ (ハイライト表示) */}
+                    {myMessage && (
+                      <div style={{
+                        background: 'linear-gradient(135deg, #fffbeb 0%, #ffffff 100%)',
+                        border: '3px solid #fbbf24',
+                        borderRadius: '20px',
+                        padding: '16px',
+                        boxShadow: '0 10px 25px -5px rgba(251,191,36,0.15)',
+                        animation: 'fadeInUp 0.4s ease',
+                        position: 'relative'
+                      }}>
+                        <span style={{
+                          position: 'absolute',
+                          top: '-10px',
+                          left: '16px',
+                          fontSize: '8.5px',
+                          fontWeight: '900',
+                          color: '#b45309',
+                          background: '#fef3c7',
+                          border: '1.5px solid #fbbf24',
+                          padding: '2px 8px',
+                          borderRadius: '8px',
+                          letterSpacing: '0.02em',
+                          boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
+                        }}>
+                          ✨ あなたの寄せ書き
+                        </span>
+                        
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', marginTop: '4px' }}>
+                          <span style={{ fontSize: '11px', fontWeight: '900', color: '#1e293b', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: myMessage.color }} />
+                            {myMessage.name || '匿名オタク'}
+                          </span>
+                          <span style={{ fontSize: '8px', color: '#94a3b8', fontFamily: 'Outfit' }}>
+                            {new Date(myMessage.created_at).toLocaleDateString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
+                          </span>
+                        </div>
+                        <p style={{ fontSize: '13px', color: '#1e293b', margin: 0, lineHeight: '1.55', fontWeight: '800', whiteSpace: 'pre-wrap' }}>
+                          {myMessage.message}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* 3. みんなの寄せ書き */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      <h3 style={{ fontSize: '13px', fontWeight: '900', color: '#1e293b', margin: '8px 0 0 0', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        💬 みんなの寄せ書き ({otherMessages.length}件)
+                      </h3>
+
+                      {isLoadingMessages ? (
+                        <div style={{ display: 'flex', justifyContent: 'center', padding: '24px', color: '#64748b', fontSize: '12px', fontWeight: 'bold' }}>
+                          読み込み中...
+                        </div>
+                      ) : otherMessages.length === 0 ? (
+                        <div style={{ background: '#f8fafc', border: '1.5px dashed #cbd5e1', borderRadius: '16px', padding: '24px', textAlign: 'center', color: '#64748b', fontSize: '12px' }}>
+                          まだ他の寄せ書きがありません。
+                        </div>
+                      ) : (
+                        <div style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '10px'
+                        }}>
+                          {otherMessages.map((msg) => (
+                            <div
+                              key={msg.id}
+                              style={{
+                                background: '#ffffff',
+                                border: `2px solid ${msg.color}`,
+                                borderRadius: '16px',
+                                padding: '12px 16px',
+                                boxShadow: `0 4px 12px -2px rgba(0,0,0,0.02), 0 0 8px ${msg.color}15`,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '6px',
+                                position: 'relative'
+                              }}
+                            >
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <span style={{ fontSize: '11px', fontWeight: '900', color: '#1e293b', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: msg.color }} />
+                                  {msg.name || '匿名オタク'}
+                                </span>
+                                <span style={{ fontSize: '8px', color: '#94a3b8', fontFamily: 'Outfit' }}>
+                                  {new Date(msg.created_at).toLocaleDateString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
+                                </span>
+                              </div>
+                              <p style={{ fontSize: '12px', color: '#475569', margin: 0, lineHeight: '1.5', fontWeight: '800', whiteSpace: 'pre-wrap' }}>
+                                {msg.message}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </>
+                );
+              })()}
             </div>
 
             {/* フッター */}

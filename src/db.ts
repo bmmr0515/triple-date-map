@@ -5,6 +5,7 @@ export interface StadiumMessage {
   name: string;
   message: string;
   color: string;
+  device_id: string;
   created_at: string;
 }
 
@@ -1807,12 +1808,13 @@ export const db = {
     }
   },
 
-  async addStadiumMessage(name: string, message: string, color: string): Promise<StadiumMessage> {
+  async addStadiumMessage(name: string, message: string, color: string, deviceId: string): Promise<StadiumMessage> {
     const newMessage: StadiumMessage = {
       id: generateUUID(),
       name,
       message,
       color,
+      device_id: deviceId,
       created_at: new Date().toISOString()
     };
 
@@ -1839,6 +1841,13 @@ export const db = {
         messages = JSON.parse(local);
       } catch (e) {}
     }
+
+    // ローカル側でも一意制約の検証を行う
+    const hasAlreadyPosted = messages.some(m => m.device_id === deviceId);
+    if (hasAlreadyPosted) {
+      throw new Error('This device has already posted a message.');
+    }
+
     messages.unshift(newMessage);
     localStorage.setItem('tdm_stadium_messages', JSON.stringify(messages));
     return newMessage;
