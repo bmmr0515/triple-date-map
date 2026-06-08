@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
+import AdminMessages from './pages/AdminMessages.tsx'
+import MessageGallery from './pages/MessageGallery.tsx'
 import './index.css'
 import { Analytics } from '@vercel/analytics/react';
 
@@ -11,9 +13,40 @@ if (import.meta.env.PROD) {
   console.warn = () => {};
 }
 
+function Router() {
+  const [path, setPath] = useState(window.location.pathname);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setPath(window.location.pathname);
+    };
+    window.addEventListener('popstate', handlePopState);
+
+    const handlePushState = () => {
+      setPath(window.location.pathname);
+    };
+    window.addEventListener('pushstate', handlePushState);
+    window.addEventListener('replacestate', handlePushState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('pushstate', handlePushState);
+      window.removeEventListener('replacestate', handlePushState);
+    };
+  }, []);
+
+  if (path === '/admin/messages') {
+    return <AdminMessages />;
+  }
+  if (path === '/messages/gallery') {
+    return <MessageGallery />;
+  }
+  return <App />;
+}
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <Router />
     <Analytics />
   </React.StrictMode>,
 )

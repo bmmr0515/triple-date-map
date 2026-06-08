@@ -23,6 +23,7 @@ import { db, Spot, User, CheckIn, GroupType, validateStadiumMessage } from './db
 import { authService, AuthSession } from './auth';
 import { SupportSection } from './components/SupportSection';
 import { AdPlaceholder } from './components/AdPlaceholder';
+import { AdminPage } from './components/AdminPage';
 
 // 🔔 アプリ内新着お知らせのインターフェースとデータ定義
 export interface Notice {
@@ -151,6 +152,26 @@ export const APP_NOTICES: Notice[] = [
 // CDNで読み込んだグローバルな Leaflet (L) をTypeScriptに認識させる
 declare const L: any;
 
+// 🏟️ 国立競技場ライブ開催日設定 (YYYY-MM-DD)
+export const LIVE_RELEASE_DATE = "2026-06-04";
+
+// 📅 エンドロール特設ページが公開中か、またはティザー（前日以前）であるかを判定するヘルパー
+export const getStadiumEventStatus = (): { isAvailable: boolean; isTeaser: boolean; timeDiffMs: number } => {
+  const liveDate = new Date(LIVE_RELEASE_DATE + "T00:00:00+09:00");
+  const teaserStartDate = new Date(liveDate.getTime() - 24 * 60 * 60 * 1000); // 1日前（前日の0:00）
+  const eventEndDate = new Date(liveDate.getTime() + 30 * 24 * 60 * 60 * 1000); // 30日後
+  
+  const now = new Date();
+  const timeDiffMs = teaserStartDate.getTime() - now.getTime();
+  
+  // teaserStartDate 以降かつ eventEndDate 以前なら公開中
+  const isAvailable = now >= teaserStartDate && now <= eventEndDate;
+  // teaserStartDate より前ならティザー表示
+  const isTeaser = now < teaserStartDate;
+  
+  return { isAvailable, isTeaser, timeDiffMs };
+};
+
 // YouTube動画ID抽出関数（以前使われていた関数、現在はiframe対応のため削除）
 
 // Haversineの公式で2点間の距離(メートル)を精密に計算する関数
@@ -214,17 +235,21 @@ export default function App() {
   const [byunMissionExpanded, setByunMissionExpanded] = useState<boolean>(true);
   const [mermaidMissionExpanded, setMermaidMissionExpanded] = useState<boolean>(true);
   const [escapeMissionExpanded, setEscapeMissionExpanded] = useState<boolean>(true);
+  const [moratoriumMissionExpanded, setMoratoriumMissionExpanded] = useState<boolean>(true);
 
   // 🏟️ 国立競技場デジタル寄せ書きボード状態
   const [showStadiumBoardModal, setShowStadiumBoardModal] = useState<boolean>(false);
   const [stadiumMessages, setStadiumMessages] = useState<any[]>([]);
-  const [isLoadingMessages, setIsLoadingMessages] = useState<boolean>(false);
+  const [_isLoadingMessages, setIsLoadingMessages] = useState<boolean>(false);
   const [postName, setPostName] = useState<string>('');
   const [postMessage, setPostMessage] = useState<string>('');
   const [postColor, setPostColor] = useState<string>('#e9d5ff');
   const [postCooldown, setPostCooldown] = useState<number>(0);
   const [deviceId, setDeviceId] = useState<string>('');
   const [showStadiumWelcomeModal, setShowStadiumWelcomeModal] = useState<boolean>(false);
+  // stadiumCountdown, autoScrollActive, isEndrollHovered は廃止（エンドロールページ廃止のため）
+
+  // カウントダウンは廃止（エンドロールページ廃止のため）;
 
   useEffect(() => {
     let id = localStorage.getItem('tdm_device_id');
@@ -568,6 +593,7 @@ export default function App() {
           if (listSelectedMission === 'byun') return tag.includes('大空、ビュンと巡礼');
           if (listSelectedMission === 'mermaid') return tag.includes('真夜中マーメイド巡礼');
           if (listSelectedMission === 'escape') return tag.includes('超特急逃走中巡礼');
+          if (listSelectedMission === 'moratorium') return tag.includes('モラトリアム巡礼');
           return false;
         });
         if (!hasMission) {
@@ -642,9 +668,15 @@ export default function App() {
     window.location.pathname === '/privacy' || window.location.pathname === '/privacy/'
   );
 
+  // 🛡️ 管理者ページの表示制御
+  const [showAdminPage, setShowAdminPage] = useState<boolean>(
+    window.location.pathname === '/admin/messages' || window.location.pathname === '/admin/messages/'
+  );
+
   useEffect(() => {
     const handlePopState = () => {
       setShowPrivacyPage(window.location.pathname === '/privacy' || window.location.pathname === '/privacy/');
+      setShowAdminPage(window.location.pathname === '/admin/messages' || window.location.pathname === '/admin/messages/');
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
@@ -654,6 +686,7 @@ export default function App() {
     if (e) e.preventDefault();
     window.history.pushState(null, '', '/privacy');
     setShowPrivacyPage(true);
+    setShowAdminPage(false);
     setIsMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -662,8 +695,10 @@ export default function App() {
     if (e) e.preventDefault();
     window.history.pushState(null, '', '/');
     setShowPrivacyPage(false);
+    setShowAdminPage(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
 
   // 📍 現在地（GPS）ジャンプ用ステート＆参照
   const [isGpsJumping, setIsGpsJumping] = useState<boolean>(false);
@@ -893,6 +928,15 @@ export default function App() {
       }
     }
 
+    // 14. 大好きでずるい人 (モラトリアム巡礼完遂時)
+    const moratoriumSpots = spots.filter(s => s.tags && s.tags.includes("モラトリアム巡礼"));
+    const moratoriumTitle = "大好きでずるい人";
+    if (moratoriumSpots.length > 0 && moratoriumSpots.every(s => checkedSpotIds.has(s.id))) {
+      if (!currentAcquired.includes(moratoriumTitle) && !newlyEarnedTitles.includes(moratoriumTitle)) {
+        newlyEarnedTitles.push(moratoriumTitle);
+      }
+    }
+
     // 称号獲得時の保存・適用処理
     if (newlyEarnedTitles.length > 0) {
       // 1. 未ログイン（ゲスト）ユーザーなら保存処理はスキップしてBaaS Read/Write負荷をゼロにする
@@ -949,6 +993,24 @@ export default function App() {
     }
   }, [showStadiumBoardModal]);
 
+  // 🏟️ 自分がまだ投稿していない最初のカラーを自動選択する
+  useEffect(() => {
+    if (showStadiumBoardModal && stadiumMessages.length >= 0) {
+      const myPostedColors = stadiumMessages
+        .filter(m => m.device_id === deviceId)
+        .map(m => m.color);
+      
+      const allColors = [
+        '#e9d5ff', '#f97316', '#38bdf8', '#fbcfe8', '#ffffff', 
+        '#ef4444', '#facc15', '#a855f7', '#84cc16', '#3b82f6'
+      ];
+      const unpostedColor = allColors.find(c => !myPostedColors.includes(c));
+      if (unpostedColor) {
+        setPostColor(unpostedColor);
+      }
+    }
+  }, [showStadiumBoardModal, stadiumMessages, deviceId]);
+
   // 投稿制限のクールダウンタイマー
   useEffect(() => {
     if (postCooldown <= 0) return;
@@ -964,8 +1026,8 @@ export default function App() {
       alert('ニックネームとメッセージを入力してください。');
       return;
     }
-    if (postMessage.trim().length > 140) {
-      alert('メッセージは140文字以内で入力してください。');
+    if (postMessage.trim().length > 100) {
+      alert('メッセージは100文字以内で入力してください。');
       return;
     }
     if (postCooldown > 0) {
@@ -980,10 +1042,10 @@ export default function App() {
       return;
     }
 
-    // すでに投稿済みか再度判定
-    const alreadyPosted = stadiumMessages.some(m => m.device_id === deviceId);
+    // すでにこのカラーで投稿済みか再度判定 (1人各メンバー1回制限)
+    const alreadyPosted = stadiumMessages.some(m => m.device_id === deviceId && m.color === postColor);
     if (alreadyPosted) {
-      alert('応援メッセージは1人1回まで投稿可能です。');
+      alert('このメンバーへは既にメッセージを投稿済みです。');
       return;
     }
 
@@ -1747,6 +1809,11 @@ ${window.location.origin + window.location.pathname}
     );
   }
 
+  // 🛡️ 管理者ページ (全画面描画)
+  if (showAdminPage) {
+    return <AdminPage onNavigateHome={navigateToHome} />;
+  }
+
   return (
     <div className="app-container">
 
@@ -2077,6 +2144,9 @@ ${window.location.origin + window.location.pathname}
         </div>
       </header>
 
+      {/* 🏟️ 国立競技場特設イベント告知バナー（廃止・非表示）*/}
+      {null}
+
       {/* 2. メイン領域 (左右分割: 左側が 地図 + 下部スライダー, 右側が Info Panel) */}
       <div className="main-area">
         
@@ -2308,6 +2378,7 @@ ${window.location.origin + window.location.pathname}
                       <option value="byun">✈️ 大空、ビュンと (全7箇所)</option>
                       <option value="mermaid">🧜 今すぐ海へと連れ去って (全3箇所)</option>
                       <option value="escape">🏃 君は超特急で逃走中！ (全5箇所)</option>
+                      <option value="moratorium">🥀 大好きでずるい人 (全7箇所)</option>
                     </select>
                     <div style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', fontSize: '9px', color: '#94a3b8' }}>▼</div>
                   </div>
@@ -2819,7 +2890,7 @@ ${window.location.origin + window.location.pathname}
               textAlign: 'center',
               fontWeight: '700'
             }}>
-              無料・広告なしで運営中 ✨ 支援が大きな励みになります
+              無料で運営中 ✨ 支援が大きな励みになります
             </span>
           </div>
 
@@ -4628,6 +4699,178 @@ ${window.location.origin + window.location.pathname}
                                 <span style={{ fontSize: '10px', fontWeight: '900', color: isCompleted ? '#db2777' : '#64748b' }}>称号報酬: 超特急な逃走者</span>
                                 <span style={{ fontSize: '8px', color: '#94a3b8' }}>
                                   {isCompleted ? '🎉 超特急な逃走者の称号を獲得！マイページでバッジが輝いています。' : '超特急逃走中の聖地5箇所すべてを巡ると「超特急な逃走者」の称号が解放されます。'}
+                                </span>
+                              </div>
+                            </div>
+
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
+
+                  {/* 🌟 大好きでずるい人（モラトリアム）巡礼ミッションの進捗カード */}
+                  {(() => {
+                    const moratoriumSpots = spots.filter(s => s.tags && s.tags.includes("モラトリアム巡礼"));
+                    const checkedMoratoriumSpots = checkins.filter(c => {
+                      const spot = spots.find(s => s.id === c.spot_id);
+                      return spot && spot.tags && spot.tags.includes("モラトリアム巡礼");
+                    });
+                    const uniqueCheckedCount = new Set(checkedMoratoriumSpots.map(c => c.spot_id)).size;
+                    const totalMoratoriumCount = moratoriumSpots.length || 7;
+                    const percent = Math.min(100, Math.round((uniqueCheckedCount / totalMoratoriumCount) * 100));
+                    const isCompleted = uniqueCheckedCount === totalMoratoriumCount;
+
+                    return (
+                      <div className="pop-panel" style={{
+                        borderRadius: '16px',
+                        border: '2px solid #e2e8f0',
+                        overflow: 'hidden',
+                        boxShadow: 'var(--shadow-panel)',
+                        marginTop: '16px'
+                      }}>
+                        {/* アコーディオンヘッダー */}
+                        <div 
+                          onClick={() => setMoratoriumMissionExpanded(!moratoriumMissionExpanded)}
+                          style={{
+                            padding: '16px',
+                            background: 'linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%)',
+                            borderBottom: '1px solid #e2e8f0',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                            {/* 🏷️ メインタイトル */}
+                            <span style={{
+                              alignSelf: 'flex-start',
+                              fontSize: '9px',
+                              fontWeight: '900',
+                              color: '#7c3aed',
+                              background: '#f5f3ff',
+                              padding: '2px 8px',
+                              borderRadius: '6px',
+                              letterSpacing: '0.02em',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '3px'
+                            }}>
+                              🥀 モラトリアム 巡礼ミッション
+                            </span>
+                            {/* 👑 サブタイトル */}
+                            <span style={{
+                              fontSize: '15px',
+                              fontWeight: '900',
+                              color: '#1e293b',
+                              letterSpacing: '-0.02em',
+                              lineHeight: '1.2',
+                              marginTop: '2px'
+                            }}>
+                              「大好きでずるい人」
+                            </span>
+                            {/* 📊 進行状況 */}
+                            <span style={{ fontSize: '9.5px', color: 'var(--text-muted)', fontWeight: '800', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                              🧭 進行状況: {uniqueCheckedCount} / {totalMoratoriumCount} 箇所 ({percent}%)
+                            </span>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            {isCompleted ? (
+                              <span style={{ fontSize: '10px', fontWeight: '900', color: '#7c3aed', background: '#ffffff', padding: '2px 8px', borderRadius: '9999px', border: '1px solid rgba(124,58,237,0.2)' }}>達成！</span>
+                            ) : (
+                              <ChevronRight className="w-4 h-4 text-slate-400" style={{ transform: moratoriumMissionExpanded ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
+                            )}
+                          </div>
+                        </div>
+
+                        {/* アコーディオンの中身 */}
+                        {moratoriumMissionExpanded && (
+                          <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', backgroundColor: '#ffffff' }}>
+                            
+                            {/* プログレスバー */}
+                            <div style={{ padding: '4px 6px 10px 6px' }}>
+                              <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '9999px', overflow: 'hidden' }}>
+                                <div style={{ width: `${percent}%`, height: '100%', background: 'linear-gradient(90deg, #a78bfa 0%, #7c3aed 100%)', transition: 'width 0.4s ease-out' }}></div>
+                              </div>
+                            </div>
+
+                            {/* 7箇所のリスト */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                              {moratoriumSpots.map(spot => {
+                                const isSpotChecked = checkins.some(c => c.spot_id === spot.id);
+                                return (
+                                  <div 
+                                    key={spot.id} 
+                                    onClick={() => {
+                                      handleFocusSpotOnMap(spot);
+                                      setSelectedSpot(spot);
+                                      setRightPanelTab('detail');
+                                    }}
+                                    style={{
+                                      display: 'flex',
+                                      justifyContent: 'space-between',
+                                      alignItems: 'center',
+                                      padding: '10px 12px',
+                                      borderRadius: '10px',
+                                      background: isSpotChecked ? '#f5f3ff' : '#f8fafc',
+                                      border: isSpotChecked ? '1px solid rgba(167, 139, 250, 0.2)' : '1px solid #e2e8f0',
+                                      cursor: 'pointer',
+                                      transition: 'all 0.2s'
+                                    }}
+                                    className="mission-spot-item"
+                                  >
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', overflow: 'hidden', paddingRight: '12px' }}>
+                                      <span style={{ fontSize: '11px', fontWeight: '800', color: isSpotChecked ? 'var(--text-main)' : 'var(--text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                        {spot.name}
+                                      </span>
+                                      <span style={{ fontSize: '8px', color: '#94a3b8' }}>{spot.category}</span>
+                                    </div>
+                                    <div style={{ flexShrink: 0 }}>
+                                      {isSpotChecked ? (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#ffffff', color: '#7c3aed', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '900', border: '1px solid rgba(124,58,237,0.2)' }}>
+                                          <CheckCircle2 className="w-3 h-3 text-[#7c3aed]" />
+                                          行った！
+                                        </div>
+                                      ) : (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#ffffff', color: '#94a3b8', padding: '2px 8px', borderRadius: '9999px', fontSize: '9px', fontWeight: '800', border: '1px solid #e2e8f0' }}>
+                                          未チェック
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+
+                            {/* 称号獲得の通知報酬枠 */}
+                            <div style={{
+                              marginTop: '8px',
+                              padding: '10px',
+                              borderRadius: '10px',
+                              background: isCompleted ? 'linear-gradient(135deg, rgba(167,139,250,0.06) 0%, rgba(124,58,237,0.06) 100%)' : '#f8fafc',
+                              border: isCompleted ? '1px dashed #7c3aed' : '1px dashed #cbd5e1',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '8px'
+                            }}>
+                              <div style={{
+                                width: '28px',
+                                height: '28px',
+                                borderRadius: '50%',
+                                background: isCompleted ? 'linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%)' : '#e2e8f0',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyItems: 'center',
+                                justifyContent: 'center',
+                                flexShrink: 0
+                              }}>
+                                <Award className="w-4 h-4 text-white" />
+                              </div>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                <span style={{ fontSize: '10px', fontWeight: '900', color: isCompleted ? '#7c3aed' : '#64748b' }}>称号報酬: 大好きでずるい人</span>
+                                <span style={{ fontSize: '8px', color: '#94a3b8' }}>
+                                  {isCompleted ? '🎉 大好きでずるい人の称号を獲得！マイページでバッジが輝いています。' : 'モラトリアムの聖地7箇所すべてを巡ると「大好きでずるい人」の称号が解放されます。'}
                                 </span>
                               </div>
                             </div>
@@ -7407,19 +7650,23 @@ ${window.location.origin + window.location.pathname}
               <p style={{ fontSize: '11px', opacity: 0.9, margin: 0 }}>
                 メンバーへの熱い応援メッセージを書いて届けましょう！
               </p>
+
+              {/* エンドロールページへのリンクは廃止 */}
             </div>
 
             {/* コンテンツエリア (スクロール可能) */}
             <div className="info-scroll-area" style={{ flex: 1, overflowY: 'auto', padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
               
               {(() => {
-                const myMessage = stadiumMessages.find(m => m.device_id === deviceId);
-                const otherMessages = stadiumMessages.filter(m => m.device_id !== deviceId);
+                const myMessages = stadiumMessages.filter(m => m.device_id === deviceId);
+                const myPostedColors = myMessages.map(m => m.color);
+                const hasPostedAll = myPostedColors.length >= 10;
+                // otherMessages は廃止（公開表示機能なし）
 
                 return (
                   <>
                     {/* 1. 投稿フォーム または サンクスメッセージ */}
-                    {myMessage ? (
+                    {hasPostedAll ? (
                       <div style={{
                         background: 'linear-gradient(135deg, rgba(251, 191, 36, 0.08) 0%, rgba(219, 39, 119, 0.08) 100%)',
                         border: '2.5px dashed #db2777',
@@ -7435,10 +7682,10 @@ ${window.location.origin + window.location.pathname}
                       }}>
                         <span style={{ fontSize: '28px', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }}>✨</span>
                         <h3 style={{ fontSize: '14px', fontWeight: '900', color: '#db2777', margin: 0 }}>
-                          熱いメッセージをありがとうございます！
+                          全メンバー分のメッセージ投稿が完了しました！
                         </h3>
                         <p style={{ fontSize: '11px', color: '#64748b', margin: 0, lineHeight: '1.6', fontWeight: '800' }}>
-                          ライブ当日を一緒に盛り上げましょう！
+                          熱いメッセージをありがとうございます！ライブ当日を一緒に盛り上げましょう！
                         </p>
                       </div>
                     ) : (
@@ -7451,9 +7698,14 @@ ${window.location.origin + window.location.pathname}
                         flexDirection: 'column',
                         gap: '12px'
                       }}>
-                        <h3 style={{ fontSize: '12px', fontWeight: '900', color: '#1e293b', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
-                          ✍️ メッセージを投稿する
-                        </h3>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <h3 style={{ fontSize: '12px', fontWeight: '900', color: '#1e293b', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            ✍️ メッセージを投稿する
+                          </h3>
+                          <span style={{ fontSize: '10px', fontWeight: '900', color: '#db2777', background: '#fdf2f8', padding: '2px 8px', borderRadius: '8px' }}>
+                            現在の投稿: {myPostedColors.length} / 10 名
+                          </span>
+                        </div>
                         
                         <div style={{ display: 'flex', gap: '10px' }}>
                           <div style={{ flex: 1 }}>
@@ -7481,16 +7733,16 @@ ${window.location.origin + window.location.pathname}
                         {/* メッセージ本文 */}
                         <div>
                           <div style={{ display: 'flex', justifyItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
-                            <label style={{ fontSize: '9px', fontWeight: '900', color: '#64748b' }}>メッセージ (最大140文字)</label>
-                            <span style={{ fontSize: '9px', fontWeight: '800', color: postMessage.length > 140 ? '#ef4444' : '#64748b' }}>
-                              {postMessage.length} / 140
+                            <label style={{ fontSize: '9px', fontWeight: '900', color: '#64748b' }}>メッセージ (最大100文字)</label>
+                            <span style={{ fontSize: '9px', fontWeight: '800', color: postMessage.length > 100 ? '#ef4444' : '#64748b' }}>
+                              {postMessage.length} / 100
                             </span>
                           </div>
                           <textarea
                             placeholder="国立競技場ライブおめでとう！大好き！"
                             value={postMessage}
                             onChange={(e) => setPostMessage(e.target.value)}
-                            maxLength={140}
+                            maxLength={100}
                             rows={3}
                             style={{
                               width: '100%',
@@ -7510,7 +7762,7 @@ ${window.location.origin + window.location.pathname}
                         {/* 推しメンカラー選択パレット */}
                         <div>
                           <label style={{ fontSize: '9px', fontWeight: '900', color: '#64748b', display: 'block', marginBottom: '6px' }}>
-                            推しメンカラー
+                            推しメンカラー (すでに投稿済みのメンバーは選択できません)
                           </label>
                           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                             {[
@@ -7524,25 +7776,43 @@ ${window.location.origin + window.location.pathname}
                               { name: '野口 衣織 (紫)', color: '#a855f7' },
                               { name: '諸橋 沙夏 (黄緑)', color: '#84cc16' },
                               { name: '山本 杏奈 (青)', color: '#3b82f6' }
-                            ].map((item) => (
-                              <button
-                                key={item.name}
-                                type="button"
-                                onClick={() => setPostColor(item.color)}
-                                title={item.name}
-                                style={{
-                                  width: '26px',
-                                  height: '26px',
-                                  borderRadius: '50%',
-                                  backgroundColor: item.color,
-                                  border: postColor === item.color ? '3px solid #0f172a' : '2.5px solid #ffffff',
-                                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                                  cursor: 'pointer',
-                                  transform: postColor === item.color ? 'scale(1.15)' : 'none',
-                                  transition: 'all 0.2s'
-                                }}
-                              />
-                            ))}
+                            ].map((item) => {
+                              const isPosted = myPostedColors.includes(item.color);
+                              return (
+                                <button
+                                  key={item.name}
+                                  type="button"
+                                  disabled={isPosted}
+                                  onClick={() => setPostColor(item.color)}
+                                  title={isPosted ? `${item.name} (投稿済み)` : item.name}
+                                  style={{
+                                    width: '26px',
+                                    height: '26px',
+                                    borderRadius: '50%',
+                                    backgroundColor: item.color,
+                                    border: postColor === item.color ? '3px solid #0f172a' : '2.5px solid #ffffff',
+                                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                                    cursor: isPosted ? 'not-allowed' : 'pointer',
+                                    opacity: isPosted ? 0.25 : 1,
+                                    transform: postColor === item.color ? 'scale(1.15)' : 'none',
+                                    transition: 'all 0.2s',
+                                    position: 'relative',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                  }}
+                                >
+                                  {isPosted && (
+                                    <span style={{
+                                      fontSize: '10px',
+                                      fontWeight: 'bold',
+                                      color: getContrastTextColor(item.color),
+                                      pointerEvents: 'none'
+                                    }}>✓</span>
+                                  )}
+                                </button>
+                              );
+                            })}
                           </div>
                         </div>
 
@@ -7571,102 +7841,73 @@ ${window.location.origin + window.location.pathname}
                     )}
 
                     {/* 2. 自分のメッセージ (ハイライト表示) */}
-                    {myMessage && (
-                      <div style={{
-                        backgroundColor: myMessage.color,
-                        color: getContrastTextColor(myMessage.color),
-                        border: '3px solid #fbbf24',
-                        borderRadius: '20px',
-                        padding: '16px',
-                        boxShadow: '0 10px 25px -5px rgba(251,191,36,0.25)',
-                        animation: 'fadeInUp 0.4s ease',
-                        position: 'relative'
-                      }}>
-                        <span style={{
-                          position: 'absolute',
-                          top: '-10px',
-                          left: '16px',
-                          fontSize: '8.5px',
-                          fontWeight: '900',
-                          color: '#b45309',
-                          background: '#fef3c7',
-                          border: '1.5px solid #fbbf24',
-                          padding: '2px 8px',
-                          borderRadius: '8px',
-                          letterSpacing: '0.02em',
-                          boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
-                        }}>
-                          ✨ あなたの寄せ書き
-                        </span>
-                        
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', marginTop: '4px' }}>
-                          <span style={{ fontSize: '11px', fontWeight: '900', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: getContrastTextColor(myMessage.color), border: '1px solid currentColor' }} />
-                            {myMessage.name || '匿名オタク'}
-                          </span>
-                          <span style={{ fontSize: '8px', opacity: 0.8, fontFamily: 'Outfit' }}>
-                            {new Date(myMessage.created_at).toLocaleDateString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
-                          </span>
-                        </div>
-                        <p style={{ fontSize: '13px', margin: 0, lineHeight: '1.55', fontWeight: '900', whiteSpace: 'pre-wrap' }}>
-                          {myMessage.message}
-                        </p>
+                    {myMessages.length > 0 && (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <h4 style={{ fontSize: '11px', fontWeight: '900', color: '#b45309', marginBottom: '2px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                          ✨ あなたの寄せ書き ({myMessages.length} / 10)
+                        </h4>
+                        {myMessages.map((msg) => (
+                          <div
+                            key={msg.id}
+                            style={{
+                              backgroundColor: msg.color,
+                              color: getContrastTextColor(msg.color),
+                              border: '2.5px solid #fbbf24',
+                              borderRadius: '16px',
+                              padding: '12px 16px',
+                              boxShadow: '0 6px 15px rgba(251,191,36,0.12)',
+                              position: 'relative',
+                              animation: 'fadeInUp 0.3s ease'
+                            }}
+                          >
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                              <span style={{ fontSize: '11px', fontWeight: '900', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: getContrastTextColor(msg.color), border: '1px solid currentColor' }} />
+                                {msg.name || '匿名オタク'}
+                              </span>
+                              <span style={{ fontSize: '8px', opacity: 0.8, fontFamily: 'Outfit' }}>
+                                {new Date(msg.created_at).toLocaleDateString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
+                              </span>
+                            </div>
+                            <p style={{ fontSize: '12px', margin: 0, lineHeight: '1.5', fontWeight: '900', whiteSpace: 'pre-wrap' }}>
+                              {msg.message}
+                            </p>
+                          </div>
+                        ))}
                       </div>
                     )}
 
-                    {/* 3. みんなの寄せ書き */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                      <h3 style={{ fontSize: '13px', fontWeight: '900', color: '#1e293b', margin: '8px 0 0 0', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        💬 みんなの寄せ書き ({otherMessages.length}件)
-                      </h3>
-
-                      {isLoadingMessages ? (
-                        <div style={{ display: 'flex', justifyContent: 'center', padding: '24px', color: '#64748b', fontSize: '12px', fontWeight: 'bold' }}>
-                          読み込み中...
-                        </div>
-                      ) : otherMessages.length === 0 ? (
-                        <div style={{ background: '#f8fafc', border: '1.5px dashed #cbd5e1', borderRadius: '16px', padding: '24px', textAlign: 'center', color: '#64748b', fontSize: '12px' }}>
-                          まだ他の寄せ書きがありません。
-                        </div>
-                      ) : (
-                        <div style={{
+                    {/* 3. みんなの寄せ書き公開機能は廃止（管理者ダッシュボードで管理）*/}
+                    <div style={{ marginTop: '20px', padding: '16px', background: '#f8fafc', borderRadius: '18px', border: '1.5px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '8px', textAlign: 'center' }}>
+                      <span style={{ fontSize: '11px', fontWeight: '900', color: '#64748b' }}>
+                        ✨ 集まったみんなのメッセージを見る ✨
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          window.history.pushState({}, '', '/messages/gallery');
+                          window.dispatchEvent(new Event('pushstate'));
+                        }}
+                        style={{
+                          background: 'linear-gradient(135deg, #a855f7 0%, #3b82f6 100%)',
+                          color: '#ffffff',
+                          border: 'none',
+                          borderRadius: '12px',
+                          padding: '10px 16px',
+                          fontSize: '12.5px',
+                          fontWeight: '900',
+                          cursor: 'pointer',
+                          boxShadow: '0 6px 15px rgba(59,130,246,0.15)',
+                          transition: 'all 0.2s',
                           display: 'flex',
-                          flexDirection: 'column',
-                          gap: '10px'
-                        }}>
-                          {otherMessages.map((msg) => (
-                            <div
-                              key={msg.id}
-                              style={{
-                                backgroundColor: msg.color,
-                                color: getContrastTextColor(msg.color),
-                                border: msg.color === '#ffffff' ? '1.5px solid #e2e8f0' : '1px solid rgba(0, 0, 0, 0.08)',
-                                borderRadius: '16px',
-                                padding: '12px 16px',
-                                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.04)',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: '6px',
-                                position: 'relative',
-                                textShadow: 'none'
-                              }}
-                            >
-                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <span style={{ fontSize: '11px', fontWeight: '900', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: getContrastTextColor(msg.color), border: '1px solid currentColor' }} />
-                                  {msg.name || '匿名オタク'}
-                                </span>
-                                <span style={{ fontSize: '8px', opacity: 0.8, fontFamily: 'Outfit' }}>
-                                  {new Date(msg.created_at).toLocaleDateString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
-                                </span>
-                              </div>
-                              <p style={{ fontSize: '12px', margin: 0, lineHeight: '1.5', fontWeight: '800', whiteSpace: 'pre-wrap' }}>
-                                {msg.message}
-                              </p>
-                            </div>
-                          ))}
-                        </div>
-                      )}
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px'
+                        }}
+                        className="pop-button"
+                      >
+                        🎨 寄せ書きギャラリーを開く
+                      </button>
                     </div>
                   </>
                 );

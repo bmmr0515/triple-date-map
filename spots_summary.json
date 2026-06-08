@@ -467,5 +467,110 @@
     "category": "飲食店・その他",
     "songOrEvent": "『真夜中マーメイド』",
     "reward_title": "潮風の歌姫・歌手"
+  },
+  {
+    "name": "ZERO BLANC",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『劇薬中毒』",
+    "reward_title": "劇薬に侵されし者"
+  },
+  {
+    "name": "ふじさんめっせ",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『劇薬中毒』",
+    "reward_title": "ふじさんめっせの中毒者"
+  },
+  {
+    "name": "Stellato",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『モラトリアム』",
+    "reward_title": "Stellatoの迷い人"
+  },
+  {
+    "name": "パークモール",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『モラトリアム』",
+    "reward_title": "パークモールの散策者"
+  },
+  {
+    "name": "中浜橋",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『モラトリアム』",
+    "reward_title": "中浜橋の佇む人"
+  },
+  {
+    "name": "ビジネス通り交差点",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『モラトリアム』",
+    "reward_title": "ビジネス通りの信号待ち"
+  },
+  {
+    "name": "ビジネス通り",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『モラトリアム』",
+    "reward_title": "モラトリアムロードの走者"
+  },
+  {
+    "name": "メッセモール 友好広場",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『モラトリアム』",
+    "reward_title": "友好広場の旅人"
+  },
+  {
+    "name": "ビジネス通り交差点デッキ",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『モラトリアム』",
+    "reward_title": "デッキから見下ろす瞳"
+  },
+  {
+    "name": "大宮アートグレイスウエディングシャトー シャトー・シャンパーニュ",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『お姫様の作り方』",
+    "reward_title": "シャトーのプリンセス"
+  },
+  {
+    "name": "東映 東京撮影所 No.5ステージ",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『ラブソングに襲われる』",
+    "reward_title": "No.5ステージの熱狂者"
+  },
+  {
+    "name": "メイフラワーゴルフクラブ チャペル",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『ラブソングに襲われる』",
+    "reward_title": "メイフラワーチャペルの巡礼者"
+  },
+  {
+    "name": "光英VERITAS中学校・高等学校",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『内緒バナシ』",
+    "reward_title": "VERITAS of 語り部"
+  },
+  {
+    "name": "多摩川浅間神社",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『内緒バナシ』",
+    "reward_title": "浅間神社の秘密の共有者"
+  },
+  {
+    "name": "BAYSIDE GEIHINKAN VERANDA minatomirai",
+    "group": "=LOVE",
+    "category": "MVロケ地",
+    "songOrEvent": "『木漏れ日メゾフォルテ』",
+    "reward_title": "木漏れ日のテラスの住人"
   }
 ]

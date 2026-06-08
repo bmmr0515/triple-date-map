@@ -13,9 +13,12 @@ export interface StadiumMessage {
 export const validateStadiumMessage = (message: string): string | null => {
   const trimmed = message.trim();
 
-  // 最低文字数制限
+  // 最低文字数制限および最大文字数制限
   if (trimmed.length < 3) {
     return 'メッセージは3文字以上で入力してください。';
+  }
+  if (trimmed.length > 100) {
+    return 'メッセージは100文字以内で入力してください。';
   }
 
   // URL・ドメインの検知（スパムリンク排除）
@@ -1696,6 +1699,208 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["国立競技場イベント"],
     memorial_date: "2026-06-04",
     description: "=LOVE初の「国立競技場スペシャルライブ」開催を記念した特設イベント会場です！\nみんなでデジタル寄せ書きボードに熱い応援メッセージを書き込んで、国立ライブを最高に盛り上げましょう！"
+  },
+  {
+    id: "spot-real-gekiyakuchu-zeroblanc",
+    name: "ZERO BLANC",
+    group: "=LOVE",
+    category: "MVロケ地",
+    description: "MV『劇薬中毒』のロケ地。千葉県木更津市の木更津倉庫 岩根営業所内にあるスタジオ。\n【⚠️注意】私有地（倉庫営業所内）のため、関係者以外の立ち入りは厳禁です。公道からの外観見学やマナーを守っての見学をお願いします。",
+    latitude: 35.413958,
+    longitude: 139.931408,
+    event_date: "2026-04-01",
+    youtube_title: "🎥 関連映像: 『劇薬中毒』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Bco8bY9r_H4?si=jAFIsjJwkpuYBm1Q&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: "劇薬に侵されし者"
+  },
+  {
+    id: "spot-real-gekiyakuchu-fujisanmesse",
+    name: "ふじさんめっせ",
+    group: "=LOVE",
+    category: "MVロケ地",
+    description: "MV『劇薬中毒』のロケ地。静岡県富士市にある産業交流展示場。\n【ℹ️見学情報】開館日やイベント開催時以外は立ち入れない場合があります。公式サイトなどで予定をご確認の上、周囲の迷惑にならないよう見学してください。",
+    latitude: 35.145176,
+    longitude: 138.666586,
+    event_date: "2026-04-01",
+    youtube_title: "🎥 関連映像: 『劇薬中毒』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Bco8bY9r_H4?si=jAFIsjJwkpuYBm1Q&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: "ふじさんめっせの中毒者"
+  },
+  {
+    id: "spot-real-moratorium-stellato",
+    name: "Stellato",
+    group: "=LOVE",
+    category: "MVロケ地",
+    description: "MV『モラトリアム』のロケ地。東京都港区白金台の洋館レストラン「Stellato」（ステラート）。",
+    latitude: 35.639268,
+    longitude: 139.722874,
+    event_date: "2026-04-01",
+    youtube_title: "🎥 関連映像: 『モラトリアム』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ZROuG57QGls?si=JTRlWHstshh8ci-G&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    tags: ["モラトリアム巡礼"],
+    reward_title: "Stellatoの迷い人"
+  },
+  {
+    id: "spot-real-moratorium-parkmall",
+    name: "パークモール",
+    group: "=LOVE",
+    category: "MVロケ地",
+    description: "MV『モラトリアム』のロケ地。千葉県千葉市美浜区中瀬の幕張メッセ周辺 of 遊歩道エリア。",
+    latitude: 35.65271341262413,
+    longitude: 140.04078621311717,
+    event_date: "2026-04-01",
+    youtube_title: "🎥 関連映像: 『モラトリアム』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ZROuG57QGls?si=JTRlWHstshh8ci-G&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    tags: ["モラトリアム巡礼"],
+    reward_title: "パークモールの散策者"
+  },
+  {
+    id: "spot-real-moratorium-nakahamabashi",
+    name: "中浜橋",
+    group: "=LOVE",
+    category: "MVロケ地",
+    description: "MV『モラトリアム』のロケ地。千葉県千葉市美浜区にある、メンバーの葛藤と決意のシーンが描かれた橋。",
+    latitude: 35.65339571489194,
+    longitude: 140.0362854166159,
+    event_date: "2026-04-01",
+    youtube_title: "🎥 関連映像: 『モラトリアム』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ZROuG57QGls?si=JTRlWHstshh8ci-G&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    tags: ["モラトリアム巡礼"],
+    reward_title: "中浜橋の佇む人"
+  },
+  {
+    id: "spot-real-moratorium-businesscross",
+    name: "ビジネス通り交差点",
+    group: "=LOVE",
+    category: "MVロケ地",
+    description: "MV『モラトリアム』のロケ地。千葉県千葉市美浜区中瀬のビジネス通り沿いにある交差点。",
+    latitude: 35.652341156914574,
+    longitude: 140.03819912951226,
+    event_date: "2026-04-01",
+    youtube_title: "🎥 関連映像: 『モラトリアム』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ZROuG57QGls?si=JTRlWHstshh8ci-G&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    tags: ["モラトリアム巡礼"],
+    reward_title: "ビジネス通りの信号待ち"
+  },
+  {
+    id: "spot-real-moratorium-businessstreet",
+    name: "ビジネス通り",
+    group: "=LOVE",
+    category: "MVロケ地",
+    description: "MV『モラトリアム』のロケ地。幕張メッセに近いビジネス通り。疾走感あふれるシーンが印象的。",
+    latitude: 35.6538334506979,
+    longitude: 140.03955227794762,
+    event_date: "2026-04-01",
+    youtube_title: "🎥 関連映像: 『モラトリアム』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ZROuG57QGls?si=JTRlWHstshh8ci-G&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    tags: ["モラトリアム巡礼"],
+    reward_title: "モラトリアムロードの走者"
+  },
+  {
+    id: "spot-real-moratorium-messemall",
+    name: "メッセモール 友好広場",
+    group: "=LOVE",
+    category: "MVロケ地",
+    description: "MV『モラトリアム』のロケ地。幕張新都心メッセモール内にある広場。",
+    latitude: 35.65070621006259,
+    longitude: 140.03926557769051,
+    event_date: "2026-04-01",
+    youtube_title: "🎥 関連映像: 『モラトリアム』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ZROuG57QGls?si=JTRlWHstshh8ci-G&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    tags: ["モラトリアム巡礼"],
+    reward_title: "友好広場の旅人"
+  },
+  {
+    id: "spot-real-moratorium-businessdeck",
+    name: "ビジネス通り交差点デッキ",
+    group: "=LOVE",
+    category: "MVロケ地",
+    description: "MV『モラトリアム』のロケ地。交差点の上を通るペデストリアンデッキ。",
+    latitude: 35.65278568676466,
+    longitude: 140.03769401508944,
+    event_date: "2026-04-01",
+    youtube_title: "🎥 関連映像: 『モラトリアム』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ZROuG57QGls?si=JTRlWHstshh8ci-G&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    tags: ["モラトリアム巡礼"],
+    reward_title: "デッキから見下ろす瞳"
+  },
+  {
+    id: "spot-real-ohimesama-artgrace",
+    name: "大宮アートグレイスウエディングシャトー シャトー・シャンパーニュ",
+    group: "=LOVE",
+    category: "MVロケ地",
+    description: "MV『お姫様の作り方』のロケ地。さいたま市北区にある結婚式場「大宮アートグレイスウエディングシャトー」内の「シャトー・シャンパーニュ」。\n【⚠️注意】現役の結婚式場（私有地）です。利用者以外の無断立ち入りは固く禁止されています。公道からの外観見学やマナーを守っての見学をお願いします。",
+    latitude: 35.931481,
+    longitude: 139.622923,
+    event_date: "2026-04-01",
+    youtube_title: "🎥 関連映像: 『お姫様の作り方』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/2udLA8-QuD8?si=bgt8o53VBaUEoa-X&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: "シャトーのプリンセス"
+  },
+  {
+    id: "spot-real-lovesong-toei5",
+    name: "東映 東京撮影所 No.5ステージ",
+    group: "=LOVE",
+    category: "MVロケ地",
+    description: "MV『ラブソングに襲われる』のロケ地。練馬区東大泉にある東映東京撮影所内のNo.5ステージ。\n【⚠️注意】スタジオ施設につき、一般の方の敷地内への立ち入りは固く禁止されています。",
+    latitude: 35.754028,
+    longitude: 139.594806,
+    event_date: "2025-10-08",
+    youtube_title: "🎥 関連映像: 『ラブソングに襲われる』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/_cf4UTe1qrY?si=2ijU0mTOnqqDWSf0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: "No.5ステージの熱狂者"
+  },
+  {
+    id: "spot-real-lovesong-mayflower",
+    name: "メイフラワーゴルフクラブ チャペル",
+    group: "=LOVE",
+    category: "MVロケ地",
+    description: "MV『ラブソングに襲われる』のロケ地。栃木県矢板市にある、英国調で美しいゴルフ場のチャペル。\n【⚠️注意】ゴルフ場およびプライベート施設につき、利用者以外の勝手な見学や立ち入りはご遠慮ください。",
+    latitude: 36.882088,
+    longitude: 139.907432,
+    event_date: "2025-10-08",
+    youtube_title: "🎥 関連映像: 『ラブソングに襲われる』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/_cf4UTe1qrY?si=2ijU0mTOnqqDWSf0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: "メイフラワーチャペルの巡礼者"
+  },
+  {
+    id: "spot-real-naisho-veritas",
+    name: "光英VERITAS中学校・高等学校",
+    group: "=LOVE",
+    category: "MVロケ地",
+    description: "MV『内緒バナシ』のロケ地。松戸市にある光英VERITAS中学校・高等学校。\n【⚠️注意】現役の学校施設です。関係者以外の無断立ち入りや、生徒が映り込む形での撮影は絶対に禁止です。",
+    latitude: 35.761639,
+    longitude: 139.924389,
+    event_date: "2025-08-22",
+    youtube_title: "🎥 関連映像: 『内緒バナシ』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/1Cy9oaBAxns?si=7GUpZxTU7GLrRZoV\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: "VERITASの語り部"
+  },
+  {
+    id: "spot-real-naisho-sengen",
+    name: "多摩川浅間神社",
+    group: "=LOVE",
+    category: "MVロケ地",
+    description: "MV『内緒バナシ』のロケ地。大田区田園調布にある神社。展望スペースから多摩川と電車、天気が良ければ富士山が望めます。\n【ℹ️見学情報】参拝者用の施設につき、マナーを守ってご参拝ください。",
+    latitude: 35.58736,
+    longitude: 139.66864,
+    event_date: "2025-08-22",
+    youtube_title: "🎥 関連映像: 『内緒バナシ』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/1Cy9oaBAxns?si=7GUpZxTU7GLrRZoV\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: "浅間神社の秘密の共有者"
+  },
+  {
+    id: "spot-real-komorebi-veranda",
+    name: "BAYSIDE GEIHINKAN VERANDA minatomirai",
+    group: "=LOVE",
+    category: "MVロケ地",
+    description: "MV『木漏れ日メゾフォルテ』のロケ地。横浜みなとみらいの「MARINE ＆ WALK YOKOHAMA」内にあるウエディングゲストハウス。\n【⚠️注意】現役の式場（私有地）です。関係者以外の無断立ち入りは禁止されています。公道や周辺施設から外観を見学するに留めてください。",
+    latitude: 35.454408,
+    longitude: 139.642221,
+    event_date: "2025-10-08",
+    youtube_title: "🎥 関連映像: 『木漏れ日メゾフォルテ』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/4xBmuiQNGdc?si=sigDn_3CfXaAss5J&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: "木漏れ日のテラスの住人"
   }
 ];
 
@@ -1892,10 +2097,10 @@ export const db = {
       } catch (e) {}
     }
 
-    // ローカル側でも一意制約の検証を行う
-    const hasAlreadyPosted = messages.some(m => m.device_id === deviceId);
+    // ローカル側でも一意制約の検証を行う (同一device_id + 同一color の重複を阻止)
+    const hasAlreadyPosted = messages.some(m => m.device_id === deviceId && m.color === color);
     if (hasAlreadyPosted) {
-      throw new Error('This device has already posted a message.');
+      throw new Error('このメンバーへは既にメッセージを投稿済みです。');
     }
 
     messages.unshift(newMessage);

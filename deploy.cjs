@@ -18,7 +18,7 @@ try {
   execSync('git add -u', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: 「排他的ファイター」「きゅんかわ人生」巡礼ミッション始動！新規スポット8箇所追加と限定称号2種類の実装';
+  const commitMsg = 'feat: 「大好きでずるい人」（モラトリアム）巡礼ミッション始動！新規ロケ地15箇所追加と限定称号の実装';
   execSync(`git commit -m "${commitMsg}"`, { stdio: 'inherit' });
   console.log('✅ Commit complete!');
 
