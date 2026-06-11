@@ -18,7 +18,7 @@ try {
   execSync('git add -u', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: 寄せ書きギャラリーの公開前非表示化および管理者限定アクセスの制限';
+  const commitMsg = 'fix: 管理者メッセージダッシュボードがスクロールできないバグの修正';
   execSync(`git commit -m "${commitMsg}"`, { stdio: 'inherit' });
   console.log('✅ Commit complete!');
 

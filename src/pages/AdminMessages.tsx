@@ -128,7 +128,8 @@ export default function AdminMessages() {
   if (!isAuthenticated) {
     return (
       <div style={{
-        minHeight: '100vh',
+        height: '100vh',
+        overflowY: 'auto',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -281,7 +282,8 @@ export default function AdminMessages() {
   // 2. 認証済みの管理画面
   return (
     <div style={{
-      minHeight: '100vh',
+      height: '100vh',
+      overflowY: 'auto',
       background: '#f8fafc',
       fontFamily: 'system-ui, -apple-system, sans-serif',
       color: '#1e293b'
