@@ -18,7 +18,7 @@ try {
   execSync('git add -u', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: 「大好きでずるい人」（モラトリアム）巡礼ミッション始動！新規ロケ地15箇所追加と限定称号の実装';
+  const commitMsg = 'feat: 寄せ書きギャラリーの公開前非表示化および管理者限定アクセスの制限';
   execSync(`git commit -m "${commitMsg}"`, { stdio: 'inherit' });
   console.log('✅ Commit complete!');
 

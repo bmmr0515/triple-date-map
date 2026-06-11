@@ -329,6 +329,30 @@ export default function AdminMessages() {
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <button
+              onClick={() => {
+                window.history.pushState({}, '', '/messages/gallery');
+                window.dispatchEvent(new Event('pushstate'));
+              }}
+              className="pop-button"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                background: 'linear-gradient(135deg, #a855f7 0%, #3b82f6 100%)',
+                border: 'none',
+                borderRadius: '12px',
+                padding: '8px 16px',
+                fontSize: '13px',
+                fontWeight: '800',
+                color: '#ffffff',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
+            >
+              🎨 ギャラリーを確認
+            </button>
+
+            <button
               onClick={handleBackToMap}
               className="pop-button"
               style={{

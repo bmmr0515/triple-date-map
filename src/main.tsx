@@ -39,7 +39,11 @@ function Router() {
     return <AdminMessages />;
   }
   if (path === '/messages/gallery') {
-    return <MessageGallery />;
+    const isAuth = sessionStorage.getItem('tdm_admin_authenticated') === 'true';
+    if (isAuth) {
+      return <MessageGallery />;
+    }
+    return <App />;
   }
   return <App />;
 }

@@ -744,7 +744,11 @@ export default function App() {
         
         // 🌟 ステート・キャッシュの完全初期化: 巡礼記録を即座に空にする
         setCheckins([]);
+        const adminAuth = sessionStorage.getItem('tdm_admin_authenticated');
         sessionStorage.clear();
+        if (adminAuth) {
+          sessionStorage.setItem('tdm_admin_authenticated', adminAuth);
+        }
       }
     });
 
@@ -7877,38 +7881,40 @@ ${window.location.origin + window.location.pathname}
                       </div>
                     )}
 
-                    {/* 3. みんなの寄せ書き公開機能は廃止（管理者ダッシュボードで管理）*/}
-                    <div style={{ marginTop: '20px', padding: '16px', background: '#f8fafc', borderRadius: '18px', border: '1.5px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '8px', textAlign: 'center' }}>
-                      <span style={{ fontSize: '11px', fontWeight: '900', color: '#64748b' }}>
-                        ✨ 集まったみんなのメッセージを見る ✨
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          window.history.pushState({}, '', '/messages/gallery');
-                          window.dispatchEvent(new Event('pushstate'));
-                        }}
-                        style={{
-                          background: 'linear-gradient(135deg, #a855f7 0%, #3b82f6 100%)',
-                          color: '#ffffff',
-                          border: 'none',
-                          borderRadius: '12px',
-                          padding: '10px 16px',
-                          fontSize: '12.5px',
-                          fontWeight: '900',
-                          cursor: 'pointer',
-                          boxShadow: '0 6px 15px rgba(59,130,246,0.15)',
-                          transition: 'all 0.2s',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          gap: '6px'
-                        }}
-                        className="pop-button"
-                      >
-                        🎨 寄せ書きギャラリーを開く
-                      </button>
-                    </div>
+                    {/* 3. みんなの寄せ書き公開機能は廃止（管理者ダッシュボードで管理。公開前は管理者ログイン時のみ表示）*/}
+                    {sessionStorage.getItem('tdm_admin_authenticated') === 'true' && (
+                      <div style={{ marginTop: '20px', padding: '16px', background: '#f8fafc', borderRadius: '18px', border: '1.5px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '8px', textAlign: 'center' }}>
+                        <span style={{ fontSize: '11px', fontWeight: '900', color: '#64748b' }}>
+                          ✨ 集まったみんなのメッセージを見る ✨
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            window.history.pushState({}, '', '/messages/gallery');
+                            window.dispatchEvent(new Event('pushstate'));
+                          }}
+                          style={{
+                            background: 'linear-gradient(135deg, #a855f7 0%, #3b82f6 100%)',
+                            color: '#ffffff',
+                            border: 'none',
+                            borderRadius: '12px',
+                            padding: '10px 16px',
+                            fontSize: '12.5px',
+                            fontWeight: '900',
+                            cursor: 'pointer',
+                            boxShadow: '0 6px 15px rgba(59,130,246,0.15)',
+                            transition: 'all 0.2s',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '6px'
+                          }}
+                          className="pop-button"
+                        >
+                          🎨 寄せ書きギャラリーを開く
+                        </button>
+                      </div>
+                    )}
                   </>
                 );
               })()}
