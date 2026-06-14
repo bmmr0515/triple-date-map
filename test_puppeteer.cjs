@@ -85,21 +85,32 @@ const puppeteer = require('puppeteer');
   await new Promise(r => setTimeout(r, 1000));
 
   // ==========================================
-  // Test 2: Accessing /messages/gallery directly as guest should fall back to App
+  // Test 2: Accessing gallery paths directly should fall back to App (Even for Admin)
   // ==========================================
-  console.log("Accessing message gallery directly as guest...");
+  console.log("Accessing /messages/gallery directly (should fall back)...");
   await page.goto('http://localhost:5173/messages/gallery', { waitUntil: 'networkidle2' });
   await new Promise(r => setTimeout(r, 1000));
 
-  const guestAccessRestricted = await page.evaluate(() => {
+  const accessRestricted1 = await page.evaluate(() => {
     const hasGalleryTitle = document.body.textContent.includes('寄せ書きメッセージギャラリー');
     const hasMap = !!document.querySelector('.leaflet-container');
     return !hasGalleryTitle && hasMap;
   });
-  console.log("Guest Access to Gallery Blocked (should be true):", guestAccessRestricted);
+  console.log("Access to /messages/gallery Blocked (should be true):", accessRestricted1);
+
+  console.log("Accessing /admin/gallery directly (should fall back)...");
+  await page.goto('http://localhost:5173/admin/gallery', { waitUntil: 'networkidle2' });
+  await new Promise(r => setTimeout(r, 1000));
+
+  const accessRestricted2 = await page.evaluate(() => {
+    const hasGalleryTitle = document.body.textContent.includes('寄せ書きメッセージギャラリー');
+    const hasMap = !!document.querySelector('.leaflet-container');
+    return !hasGalleryTitle && hasMap;
+  });
+  console.log("Access to /admin/gallery Blocked (should be true):", accessRestricted2);
 
   // ==========================================
-  // Test 3: Log in as admin and verify the admin gallery access
+  // Test 3: Log in as admin and verify the dashboard contents
   // ==========================================
   console.log("Navigating to admin page...");
   await page.goto('http://localhost:5173/admin/messages', { waitUntil: 'networkidle2' });
@@ -119,40 +130,28 @@ const puppeteer = require('puppeteer');
     const hasAdminTitle = document.body.textContent.includes('寄せ書き管理ダッシュボード');
     const buttons = Array.from(document.querySelectorAll('button'));
     const hasGalleryBtn = buttons.some(b => b.textContent.includes('ギャラリーを確認'));
-    return hasAdminTitle && hasGalleryBtn;
+    return hasAdminTitle && !hasGalleryBtn; // Gallery button should NOT exist
   });
-  console.log("Admin Dashboard Logged In & Gallery Button Exists:", adminPageVerified);
+  console.log("Admin Dashboard Logged In & Gallery Button does NOT Exist (should be true):", adminPageVerified);
 
   // ==========================================
-  // Test 4: Admin clicks gallery button and successfully views gallery
+  // Test 4: Verify Admin cannot view Message Gallery via direct URL even when authenticated
   // ==========================================
-  console.log("Clicking 'ギャラリーを確認' button...");
-  await page.evaluate(() => {
-    const buttons = Array.from(document.querySelectorAll('button'));
-    const galleryBtn = buttons.find(b => b.textContent.includes('ギャラリーを確認'));
-    if (galleryBtn) galleryBtn.click();
-  });
-  await new Promise(r => setTimeout(r, 1500));
+  console.log("Attempting to access message gallery directly as authenticated admin...");
+  await page.goto('http://localhost:5173/admin/gallery', { waitUntil: 'networkidle2' });
+  await new Promise(r => setTimeout(r, 1000));
 
-  const adminCanViewGallery = await page.evaluate(() => {
+  const adminBlockedFromGallery = await page.evaluate(() => {
     const hasGalleryTitle = document.body.textContent.includes('寄せ書きメッセージギャラリー');
-    const hasFilters = document.body.textContent.includes('メンバーカラーで絞り込む');
-    return hasGalleryTitle && hasFilters;
+    const hasMap = !!document.querySelector('.leaflet-container');
+    return !hasGalleryTitle && hasMap; // Should fall back to map
   });
-  console.log("Admin can successfully view Message Gallery:", adminCanViewGallery);
+  console.log("Authenticated Admin Access to Gallery Blocked (should be true):", adminBlockedFromGallery);
 
   // ==========================================
-  // Test 5: Admin goes back to map, gallery button should now be visible on map inside stadium board modal
+  // Test 5: Verify Gallery Button is not visible on map inside stadium board modal for Admin
   // ==========================================
-  console.log("Clicking '地図に戻る' button...");
-  await page.evaluate(() => {
-    const buttons = Array.from(document.querySelectorAll('button'));
-    const backBtn = buttons.find(b => b.textContent.includes('地図に戻る'));
-    if (backBtn) backBtn.click();
-  });
-  
-  // Wait longer for map page load and dismiss any modals that pop up on mount
-  await new Promise(r => setTimeout(r, 2500));
+  // We are already redirected to map page
   await dismissModals();
   await new Promise(r => setTimeout(r, 1000));
 
@@ -196,7 +195,7 @@ const puppeteer = require('puppeteer');
   await new Promise(r => setTimeout(r, 1500));
 
   // Open stadium board modal
-  console.log("Opening stadium board modal as admin...");
+  console.log("Opening stadium board modal...");
   const clickedBoardAdmin = await page.evaluate(() => {
     const buttons = Array.from(document.querySelectorAll('button'));
     const boardBtn = buttons.find(b => b.textContent.includes('寄せ書きメッセージを書く / 見る'));
@@ -222,7 +221,7 @@ const puppeteer = require('puppeteer');
   });
   console.log("SessionStorage 'tdm_admin_authenticated' status:", adminGalleryBtnOnMap.isAuth);
   console.log("Visible buttons:", adminGalleryBtnOnMap.buttonsText);
-  console.log("Authenticated Admin Map shows Gallery Button (should be true):", adminGalleryBtnOnMap.hasBtn);
+  console.log("Admin Map does NOT show Gallery Button (should be false):", !adminGalleryBtnOnMap.hasBtn);
 
   await browser.close();
 })();
