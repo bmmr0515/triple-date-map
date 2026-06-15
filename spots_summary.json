@@ -572,5 +572,19 @@
     "category": "MVロケ地",
     "songOrEvent": "『木漏れ日メゾフォルテ』",
     "reward_title": "木漏れ日のテラスの住人"
+  },
+  {
+    "name": "Kamogawa SEASIDE BASE",
+    "group": "≠ME",
+    "category": "飲食店・その他",
+    "songOrEvent": "【ノイミー年長組の夏休み】BBQで大はしゃぎ！今年もツッコミどころ満載です！！！",
+    "reward_title": "鴨川のBBQ仲間"
+  },
+  {
+    "name": "鴨川シーワールド",
+    "group": "≠ME",
+    "category": "飲食店・その他",
+    "songOrEvent": "【ゆる旅】ノイミー年長組で鴨川シーワールドを大満満喫してきました🐬大迫力のシャチパフォーマンスに大興奮！",
+    "reward_title": "シャチにずぶ濡らされた者"
   }
 ]

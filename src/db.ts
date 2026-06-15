@@ -1901,6 +1901,32 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『木漏れ日メゾフォルテ』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/4xBmuiQNGdc?si=sigDn_3CfXaAss5J&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "木漏れ日のテラスの住人"
+  },
+  {
+    id: "spot-real-kamogawa-seaside-base",
+    name: "Kamogawa SEASIDE BASE",
+    group: "≠ME",
+    category: "飲食店・その他",
+    description: "ノイミーお姉さんチーム（年長組）のYouTube企画でメンバーが訪れ、海を眺めながらBBQ（バーベキュー）を楽しんだ場所。千葉県鴨川市の海沿いにあるオシャレな複合施設です。",
+    latitude: 35.098187,
+    longitude: 140.104624,
+    event_date: "2024-08-28",
+    youtube_title: "🎥 関連映像: 【ノイミー年長組の夏休み】BBQで大はしゃぎ！今年もツッコミどころ満載です！！！",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/nZ2K-hyErl4?si=i3_6csBVt_slo3R-\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: "鴨川のBBQ仲間"
+  },
+  {
+    id: "spot-real-kamogawa-seaworld",
+    name: "鴨川シーワールド",
+    group: "≠ME",
+    category: "飲食店・その他",
+    description: "ノイミーお姉さんチーム（年長組）のYouTube企画でメンバーが訪れた水族館。大迫力のシャチパフォーマンスに大興奮したり、海の生き物たちと触れ合って大満満喫した日本屈指の水族館です。",
+    latitude: 35.115954,
+    longitude: 140.120373,
+    event_date: "2024-08-21",
+    youtube_title: "🎥 関連映像: 【ゆる旅】ノイミー年長組で鴨川シーワールドを大満満喫してきました🐬大迫力のシャチパフォーマンスに大興奮！",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/8PSIWxRJCi4?si=wT0r0jlzxP4SYRjL\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: "シャチにずぶ濡らされた者"
   }
 ];
 

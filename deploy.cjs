@@ -18,7 +18,7 @@ try {
   execSync('git add -u', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'fix: 寄せ書きギャラリーページを一時的に完全に閉鎖（公開前非公開化）';
+  const commitMsg = 'feat: ノイミー（≠ME）YouTube企画聖地データ「Kamogawa SEASIDE BASE」および「鴨川シーワールド」の追加';
   execSync(`git commit -m "${commitMsg}"`, { stdio: 'inherit' });
   console.log('✅ Commit complete!');
 
