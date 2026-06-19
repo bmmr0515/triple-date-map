@@ -39,7 +39,7 @@ export const APP_NOTICES: Notice[] = [
     id: 'notice-20260604-stadium-board',
     date: '2026/06/04',
     title: '🏟️ 【特設】国立競技場のデジタル寄せ書きボードを公開しました！',
-    content: '【=LOVE 国立競技場スペシャルライブ応援企画】\n国立競技場ライブの開催を記念して、アプリ内に「デジタル寄せ書きボード」を特設しました！\n\nマップ上のゴールドに優しく光る「国立競技場ピン」をタップすると、寄せ書きモーダルが開きます。\nお一人様1回限定で、推しメンのメンバーカラーを選択して応援メッセージを届けることができます。\n\nライブに向けて、みんなの熱い想いで寄せ書きボードをカラフルに彩り、当日を一緒に盛り上げましょう！',
+    content: '【=LOVE 国立競技場スペシャルライブ応援企画】\n国立競技場ライブの開催を記念して、アプリ内に「デジタル寄せ書きボード」を特設しました！\n\nマップ上のゴールドに優しく光る「国立競技場ピン」をタップすると、メッセージボードギャラリーが開きます。\n詳細パネルからはメッセージの新規書き込みや、物販情報・混雑状況情報の確認も行えます！\n\nライブに向けて、みんなの熱い想いで寄せ書きボードをカラフルに彩り、当日を一緒に盛り上げましょう！',
     type: 'update'
   },
   {
@@ -1324,7 +1324,8 @@ export default function App() {
         .on('click', () => {
           setSelectedSpot(spot);
           if (spot.id === 'spot-special-national-stadium') {
-            setShowStadiumBoardModal(true);
+            window.history.pushState({}, '', '/gallery');
+            window.dispatchEvent(new Event('pushstate'));
           } else {
             setRightPanelTab('detail'); // ピンをタップしたら自動的に「詳細」タブを表示
           }
@@ -5488,32 +5489,88 @@ ${window.location.origin + window.location.pathname}
                       </p>
                     </div>
 
-                    {/* 国立競技場特設イベントボタン */}
+                    {/* 国立競技場特設イベントボタン群 */}
                     {selectedSpot.id === 'spot-special-national-stadium' && (
-                      <div className="animate-fade-in-up" style={{ marginTop: '4px' }}>
-                        <button
-                          onClick={() => setShowStadiumBoardModal(true)}
+                      <div className="animate-fade-in-up" style={{ marginTop: '4px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                          <button
+                            onClick={() => setShowStadiumBoardModal(true)}
+                            style={{
+                              flex: 1,
+                              background: 'linear-gradient(135deg, #ffd700 0%, #f59e0b 100%)',
+                              color: '#ffffff',
+                              border: 'none',
+                              borderRadius: '16px',
+                              padding: '12px 14px',
+                              fontSize: '12px',
+                              fontWeight: '900',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: '6px',
+                              boxShadow: '0 4px 12px rgba(245, 158, 11, 0.2)',
+                              transition: 'all 0.2s'
+                            }}
+                            className="pop-button"
+                          >
+                            ✍️ メッセージを書く
+                          </button>
+                          <button
+                            onClick={() => {
+                              window.history.pushState({}, '', '/gallery');
+                              window.dispatchEvent(new Event('pushstate'));
+                            }}
+                            style={{
+                              flex: 1,
+                              background: 'linear-gradient(135deg, #db2777 0%, #a855f7 100%)',
+                              color: '#ffffff',
+                              border: 'none',
+                              borderRadius: '16px',
+                              padding: '12px 14px',
+                              fontSize: '12px',
+                              fontWeight: '900',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: '6px',
+                              boxShadow: '0 4px 12px rgba(219, 39, 119, 0.2)',
+                              transition: 'all 0.2s'
+                            }}
+                            className="pop-button"
+                          >
+                            🌌 ボードを見る
+                          </button>
+                        </div>
+                        
+                        <a
+                          href="https://encount-support-app.vercel.app"
+                          target="_blank"
+                          rel="noopener noreferrer"
                           style={{
                             width: '100%',
-                            background: 'linear-gradient(135deg, #ffd700 0%, #f59e0b 50%, #db2777 100%)',
+                            background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
                             color: '#ffffff',
                             border: 'none',
                             borderRadius: '16px',
-                            padding: '14px',
-                            fontSize: '13px',
+                            padding: '12px 14px',
+                            fontSize: '12px',
                             fontWeight: '900',
                             cursor: 'pointer',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            gap: '8px',
-                            boxShadow: '0 8px 20px rgba(245, 158, 11, 0.25)',
-                            transition: 'all 0.2s'
+                            gap: '6px',
+                            boxShadow: '0 4px 12px rgba(59, 130, 246, 0.2)',
+                            transition: 'all 0.2s',
+                            textDecoration: 'none',
+                            textAlign: 'center'
                           }}
                           className="pop-button"
                         >
-                          🏟️ 寄せ書きメッセージを書く / 見る
-                        </button>
+                          📢 物販情報、混雑状況を見る
+                        </a>
                       </div>
                     )}
 
@@ -7732,32 +7789,88 @@ ${window.location.origin + window.location.pathname}
                 </p>
               </div>
 
-              {/* 国立競技場特設イベントボタン (モバイル) */}
+              {/* 国立競技場特設イベントボタン群 (モバイル) */}
               {selectedSpot.id === 'spot-special-national-stadium' && (
-                <div className="animate-fade-in-up" style={{ marginTop: '12px' }}>
-                  <button
-                    onClick={() => setShowStadiumBoardModal(true)}
+                <div className="animate-fade-in-up" style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <button
+                      onClick={() => setShowStadiumBoardModal(true)}
+                      style={{
+                        flex: 1,
+                        background: 'linear-gradient(135deg, #ffd700 0%, #f59e0b 100%)',
+                        color: '#ffffff',
+                        border: 'none',
+                        borderRadius: '16px',
+                        padding: '12px 14px',
+                        fontSize: '12px',
+                        fontWeight: '900',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '6px',
+                        boxShadow: '0 4px 12px rgba(245, 158, 11, 0.2)',
+                        transition: 'all 0.2s'
+                      }}
+                      className="pop-button"
+                    >
+                      ✍️ メッセージを書く
+                    </button>
+                    <button
+                      onClick={() => {
+                        window.history.pushState({}, '', '/gallery');
+                        window.dispatchEvent(new Event('pushstate'));
+                      }}
+                      style={{
+                        flex: 1,
+                        background: 'linear-gradient(135deg, #db2777 0%, #a855f7 100%)',
+                        color: '#ffffff',
+                        border: 'none',
+                        borderRadius: '16px',
+                        padding: '12px 14px',
+                        fontSize: '12px',
+                        fontWeight: '900',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '6px',
+                        boxShadow: '0 4px 12px rgba(219, 39, 119, 0.2)',
+                        transition: 'all 0.2s'
+                      }}
+                      className="pop-button"
+                    >
+                      🌌 ギャラリーを見る
+                    </button>
+                  </div>
+                  
+                  <a
+                    href="https://encount-support-app.vercel.app"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     style={{
                       width: '100%',
-                      background: 'linear-gradient(135deg, #ffd700 0%, #f59e0b 50%, #db2777 100%)',
+                      background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
                       color: '#ffffff',
                       border: 'none',
                       borderRadius: '16px',
-                      padding: '14px',
-                      fontSize: '13px',
+                      padding: '12px 14px',
+                      fontSize: '12px',
                       fontWeight: '900',
                       cursor: 'pointer',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      gap: '8px',
-                      boxShadow: '0 8px 20px rgba(245, 158, 11, 0.25)',
-                      transition: 'all 0.2s'
+                      gap: '6px',
+                      boxShadow: '0 4px 12px rgba(59, 130, 246, 0.2)',
+                      transition: 'all 0.2s',
+                      textDecoration: 'none',
+                      textAlign: 'center'
                     }}
                     className="pop-button"
                   >
-                    🏟️ 寄せ書きメッセージを書く / 見る
-                  </button>
+                    📢 物販情報、混雑状況を見る
+                  </a>
                 </div>
               )}
 
@@ -8489,7 +8602,7 @@ ${window.location.origin + window.location.pathname}
                 メッセージの投稿は<strong style={{ color: '#db2777' }}>1人1回限定</strong>。メンバーそれぞれのメンバーカラーを選択して、あなたの想いを乗せたメッセージをカラフルに残すことができます！
               </p>
               <p style={{ fontSize: '12.5px', color: '#334155', lineHeight: '1.6', margin: 0, textAlign: 'center', fontWeight: '900' }}>
-                マップ上の「国立競技場ピン」からメッセージを書き込み、ライブをみんなで一緒に盛り上げましょう！
+                マップ上の「国立競技場ピン」をタップしてメッセージボードを確認しましょう！
               </p>
             </div>
 
