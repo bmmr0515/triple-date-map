@@ -70,6 +70,7 @@ export interface Spot {
   tags?: string[];
   reward_title?: string;
   memorial_date?: string;
+  commentary?: string;
 }
 
 export interface User {

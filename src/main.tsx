@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import AdminMessages from './pages/AdminMessages.tsx'
+import MessageGallery from './pages/MessageGallery.tsx'
 import './index.css'
 import { Analytics } from '@vercel/analytics/react';
 
@@ -36,6 +37,9 @@ function Router() {
 
   if (path === '/admin/messages') {
     return <AdminMessages />;
+  }
+  if (path === '/gallery') {
+    return <MessageGallery />;
   }
   return <App />;
 }
