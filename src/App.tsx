@@ -254,6 +254,7 @@ export default function App() {
   const [postCooldown, setPostCooldown] = useState<number>(0);
   const [deviceId, setDeviceId] = useState<string>('');
   const [showStadiumWelcomeModal, setShowStadiumWelcomeModal] = useState<boolean>(false);
+  const [showStadiumPinPopup, setShowStadiumPinPopup] = useState<boolean>(false);
   // stadiumCountdown, autoScrollActive, isEndrollHovered は廃止（エンドロールページ廃止のため）
 
   // カウントダウンは廃止（エンドロールページ廃止のため）;
@@ -1121,6 +1122,7 @@ export default function App() {
     if (stadiumSpot && mapRef.current) {
       setSelectedSpot(stadiumSpot);
       setRightPanelTab('detail');
+      setShowStadiumPinPopup(true);
       mapRef.current.setView([stadiumSpot.latitude, stadiumSpot.longitude], 16, { animate: true });
     }
   };
@@ -1323,11 +1325,9 @@ export default function App() {
       const marker = L.marker([spot.latitude, spot.longitude], { icon })
         .on('click', () => {
           setSelectedSpot(spot);
+          setRightPanelTab('detail'); // ピンをタップしたら自動的に「詳細」タブを表示
           if (spot.id === 'spot-special-national-stadium') {
-            window.history.pushState({}, '', '/gallery');
-            window.dispatchEvent(new Event('pushstate'));
-          } else {
-            setRightPanelTab('detail'); // ピンをタップしたら自動的に「詳細」タブを表示
+            setShowStadiumPinPopup(true);
           }
           
           // 既にズームイン（16以上）している状態でピンを押しても、ズームレベルを下げず（動かさず）に滑らかに中央移動のみ行います
@@ -8561,6 +8561,147 @@ ${window.location.origin + window.location.pathname}
           </div>
         </div>
       )}
+      {/* 🏟️ 国立競技場ピンタップ時誘導ポップアップ */}
+      {showStadiumPinPopup && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+          backgroundColor: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(8px)', zIndex: 3500,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px'
+        }} className="animate-fade-in-up">
+          <div style={{
+            background: '#ffffff',
+            borderRadius: '28px',
+            width: '100%',
+            maxWidth: '480px',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.3)',
+            overflow: 'hidden',
+            border: '3px solid #ffffff'
+          }}>
+            {/* 上部ゴールドグラデーションヘッダー */}
+            <div style={{
+              background: 'linear-gradient(135deg, #ffd700 0%, #f59e0b 50%, #db2777 100%)',
+              padding: '24px',
+              textAlign: 'center',
+              color: '#ffffff',
+              position: 'relative'
+            }}>
+              <button 
+                onClick={() => setShowStadiumPinPopup(false)} 
+                style={{
+                  position: 'absolute', top: '16px', right: '16px',
+                  border: 'none', background: 'rgba(255,255,255,0.2)', color: '#ffffff',
+                  borderRadius: '50%', width: '32px', height: '32px',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+                className="pop-button"
+              >
+                <X size={16} />
+              </button>
+              <span style={{ fontSize: '28px', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.15))' }}>🏟️</span>
+              <h2 style={{ fontSize: '18px', fontWeight: '950', marginTop: '10px', marginBottom: '4px', letterSpacing: '0.02em', textShadow: '0 2px 4px rgba(0,0,0,0.15)' }}>
+                国立競技場ライブ特設
+              </h2>
+              <p style={{ fontSize: '11px', fontWeight: '800', opacity: 0.95, margin: 0, letterSpacing: '0.05em' }}>
+                デジタル寄せ書き＆ギャラリー
+              </p>
+            </div>
+
+            {/* モーダル本文 */}
+            <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <p style={{ fontSize: '13px', color: '#475569', lineHeight: '1.7', fontWeight: '800', margin: 0, textAlign: 'center' }}>
+                🎊 =LOVE 初の国立競技場ライブ開催記念特設エリアです！みんなでメッセージを書き込んで、ライブを最高に盛り上げましょう！ 🎊
+              </p>
+              <p style={{ fontSize: '12px', color: '#64748b', lineHeight: '1.6', margin: 0, background: '#f8fafc', padding: '14px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                メッセージの投稿は1人1回限定。他のファンのメッセージが飾られたギャラリーボードを見ることもできます。
+              </p>
+            </div>
+
+            {/* アクションボタン */}
+            <div style={{
+              padding: '0 24px 24px 24px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px'
+            }}>
+              <button
+                onClick={() => {
+                  setShowStadiumPinPopup(false);
+                  window.history.pushState({}, '', '/gallery');
+                  window.dispatchEvent(new Event('pushstate'));
+                }}
+                style={{
+                  background: 'linear-gradient(135deg, #db2777 0%, #a855f7 100%)',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '14px',
+                  padding: '12px',
+                  fontSize: '12.5px',
+                  fontWeight: '900',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 12px rgba(219, 39, 119, 0.2)',
+                  transition: 'all 0.2s',
+                  textAlign: 'center',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px'
+                }}
+                className="pop-button"
+              >
+                🌌 寄せ書きギャラリーを見る
+              </button>
+
+              <button
+                onClick={() => {
+                  setShowStadiumPinPopup(false);
+                  setShowStadiumBoardModal(true);
+                }}
+                style={{
+                  background: 'linear-gradient(135deg, #ffd700 0%, #f59e0b 100%)',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '14px',
+                  padding: '12px',
+                  fontSize: '12.5px',
+                  fontWeight: '900',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 12px rgba(245, 158, 11, 0.2)',
+                  transition: 'all 0.2s',
+                  textAlign: 'center',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px'
+                }}
+                className="pop-button"
+              >
+                ✍️ メッセージを書く
+              </button>
+              
+              <button
+                onClick={() => setShowStadiumPinPopup(false)}
+                style={{
+                  background: '#f1f5f9',
+                  color: '#475569',
+                  border: 'none',
+                  borderRadius: '14px',
+                  padding: '10px',
+                  fontSize: '12px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  textAlign: 'center',
+                  transition: 'all 0.2s'
+                }}
+                className="pop-button"
+              >
+                詳細を見る（閉じる）
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* 🎊 国立競技場ライブ特設告知モーダル */}
       {showStadiumWelcomeModal && (
         <div style={{

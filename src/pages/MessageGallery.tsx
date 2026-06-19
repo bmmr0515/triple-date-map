@@ -73,23 +73,47 @@ export default function MessageGallery() {
     };
     fetchMessages();
 
-    // bodyのスクロール禁止設定を一時的に解除
-    const originalOverflow = document.body.style.overflow;
-    const originalPosition = document.body.style.position;
-    const originalWidth = document.body.style.width;
-    const originalHeight = document.body.style.height;
+    // 🌟 html, body, #root のスクロール制限・固定を確実に完全解除する
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalBodyPosition = document.body.style.position;
+    const originalBodyWidth = document.body.style.width;
+    const originalBodyHeight = document.body.style.height;
 
-    document.body.style.overflow = 'auto';
-    document.body.style.position = 'static';
-    document.body.style.width = 'auto';
-    document.body.style.height = 'auto';
+    const rootEl = document.getElementById('root');
+    const originalRootOverflow = rootEl ? rootEl.style.overflow : '';
+    const originalRootHeight = rootEl ? rootEl.style.height : '';
+
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+    const originalHtmlHeight = document.documentElement.style.height;
+
+    // 解除スタイルをインラインで適用 (!important 相当を setProperty で付与)
+    document.body.style.setProperty('overflow', 'auto', 'important');
+    document.body.style.setProperty('position', 'static', 'important');
+    document.body.style.setProperty('width', 'auto', 'important');
+    document.body.style.setProperty('height', 'auto', 'important');
+
+    if (rootEl) {
+      rootEl.style.setProperty('overflow', 'auto', 'important');
+      rootEl.style.setProperty('height', 'auto', 'important');
+    }
+
+    document.documentElement.style.setProperty('overflow', 'auto', 'important');
+    document.documentElement.style.setProperty('height', 'auto', 'important');
 
     return () => {
-      // 元の設定に戻す
-      document.body.style.overflow = originalOverflow;
-      document.body.style.position = originalPosition;
-      document.body.style.width = originalWidth;
-      document.body.style.height = originalHeight;
+      // アンマウント時に元の状態に復元
+      document.body.style.overflow = originalBodyOverflow;
+      document.body.style.position = originalBodyPosition;
+      document.body.style.width = originalBodyWidth;
+      document.body.style.height = originalBodyHeight;
+
+      if (rootEl) {
+        rootEl.style.overflow = originalRootOverflow;
+        rootEl.style.height = originalRootHeight;
+      }
+
+      document.documentElement.style.overflow = originalHtmlOverflow;
+      document.documentElement.style.height = originalHtmlHeight;
     };
   }, []);
 
