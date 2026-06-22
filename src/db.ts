@@ -1689,17 +1689,18 @@ const INITIAL_SPOTS: Spot[] = [
   },
   {
     id: "spot-special-national-stadium",
-    name: "国立競技場",
+    name: "国立競技場（MUFGスタジアム）",
     group: "=LOVE",
     category: "ライブ会場",
     latitude: 35.6778,
     longitude: 139.7145,
     event_date: "2026-06-04",
-    youtube_title: "🏟️ =LOVE 国立競技場スペシャルライブ特設イベント会場",
+    youtube_title: "🎥 関連映像: 東京ドーム公演サプライズ発表",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/2pbH_jW8q7E?si=OiiV7OPhsNOzgPBr&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
     reward_title: "国立寄せ書きの証人",
     tags: ["国立競技場イベント"],
     memorial_date: "2026-06-04",
-    description: "=LOVE初の「国立競技場スペシャルライブ」開催を記念した特設イベント会場です！\nみんなでデジタル寄せ書きボードに熱い応援メッセージを書き込んで、国立ライブを最高に盛り上げましょう！"
+    description: '2026年6月20日・21日の2日間にわたり、＝LOVE史上最大規模となるスタジアムライブ『＝LOVE STADIUM LIVE「Beyond "KYUN"♡」』が開催された記念すべき聖地。\nメンバーとファンの夢が詰まった最高のステージが繰り広げられました。さらに、2日目のフィナーレでは次なる夢のステージである「東京ドーム」での公演がサプライズ発表され、会場全体が歓喜と感動の涙に包まれました。'
   },
   {
     id: "spot-real-gekiyakuchu-zeroblanc",

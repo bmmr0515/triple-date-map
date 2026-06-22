@@ -18,7 +18,7 @@ try {
   execSync('git add -u', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: ノイミー（≠ME）YouTube企画聖地データ「Kamogawa SEASIDE BASE」および「鴨川シーワールド」の追加';
+  const commitMsg = 'feat: 国立競技場（MUFGスタジアム）のスポット詳細情報と動画を更新';
   execSync(`git commit -m "${commitMsg}"`, { stdio: 'inherit' });
   console.log('✅ Commit complete!');
 
