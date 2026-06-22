@@ -2125,12 +2125,6 @@ export const db = {
       } catch (e) {}
     }
 
-    // ローカル側でも一意制約の検証を行う (同一device_id + 同一color の重複を阻止)
-    const hasAlreadyPosted = messages.some(m => m.device_id === deviceId && m.color === color);
-    if (hasAlreadyPosted) {
-      throw new Error('このメンバーへは既にメッセージを投稿済みです。');
-    }
-
     messages.unshift(newMessage);
     localStorage.setItem('tdm_stadium_messages', JSON.stringify(messages));
     return newMessage;

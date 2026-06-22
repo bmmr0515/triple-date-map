@@ -18,10 +18,9 @@ CREATE TABLE IF NOT EXISTS public.national_stadium_messages (
     ) -- スパムURL・ドメインの禁止
 );
 
--- 既存の単一device_idユニーク制約を削除し、メンバー色(color)との複合ユニーク制約へ切り替えます(1人につき各メンバー1回ずつ・最大10回)
+-- 既存の単一device_idユニーク制約、およびメンバー色(color)との複合ユニーク制約を削除し、無制限に投稿できるようにします
 ALTER TABLE public.national_stadium_messages DROP CONSTRAINT IF EXISTS unique_device_message;
 ALTER TABLE public.national_stadium_messages DROP CONSTRAINT IF EXISTS unique_device_member_color;
-ALTER TABLE public.national_stadium_messages ADD CONSTRAINT unique_device_member_color UNIQUE (device_id, color);
 
 -- RLS (Row Level Security) の有効化 (任意)
 ALTER TABLE public.national_stadium_messages ENABLE ROW LEVEL SECURITY;
