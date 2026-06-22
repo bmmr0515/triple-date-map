@@ -1034,7 +1034,7 @@ export default function App() {
       if (lastPostStr) {
         const lastPost = new Date(lastPostStr).getTime();
         const diff = Date.now() - lastPost;
-        const limit = 5 * 1000; // 5秒間の投稿制限 (スパム対策クールダウン)
+        const limit = 5 * 60 * 1000; // 5分間の投稿制限
         if (diff < limit) {
           const remainingSec = Math.ceil((limit - diff) / 1000);
           setPostCooldown(remainingSec);
@@ -1046,15 +1046,19 @@ export default function App() {
   // 🏟️ 自分がまだ投稿していない最初のカラーを自動選択する
   useEffect(() => {
     if (showStadiumBoardModal && stadiumMessages.length >= 0) {
+      const afterLiveThreshold = new Date('2026-06-22T00:00:00+09:00').getTime();
       const myPostedColors = stadiumMessages
-        .filter(m => m.device_id === deviceId)
+        .filter(m => m.device_id === deviceId && (
+          localStorage.getItem(`is_message_posted_after_live_${m.color}`) === 'true' ||
+          new Date(m.created_at).getTime() >= afterLiveThreshold
+        ))
         .map(m => m.color);
       
       const allColors = [
         '#e9d5ff', '#f97316', '#38bdf8', '#fbcfe8', '#ffffff', 
         '#ef4444', '#facc15', '#a855f7', '#84cc16', '#3b82f6'
       ];
-      const unpostedColor = allColors.find(c => !myPostedColors.includes(c)) || allColors[0];
+      const unpostedColor = allColors.find(c => !myPostedColors.includes(c));
       if (unpostedColor) {
         setPostColor(unpostedColor);
       }
@@ -1092,13 +1096,29 @@ export default function App() {
       return;
     }
 
+    // すでにこのカラーで投稿済みか再度判定 (1人各メンバーライブ後1回制限)
+    const afterLiveThreshold = new Date('2026-06-22T00:00:00+09:00').getTime();
+    const alreadyPosted = stadiumMessages.some(m => 
+      m.device_id === deviceId && 
+      m.color === postColor && 
+      new Date(m.created_at).getTime() >= afterLiveThreshold
+    );
+    const afterLiveKey = `is_message_posted_after_live_${postColor}`;
+    if (alreadyPosted || localStorage.getItem(afterLiveKey) === 'true') {
+      alert('このメンバーへは既にメッセージを投稿済みです。');
+      if (alreadyPosted) {
+        localStorage.setItem(afterLiveKey, 'true');
+      }
+      return;
+    }
+
     try {
       await db.addStadiumMessage(postName.trim(), postMessage.trim(), postColor, deviceId);
       setPostMessage('');
       
       // クールダウン設定
       localStorage.setItem('tdm_last_stadium_post', new Date().toISOString());
-      setPostCooldown(5); // 5秒クールダウン
+      setPostCooldown(5 * 60); // 5分クールダウン
 
       // メッセージの再読込
       loadStadiumMessages();
@@ -8302,28 +8322,59 @@ ${window.location.origin + window.location.pathname}
               
               {(() => {
                 const myMessages = stadiumMessages.filter(m => m.device_id === deviceId);
+                const afterLiveThreshold = new Date('2026-06-22T00:00:00+09:00').getTime();
+                const myPostedColors = myMessages
+                  .filter(m => 
+                    localStorage.getItem(`is_message_posted_after_live_${m.color}`) === 'true' ||
+                    new Date(m.created_at).getTime() >= afterLiveThreshold
+                  )
+                  .map(m => m.color);
+                const hasPostedAll = myPostedColors.length >= 10;
                 // otherMessages は廃止（公開表示機能なし）
 
                 return (
                   <>
-                    {/* 1. 投稿フォーム */}
-                    <form onSubmit={handlePostMessage} style={{
-                      background: '#f8fafc',
-                      border: '1.5px solid #e2e8f0',
-                      borderRadius: '20px',
-                      padding: '16px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '12px'
-                    }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <h3 style={{ fontSize: '12px', fontWeight: '900', color: '#1e293b', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
-                          ✍️ メッセージを投稿する
+                    {/* 1. 投稿フォーム または サンクスメッセージ */}
+                    {hasPostedAll ? (
+                      <div style={{
+                        background: 'linear-gradient(135deg, rgba(251, 191, 36, 0.08) 0%, rgba(219, 39, 119, 0.08) 100%)',
+                        border: '2.5px dashed #db2777',
+                        borderRadius: '20px',
+                        padding: '20px 16px',
+                        textAlign: 'center',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '6px',
+                        boxShadow: '0 4px 15px rgba(219,39,119,0.05)',
+                        animation: 'fadeInUp 0.4s ease'
+                      }}>
+                        <span style={{ fontSize: '28px', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }}>✨</span>
+                        <h3 style={{ fontSize: '14px', fontWeight: '900', color: '#db2777', margin: 0 }}>
+                          全メンバー分のメッセージ投稿が完了しました！
                         </h3>
-                        <span style={{ fontSize: '10px', fontWeight: '900', color: '#db2777', background: '#fdf2f8', padding: '2px 8px', borderRadius: '8px' }}>
-                          あなたの投稿数: {myMessages.length} 件
-                        </span>
+                        <p style={{ fontSize: '11px', color: '#64748b', margin: 0, lineHeight: '1.6', fontWeight: '800' }}>
+                          熱いメッセージをありがとうございます！ライブ当日を一緒に盛り上げましょう！
+                        </p>
                       </div>
+                    ) : (
+                      <form onSubmit={handlePostMessage} style={{
+                        background: '#f8fafc',
+                        border: '1.5px solid #e2e8f0',
+                        borderRadius: '20px',
+                        padding: '16px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '12px'
+                      }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <h3 style={{ fontSize: '12px', fontWeight: '900', color: '#1e293b', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            ✍️ メッセージを投稿する
+                          </h3>
+                          <span style={{ fontSize: '10px', fontWeight: '900', color: '#db2777', background: '#fdf2f8', padding: '2px 8px', borderRadius: '8px' }}>
+                            現在の投稿: {myPostedColors.length} / 10 名
+                          </span>
+                        </div>
                         
                         <div style={{ display: 'flex', gap: '10px' }}>
                           <div style={{ flex: 1 }}>
@@ -8380,7 +8431,7 @@ ${window.location.origin + window.location.pathname}
                         {/* 推しメンカラー選択パレット */}
                         <div>
                           <label style={{ fontSize: '9px', fontWeight: '900', color: '#64748b', display: 'block', marginBottom: '6px' }}>
-                            推しメンカラー
+                            推しメンカラー (すでに投稿済みのメンバーは選択できません)
                           </label>
                           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                             {[
@@ -8395,12 +8446,14 @@ ${window.location.origin + window.location.pathname}
                               { name: '諸橋 沙夏 (黄緑)', color: '#84cc16' },
                               { name: '山本 杏奈 (青)', color: '#3b82f6' }
                             ].map((item) => {
+                              const isPosted = myPostedColors.includes(item.color);
                               return (
                                 <button
                                   key={item.name}
                                   type="button"
+                                  disabled={isPosted}
                                   onClick={() => setPostColor(item.color)}
-                                  title={item.name}
+                                  title={isPosted ? `${item.name} (投稿済み)` : item.name}
                                   style={{
                                     width: '26px',
                                     height: '26px',
@@ -8408,8 +8461,8 @@ ${window.location.origin + window.location.pathname}
                                     backgroundColor: item.color,
                                     border: postColor === item.color ? '3px solid #0f172a' : '2.5px solid #ffffff',
                                     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                                    cursor: 'pointer',
-                                    opacity: 1,
+                                    cursor: isPosted ? 'not-allowed' : 'pointer',
+                                    opacity: isPosted ? 0.25 : 1,
                                     transform: postColor === item.color ? 'scale(1.15)' : 'none',
                                     transition: 'all 0.2s',
                                     position: 'relative',
@@ -8418,6 +8471,14 @@ ${window.location.origin + window.location.pathname}
                                     justifyContent: 'center'
                                   }}
                                 >
+                                  {isPosted && (
+                                    <span style={{
+                                      fontSize: '10px',
+                                      fontWeight: 'bold',
+                                      color: getContrastTextColor(item.color),
+                                      pointerEvents: 'none'
+                                    }}>✓</span>
+                                  )}
                                 </button>
                               );
                             })}
@@ -8446,6 +8507,7 @@ ${window.location.origin + window.location.pathname}
                           {postCooldown > 0 ? `連投制限中 (あと ${postCooldown} 秒)` : '📣 メッセージを送信'}
                         </button>
                       </form>
+                    )}
 
                     {/* 2. 自分のメッセージ (ハイライト表示) */}
                     {myMessages.length > 0 && (

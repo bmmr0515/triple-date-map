@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS public.national_stadium_messages (
     ) -- スパムURL・ドメインの禁止
 );
 
--- 既存の単一device_idユニーク制約、およびメンバー色(color)との複合ユニーク制約を削除し、無制限に投稿できるようにします
+-- 既存の単一device_idユニーク制約や複合ユニーク制約を削除（ライブ後にもう1回投稿できるようアプリ側で制御するため、DBレベルの一意制約は解除します）
 ALTER TABLE public.national_stadium_messages DROP CONSTRAINT IF EXISTS unique_device_message;
 ALTER TABLE public.national_stadium_messages DROP CONSTRAINT IF EXISTS unique_device_member_color;
 

@@ -2101,13 +2101,33 @@ export const db = {
       created_at: new Date().toISOString()
     };
 
+    const afterLiveThreshold = new Date('2026-06-22T00:00:00+09:00').getTime();
+
     if (supabase) {
       try {
+        // 重複チェック: device_id と color に一致する過去の投稿を取得
+        const { data: existing, error: fetchError } = await supabase
+          .from('national_stadium_messages')
+          .select('created_at')
+          .eq('device_id', deviceId)
+          .eq('color', color);
+
+        if (!fetchError && existing && existing.length > 0) {
+          // 2026年6月22日 0:00 以降の投稿が既にあればブロック
+          const hasAlreadyPostedAfterLive = existing.some(m => 
+            new Date(m.created_at).getTime() >= afterLiveThreshold
+          );
+          if (hasAlreadyPostedAfterLive) {
+            throw new Error('このメンバーへは既にメッセージを投稿済みです。');
+          }
+        }
+
         const { data, error } = await supabase
           .from('national_stadium_messages')
           .insert([newMessage])
           .select();
         if (!error && data && data[0]) {
+          localStorage.setItem(`is_message_posted_after_live_${color}`, 'true');
           return data[0] as StadiumMessage;
         }
         console.error('Failed to insert message to Supabase, falling back to local:', error);
@@ -2125,8 +2145,19 @@ export const db = {
       } catch (e) {}
     }
 
+    // ローカル側でも一意制約の検証を行う (ライブ後 [2026-06-22 0:00] 以降の投稿が既に存在すれば重複とみなす)
+    const hasAlreadyPostedAfterLive = messages.some(m => 
+      m.device_id === deviceId && 
+      m.color === color && 
+      new Date(m.created_at).getTime() >= afterLiveThreshold
+    );
+    if (hasAlreadyPostedAfterLive) {
+      throw new Error('このメンバーへは既にメッセージを投稿済みです。');
+    }
+
     messages.unshift(newMessage);
     localStorage.setItem('tdm_stadium_messages', JSON.stringify(messages));
+    localStorage.setItem(`is_message_posted_after_live_${color}`, 'true');
     return newMessage;
   }
 };
