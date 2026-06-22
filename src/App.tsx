@@ -19,7 +19,7 @@ import {
   Search
 } from 'lucide-react';
 import Fuse from 'fuse.js';
-import { db, Spot, User, CheckIn, GroupType, validateStadiumMessage } from './db';
+import { db, Spot, User, CheckIn, GroupType } from './db';
 import { authService, AuthSession } from './auth';
 import { SupportSection } from './components/SupportSection';
 import { AdPlaceholder } from './components/AdPlaceholder';
@@ -35,6 +35,13 @@ export interface Notice {
 }
 
 export const APP_NOTICES: Notice[] = [
+  {
+    id: 'notice-20260622-stadium-close',
+    date: '2026/06/22',
+    title: '🏟️ 【お知らせ】国立競技場寄せ書きボードの募集終了と特設サイト開発のご案内',
+    content: '【寄せ書きボード募集終了のお知らせ】\n国立競技場のデジタル寄せ書きボードでのメッセージ募集は終了いたしました。たくさんの温かいメッセージをいただき、本当にありがとうございました！\n\n現在、投稿いただいたメッセージを飾る特設サイトを開発中ですので、公開まで今しばらくお待ちください。\n\n引き続き、トリプルデートマップをよろしくお願いします！',
+    type: 'update'
+  },
   {
     id: 'notice-20260604-stadium-board',
     date: '2026/06/04',
@@ -248,10 +255,6 @@ export default function App() {
   const [showStadiumBoardModal, setShowStadiumBoardModal] = useState<boolean>(false);
   const [stadiumMessages, setStadiumMessages] = useState<any[]>([]);
   const [_isLoadingMessages, setIsLoadingMessages] = useState<boolean>(false);
-  const [postName, setPostName] = useState<string>('');
-  const [postMessage, setPostMessage] = useState<string>('');
-  const [postColor, setPostColor] = useState<string>('#e9d5ff');
-  const [postCooldown, setPostCooldown] = useState<number>(0);
   const [deviceId, setDeviceId] = useState<string>('');
   const [showStadiumWelcomeModal, setShowStadiumWelcomeModal] = useState<boolean>(false);
   const [showStadiumPinPopup, setShowStadiumPinPopup] = useState<boolean>(false);
@@ -1029,105 +1032,8 @@ export default function App() {
   useEffect(() => {
     if (showStadiumBoardModal) {
       loadStadiumMessages();
-
-      const lastPostStr = localStorage.getItem('tdm_last_stadium_post');
-      if (lastPostStr) {
-        const lastPost = new Date(lastPostStr).getTime();
-        const diff = Date.now() - lastPost;
-        const limit = 5 * 60 * 1000; // 5分間の投稿制限
-        if (diff < limit) {
-          const remainingSec = Math.ceil((limit - diff) / 1000);
-          setPostCooldown(remainingSec);
-        }
-      }
     }
   }, [showStadiumBoardModal]);
-
-  // 🏟️ 自分がまだ投稿していない最初のカラーを自動選択する
-  useEffect(() => {
-    if (showStadiumBoardModal && stadiumMessages.length >= 0) {
-      const afterLiveThreshold = new Date('2026-06-22T00:00:00+09:00').getTime();
-      const myPostedColors = stadiumMessages
-        .filter(m => m.device_id === deviceId && (
-          localStorage.getItem(`is_message_posted_after_live_${m.color}`) === 'true' ||
-          new Date(m.created_at).getTime() >= afterLiveThreshold
-        ))
-        .map(m => m.color);
-      
-      const allColors = [
-        '#e9d5ff', '#f97316', '#38bdf8', '#fbcfe8', '#ffffff', 
-        '#ef4444', '#facc15', '#a855f7', '#84cc16', '#3b82f6'
-      ];
-      const unpostedColor = allColors.find(c => !myPostedColors.includes(c));
-      if (unpostedColor) {
-        setPostColor(unpostedColor);
-      }
-    }
-  }, [showStadiumBoardModal, stadiumMessages, deviceId]);
-
-  // 投稿制限のクールダウンタイマー
-  useEffect(() => {
-    if (postCooldown <= 0) return;
-    const timer = setTimeout(() => {
-      setPostCooldown(prev => prev - 1);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, [postCooldown]);
-
-  const handlePostMessage = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!postName.trim() || !postMessage.trim()) {
-      alert('ニックネームとメッセージを入力してください。');
-      return;
-    }
-    if (postMessage.trim().length > 100) {
-      alert('メッセージは100文字以内で入力してください。');
-      return;
-    }
-    if (postCooldown > 0) {
-      alert(`連続投稿は制限されています。残り ${postCooldown} 秒お待ちください。`);
-      return;
-    }
-
-    // コンテンツモデレーション（画面側での検証）
-    const validationError = validateStadiumMessage(postMessage);
-    if (validationError) {
-      alert(validationError);
-      return;
-    }
-
-    // すでにこのカラーで投稿済みか再度判定 (1人各メンバーライブ後1回制限)
-    const afterLiveThreshold = new Date('2026-06-22T00:00:00+09:00').getTime();
-    const alreadyPosted = stadiumMessages.some(m => 
-      m.device_id === deviceId && 
-      m.color === postColor && 
-      new Date(m.created_at).getTime() >= afterLiveThreshold
-    );
-    const afterLiveKey = `is_message_posted_after_live_${postColor}`;
-    if (alreadyPosted || localStorage.getItem(afterLiveKey) === 'true') {
-      alert('このメンバーへは既にメッセージを投稿済みです。');
-      if (alreadyPosted) {
-        localStorage.setItem(afterLiveKey, 'true');
-      }
-      return;
-    }
-
-    try {
-      await db.addStadiumMessage(postName.trim(), postMessage.trim(), postColor, deviceId);
-      setPostMessage('');
-      
-      // クールダウン設定
-      localStorage.setItem('tdm_last_stadium_post', new Date().toISOString());
-      setPostCooldown(5 * 60); // 5分クールダウン
-
-      // メッセージの再読込
-      loadStadiumMessages();
-      alert('寄せ書きメッセージを送信しました！');
-    } catch (err) {
-      console.error('Failed to post stadium message:', err);
-      alert('メッセージの送信に失敗しました。既に投稿されている可能性があります。');
-    }
-  };
 
   // 🏟️ 国立競技場の特別ピンにマップカメラをフォーカスする
   const focusOnNationalStadium = () => {
@@ -8322,192 +8228,32 @@ ${window.location.origin + window.location.pathname}
               
               {(() => {
                 const myMessages = stadiumMessages.filter(m => m.device_id === deviceId);
-                const afterLiveThreshold = new Date('2026-06-22T00:00:00+09:00').getTime();
-                const myPostedColors = myMessages
-                  .filter(m => 
-                    localStorage.getItem(`is_message_posted_after_live_${m.color}`) === 'true' ||
-                    new Date(m.created_at).getTime() >= afterLiveThreshold
-                  )
-                  .map(m => m.color);
-                const hasPostedAll = myPostedColors.length >= 10;
-                // otherMessages は廃止（公開表示機能なし）
 
                 return (
                   <>
                     {/* 1. 投稿フォーム または サンクスメッセージ */}
-                    {hasPostedAll ? (
-                      <div style={{
-                        background: 'linear-gradient(135deg, rgba(251, 191, 36, 0.08) 0%, rgba(219, 39, 119, 0.08) 100%)',
-                        border: '2.5px dashed #db2777',
-                        borderRadius: '20px',
-                        padding: '20px 16px',
-                        textAlign: 'center',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        gap: '6px',
-                        boxShadow: '0 4px 15px rgba(219,39,119,0.05)',
-                        animation: 'fadeInUp 0.4s ease'
-                      }}>
-                        <span style={{ fontSize: '28px', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }}>✨</span>
-                        <h3 style={{ fontSize: '14px', fontWeight: '900', color: '#db2777', margin: 0 }}>
-                          全メンバー分のメッセージ投稿が完了しました！
-                        </h3>
-                        <p style={{ fontSize: '11px', color: '#64748b', margin: 0, lineHeight: '1.6', fontWeight: '800' }}>
-                          熱いメッセージをありがとうございます！ライブ当日を一緒に盛り上げましょう！
-                        </p>
-                      </div>
-                    ) : (
-                      <form onSubmit={handlePostMessage} style={{
-                        background: '#f8fafc',
-                        border: '1.5px solid #e2e8f0',
-                        borderRadius: '20px',
-                        padding: '16px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '12px'
-                      }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <h3 style={{ fontSize: '12px', fontWeight: '900', color: '#1e293b', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            ✍️ メッセージを投稿する
-                          </h3>
-                          <span style={{ fontSize: '10px', fontWeight: '900', color: '#db2777', background: '#fdf2f8', padding: '2px 8px', borderRadius: '8px' }}>
-                            現在の投稿: {myPostedColors.length} / 10 名
-                          </span>
-                        </div>
-                        
-                        <div style={{ display: 'flex', gap: '10px' }}>
-                          <div style={{ flex: 1 }}>
-                            <label style={{ fontSize: '9px', fontWeight: '900', color: '#64748b', display: 'block', marginBottom: '4px' }}>ニックネーム</label>
-                            <input
-                              type="text"
-                              placeholder="匿名オタク"
-                              value={postName}
-                              onChange={(e) => setPostName(e.target.value)}
-                              maxLength={20}
-                              style={{
-                                width: '100%',
-                                padding: '8px 12px',
-                                borderRadius: '10px',
-                                border: '1.5px solid #cbd5e1',
-                                fontSize: '12px',
-                                fontWeight: '700',
-                                outline: 'none',
-                                background: '#ffffff'
-                              }}
-                            />
-                          </div>
-                        </div>
-
-                        {/* メッセージ本文 */}
-                        <div>
-                          <div style={{ display: 'flex', justifyItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
-                            <label style={{ fontSize: '9px', fontWeight: '900', color: '#64748b' }}>メッセージ (最大100文字)</label>
-                            <span style={{ fontSize: '9px', fontWeight: '800', color: postMessage.length > 100 ? '#ef4444' : '#64748b' }}>
-                              {postMessage.length} / 100
-                            </span>
-                          </div>
-                          <textarea
-                            placeholder="国立競技場ライブおめでとう！大好き！"
-                            value={postMessage}
-                            onChange={(e) => setPostMessage(e.target.value)}
-                            maxLength={100}
-                            rows={3}
-                            style={{
-                              width: '100%',
-                              padding: '10px 12px',
-                              borderRadius: '12px',
-                              border: '1.5px solid #cbd5e1',
-                              fontSize: '12px',
-                              fontWeight: '700',
-                              outline: 'none',
-                              resize: 'none',
-                              background: '#ffffff',
-                              lineHeight: '1.5'
-                            }}
-                          />
-                        </div>
-
-                        {/* 推しメンカラー選択パレット */}
-                        <div>
-                          <label style={{ fontSize: '9px', fontWeight: '900', color: '#64748b', display: 'block', marginBottom: '6px' }}>
-                            推しメンカラー (すでに投稿済みのメンバーは選択できません)
-                          </label>
-                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                            {[
-                              { name: '大谷 映美里 (薄紫)', color: '#e9d5ff' },
-                              { name: '大場 花菜 (オレンジ)', color: '#f97316' },
-                              { name: '音嶋 莉沙 (水色)', color: '#38bdf8' },
-                              { name: '齋藤 樹愛羅 (薄ピンク)', color: '#fbcfe8' },
-                              { name: '佐々木 舞香 (白)', color: '#ffffff' },
-                              { name: '髙松 瞳 (赤)', color: '#ef4444' },
-                              { name: '瀧脇 笙古 (黄色)', color: '#facc15' },
-                              { name: '野口 衣織 (紫)', color: '#a855f7' },
-                              { name: '諸橋 沙夏 (黄緑)', color: '#84cc16' },
-                              { name: '山本 杏奈 (青)', color: '#3b82f6' }
-                            ].map((item) => {
-                              const isPosted = myPostedColors.includes(item.color);
-                              return (
-                                <button
-                                  key={item.name}
-                                  type="button"
-                                  disabled={isPosted}
-                                  onClick={() => setPostColor(item.color)}
-                                  title={isPosted ? `${item.name} (投稿済み)` : item.name}
-                                  style={{
-                                    width: '26px',
-                                    height: '26px',
-                                    borderRadius: '50%',
-                                    backgroundColor: item.color,
-                                    border: postColor === item.color ? '3px solid #0f172a' : '2.5px solid #ffffff',
-                                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                                    cursor: isPosted ? 'not-allowed' : 'pointer',
-                                    opacity: isPosted ? 0.25 : 1,
-                                    transform: postColor === item.color ? 'scale(1.15)' : 'none',
-                                    transition: 'all 0.2s',
-                                    position: 'relative',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center'
-                                  }}
-                                >
-                                  {isPosted && (
-                                    <span style={{
-                                      fontSize: '10px',
-                                      fontWeight: 'bold',
-                                      color: getContrastTextColor(item.color),
-                                      pointerEvents: 'none'
-                                    }}>✓</span>
-                                  )}
-                                </button>
-                              );
-                            })}
-                          </div>
-                        </div>
-
-                        {/* 送信ボタン */}
-                        <button
-                          type="submit"
-                          disabled={postCooldown > 0}
-                          style={{
-                            background: postCooldown > 0 ? '#cbd5e1' : 'linear-gradient(135deg, #ffd700 0%, #db2777 100%)',
-                            color: '#ffffff',
-                            border: 'none',
-                            borderRadius: '12px',
-                            padding: '10px',
-                            fontSize: '12px',
-                            fontWeight: '900',
-                            cursor: postCooldown > 0 ? 'not-allowed' : 'pointer',
-                            boxShadow: postCooldown > 0 ? 'none' : '0 4px 10px rgba(219,39,119,0.15)',
-                            transition: 'all 0.2s',
-                            marginTop: '4px'
-                          }}
-                          className="pop-button"
-                        >
-                          {postCooldown > 0 ? `連投制限中 (あと ${postCooldown} 秒)` : '📣 メッセージを送信'}
-                        </button>
-                      </form>
-                    )}
+                    <div style={{
+                      background: 'linear-gradient(135deg, rgba(251, 191, 36, 0.06) 0%, rgba(219, 39, 119, 0.06) 100%)',
+                      border: '1.5px solid #cbd5e1',
+                      borderRadius: '20px',
+                      padding: '20px 16px',
+                      textAlign: 'center',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: '8px',
+                      boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                    }}>
+                      <span style={{ fontSize: '28px' }}>📣</span>
+                      <h3 style={{ fontSize: '14.5px', fontWeight: '900', color: '#1e293b', margin: 0 }}>
+                        メッセージの募集は終了いたしました
+                      </h3>
+                      <p style={{ fontSize: '11.5px', color: '#475569', margin: 0, lineHeight: '1.6', fontWeight: '800' }}>
+                        たくさんの温かい寄せ書きメッセージをいただき、本当にありがとうございました！<br />
+                        現在、お寄せいただいたメッセージを掲載する特設サイトを開発中ですので、公開まで今しばらくお待ちください。<br /><br />
+                        引き続き、トリプルデートマップをよろしくお願いします！
+                      </p>
+                    </div>
 
                     {/* 2. 自分のメッセージ (ハイライト表示) */}
                     {myMessages.length > 0 && (
@@ -8629,10 +8375,10 @@ ${window.location.origin + window.location.pathname}
             {/* モーダル本文 */}
             <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <p style={{ fontSize: '13px', color: '#475569', lineHeight: '1.7', fontWeight: '800', margin: 0, textAlign: 'center' }}>
-                🎊 =LOVE 初の国立競技場ライブ開催記念特設エリアです！みんなでメッセージを書き込んで、ライブを最高に盛り上げましょう！ 🎊
+                🎊 =LOVE 国立競技場ライブ特設エリアです！メッセージの募集は終了いたしました。たくさんの温かいメッセージをありがとうございました！ 🎊
               </p>
               <p style={{ fontSize: '12px', color: '#64748b', lineHeight: '1.6', margin: 0, background: '#f8fafc', padding: '14px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                メッセージの投稿は1人1回限定。他のファンのメッセージが飾られたギャラリーボードを見ることもできます。
+                メッセージの新規募集は終了しましたが、お寄せいただいたメッセージが飾られたギャラリーボードをご覧いただけます。現在、特設サイトを開発中ですので、公開まで今しばらくお待ちください。
               </p>
             </div>
 
@@ -8677,35 +8423,11 @@ ${window.location.origin + window.location.pathname}
                   setShowStadiumBoardModal(true);
                 }}
                 style={{
-                  background: 'linear-gradient(135deg, #ffd700 0%, #f59e0b 100%)',
-                  color: '#ffffff',
-                  border: 'none',
-                  borderRadius: '14px',
-                  padding: '12px',
-                  fontSize: '12.5px',
-                  fontWeight: '900',
-                  cursor: 'pointer',
-                  boxShadow: '0 4px 12px rgba(245, 158, 11, 0.2)',
-                  transition: 'all 0.2s',
-                  textAlign: 'center',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '6px'
-                }}
-                className="pop-button"
-              >
-                ✍️ メッセージを書く
-              </button>
-              
-              <button
-                onClick={() => setShowStadiumPinPopup(false)}
-                style={{
                   background: '#f1f5f9',
                   color: '#475569',
                   border: 'none',
                   borderRadius: '14px',
-                  padding: '10px',
+                  padding: '12px',
                   fontSize: '12px',
                   fontWeight: 'bold',
                   cursor: 'pointer',
@@ -8714,7 +8436,7 @@ ${window.location.origin + window.location.pathname}
                 }}
                 className="pop-button"
               >
-                詳細を見る（閉じる）
+                詳細・お知らせを見る
               </button>
             </div>
           </div>
