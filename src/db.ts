@@ -1129,6 +1129,8 @@ const INITIAL_SPOTS: Spot[] = [
     latitude: 35.6797,
     longitude: 139.7684,
     event_date: "2024-04-01",
+    youtube_title: "🎥 関連映像: しょこりさんぽ",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/CEES6m9G268?si=7U9Innbv28VkWXNT&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
     tags: ["しょこりさんぽ巡礼"],
     reward_title: "しょこりさ推し！",
     memorial_date: "2024-04-01"
@@ -1142,6 +1144,8 @@ const INITIAL_SPOTS: Spot[] = [
     latitude: 35.6841,
     longitude: 139.7699,
     event_date: "2024-04-01",
+    youtube_title: "🎥 関連映像: しょこりさんぽ",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/CEES6m9G268?si=7U9Innbv28VkWXNT&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
     tags: ["しょこりさんぽ巡礼", "しょこりさんぽゴール"],
     reward_title: "しょこりさ推し！",
     memorial_date: "2024-04-01"
