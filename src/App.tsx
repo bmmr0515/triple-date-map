@@ -5362,7 +5362,11 @@ ${window.location.origin + window.location.pathname}
                       <Calendar className="w-4 h-4 text-[#a78bfa]" />
                       <div className="detail-time-text">
                         <span style={{ fontWeight: '800', color: 'var(--color-equal-love)', marginRight: '6px', letterSpacing: '0.05em' }}>MEMORIAL DAY:</span>
-                        <span style={{ color: 'var(--text-main)', fontWeight: '900' }}>{selectedSpot.event_date.split('-').map((v, i) => v + ['年', '月', '日'][i]).join('')}</span>
+                        <span style={{ color: 'var(--text-main)', fontWeight: '900' }}>
+                          {selectedSpot.id === 'spot-special-national-stadium'
+                            ? '2026年06月20日・21日'
+                            : selectedSpot.event_date.split('-').map((v, i) => v + ['年', '月', '日'][i]).join('')}
+                        </span>
                       </div>
                     </div>
 
@@ -7647,7 +7651,9 @@ ${window.location.origin + window.location.pathname}
                   </span>
                 </div>
                 <span className="spot-date-text">
-                  {selectedSpot.event_date.replace(/-/g, '/')}
+                  {selectedSpot.id === 'spot-special-national-stadium'
+                    ? '2026/06/20・21'
+                    : selectedSpot.event_date.replace(/-/g, '/')}
                 </span>
               </div>
 
@@ -7663,7 +7669,9 @@ ${window.location.origin + window.location.pathname}
                 <div className="detail-time-text">
                   <span style={{ fontWeight: '800', color: 'var(--color-equal-love)', marginRight: '6px', letterSpacing: '0.05em', fontSize: '11px' }}>MEMORIAL DAY:</span>
                   <span style={{ color: 'var(--text-main)', fontWeight: '900', fontSize: '11px' }}>
-                    {selectedSpot.event_date.split('-').map((v, i) => v + ['年', '月', '日'][i]).join('')}
+                    {selectedSpot.id === 'spot-special-national-stadium'
+                      ? '2026年06月20日・21日'
+                      : selectedSpot.event_date.split('-').map((v, i) => v + ['年', '月', '日'][i]).join('')}
                   </span>
                 </div>
               </div>
