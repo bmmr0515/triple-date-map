@@ -435,15 +435,45 @@ export default function App() {
 
   // 📝 聖地説明文の警告テキスト強調用レンダリングヘルパー
   const renderDescription = (desc: string) => {
-    if (desc.includes('⚠️聖地巡礼に関する重要なお願い')) {
-      const parts = desc.split('⚠️聖地巡礼に関する重要なお願い');
-      const mainDesc = parts[0];
-      const warningText = parts[1];
-      return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+    // 1. まず全体から iframe タグを抽出して除去する
+    const iframeRegex = /<iframe[^>]*>.*?<\/iframe>/gi;
+    const iframes = desc.match(iframeRegex) || [];
+    const cleanDesc = desc.replace(iframeRegex, '').trim();
+
+    // 2. クリーンになったテキストに対して従来の警告テキスト分割を行う
+    let mainDesc = cleanDesc;
+    let warningText = "";
+    if (cleanDesc.includes('⚠️聖地巡礼に関する重要なお願い')) {
+      const parts = cleanDesc.split('⚠️聖地巡礼に関する重要なお願い');
+      mainDesc = parts[0];
+      warningText = parts[1];
+    }
+
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        {/* メイン説明文 */}
+        {mainDesc.trim() && (
           <p className="episode-text" style={{ margin: 0, fontSize: '12.5px', lineHeight: '1.6', color: '#334155', whiteSpace: 'pre-wrap' }}>
             {mainDesc.trim()}
           </p>
+        )}
+
+        {/* 抽出された iframe があればレンダリング */}
+        {iframes.length > 0 && iframes.map((iframeHtml, index) => (
+          <div 
+            key={index}
+            className="video-box" 
+            style={{ width: '100%', aspectRatio: '16/9', borderRadius: '16px', overflow: 'hidden', marginTop: '4px', marginBottom: '4px' }}
+            dangerouslySetInnerHTML={{ 
+              __html: iframeHtml
+                .replace(/width="\d+"/, 'width="100%"')
+                .replace(/height="\d+"/, 'height="100%"')
+            }} 
+          />
+        ))}
+
+        {/* 警告文 */}
+        {warningText.trim() && (
           <div style={{
             padding: '14px 16px',
             background: '#fff5f5',
@@ -462,13 +492,8 @@ export default function App() {
               {warningText.trim()}
             </span>
           </div>
-        </div>
-      );
-    }
-    return (
-      <p className="episode-text" style={{ margin: 0, fontSize: '12.5px', lineHeight: '1.6', color: '#334155', whiteSpace: 'pre-wrap' }}>
-        {desc}
-      </p>
+        )}
+      </div>
     );
   };
 
