@@ -145,7 +145,7 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
         <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <h2 style={{ fontSize: '15px', fontWeight: 'bold', color: '#0f172a', margin: 0, borderBottom: '2px solid #e2e8f0', paddingBottom: '8px' }}>📍 スポット基本情報</h2>
           
-          {spot.address && (
+          {spot.address && !spot.address.includes('日本、東京都周辺') && (
             <div style={{ display: 'flex', gap: '8px', fontSize: '13px' }}>
               <MapPin size={16} style={{ color: '#ff6897', flexShrink: 0, marginTop: '2px' }} />
               <div>
@@ -155,12 +155,15 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
             </div>
           )}
 
-          {(spot.nearest_station || spot.walk_time) && (
+          {spot.nearest_station && !spot.nearest_station.includes('最寄り駅情報なし') && (
             <div style={{ display: 'flex', gap: '8px', fontSize: '13px' }}>
               <Train size={16} style={{ color: '#a78bfa', flexShrink: 0, marginTop: '2px' }} />
               <div>
                 <strong style={{ color: '#475569', display: 'block', fontSize: '11px' }}>最寄り駅 / アクセス</strong>
-                <span style={{ color: '#0f172a' }}>{spot.nearest_station || ''} {spot.walk_time ? `(徒歩 ${spot.walk_time})` : ''}</span>
+                <span style={{ color: '#0f172a' }}>
+                  {spot.nearest_station}
+                  {spot.walk_time && !spot.walk_time.includes('徒歩時間情報なし') ? ` (徒歩 ${spot.walk_time})` : ''}
+                </span>
               </div>
             </div>
           )}
@@ -208,7 +211,7 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
       )}
 
       {/* どの場面で登場したか */}
-      {spot.scene && (
+      {spot.scene && !spot.scene.includes('MVに登場した名場面シーン') && (
         <div style={{ marginBottom: '24px', background: '#fffbeb', border: '1px solid #fef3c7', padding: '16px', borderRadius: '14px' }}>
           <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#b45309', margin: '0 0 8px 0', display: 'flex', alignItems: 'center', gap: '4px' }}>🎬 どの場面で登場した？</h3>
           <p style={{ fontSize: '13px', lineHeight: '1.6', color: '#78350f', margin: 0 }}>{spot.scene}</p>
@@ -231,7 +234,7 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
       {renderYoutube()}
 
       {/* 訪問時の注意 */}
-      {spot.visitor_notes ? (
+      {spot.visitor_notes && !spot.visitor_notes.includes('特になし') ? (
         <div style={{ padding: '16px', background: '#fff5f5', border: '2px solid #feb2b2', borderRadius: '14px', margin: '24px 0', fontSize: '12.5px', color: '#9b2c2c', lineHeight: '1.6' }}>
           <span style={{ fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px', color: '#c53030', fontWeight: 'bold' }}>
             <ShieldAlert size={18} /> ⚠️ 訪問時の注意事項

@@ -254,6 +254,17 @@ routes.forEach(route => {
       "url": canonicalUrl
     };
     
+    const showAddress = s.address && !s.address.includes('日本、東京都周辺');
+    const showAccess = s.nearest_station && !s.nearest_station.includes('最寄り駅情報なし');
+    const showScene = s.scene && !s.scene.includes('MVに登場した名場面シーン');
+    const showNotes = s.visitor_notes && !s.visitor_notes.includes('特になし');
+
+    let accessText = '';
+    if (showAccess) {
+      const walkText = s.walk_time && !s.walk_time.includes('徒歩時間情報なし') ? ` (徒歩 ${s.walk_time})` : '';
+      accessText = `<li><strong>最寄り駅:</strong> ${s.nearest_station}${walkText}</li>`;
+    }
+    
     bodyContent = `
       <div class="prerendered-content" style="max-width: 800px; margin: 0 auto; padding: 20px;">
         ${breadcrumbs}
@@ -263,15 +274,15 @@ routes.forEach(route => {
         <hr/>
         <h2>概要</h2>
         <p>${s.description}</p>
-        <h2>場面説明</h2>
-        <p>${s.scene}</p>
+        ${showScene ? `<h2>場面説明</h2>\n<p>${s.scene}</p>` : ''}
+        ${(showAddress || showAccess) ? `
         <h2>ロケ地住所・最寄り駅</h2>
         <ul>
-          <li><strong>所在地:</strong> ${s.address}</li>
-          <li><strong>最寄り駅:</strong> ${s.nearest_station} (徒歩 ${s.walk_time})</li>
+          ${showAddress ? `<li><strong>所在地:</strong> ${s.address}</li>` : ''}
+          ${accessText}
         </ul>
-        <h2>訪問時の注意事項</h2>
-        <p>${s.visitor_notes}</p>
+        ` : ''}
+        ${showNotes ? `<h2>訪問時の注意事項</h2>\n<p>${s.visitor_notes}</p>` : ''}
         <h2>現地チェックポイント</h2>
         <ul>
           ${s.check_points.map(cp => `<li>${cp}</li>`).join('')}

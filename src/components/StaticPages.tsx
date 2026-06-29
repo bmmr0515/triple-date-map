@@ -43,6 +43,14 @@ export const ProfilePage: React.FC<PageProps> = ({ onNavigate }) => {
               <td style={{ padding: '12px' }}>=LOVE, ≠ME, ≒JOYの魅力をより多くの人に広め、聖地巡礼を楽しむファンを増やすこと。</td>
             </tr>
             <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
+              <td style={{ padding: '12px', fontWeight: 'bold' }}>管理人連絡先 (SNS)</td>
+              <td style={{ padding: '12px' }}>
+                【管理者の公式X(Twitter)アカウントや連絡用SNSリンクをここに設定してください】
+                <br />
+                <span style={{ fontSize: '11px', color: '#64748b' }}>（例：X @triple_date_map など、審査前に実際のSNSアカウントへのリンクに書き換えることを推奨します）</span>
+              </td>
+            </tr>
+            <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
               <td style={{ padding: '12px', fontWeight: 'bold' }}>更新方針</td>
               <td style={{ padding: '12px' }}>新曲のMVロケ地が公開された際や、番組等で新しい聖地が判明した際に随時更新を行います。また、ユーザーの皆様からの情報提供や修正依頼に基づき、定期的にメンテナンスを行っています。</td>
             </tr>
