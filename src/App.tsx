@@ -2383,7 +2383,7 @@ ${window.location.origin + window.location.pathname}
       <div className="main-area">
         
         {/* 左側: 地図領域 (マップとリストが干渉せず共存し、高速に切り替わる display:none 方式を採用) */}
-        <div className={`left-area ${activeView === 'map' ? 'scrollable-portal' : ''}`} style={{ position: 'relative', height: '100%' }}>
+        <div className={`left-area ${currentRoute.path !== '/' || activeView === 'map' ? 'scrollable-portal' : ''}`} style={{ position: 'relative', height: '100%' }}>
           
           {/* 地図エリア (中央のメインエリア) */}
           <div 
