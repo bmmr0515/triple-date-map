@@ -36,7 +36,7 @@ export const ProfilePage: React.FC<PageProps> = ({ onNavigate }) => {
           <tbody>
             <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
               <td style={{ padding: '12px', fontWeight: 'bold', width: '30%' }}>運営者名</td>
-              <td style={{ padding: '12px' }}>トリプルデートマップ運営事務局（管理人：イコノイジョイ応援隊）</td>
+              <td style={{ padding: '12px' }}>トリプルデートマップ運営事務局（管理人：しょこわき）</td>
             </tr>
             <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
               <td style={{ padding: '12px', fontWeight: 'bold' }}>サイト運営の目的</td>
@@ -45,9 +45,7 @@ export const ProfilePage: React.FC<PageProps> = ({ onNavigate }) => {
             <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
               <td style={{ padding: '12px', fontWeight: 'bold' }}>管理人連絡先 (SNS)</td>
               <td style={{ padding: '12px' }}>
-                【管理者の公式X(Twitter)アカウントや連絡用SNSリンクをここに設定してください】
-                <br />
-                <span style={{ fontSize: '11px', color: '#64748b' }}>（例：X @triple_date_map など、審査前に実際のSNSアカウントへのリンクに書き換えることを推奨します）</span>
+                <a href="https://x.com/shoko_wakichan" target="_blank" rel="noopener noreferrer" style={{ color: '#ff6897', textDecoration: 'underline', fontWeight: 'bold' }}>@shoko_wakichan (X)</a>
               </td>
             </tr>
             <tr style={{ borderBottom: '1px solid #e2e8f0' }}>

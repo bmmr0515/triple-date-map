@@ -751,6 +751,14 @@ export default function App() {
   );
 
   useEffect(() => {
+    if (currentRoute.path !== '/' && currentRoute.path !== '/404') {
+      document.body.classList.add('normal-scroll-page');
+    } else {
+      document.body.classList.remove('normal-scroll-page');
+    }
+  }, [currentRoute.path]);
+
+  useEffect(() => {
     const handlePopState = () => {
       setCurrentRoute(parseLocation(window.location.pathname));
     };

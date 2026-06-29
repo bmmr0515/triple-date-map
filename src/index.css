@@ -1768,3 +1768,33 @@ input[type="range"].pop-slider::-webkit-slider-thumb:hover {
     flex-shrink: 0 !important;
   }
 }
+
+/* 🆕 通常スクロールページ用のボディ解除スタイル（トップページ以外の全SPAページ用） */
+body.normal-scroll-page {
+  overflow: auto !important;
+  height: auto !important;
+  width: 100% !important;
+  position: static !important;
+}
+
+body.normal-scroll-page .app-container {
+  height: auto !important;
+  min-height: 100vh !important;
+  overflow: visible !important;
+}
+
+body.normal-scroll-page .main-area {
+  height: auto !important;
+  overflow: visible !important;
+  flex-direction: column !important; /* スマホ・PC問わず縦並びに */
+}
+
+body.normal-scroll-page .left-area {
+  height: auto !important;
+  overflow: visible !important;
+  padding: 16px !important;
+}
+
+body.normal-scroll-page .right-panel {
+  display: none !important; /* 詳細・一覧ページ表示中は右側マップ連動パネルを非表示 */
+}
