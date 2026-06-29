@@ -56,6 +56,16 @@ export const validateStadiumMessage = (message: string): string | null => {
   return null;
 };
 
+export interface SpotImage {
+  url: string;
+  caption?: string;
+  photographer?: string; // 撮影者
+  source?: string; // 出典
+  permission?: string; // 使用許可
+  shooting_date?: string; // 撮影日
+  copyright_status?: 'owner' | 'permitted' | 'unknown' | 'web_unauthorized'; // 権利状態
+}
+
 export interface Spot {
   id: string;
   name: string;
@@ -71,6 +81,18 @@ export interface Spot {
   reward_title?: string;
   memorial_date?: string;
   commentary?: string;
+  
+  // 🆕 今回の改修で追加するフィールド
+  slug?: string;
+  status?: 'published' | 'draft';
+  address?: string;
+  nearest_station?: string;
+  walk_time?: string;
+  scene?: string;
+  check_points?: string[];
+  visitor_notes?: string;
+  last_confirmed_date?: string;
+  images?: SpotImage[];
 }
 
 export interface User {
@@ -2061,10 +2083,27 @@ const DEFAULT_USER: User = {
 export const db = {
   // Spots操作
   getSpots(): Spot[] {
+    const fillDefaults = (items: Spot[]): Spot[] => {
+      return items.map(item => ({
+        ...item,
+        slug: item.slug || item.id.replace(/^(spot-real-|spot-special-)/, ''),
+        status: item.status || 'published',
+        address: item.address || '',
+        nearest_station: item.nearest_station || '',
+        walk_time: item.walk_time || '',
+        scene: item.scene || '',
+        check_points: item.check_points || [],
+        visitor_notes: item.visitor_notes || '',
+        last_confirmed_date: item.last_confirmed_date || '2026-06-29',
+        images: item.images || []
+      }));
+    };
+
     const data = localStorage.getItem('tdm_spots');
     if (!data) {
-      this.setSpots(INITIAL_SPOTS);
-      return INITIAL_SPOTS;
+      const filled = fillDefaults(INITIAL_SPOTS);
+      this.setSpots(filled);
+      return filled;
     }
     // データのプロパティ（説明文や座標など）に何かしらの変更があれば確実に最新化する完全同期
     try {
@@ -2074,14 +2113,16 @@ export const db = {
       const sortedInitial = [...INITIAL_SPOTS].sort((a, b) => a.id.localeCompare(b.id));
       const sortedParsed = [...parsed].sort((a, b) => a.id.localeCompare(b.id));
       
-      if (JSON.stringify(sortedInitial) !== JSON.stringify(sortedParsed)) {
-        this.setSpots(INITIAL_SPOTS);
-        return INITIAL_SPOTS;
+      if (sortedInitial.length !== sortedParsed.length || sortedInitial.some((val, i) => val.id !== sortedParsed[i].id)) {
+        const filled = fillDefaults(INITIAL_SPOTS);
+        this.setSpots(filled);
+        return filled;
       }
-      return parsed;
+      return fillDefaults(parsed);
     } catch (e) {
-      this.setSpots(INITIAL_SPOTS);
-      return INITIAL_SPOTS;
+      const filled = fillDefaults(INITIAL_SPOTS);
+      this.setSpots(filled);
+      return filled;
     }
   },
 

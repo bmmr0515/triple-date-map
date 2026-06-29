@@ -24,6 +24,12 @@ import { authService, AuthSession } from './auth';
 import { SupportSection } from './components/SupportSection';
 import { AdPlaceholder } from './components/AdPlaceholder';
 import { AdminPage } from './components/AdminPage';
+import { coursesDb, Course } from './courses';
+import { AboutPage, ProfilePage, DisclaimerPage, CopyrightPage, GuidePage, PrivacyPageContent, TermsPageContent } from './components/StaticPages';
+import { SpotsListPage, AreasListPage, GroupsListPage, SongsListPage, CoursesListPage } from './components/ListViews';
+import { SpotDetailView } from './components/SpotDetailView';
+import { CourseDetailView } from './components/CourseDetailView';
+import { ContactForm } from './components/ContactForm';
 
 // 🔔 アプリ内新着お知らせのインターフェースとデータ定義
 export interface Notice {
@@ -200,6 +206,7 @@ export default function App() {
   const [spots, setSpots] = useState<Spot[]>([]);
   const [currentUser, setCurrentUser] = useState<User>(db.getCurrentUser());
   const [checkins, setCheckins] = useState<CheckIn[]>([]);
+  const [courses, setCourses] = useState<Course[]>(coursesDb.getCourses());
 
   // 🔐 認証状態
   const [authSession, setAuthSession] = useState<AuthSession | null>(authService.getSession());
@@ -700,78 +707,76 @@ export default function App() {
   const [showNoResultsToast, setShowNoResultsToast] = useState<boolean>(false);
 
   // 📄 プライバシーポリシーページの表示制御 (SPA/URL同期ハイブリッドルーティング)
-  const [showPrivacyPage, setShowPrivacyPage] = useState<boolean>(
-    window.location.pathname === '/privacy' || window.location.pathname === '/privacy/'
-  );
+  // 📄 一元化された擬似ルーティング (SPA/URL同期ハイブリッド)
+  interface RouteState {
+    path: string;
+    params: Record<string, string>;
+  }
 
-  // 📜 利用規約ページの表示制御
-  const [showTermsPage, setShowTermsPage] = useState<boolean>(
-    window.location.pathname === '/terms' || window.location.pathname === '/terms/'
-  );
+  const parseLocation = (pathname: string): RouteState => {
+    const pathOnly = pathname.split('?')[0];
+    const cleanPath = pathOnly.replace(/\/$/, '') || '/';
+    
+    // 個別スポット詳細: /spots/:slug
+    const spotMatch = cleanPath.match(/^\/spots\/([a-zA-Z0-9_-]+)$/);
+    if (spotMatch) {
+      return { path: '/spots/:slug', params: { slug: spotMatch[1] } };
+    }
+    // 個別コース詳細: /courses/:slug
+    const courseMatch = cleanPath.match(/^\/courses\/([a-zA-Z0-9_-]+)$/);
+    if (courseMatch) {
+      return { path: '/courses/:slug', params: { slug: courseMatch[1] } };
+    }
 
-  // ✉️ お問い合わせページの表示制御
-  const [showContactPage, setShowContactPage] = useState<boolean>(
-    window.location.pathname === '/contact' || window.location.pathname === '/contact/'
-  );
+    const validPaths = [
+      '/spots', '/areas', '/groups', '/songs', '/courses', '/guide',
+      '/about', '/profile', '/contact', '/privacy', '/terms', '/disclaimer', '/copyright'
+    ];
+    
+    if (validPaths.includes(cleanPath)) {
+      return { path: cleanPath, params: {} };
+    }
+    
+    if (cleanPath === '/admin/messages') {
+      return { path: '/admin/messages', params: {} };
+    }
+    if (cleanPath === '/') {
+      return { path: '/', params: {} };
+    }
+    return { path: '/404', params: {} };
+  };
 
-  // 🛡️ 管理者ページの表示制御
-  const [showAdminPage, setShowAdminPage] = useState<boolean>(
-    window.location.pathname === '/admin/messages' || window.location.pathname === '/admin/messages/'
+  const [currentRoute, setCurrentRoute] = useState<RouteState>(
+    parseLocation(window.location.pathname)
   );
 
   useEffect(() => {
     const handlePopState = () => {
-      setShowPrivacyPage(window.location.pathname === '/privacy' || window.location.pathname === '/privacy/');
-      setShowTermsPage(window.location.pathname === '/terms' || window.location.pathname === '/terms/');
-      setShowContactPage(window.location.pathname === '/contact' || window.location.pathname === '/contact/');
-      setShowAdminPage(window.location.pathname === '/admin/messages' || window.location.pathname === '/admin/messages/');
+      setCurrentRoute(parseLocation(window.location.pathname));
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  const navigateToPrivacy = (e?: React.MouseEvent) => {
+  const navigateTo = (path: string, e?: React.MouseEvent) => {
     if (e) e.preventDefault();
-    window.history.pushState(null, '', '/privacy');
-    setShowPrivacyPage(true);
-    setShowTermsPage(false);
-    setShowContactPage(false);
-    setShowAdminPage(false);
+    window.history.pushState(null, '', path);
+    setCurrentRoute(parseLocation(path));
     setIsMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const navigateToTerms = (e?: React.MouseEvent) => {
-    if (e) e.preventDefault();
-    window.history.pushState(null, '', '/terms');
-    setShowTermsPage(true);
-    setShowPrivacyPage(false);
-    setShowContactPage(false);
-    setShowAdminPage(false);
-    setIsMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  // 既存の互換性用ヘルパー変数
+  const showPrivacyPage = currentRoute.path === '/privacy';
+  const showTermsPage = currentRoute.path === '/terms';
+  const showContactPage = currentRoute.path === '/contact';
+  const showAdminPage = currentRoute.path === '/admin/messages';
 
-  const navigateToContact = (e?: React.MouseEvent) => {
-    if (e) e.preventDefault();
-    window.history.pushState(null, '', '/contact');
-    setShowContactPage(true);
-    setShowPrivacyPage(false);
-    setShowTermsPage(false);
-    setShowAdminPage(false);
-    setIsMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const navigateToHome = (e?: React.MouseEvent) => {
-    if (e) e.preventDefault();
-    window.history.pushState(null, '', '/');
-    setShowPrivacyPage(false);
-    setShowTermsPage(false);
-    setShowContactPage(false);
-    setShowAdminPage(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  // 既存の移行用関数
+  const navigateToPrivacy = (e?: React.MouseEvent) => navigateTo('/privacy', e);
+  const navigateToTerms = (e?: React.MouseEvent) => navigateTo('/terms', e);
+  const navigateToContact = (e?: React.MouseEvent) => navigateTo('/contact', e);
+  const navigateToHome = (e?: React.MouseEvent) => navigateTo('/', e);
 
 
   // 📍 現在地（GPS）ジャンプ用ステート＆参照
@@ -788,6 +793,7 @@ export default function App() {
     // 聖地データは静的JSON（INITIAL_SPOTS）としてメモリ上に強力にキャッシュされているためRead負荷ゼロ
     setSpots(db.getSpots());
     setCheckins(db.getCheckIns());
+    setCourses(coursesDb.getCourses());
 
     const unsubscribe = authService.onAuthStateChange((session) => {
       setAuthSession(session);
@@ -1551,256 +1557,109 @@ ${window.location.origin + window.location.pathname}
 
   const fanRank = getFanRank(checkins.length);
 
-  // 📄 プライバシーポリシー全画面レンダリング (showPrivacyPage === true のとき)
-  if (showPrivacyPage) {
+  // 📄 一元化された擬似ルーティングの全画面レンダリング (currentRoute.path !== '/' かつ '/admin/messages' 以外の全ルート)
+  if (currentRoute.path !== '/' && currentRoute.path !== '/admin/messages') {
     return (
-      <div className="privacy-page-container" style={{
-        height: '100vh',
-        overflowY: 'auto',
-        background: '#f8fafc',
-        color: '#1e293b',
-        fontFamily: "'Outfit', 'Inter', sans-serif",
-        display: 'flex',
-        flexDirection: 'column'
-      }}>
-        {/* 💖 グラデーションヘッダー */}
-        <header style={{
-          background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)',
-          padding: '32px 16px',
-          color: 'white',
-          textAlign: 'center',
-          boxShadow: '0 4px 20px rgba(255, 104, 151, 0.15)',
-          position: 'relative'
-        }}>
-          <div style={{ maxWidth: '720px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '32px', animation: 'float 3s ease-in-out infinite' }}>📜</span>
-            <h1 style={{ fontSize: '20px', fontWeight: '900', margin: 0, letterSpacing: '-0.02em' }}>
-              プライバシーポリシー
+      <div className="app-container" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#f8fafc', fontFamily: "'Outfit', 'Noto Sans JP', sans-serif" }}>
+        {/* 共通ヘッダー */}
+        <header className="app-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 24px', background: '#ffffff', borderBottom: '1.5px solid #e2e8f0', boxShadow: '0 4px 12px rgba(15, 23, 42, 0.02)' }}>
+          <div className="header-left" onClick={() => navigateTo('/')} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div className="header-icon-box" style={{ background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)', width: '36px', height: '36px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '18px' }}>
+              🗺️
+            </div>
+            <h1 className="header-title" style={{ fontSize: '16px', fontWeight: '900', color: '#0f172a', margin: 0 }}>
+              トリプルデート・マップ
             </h1>
-            <p style={{ fontSize: '11px', opacity: 0.9, margin: 0, fontWeight: '700' }}>
-              トリプルデート・マップ (非公式ファンサービス)
-            </p>
+          </div>
+          <div className="header-right">
+            <button onClick={() => navigateTo('/')} style={{ background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              🗺️ マップに戻る
+            </button>
           </div>
         </header>
 
-        {/* 📚 ポリシー本文メインコンテンツ */}
-        <main style={{ flex: 1, maxWidth: '720px', width: '100%', margin: '24px auto', padding: '0 16px 80px' }}>
-          {/* マップに戻るフローティング誘導 */}
-          <button
-            onClick={navigateToHome}
-            className="pop-button font-black"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              background: '#ffffff',
-              color: 'var(--text-main)',
-              border: '2px solid #cbd5e1',
-              padding: '10px 18px',
-              borderRadius: '20px',
-              fontSize: '11.5px',
-              cursor: 'pointer',
-              marginBottom: '20px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.03)'
-            }}
-          >
-            🗺️ 聖地マップに戻る
-          </button>
-
-          <div style={{
-            background: '#ffffff',
-            borderRadius: '24px',
-            border: '2px solid #e2e8f0',
-            boxShadow: '0 10px 30px rgba(15, 23, 42, 0.03)',
-            padding: isMobile ? '24px 16px' : '40px 32px'
-          }}>
-            {/* 非公式明記の特別目立つアラートボックス */}
-            <div style={{
-              fontSize: '11.5px',
-              color: '#9f1239',
-              lineHeight: '1.7',
-              background: '#fff1f2',
-              padding: '18px',
-              borderRadius: '16px',
-              border: '1.5px solid #ffe4e6',
-              fontWeight: '900',
-              marginBottom: '28px'
-            }}>
-              💡 免責事項（非公式宣言）<br />
-              本サービス「トリプルデートマップ」（以下「本サービス」）は、=LOVE / ≠ME / ≒JOY（以下「イコノイジョイ」）および各公式運営・所属事務所・権利者とは一切関係のない非公式サービスです。PWA / Webアプリとしてファン有志によって提供されています。
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '28px', fontSize: '12px', color: '#334155', lineHeight: '1.8' }}>
-              
-              <div>
-                <p style={{ margin: 0, fontWeight: '700', color: '#475569' }}>
-                  『トリプルデートマップ』は、ユーザーの個人情報の取扱いおよびセキュリティについて、以下のとおり定めます。
-                </p>
-              </div>
-
-              <div>
-                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  1. 収集する情報
-                </h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  <div>
-                    <strong style={{ color: 'var(--text-main)', display: 'block', fontSize: '12.5px' }}>● メール/パスワード登録時に収集する情報：</strong>
-                    <span style={{ display: 'block', marginTop: '2px' }}>
-                      アカウント登録時にご入力いただいた以下の情報を収集します。これらの情報は認証サービス「Supabase」（米国）のクラウドサーバーに保存されます。
-                    </span>
-                    <ul style={{ margin: '6px 0 0 16px', padding: 0, display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                      <li>メールアドレス</li>
-                      <li>ニックネーム（表示名）</li>
-                      <li>推しグループ（=LOVE / ≠ME / ≒JOY / 合同）</li>
-                      <li>獲得称号・設定中の称号</li>
-                    </ul>
-                    <span style={{ display: 'block', marginTop: '4px', color: '#64748b' }}>
-                      ※パスワードはSupabase側でハッシュ化（暗号化）されており、本サービス運営者が平文で参照することはできません。
-                    </span>
+        {/* コンテンツエリア */}
+        <main style={{ flexGrow: 1, padding: '20px 16px 60px' }}>
+          {(() => {
+            switch (currentRoute.path) {
+              case '/about':
+                return <AboutPage onNavigate={navigateTo} />;
+              case '/profile':
+                return <ProfilePage onNavigate={navigateTo} />;
+              case '/disclaimer':
+                return <DisclaimerPage onNavigate={navigateTo} />;
+              case '/copyright':
+                return <CopyrightPage onNavigate={navigateTo} />;
+              case '/guide':
+                return <GuidePage onNavigate={navigateTo} />;
+              case '/contact':
+                return <ContactForm onNavigate={navigateTo} />;
+              case '/spots':
+                return <SpotsListPage spots={spots} onNavigate={navigateTo} onViewOnMap={handleViewOnMap} />;
+              case '/areas':
+                return <AreasListPage spots={spots} onNavigate={navigateTo} onViewOnMap={handleViewOnMap} />;
+              case '/groups':
+                return <GroupsListPage spots={spots} onNavigate={navigateTo} onViewOnMap={handleViewOnMap} />;
+              case '/songs':
+                return <SongsListPage spots={spots} onNavigate={navigateTo} onViewOnMap={handleViewOnMap} />;
+              case '/courses':
+                return <CoursesListPage courses={courses} spots={spots} onNavigate={navigateTo} />;
+              case '/spots/:slug': {
+                const spot = spots.find(s => s.slug === currentRoute.params.slug);
+                if (spot) {
+                  return <SpotDetailView spot={spot} allSpots={spots} onNavigate={navigateTo} onViewOnMap={handleViewOnMap} />;
+                }
+                return <div style={{ textAlign: 'center', padding: '100px 20px', fontSize: '14px', color: '#64748b' }}>スポットが見つかりません。</div>;
+              }
+              case '/courses/:slug': {
+                const course = courses.find(c => c.slug === currentRoute.params.slug);
+                if (course) {
+                  return <CourseDetailView course={course} allSpots={spots} onNavigate={navigateTo} />;
+                }
+                return <div style={{ textAlign: 'center', padding: '100px 20px', fontSize: '14px', color: '#64748b' }}>モデルコースが見つかりません。</div>;
+              }
+              case '/privacy':
+                return <PrivacyPageContent onNavigate={navigateTo} />;
+              case '/terms':
+                return <TermsPageContent onNavigate={navigateTo} />;
+              default:
+                return (
+                  <div style={{ textAlign: 'center', padding: '100px 20px' }}>
+                    <h1 style={{ fontSize: '64px', margin: '0 0 10px 0', color: '#ff6897', fontWeight: '900' }}>404</h1>
+                    <p style={{ fontSize: '16px', color: '#64748b', marginBottom: '24px' }}>お探しのページは存在しないか、移動した可能性があります。</p>
+                    <button onClick={() => navigateTo('/')} style={{ background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)', color: '#fff', border: 'none', padding: '10px 24px', borderRadius: '20px', fontWeight: 'bold', cursor: 'pointer' }}>トップに戻る</button>
                   </div>
-                  <div>
-                    <strong style={{ color: 'var(--text-main)', display: 'block', fontSize: '12.5px' }}>● X（Twitter）ログイン時に収集する情報：</strong>
-                    <span style={{ display: 'block', marginTop: '2px' }}>
-                      XのOAuth 2.0認証を経由してログインした場合、Xプラットフォームから提供される「メールアドレス」「表示名」のみを取得します。パスワードは本サービスでは一切保持・管理いたしません。
-                    </span>
-                  </div>
-                  <div>
-                    <strong style={{ color: 'var(--text-main)', display: 'block', fontSize: '12.5px' }}>● 位置情報（GPSデータ）：</strong>
-                    <span style={{ display: 'block', marginTop: '2px' }}>
-                      「チェックイン機能」を利用する際、ユーザーの現在地情報を一時的に取得します。この情報はチェックイン対象スポットとの距離判定にのみ使用され、移動履歴としてサーバーに保存・追跡されることはありません。
-                    </span>
-                  </div>
-                  <div>
-                    <strong style={{ color: 'var(--text-main)', display: 'block', fontSize: '12.5px' }}>● チェックイン記録・利用データ：</strong>
-                    <span style={{ display: 'block', marginTop: '2px' }}>
-                      チェックイン履歴（巡礼記録）は<strong>お使いの端末のブラウザ内（localStorage）にのみ保存</strong>されます。クラウドサーバーへの送信は行っておりません。端末の初期化やブラウザのデータ消去により削除される場合があります。
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  2. 利用目的
-                </h3>
-                <ul style={{ margin: '6px 0 0 20px', padding: 0, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <li>本サービスの提供・維持、およびアカウント認証（ログイン）管理のため</li>
-                  <li>GPSを利用した現在地とスポットの距離判定、およびチェックイン機能の提供のため</li>
-                  <li>ユーザーサポートおよびお問い合わせ対応のため</li>
-                  <li>サービスの利用状況分析および機能改善のため</li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  3. 情報の管理と外部サービスの利用
-                </h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '12px 14px' }}>
-                    <strong style={{ display: 'block', fontSize: '12px', color: 'var(--text-main)', marginBottom: '4px' }}>🔐 認証サービス：Supabase（Supabase Inc. / 米国）</strong>
-                    <ul style={{ margin: '4px 0 0 16px', padding: 0, display: 'flex', flexDirection: 'column', gap: '3px', fontSize: '11.5px' }}>
-                      <li>アカウント登録・ログイン認証の管理に使用しています。</li>
-                      <li>保存されるデータ：メールアドレス、ニックネーム、推しグループ、獲得称号</li>
-                      <li>データはSupabase Inc.の管理するサーバー（主に米国）に保存されます。</li>
-                      <li>Supabaseは業界標準のセキュリティ基準（SOC2 Type 2）に準拠しています。</li>
-                      <li>Supabaseのプライバシーポリシー：<a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer" style={{ color: '#ff6897' }}>https://supabase.com/privacy</a></li>
-                    </ul>
-                  </div>
-                  <ul style={{ margin: '0', padding: '0 0 0 20px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <li>法令に基づく場合を除き、ユーザーの同意を得ることなく第三者へ個人情報を提供することはありません。</li>
-                    <li>チェックイン記録（巡礼履歴）はお使いの端末内にのみ保存され、クラウドへの送信は行いません。</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div>
-                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  4. 免責事項
-                </h3>
-                <ul style={{ margin: '6px 0 0 20px', padding: 0, display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <li>本サービスは、アクセス制御（RLS）や通信の暗号化を実施しデータの保護に努めておりますが、個人開発による運営のため、予期せぬシステム障害、サイバー攻撃、またはサービス終了に伴うデータの消失や損害について、法令により免責が認められない場合（運営者の故意または重過失による場合等）を除き、一切の責任を負いかねます。</li>
-                  <li style={{ color: '#ff6897', fontWeight: '800' }}>チェックイン記録などの大切な思い出のデータにつきましては、ユーザーご自身でもスクリーンショット等でバックアップを保管していただくことを強く推奨いたします。</li>
-                  <li>端末のGPS精度の誤差や、通信環境によってチェックインが正常に行えなかった場合の補償等はいたしかねます。</li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  5. データの削除
-                </h3>
-                <p style={{ margin: 0 }}>
-                  ユーザーは、本サービス内の設定画面等より、いつでも自身のアカウントおよび紐づく全データを完全に削除（退会）することができます。
-                </p>
-              </div>
-
-              <div>
-                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  6. 広告・アクセス解析ツールの利用について
-                </h3>
-                <ul style={{ margin: '6px 0 0 20px', padding: 0, display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <li>当サービスは、第三者配信の広告サービス（Google AdSense）を利用しています。</li>
-                  <li>Googleなどの広告配信事業者は、Cookie（クッキー）を使用して、ユーザーが当サイトや他のウェブサイトに過去にアクセスした際の情報に基づき、適切な広告を配信します。</li>
-                  <li>Googleが広告Cookieを使用することにより、当サイトや他のサイトへのアクセス情報に基づいて、Googleやそのパートナーが適切な広告をユーザーに表示できます。</li>
-                  <li>ユーザーは、Googleの<a href="https://adssettings.google.com/authenticated" target="_blank" rel="noopener noreferrer" style={{ color: '#ff6897' }}>広告設定</a>でパーソナライズ広告を無効にできます。また、<a href="https://www.aboutads.info" target="_blank" rel="noopener noreferrer" style={{ color: '#ff6897' }}>www.aboutads.info</a>にアクセスすることで、第三者配信事業者のCookieを無効にすることも可能です。</li>
-                  <li>また、当サービスではトラフィックデータの収集のためにアクセス解析ツール（Google Analytics、Vercel Analytics等）を使用しています。これらはCookieを使用しますが、データは匿名で収集されており、個人を特定するものではありません。Cookieを無効にする設定については、お使いのブラウザの設定をご確認ください。</li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  7. 本ポリシーの変更
-                </h3>
-                <p style={{ margin: 0 }}>
-                  本サービスは、必要に応じて本プライバシーポリシーを変更することがあります。変更した場合は、本サービス内でお知らせいたします。
-                </p>
-              </div>
-
-              <div>
-                <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--text-main)', margin: '0 0 8px 0', borderLeft: '4px solid #ff6897', paddingLeft: '8px' }}>
-                  8. お問い合わせ
-                </h3>
-                <p style={{ margin: 0 }}>
-                  個人情報の取扱い、または本サービスに関するお問い合わせは、公式Discordコミュニティにて、お願いいたします。
-                </p>
-                <div style={{ marginTop: '12px' }}>
-                  <a
-                    href="https://discord.gg/QBhyDJ5hF"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="pop-button font-black"
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '8px',
-                      background: 'linear-gradient(135deg, #5865F2 0%, #a78bfa 100%)',
-                      color: 'white',
-                      padding: '10px 20px',
-                      borderRadius: '16px',
-                      textDecoration: 'none',
-                      fontSize: '11.5px',
-                      boxShadow: '0 4px 15px rgba(88, 101, 242, 0.3)'
-                    }}
-                  >
-                    👾 公式Discordコミュニティに参加する
-                  </a>
-                </div>
-              </div>
-
-            </div>
-          </div>
-          
-          {/* プライバシーポリシーページの下部簡易フッター */}
-          <div style={{ textAlign: 'center', marginTop: '40px', fontSize: '10px', color: 'var(--text-muted)' }}>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginBottom: '8px', fontWeight: '900' }}>
-              <a href="#" onClick={(e) => navigateToTerms(e)} style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>利用規約</a>
-              <span>•</span>
-              <a href="#" onClick={navigateToHome} style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>聖地マップ</a>
-              <span>•</span>
-              <a href="#" onClick={(e) => navigateToContact(e)} style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>お問い合わせ</a>
-            </div>
-            © {new Date().getFullYear()} トリプルデートマップ (非公式)
-          </div>
+                );
+            }
+          })()}
         </main>
+
+        {/* 共通フッター */}
+        <footer style={{ background: '#0f172a', color: '#94a3b8', padding: '40px 20px', borderTop: '1px solid #1e293b', fontSize: '11px', textAlign: 'center' }}>
+          <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'center', fontWeight: 'bold' }}>
+              <a href="/about" onClick={(e) => { e.preventDefault(); navigateTo('/about'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>このサイトについて</a>
+              <span style={{ color: '#334155' }}>|</span>
+              <a href="/profile" onClick={(e) => { e.preventDefault(); navigateTo('/profile'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>運営者情報</a>
+              <span style={{ color: '#334155' }}>|</span>
+              <a href="/contact" onClick={(e) => { e.preventDefault(); navigateTo('/contact'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>お問い合わせ</a>
+              <span style={{ color: '#334155' }}>|</span>
+              <a href="/privacy" onClick={(e) => { e.preventDefault(); navigateTo('/privacy'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>プライバシーポリシー</a>
+              <span style={{ color: '#334155' }}>|</span>
+              <a href="/terms" onClick={(e) => { e.preventDefault(); navigateTo('/terms'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>利用規約</a>
+              <span style={{ color: '#334155' }}>|</span>
+              <a href="/disclaimer" onClick={(e) => { e.preventDefault(); navigateTo('/disclaimer'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>免責事項</a>
+              <span style={{ color: '#334155' }}>|</span>
+              <a href="/copyright" onClick={(e) => { e.preventDefault(); navigateTo('/copyright'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>著作権・権利者への配慮</a>
+              <span style={{ color: '#334155' }}>|</span>
+              <a href="/spots" onClick={(e) => { e.preventDefault(); navigateTo('/spots'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>サイトマップ</a>
+            </div>
+            <div style={{ color: '#64748b', lineHeight: '1.6' }}>
+              当サイトは個人が運営する非公式のファンサイトであり、=LOVE、≠ME、≒JOYの関係者や所属事務所、レコード会社とは一切関係ありません。<br />
+              © {new Date().getFullYear()} トリプルデートマップ (非公式)
+            </div>
+          </div>
+        </footer>
       </div>
     );
   }
@@ -2524,15 +2383,17 @@ ${window.location.origin + window.location.pathname}
       <div className="main-area">
         
         {/* 左側: 地図領域 (マップとリストが干渉せず共存し、高速に切り替わる display:none 方式を採用) */}
-        <div className="left-area" style={{ position: 'relative', height: '100%' }}>
+        <div className={`left-area ${activeView === 'map' ? 'scrollable-portal' : ''}`} style={{ position: 'relative', height: '100%' }}>
           
           {/* 地図エリア (中央のメインエリア) */}
           <div 
             className="map-container" 
             style={{ 
               position: 'relative',
-              height: '100%',
-              display: activeView === 'map' ? 'block' : 'none'
+              height: activeView === 'map' ? '500px' : '100%',
+              display: activeView === 'map' ? 'block' : 'none',
+              flexShrink: 0,
+              marginBottom: activeView === 'map' ? '24px' : '0'
             }}
           >
             {/* 🔍 フローティング検索バー */}
@@ -2611,6 +2472,151 @@ ${window.location.origin + window.location.pathname}
               ></div>
             </div>
           </div>
+
+          {/* 🆕 トップページ下部の豊富で美しいコンテンツポータルセクション (地図ビューの時だけ表示) */}
+          {activeView === 'map' && (
+            <div className="portal-content-section" style={{ padding: '0 8px 60px 8px', display: 'flex', flexDirection: 'column', gap: '32px', color: '#1e293b', fontFamily: "'Outfit', 'Noto Sans JP', sans-serif" }}>
+              
+              {/* 1. サイトの目的と導入文 */}
+              <section style={{ background: '#ffffff', border: '1px solid #e2e8f0', padding: '24px', borderRadius: '24px', boxShadow: 'var(--shadow-bubble)' }}>
+                <h2 style={{ fontSize: '18px', fontWeight: '900', margin: '0 0 12px 0', background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>👋 トリプルデートマップへようこそ！</h2>
+                <p style={{ fontSize: '13px', lineHeight: '1.8', color: '#475569', margin: 0, fontWeight: '500' }}>
+                  アイドルやアーティストのMV、番組、作品などに登場した場所を、地図と詳しい解説から探せる非公式の聖地巡礼サイトです。イコノイジョイ（=LOVE、≠ME、≒JOY）のメンバーが実際に訪れた大切なロケ地を登録しており、GPSでのチェックイン（巡礼スタンプ）や称号のコレクションが楽しめます。
+                </p>
+                <div style={{ display: 'flex', gap: '10px', marginTop: '16px', flexWrap: 'wrap' }}>
+                  <a href="/guide" onClick={(e) => navigateTo('/guide', e)} style={{ background: '#f1f5f9', color: '#334155', textDecoration: 'none', padding: '8px 16px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>🔰 初めての方向けガイド</a>
+                  <a href="/about" onClick={(e) => navigateTo('/about', e)} style={{ background: '#f1f5f9', color: '#334155', textDecoration: 'none', padding: '8px 16px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>🧭 このサイトについて</a>
+                </div>
+              </section>
+
+              {/* 2. 地域・カテゴリ・楽曲から探す */}
+              <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+                <a href="/areas" onClick={(e) => navigateTo('/areas', e)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', background: '#ffffff', padding: '20px', borderRadius: '20px', border: '1px solid #e2e8f0', textDecoration: 'none', boxShadow: 'var(--shadow-bubble)' }}>
+                  <span style={{ fontSize: '28px' }}>🗺️</span>
+                  <strong style={{ fontSize: '13.5px', color: '#0f172a' }}>地域から探す</strong>
+                  <span style={{ fontSize: '11px', color: '#64748b' }}>都道府県・市区町村から聖地を探索</span>
+                </a>
+                <a href="/groups" onClick={(e) => navigateTo('/groups', e)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', background: '#ffffff', padding: '20px', borderRadius: '20px', border: '1px solid #e2e8f0', textDecoration: 'none', boxShadow: 'var(--shadow-bubble)' }}>
+                  <span style={{ fontSize: '28px' }}>👥</span>
+                  <strong style={{ fontSize: '13.5px', color: '#0f172a' }}>グループから探す</strong>
+                  <span style={{ fontSize: '11px', color: '#64748b' }}>イコラブ・ノイミー・ニアジョイ別</span>
+                </a>
+                <a href="/songs" onClick={(e) => navigateTo('/songs', e)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', background: '#ffffff', padding: '20px', borderRadius: '20px', border: '1px solid #e2e8f0', textDecoration: 'none', boxShadow: 'var(--shadow-bubble)' }}>
+                  <span style={{ fontSize: '28px' }}>🎵</span>
+                  <strong style={{ fontSize: '13.5px', color: '#0f172a' }}>楽曲・作品から探す</strong>
+                  <span style={{ fontSize: '11px', color: '#64748b' }}>MVタイトルや番組ロケから探索</span>
+                </a>
+              </section>
+
+              {/* 3. 人気＆新着聖地スポット */}
+              <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+                <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', padding: '20px', borderRadius: '24px', boxShadow: 'var(--shadow-bubble)' }}>
+                  <h3 style={{ fontSize: '16px', fontWeight: '900', margin: '0 0 14px 0', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '6px' }}>🔥 人気スポット</h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    {spots.slice(0, 3).map(s => (
+                      <a key={s.id} href={`/spots/${s.slug}`} onClick={(e) => navigateTo(`/spots/${s.slug}`, e)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f8fafc', padding: '10px 14px', borderRadius: '12px', textDecoration: 'none', color: '#334155', border: '1px solid #e2e8f0' }}>
+                        <span style={{ fontSize: '12.5px', fontWeight: 'bold' }}>{s.name}</span>
+                        <span style={{ fontSize: '9px', fontWeight: 'bold', color: '#ff6897', background: '#fff5f5', padding: '2px 8px', borderRadius: '6px' }}>{s.group}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', padding: '20px', borderRadius: '24px', boxShadow: 'var(--shadow-bubble)' }}>
+                  <h3 style={{ fontSize: '16px', fontWeight: '900', margin: '0 0 14px 0', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '6px' }}>✨ 新着スポット</h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    {spots.slice(5, 8).map(s => (
+                      <a key={s.id} href={`/spots/${s.slug}`} onClick={(e) => navigateTo(`/spots/${s.slug}`, e)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f8fafc', padding: '10px 14px', borderRadius: '12px', textDecoration: 'none', color: '#334155', border: '1px solid #e2e8f0' }}>
+                        <span style={{ fontSize: '12.5px', fontWeight: 'bold' }}>{s.name}</span>
+                        <span style={{ fontSize: '9px', fontWeight: 'bold', color: '#58ccff', background: '#f0faff', padding: '2px 8px', borderRadius: '6px' }}>{s.group}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </section>
+
+              {/* 4. おすすめモデルコース */}
+              <section style={{ background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)', padding: '24px', borderRadius: '24px', color: '#ffffff', boxShadow: '0 10px 25px rgba(255, 104, 151, 0.15)' }}>
+                <h3 style={{ fontSize: '17px', fontWeight: '900', margin: '0 0 8px 0', display: 'flex', alignItems: 'center', gap: '6px' }}>🧭 おすすめ巡礼モデルコース</h3>
+                <p style={{ fontSize: '12px', opacity: 0.9, marginBottom: '16px', lineHeight: '1.6' }}>
+                  複数の聖地スポットを効率よく回るための時間や移動ルートをまとめた、特製の巡礼モデルコースをご用意しています。
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {courses.slice(0, 2).map(c => (
+                    <a key={c.slug} href={`/courses/${c.slug}`} onClick={(e) => navigateTo(`/courses/${c.slug}`, e)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(4px)', padding: '12px 16px', borderRadius: '14px', textDecoration: 'none', color: '#ffffff', border: '1px solid rgba(255,255,255,0.2)' }}>
+                      <div>
+                        <strong style={{ fontSize: '13px', display: 'block' }}>{c.name}</strong>
+                        <span style={{ fontSize: '10px', opacity: 0.8 }}>🕒 {c.duration} / {c.transportation}</span>
+                      </div>
+                      <span style={{ fontSize: '11px', fontWeight: 'bold', background: '#ffffff', color: '#ff6897', padding: '4px 10px', borderRadius: '8px' }}>見る</span>
+                    </a>
+                  ))}
+                </div>
+              </section>
+
+              {/* 5. 聖地巡礼のマナー */}
+              <section style={{ background: '#fff5f5', border: '1px solid #fed7d7', padding: '20px', borderRadius: '24px' }}>
+                <h3 style={{ fontSize: '15px', fontWeight: '900', color: '#c53030', margin: '0 0 8px 0', display: 'flex', alignItems: 'center', gap: '6px' }}>🚨 聖地巡礼のマナーについて</h3>
+                <p style={{ fontSize: '12.5px', lineHeight: '1.7', color: '#9b2c2c', margin: 0 }}>
+                  聖地ロケ地の中には、現役の学校や一般の道路、店舗などが多く含まれています。近隣住民の方へのご迷惑になる大声での会話やゴミ捨て、私有地への無断立ち入りは厳禁です。店舗を利用する際はマナーを守り、楽しい巡礼にしましょう。
+                </p>
+              </section>
+
+              {/* 6. 更新履歴と運営からのお知らせ */}
+              <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+                <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', padding: '20px', borderRadius: '24px', boxShadow: 'var(--shadow-bubble)' }}>
+                  <h3 style={{ fontSize: '15px', fontWeight: '900', margin: '0 0 12px 0', color: '#0f172a' }}>📢 お知らせ</h3>
+                  <ul style={{ padding: 0, margin: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '12px' }}>
+                    <li style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '8px' }}>
+                      <span style={{ color: '#94a3b8', fontSize: '10px', display: 'block', fontWeight: 'bold' }}>2026/06/22</span>
+                      <a href="#" onClick={(e) => { e.preventDefault(); alert(APP_NOTICES[0].content); }} style={{ color: '#475569', textDecoration: 'none', fontWeight: '600' }}>国立競技場メッセージ寄せ書きボードの募集を終了しました。</a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', padding: '20px', borderRadius: '24px', boxShadow: 'var(--shadow-bubble)' }}>
+                  <h3 style={{ fontSize: '15px', fontWeight: '900', margin: '0 0 12px 0', color: '#0f172a' }}>📝 更新履歴</h3>
+                  <ul style={{ padding: 0, margin: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '12px' }}>
+                    <li style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '8px' }}>
+                      <span style={{ color: '#94a3b8', fontSize: '10px', display: 'block', fontWeight: 'bold' }}>2026/06/29</span>
+                      <span style={{ color: '#475569', fontWeight: '600' }}>サイトのメディア化リニューアル（個別ページ、巡礼コース等追加）を完了。</span>
+                    </li>
+                    <li style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '8px' }}>
+                      <span style={{ color: '#94a3b8', fontSize: '10px', display: 'block', fontWeight: 'bold' }}>2026/06/02</span>
+                      <span style={{ color: '#475569', fontWeight: '600' }}>=LOVE『超特急逃走中』ロケ地5箇所追加！</span>
+                    </li>
+                  </ul>
+                </div>
+              </section>
+
+              {/* 7. 共通フッター */}
+              <footer style={{ background: '#0f172a', color: '#94a3b8', padding: '40px 20px', borderTop: '1px solid #1e293b', borderRadius: '24px', fontSize: '11px', textAlign: 'center', marginTop: '20px' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'center', fontWeight: 'bold', marginBottom: '20px' }}>
+                  <a href="/about" onClick={(e) => { e.preventDefault(); navigateTo('/about'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>このサイトについて</a>
+                  <span style={{ color: '#334155' }}>|</span>
+                  <a href="/profile" onClick={(e) => { e.preventDefault(); navigateTo('/profile'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>運営者情報</a>
+                  <span style={{ color: '#334155' }}>|</span>
+                  <a href="/contact" onClick={(e) => { e.preventDefault(); navigateTo('/contact'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>お問い合わせ</a>
+                  <span style={{ color: '#334155' }}>|</span>
+                  <a href="/privacy" onClick={(e) => { e.preventDefault(); navigateTo('/privacy'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>プライバシーポリシー</a>
+                  <span style={{ color: '#334155' }}>|</span>
+                  <a href="/terms" onClick={(e) => { e.preventDefault(); navigateTo('/terms'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>利用規約</a>
+                  <span style={{ color: '#334155' }}>|</span>
+                  <a href="/disclaimer" onClick={(e) => { e.preventDefault(); navigateTo('/disclaimer'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>免責事項</a>
+                  <span style={{ color: '#334155' }}>|</span>
+                  <a href="/copyright" onClick={(e) => { e.preventDefault(); navigateTo('/copyright'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>著作権・権利者への配慮</a>
+                  <span style={{ color: '#334155' }}>|</span>
+                  <a href="/spots" onClick={(e) => { e.preventDefault(); navigateTo('/spots'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>サイトマップ</a>
+                </div>
+                <div style={{ color: '#64748b', lineHeight: '1.6' }}>
+                  当サイトは個人が運営する非公式のファンサイトであり、=LOVE、≠ME、≒JOYの関係者や所属事務所、レコード会社とは一切関係ありません。<br />
+                  © {new Date().getFullYear()} トリプルデートマップ (非公式)
+                </div>
+              </footer>
+
+            </div>
+          )}
+
           {/* 📋 聖地一覧リストUI (Lazy Load & 検索 & 絞り込み搭載) */}
           <div 
             className="spots-list-container" 

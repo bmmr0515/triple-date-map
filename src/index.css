@@ -1748,3 +1748,23 @@ input[type="range"].pop-slider::-webkit-slider-thumb:hover {
 .support-modal-btn-close:hover {
   background: #e2e8f0;
 }
+
+/* 🆕 トップページスクロールポータル表示用の調整クラス */
+.left-area.scrollable-portal {
+  overflow-y: auto !important;
+  height: 100% !important; /* コンテナ自体は100%の高さのスクロール枠 */
+}
+
+@media (max-width: 768px) {
+  .left-area.scrollable-portal {
+    overflow-y: auto !important;
+    display: block !important; /* flex-rowなどを解除して縦並びに */
+  }
+  
+  .left-area.scrollable-portal .map-container,
+  .left-area.scrollable-portal .map-wrapper,
+  .left-area.scrollable-portal #map-canvas {
+    height: 360px !important; /* スマホでは地図の高さを360pxに制限 */
+    flex-shrink: 0 !important;
+  }
+}
