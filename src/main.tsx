@@ -16,14 +16,37 @@ if (import.meta.env.PROD) {
 function Router() {
   const [path, setPath] = useState(window.location.pathname);
 
+  const checkRedirect = (currentPath: string): string => {
+    // 🔐 管理者・ギャラリーページの認証状態に応じた強力なフォールバックルーティング
+    // 直接アクセス時に App (地図) にフォールバックする
+    if (currentPath === '/messages/gallery' || currentPath === '/admin/gallery') {
+      window.history.replaceState({}, '', '/');
+      return '/';
+    }
+    return currentPath;
+  };
+
   useEffect(() => {
+    // ⚡ アプリケーション初期化完了（ハイドレーション・初回描画完了）
+    requestAnimationFrame(() => {
+      document.documentElement.classList.remove('app-loading');
+      document.documentElement.classList.add('app-ready');
+    });
+
+    const initialPath = checkRedirect(window.location.pathname);
+    if (initialPath !== path) {
+      setPath(initialPath);
+    }
+
     const handlePopState = () => {
-      setPath(window.location.pathname);
+      const activePath = checkRedirect(window.location.pathname);
+      setPath(activePath);
     };
     window.addEventListener('popstate', handlePopState);
 
     const handlePushState = () => {
-      setPath(window.location.pathname);
+      const activePath = checkRedirect(window.location.pathname);
+      setPath(activePath);
     };
     window.addEventListener('pushstate', handlePushState);
     window.addEventListener('replacestate', handlePushState);

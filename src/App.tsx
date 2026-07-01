@@ -737,6 +737,15 @@ export default function App() {
       return { path: cleanPath, params: {} };
     }
     
+    // 🔐 管理者・ギャラリーページの認証状態に応じた強力なフォールバックルーティング
+    // 直接アクセス時に App (地図) にフォールバックする
+    if (cleanPath === '/messages/gallery' || cleanPath === '/admin/gallery') {
+      if (typeof window !== 'undefined') {
+        window.history.replaceState({}, '', '/');
+      }
+      return { path: '/', params: {} };
+    }
+    
     if (cleanPath === '/admin/messages') {
       return { path: '/admin/messages', params: {} };
     }
@@ -795,6 +804,23 @@ export default function App() {
   const mapRef = useRef<any>(null);
   const markersRef = useRef<any[]>([]);
   const clusterGroupRef = useRef<any>(null);
+
+  // 🗺️ 地図の初期化状態を管理するステート（マーカー描画useEffectの連動用）
+  const [mapReady, setMapReady] = useState<boolean>(false);
+
+  // 地図用のイベントリスナーやインターバルの参照を保持するRef（重複登録・解放漏れ防止）
+  const mapEventsRef = useRef<{
+    resizeListener: any;
+    resizeInterval: any;
+    pageshowListener: any;
+  }>({
+    resizeListener: null,
+    resizeInterval: null,
+    pageshowListener: null
+  });
+
+  // 非同期通信のキャンセル用
+  const stadiumAbortControllerRef = useRef<AbortController | null>(null);
 
   // データ初期ロード ＆ 認証変更購読
   useEffect(() => {
@@ -1057,14 +1083,27 @@ export default function App() {
 
   // 🏟️ 国立競技場デジタル寄せ書きボード機能のロード・投稿ロジック
   const loadStadiumMessages = async () => {
+    // 既存の通信があればキャンセル
+    if (stadiumAbortControllerRef.current) {
+      stadiumAbortControllerRef.current.abort();
+    }
+    const controller = new AbortController();
+    stadiumAbortControllerRef.current = controller;
+
     setIsLoadingMessages(true);
     try {
       const msgs = await db.getStadiumMessages();
-      setStadiumMessages(msgs);
-    } catch (e) {
-      console.error(e);
+      if (!controller.signal.aborted) {
+        setStadiumMessages(msgs);
+      }
+    } catch (e: any) {
+      if (e.name !== 'AbortError') {
+        console.error(e);
+      }
     } finally {
-      setIsLoadingMessages(false);
+      if (!controller.signal.aborted) {
+        setIsLoadingMessages(false);
+      }
     }
   };
 
@@ -1072,6 +1111,12 @@ export default function App() {
     if (showStadiumBoardModal) {
       loadStadiumMessages();
     }
+    return () => {
+      if (stadiumAbortControllerRef.current) {
+        stadiumAbortControllerRef.current.abort();
+        stadiumAbortControllerRef.current = null;
+      }
+    };
   }, [showStadiumBoardModal]);
 
   // 🏟️ 国立競技場の特別ピンにマップカメラをフォーカスする
@@ -1085,71 +1130,149 @@ export default function App() {
     }
   };
 
-  // マップの初期セットアップ（CDN経由で読み込んだLをDOMにマウント）
-  useEffect(() => {
-    let mapInstance = null;
-
-    if (typeof L !== 'undefined') {
-      const container = document.getElementById('map-canvas');
-      if (container) {
-        // 多重初期化エラー（Map container is already initialized）を防ぐための強力なセーフガード
-        if ((container as any)._leaflet_id) {
-          (container as any)._leaflet_id = null;
-        }
-
-        // 2. 地図の初期設定: 日本中心（35.6895, 139.6917）、ズームレベル6
-        const map = L.map('map-canvas', {
-          zoomControl: false,
-          attributionControl: false
-        }).setView([35.6895, 139.6917], 6);
-
-        // ポップで明るい Voyager タイルをロード
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-          maxZoom: 20
-        }).addTo(map);
-
-        // ズームコントロールを右上にカスタマイズして追加
-        L.control.zoom({
-          position: 'topright'
-        }).addTo(map);
-
-        mapRef.current = map;
-        mapInstance = map;
-        
-        // 初回のリサイズトリガー (複数回に分けて実行し、DOMマウントと完全に同期させてグレー背景バグを根絶)
-        setTimeout(() => { map && map.invalidateSize(); }, 50);
-        setTimeout(() => { map && map.invalidateSize(); }, 150);
-        setTimeout(() => { map && map.invalidateSize(); }, 300);
-        setTimeout(() => { map && map.invalidateSize(); }, 600);
-        setTimeout(() => { map && map.invalidateSize(); }, 1000);
-      }
+  // 1. 地図の初期化処理
+  const initializeMapPage = () => {
+    if (typeof L === 'undefined') return;
+    
+    const container = document.getElementById('map-canvas');
+    if (!container) {
+      console.log("initializeMapPage: map-canvas element not found.");
+      return;
     }
 
-    // 🌟 マップインスタンスのクリーンアップ処理（アンマウント時に完全に破棄し再初期化を可能にする）
-    return () => {
-      if (mapInstance) {
-        mapInstance.remove();
-        mapRef.current = null;
-      }
-    };
-  }, [showPrivacyPage]);
+    // 多重初期化エラー（Map container is already initialized）を防ぐための強力なセーフガード
+    if ((container as any)._leaflet_id) {
+      (container as any)._leaflet_id = null;
+    }
 
-  // ウィンドウのリサイズやレイアウト変動時に Leaflet の描画サイズを完璧に追従・更新する
-  useEffect(() => {
+    // 2. 地図の初期設定: 日本中心（35.6895, 139.6917）、ズームレベル6
+    const map = L.map('map-canvas', {
+      zoomControl: false,
+      attributionControl: false
+    }).setView([35.6895, 139.6917], 6);
+
+    // ポップで明るい Voyager タイルをロード
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      maxZoom: 20
+    }).addTo(map);
+
+    // ズームコントロールを右上にカスタマイズして追加
+    L.control.zoom({
+      position: 'topright'
+    }).addTo(map);
+
+    mapRef.current = map;
+    
+    // イベント登録
+    bindMapPageEvents();
+    
+    setMapReady(true);
+
+    // 初回のリサイズトリガー
+    refreshMapSize();
+  };
+
+  // 2. 地図の破棄処理
+  const destroyMapPage = () => {
+    // イベント登録の解除
+    unbindMapPageEvents();
+
+    if (mapRef.current) {
+      try {
+        mapRef.current.remove();
+      } catch (e) {
+        console.error("Error during map removal:", e);
+      }
+      mapRef.current = null;
+    }
+
+    // 参照のクリア
+    if (clusterGroupRef.current) {
+      clusterGroupRef.current = null;
+    }
+    markersRef.current = [];
+    userLocationMarkerRef.current = null;
+    
+    setMapReady(false);
+  };
+
+  // 3. イベントバインド処理
+  const bindMapPageEvents = () => {
+    unbindMapPageEvents();
+
+    // ウィンドウリサイズ時の再描画リスナー
     const handleResize = () => {
       if (mapRef.current) {
         mapRef.current.invalidateSize();
       }
     };
     window.addEventListener('resize', handleResize);
-    // 右パネルのタブ切り替えやレイアウトの縦並び化、初回レンダリング時などに確実に追従させるためのポーリング補正
+    mapEventsRef.current.resizeListener = handleResize;
+
+    // レイアウト変動に追従するためのインターバルポーリング
     const interval = setInterval(handleResize, 400);
+    mapEventsRef.current.resizeInterval = interval;
+
+    // bfcacheからの復元対策 (pageshowでevent.persistedがtrueの場合に再構築)
+    const handlePageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) {
+        console.log("bfcache pageshow detected. Reinitializing map...");
+        destroyMapPage();
+        initializeMapPage();
+      }
+    };
+    window.addEventListener('pageshow', handlePageShow);
+    mapEventsRef.current.pageshowListener = handlePageShow;
+  };
+
+  // 4. イベントアンバインド処理
+  const unbindMapPageEvents = () => {
+    if (mapEventsRef.current.resizeListener) {
+      window.removeEventListener('resize', mapEventsRef.current.resizeListener);
+      mapEventsRef.current.resizeListener = null;
+    }
+    if (mapEventsRef.current.resizeInterval) {
+      clearInterval(mapEventsRef.current.resizeInterval);
+      mapEventsRef.current.resizeInterval = null;
+    }
+    if (mapEventsRef.current.pageshowListener) {
+      window.removeEventListener('pageshow', mapEventsRef.current.pageshowListener);
+      mapEventsRef.current.pageshowListener = null;
+    }
+  };
+
+  // 5. 地図再描画サイズ更新処理
+  const refreshMapSize = () => {
+    if (mapRef.current) {
+      mapRef.current.invalidateSize();
+    }
+    // DOMマウントや表示切り替えのディレイと完全に同期させてグレー背景バグを根絶する
+    const delays = [50, 150, 300, 600, 1000];
+    delays.forEach(delay => {
+      setTimeout(() => {
+        if (mapRef.current) {
+          mapRef.current.invalidateSize();
+        }
+      }, delay);
+    });
+  };
+
+  // 🗺️ 画面遷移（擬似ルーティング）に伴う地図の表示・非表示ライフサイクル
+  useEffect(() => {
+    const isMapPage = currentRoute.path === '/';
+    if (isMapPage) {
+      // マップを表示するページに入った場合、安全のために一度破棄してから初期化する
+      destroyMapPage();
+      initializeMapPage();
+    } else {
+      // マップを表示しないページに離脱した場合、インスタンスを破棄する
+      destroyMapPage();
+    }
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-      clearInterval(interval);
+      destroyMapPage();
     };
-  }, []);
+  }, [currentRoute.path]);
 
   // 🔍 検索・絞り込みを適用した聖地リスト (AND条件)
   const filteredSpotsOnMap = spots.filter(spot => {
@@ -1316,7 +1439,7 @@ export default function App() {
     if (clusterGroup) {
       map.addLayer(clusterGroup);
     }
-  }, [spots, checkins, selectedSpot, searchGroup, searchKeyword, showPrivacyPage]);
+  }, [spots, checkins, selectedSpot, searchGroup, searchKeyword, showPrivacyPage, mapReady]);
 
   // GPS判定付きチェックイン実行 (オプティミスティックUI ＆ 未ログインガード対応)
   const handleCheckin = (spot: Spot) => {
