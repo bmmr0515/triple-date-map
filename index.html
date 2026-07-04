@@ -48,6 +48,26 @@
       @keyframes spin {
         to { transform: rotate(360deg); }
       }
+
+      #app-error[hidden] {
+        display: none !important;
+      }
+
+      #app-error {
+        position: fixed;
+        inset: 0;
+        z-index: 999999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0b1020;
+        color: #f8fafc;
+        font-family: sans-serif;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        padding: 20px;
+      }
     </style>
     <script>
       // 8秒後に初期化成功（app-ready）していなければエラーを表示する
@@ -111,7 +131,7 @@
       <div class="loader-spinner"></div>
     </div>
 
-    <div id="app-error" hidden style="position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #0b1020; color: #f8fafc; font-family: sans-serif; font-size: 15px; font-weight: bold; text-align: center; padding: 20px; z-index: 999999;">
+    <div id="app-error" hidden>
       読み込みに失敗しました。ページを再読み込みしてください。
     </div>
 

@@ -3,6 +3,7 @@ import { Spot } from '../db';
 import { Breadcrumb } from './ListViews';
 import { AdPlaceholder } from './AdPlaceholder';
 import { MapPin, Train, Calendar, ShieldAlert, Heart, HelpCircle, Compass } from 'lucide-react';
+import { TwitterEmbed } from './TwitterEmbed';
 
 interface SpotDetailProps {
   spot: Spot;
@@ -207,6 +208,13 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
         <div style={{ marginBottom: '24px' }}>
           <h3 style={{ fontSize: '17px', fontWeight: 'bold', color: '#0f172a', marginBottom: '10px' }}>📝 聖地解説</h3>
           <p style={{ fontSize: '14px', lineHeight: '1.8', color: '#334155', whiteSpace: 'pre-wrap', margin: 0 }}>{cleanDescription}</p>
+        </div>
+      )}
+
+      {/* X (Twitter) ポスト埋め込み */}
+      {spot.twitter_url && (
+        <div style={{ marginBottom: '24px' }}>
+          <TwitterEmbed url={spot.twitter_url} />
         </div>
       )}
 

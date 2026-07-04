@@ -93,6 +93,7 @@ export interface Spot {
   visitor_notes?: string;
   last_confirmed_date?: string;
   images?: SpotImage[];
+  twitter_url?: string;
 }
 
 export interface User {
@@ -2067,6 +2068,23 @@ const INITIAL_SPOTS: Spot[] = [
     reward_title: "君と私の歌のファン",
     tags: ["君と私の歌", "ロングウッドステーション"],
     description: '『君と私の歌』のMVロケ地となった撮影スタジオ。メンバーたちがカラフルな衣装で元気いっぱいにパフォーマンスを披露した、ファンにとって愛着深い聖地です。\n\n住所: 〒297-0231 千葉県長生郡長柄町山之郷６７−１\n\n⚠️聖地巡礼に関する重要なお願い\n普段は大型の撮影スタジオおよびイベントスペースとして運営されています。イベント開催日など一般開放されている日を除き、敷地内への無断立ち入りは禁止されています。イベント等に参加して巡礼するか、外観を遠目に見る程度に留めてください。\n\n<iframe width="560" height="315" src="https://www.youtube.com/embed/juImxVpogRY?si=ggy-PMj9Z3jjRM2q&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+  {
+    id: "spot-real-pokepark-yomiuri",
+    name: "ポケパークカントー（よみうりランド）",
+    group: "=LOVE",
+    category: "ライブ会場",
+    latitude: 35.625238,
+    longitude: 139.518645,
+    event_date: "2026-07-04",
+    reward_title: "とくべチュ、した者",
+    tags: ["とくべチュ、して", "ラブソングに襲われる", "THE MUSIC DAY", "よみうりランド"],
+    description: "2026年7月4日放送の『THE MUSIC DAY』にて、＝LOVEがパフォーマンスを披露した特別なステージ。\n\n住所: 〒206-8725 東京都稲城市矢野口4015-1（よみうりランド内）",
+    twitter_url: "https://twitter.com/Equal_LOVE_12/status/2073300783744082150",
+    address: "〒206-8725 東京都稲城市矢野口4015-1（よみうりランド内）",
+    nearest_station: "京王よみうりランド駅",
+    walk_time: "徒歩約20分（またはゴンドラ「スカイシャトル」で約5〜10分、小田急バスで約5分）",
+    scene: "THE MUSIC DAYにて、＝LOVEが「とくべチュ、して」「ラブソングに襲われる」の特別パフォーマンスを披露したステージです。"
   }
 ];
 
@@ -2095,7 +2113,8 @@ export const db = {
         check_points: item.check_points || [],
         visitor_notes: item.visitor_notes || '',
         last_confirmed_date: item.last_confirmed_date || '2026-06-29',
-        images: item.images || []
+        images: item.images || [],
+        twitter_url: item.twitter_url || ''
       }));
     };
 
