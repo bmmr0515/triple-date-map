@@ -15,7 +15,7 @@ try {
 
   // 3. すべての変更をGitに追加
   console.log('📝 Adding all modified files to Git staging area...');
-  execSync('git add -u', { stdio: 'inherit' });
+  execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
   const commitMsg = 'feat: 国立競技場（MUFGスタジアム）のスポット詳細情報と動画を更新';
