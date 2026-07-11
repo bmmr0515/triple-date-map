@@ -2085,6 +2085,66 @@ const INITIAL_SPOTS: Spot[] = [
     nearest_station: "京王よみうりランド駅",
     walk_time: "徒歩約20分（またはゴンドラ「スカイシャトル」で約5〜10分、小田急バスで約5分）",
     scene: "THE MUSIC DAYにて、＝LOVEが「とくべチュ、して」「ラブソングに襲われる」の特別パフォーマンスを披露したステージです。"
+  },
+  {
+    id: "spot-real-hamburger-obica",
+    name: "オービカ モッツァレラバー 六本木ヒルズ店",
+    group: "=LOVE",
+    category: "聖地店舗",
+    latitude: 35.661139,
+    longitude: 139.730156,
+    event_date: "2024-09-25",
+    youtube_title: "🎥 関連映像: 【感動】おいしすぎて衝撃のハンバーガーに出会ってしまいました 【#イコラブハンバーガー部】",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/LXebPFtWQhE?si=htglM-6j-KB5CAPo&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "モッツァレラバーガーの美食家",
+    tags: ["YouTube企画", "ハンバーガー部"],
+    description: 'YouTube企画「イコラブハンバーガー部」の聖地として紹介されたスポットです。髙松瞳さんと瀧脇笙古さんが訪れました。\n\n■ 注文メニュー\n・O\' バーガー\n・タルトゥーフォバーガー\n※現在提供されていない可能性があります。\n\nURL: https://obica.jp/\n住所: 〒106-0032 東京都港区六本木６丁目４−１ ヒルズ ハリウッドビューティプラザ 1F\n\n<iframe width="560" height="315" src="https://www.youtube.com/embed/LXebPFtWQhE?si=htglM-6j-KB5CAPo&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    address: "〒106-0032 東京都港区六本木６丁目４−１ ヒルズ ハリウッドビューティプラザ 1F"
+  },
+  {
+    id: "spot-real-hamburger-37steak",
+    name: "37 ステーキハウス & バー",
+    group: "=LOVE",
+    category: "聖地店舗",
+    latitude: 35.6606,
+    longitude: 139.7303,
+    event_date: "2024-09-25",
+    youtube_title: "🎥 関連映像: 【感動】おいしすぎて衝撃のハンバーガーに出会ってしまいました 【#イコラブハンバーガー部】",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/LXebPFtWQhE?si=htglM-6j-KB5CAPo&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "熟成ビーフバーガーの愛好家",
+    tags: ["YouTube企画", "ハンバーガー部"],
+    description: 'YouTube企画「イコラブハンバーガー部」の聖地として紹介されたスポットです。髙松瞳さんと瀧脇笙古さんが訪れました。\n\n■ 注文メニュー\n・21日間熟成ブラックアンガスビーフ×オーストラリアビーフのクラシックバーガー\n・21日間熟成ブラックアンガスビーフのハンバーガー カポナータと生ハム、モッツァレラ チーズを燻製BBQソースで\n※現在提供されていない可能性があります。\n\nURL: https://37steakhouse.com/roppongi\n住所: 〒106-0032 東京都港区六本木６丁目１５−１ 六本木ヒルズけやき坂 2F\n\n<iframe width="560" height="315" src="https://www.youtube.com/embed/LXebPFtWQhE?si=htglM-6j-KB5CAPo&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    address: "〒106-0032 東京都港区六本木６丁目１５−１ 六本木ヒルズけやき坂 2F"
+  },
+  {
+    id: "spot-real-hamburger-gokuburger",
+    name: "いしがまや GOKU BURGER",
+    group: "=LOVE",
+    category: "聖地店舗",
+    latitude: 35.666922,
+    longitude: 139.708289,
+    event_date: "2024-09-25",
+    youtube_title: "🎥 関連映像: 【感動】おいしすぎて衝撃のハンバーガーに出会ってしまいました 【#イコラブハンバーガー部】",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/LXebPFtWQhE?si=bUbtFoADpW1mY3Mp&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "神戸牛チーズバーガーの熱狂者",
+    tags: ["YouTube企画", "ハンバーガー部"],
+    description: 'YouTube企画「イコラブハンバーガー部」の聖地として紹介されたスポットです。髙松瞳さんと瀧脇笙古さんが訪れました。\n\n■ 注文メニュー\n・ダブル神戸牛 チーズ バーガー セット\n・BLTチーズバーガー＋アボカドトッピング セット\n※現在提供されていない可能性があります。\n\nURL: https://kichiri.jp/ishigamaya/gokuburger-omotesando/\n住所: 〒150-0001 東京都渋谷区神宮前５丁目８−５ ジュビリープラザビル 2F\n\n<iframe width="560" height="315" src="https://www.youtube.com/embed/LXebPFtWQhE?si=bUbtFoADpW1mY3Mp&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    address: "〒150-0001 東京都渋谷区神宮前５丁目８−５ ジュビリープラザビル 2F"
+  },
+  {
+    id: "spot-real-hamburger-ballpark9",
+    name: "BALLPARK BURGER &9",
+    group: "=LOVE",
+    category: "聖地店舗",
+    latitude: 35.4433,
+    longitude: 139.6402,
+    event_date: "2025-06-07",
+    youtube_title: "🎥 関連映像: 【嬉しいご報告】イコラブハンバーガー部、コラボします！！",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/xUoPnF8uUXY?si=4Ni-pe6ZQB0foiYI&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "ベイスターズコラボバーガーの目撃者",
+    tags: ["YouTube企画", "ハンバーガー部"],
+    description: 'YouTube企画「イコラブハンバーガー部」の聖地として紹介されたスポットです。髙松瞳さんと瀧脇笙古さんが訪れました。\n\n■ 注文メニュー\n・コラボバーガー（※現在は提供終了しています）\n※現在提供されていない可能性があります。\n\n住所: 〒231-0022 横浜市中区横浜公園\n\n<iframe width="560" height="315" src="https://www.youtube.com/embed/xUoPnF8uUXY?si=4Ni-pe6ZQB0foiYI&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    address: "〒231-0022 横浜市中区横浜公園"
   }
 ];
 
