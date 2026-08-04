@@ -18,7 +18,7 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: 「さなつんのはしご酒」の聖地10店舗のデータを追加';
+  const commitMsg = 'fix: 聖地解説・MV見どころガイドの定型文デフォルト表示を削除（解説がある場合のみ表示）';
   execSync(`git commit -m "${commitMsg}"`, { stdio: 'inherit' });
   console.log('✅ Commit complete!');
 

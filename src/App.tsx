@@ -5555,38 +5555,40 @@ ${window.location.origin + window.location.pathname}
                     </div>
 
                     {/* 🎬 聖地解説・MV見どころガイド */}
-                    <div className="animate-fade-in-up" style={{
-                      marginTop: '20px',
-                      padding: '16px',
-                      background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
-                      border: '1px solid #e2e8f0',
-                      borderRadius: '16px',
-                      boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.02)'
-                    }}>
-                      <h4 style={{
-                        fontSize: '11px',
-                        fontWeight: '900',
-                        color: '#64748b',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.05em',
-                        marginBottom: '8px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '6px'
+                    {selectedSpot.commentary && (
+                      <div className="animate-fade-in-up" style={{
+                        marginTop: '20px',
+                        padding: '16px',
+                        background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
+                        border: '1px solid #e2e8f0',
+                        borderRadius: '16px',
+                        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.02)'
                       }}>
-                        🎬 聖地解説・MV見どころガイド
-                      </h4>
-                      <p className="episode-text" style={{
-                        fontSize: '12.5px',
-                        lineHeight: '1.65',
-                        color: '#334155',
-                        margin: 0,
-                        whiteSpace: 'pre-wrap',
-                        fontWeight: '700'
-                      }}>
-                        {selectedSpot.commentary || `${selectedSpot.name}は、イコノイジョイ（${selectedSpot.group}）の歴史において重要な役割を持つ聖地です。MVロケ地としての美しいカットや、メンバーが歩んだ軌跡、ライブでの感動の瞬間がここに刻まれています。現地を訪れる際は、周辺の環境やルールに配慮しながら、彼女たちが実際に過ごした眩しい青春の空気感を体感してみましょう。`}
-                      </p>
-                    </div>
+                        <h4 style={{
+                          fontSize: '11px',
+                          fontWeight: '900',
+                          color: '#64748b',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.05em',
+                          marginBottom: '8px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px'
+                        }}>
+                          🎬 聖地解説・MV見どころガイド
+                        </h4>
+                        <p className="episode-text" style={{
+                          fontSize: '12.5px',
+                          lineHeight: '1.65',
+                          color: '#334155',
+                          margin: 0,
+                          whiteSpace: 'pre-wrap',
+                          fontWeight: '700'
+                        }}>
+                          {selectedSpot.commentary}
+                        </p>
+                      </div>
+                    )}
 
                     {/* 国立競技場特設イベントボタン群 */}
                     {selectedSpot.id === 'spot-special-national-stadium' && (
@@ -7859,38 +7861,40 @@ ${window.location.origin + window.location.pathname}
               </div>
 
               {/* 🎬 聖地解説・MV見どころガイド */}
-              <div className="animate-fade-in-up" style={{
-                marginTop: '16px',
-                padding: '16px',
-                background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
-                border: '1px solid #e2e8f0',
-                borderRadius: '16px',
-                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.02)'
-              }}>
-                <h4 style={{
-                  fontSize: '11px',
-                  fontWeight: '900',
-                  color: '#64748b',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.05em',
-                  marginBottom: '8px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px'
+              {selectedSpot.commentary && (
+                <div className="animate-fade-in-up" style={{
+                  marginTop: '16px',
+                  padding: '16px',
+                  background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '16px',
+                  boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.02)'
                 }}>
-                  🎬 聖地解説・MV見どころガイド
-                </h4>
-                <p className="episode-text" style={{
-                  fontSize: '12px',
-                  lineHeight: '1.65',
-                  color: '#334155',
-                  margin: 0,
-                  whiteSpace: 'pre-wrap',
-                  fontWeight: '700'
-                }}>
-                  {selectedSpot.commentary || `${selectedSpot.name}は、イコノイジョイ（${selectedSpot.group}）の歴史において重要な役割を持つ聖地です。MVロケ地としての美しいカットや、メンバーが歩んだ軌跡、ライブでの感動の瞬間がここに刻まれています。現地を訪れる際は、周辺の環境やルールに配慮しながら、彼女たちが実際に過ごした眩しい青春の空気感を体感してみましょう。`}
-                </p>
-              </div>
+                  <h4 style={{
+                    fontSize: '11px',
+                    fontWeight: '900',
+                    color: '#64748b',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                    marginBottom: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px'
+                  }}>
+                    🎬 聖地解説・MV見どころガイド
+                  </h4>
+                  <p className="episode-text" style={{
+                    fontSize: '12px',
+                    lineHeight: '1.65',
+                    color: '#334155',
+                    margin: 0,
+                    whiteSpace: 'pre-wrap',
+                    fontWeight: '700'
+                  }}>
+                    {selectedSpot.commentary}
+                  </p>
+                </div>
+              )}
 
               {/* 国立競技場特設イベントボタン群 (モバイル) */}
               {selectedSpot.id === 'spot-special-national-stadium' && (
