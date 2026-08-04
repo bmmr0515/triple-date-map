@@ -18,7 +18,7 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: 国立競技場（MUFGスタジアム）のスポット詳細情報と動画を更新';
+  const commitMsg = 'feat: 「さなつんのはしご酒」の聖地10店舗のデータを追加';
   execSync(`git commit -m "${commitMsg}"`, { stdio: 'inherit' });
   console.log('✅ Commit complete!');
 
