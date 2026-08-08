@@ -30,6 +30,8 @@ import { SpotsListPage, AreasListPage, GroupsListPage, SongsListPage, CoursesLis
 import { SpotDetailView } from './components/SpotDetailView';
 import { CourseDetailView } from './components/CourseDetailView';
 import { ContactForm } from './components/ContactForm';
+import { INITIAL_ARTICLES } from './articles';
+import { ArticlesListPage, ArticleDetailView } from './components/ArticleViews';
 
 // 🔔 アプリ内新着お知らせのインターフェースとデータ定義
 export interface Notice {
@@ -731,6 +733,12 @@ export default function App() {
     const pathOnly = pathname.split('?')[0];
     const cleanPath = pathOnly.replace(/\/$/, '') || '/';
     
+    // 個別記事詳細: /articles/:slug
+    const articleMatch = cleanPath.match(/^\/articles\/([a-zA-Z0-9_-]+)$/);
+    if (articleMatch) {
+      return { path: '/articles/:slug', params: { slug: articleMatch[1] } };
+    }
+
     // 個別スポット詳細: /spots/:slug
     const spotMatch = cleanPath.match(/^\/spots\/([a-zA-Z0-9_-]+)$/);
     if (spotMatch) {
@@ -744,7 +752,8 @@ export default function App() {
 
     const validPaths = [
       '/spots', '/areas', '/groups', '/songs', '/courses', '/guide',
-      '/about', '/profile', '/contact', '/privacy', '/terms', '/disclaimer', '/copyright'
+      '/about', '/profile', '/contact', '/privacy', '/terms', '/disclaimer', '/copyright',
+      '/articles'
     ];
     
     if (validPaths.includes(cleanPath)) {
@@ -1751,6 +1760,15 @@ ${window.location.origin + window.location.pathname}
                 return <SongsListPage spots={spots} onNavigate={navigateTo} onViewOnMap={handleViewOnMap} />;
               case '/courses':
                 return <CoursesListPage courses={courses} spots={spots} onNavigate={navigateTo} />;
+              case '/articles':
+                return <ArticlesListPage articles={INITIAL_ARTICLES} onNavigate={navigateTo} />;
+              case '/articles/:slug': {
+                const article = INITIAL_ARTICLES.find(a => a.slug === currentRoute.params.slug);
+                if (article) {
+                  return <ArticleDetailView article={article} allSpots={spots} onNavigate={navigateTo} onViewOnMap={handleViewOnMap} />;
+                }
+                return <div style={{ textAlign: 'center', padding: '100px 20px', fontSize: '14px', color: '#64748b' }}>コラムが見つかりません。</div>;
+              }
               case '/spots/:slug': {
                 const spot = spots.find(s => s.slug === currentRoute.params.slug);
                 if (spot) {
@@ -1785,6 +1803,8 @@ ${window.location.origin + window.location.pathname}
         <footer style={{ background: '#0f172a', color: '#94a3b8', padding: '40px 20px', borderTop: '1px solid #1e293b', fontSize: '11px', textAlign: 'center' }}>
           <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'center', fontWeight: 'bold' }}>
+              <a href="/articles" onClick={(e) => { e.preventDefault(); navigateTo('/articles'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>巡礼コラム・レポート</a>
+              <span style={{ color: '#334155' }}>|</span>
               <a href="/about" onClick={(e) => { e.preventDefault(); navigateTo('/about'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>このサイトについて</a>
               <span style={{ color: '#334155' }}>|</span>
               <a href="/profile" onClick={(e) => { e.preventDefault(); navigateTo('/profile'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>運営者情報</a>

@@ -126,6 +126,37 @@ try {
   process.exit(1);
 }
 
+// 3. 記事データの抽出
+console.log('📦 記事データを解析中...');
+const articlesTsPath = path.join(__dirname, '../src/articles.ts');
+const articlesTsContent = fs.readFileSync(articlesTsPath, 'utf8');
+const startIdxArticles = articlesTsContent.indexOf('const INITIAL_ARTICLES: Article[] = [');
+
+if (startIdxArticles === -1) {
+  console.error('❌ エラー: articles.ts 内の INITIAL_ARTICLES の検出に失敗しました。');
+  process.exit(1);
+}
+
+let articlesBracketCount = 0;
+let articlesArrayString = '';
+for (let i = startIdxArticles + 'const INITIAL_ARTICLES: Article[] = '.length; i < articlesTsContent.length; i++) {
+  const char = articlesTsContent[i];
+  if (char === '[') articlesBracketCount++;
+  if (char === ']') articlesBracketCount--;
+  articlesArrayString += char;
+  if (articlesBracketCount === 0 && articlesArrayString.trim().startsWith('[')) {
+    break;
+  }
+}
+
+let articles = [];
+try {
+  articles = eval('(' + articlesArrayString + ')');
+} catch (e) {
+  console.error('❌ エラー: INITIAL_ARTICLES の eval パースに失敗しました。', e);
+  process.exit(1);
+}
+
 // 🌐 プリレンダリング用ルートリスト定義
 const routes = [
   // 固定・一覧ページ
@@ -142,7 +173,8 @@ const routes = [
   { path: '/areas', title: '地域別聖地一覧 - トリプルデートマップ', desc: '都道府県や市区町村などの地域別に分類された聖地一覧ページです。' },
   { path: '/groups', title: 'グループ別聖地一覧 - トリプルデートマップ', desc: '=LOVE（イコラブ）、≠ME（ノイミー）、≒JOY（ニアジョイ）のグループ別聖地一覧です。' },
   { path: '/songs', title: '作品・楽曲別聖地一覧 - トリプルデートマップ', desc: 'ミュージックビデオ（MV）やロケ番組などの作品・楽曲別の聖地一覧です。' },
-  { path: '/courses', title: '聖地巡礼モデルコース一覧 - トリプルデートマップ', desc: '効率よく聖地を回れるおすすめのモデルコース情報一覧です。' }
+  { path: '/courses', title: '聖地巡礼モデルコース一覧 - トリプルデートマップ', desc: '効率よく聖地を回れるおすすめのモデルコース情報一覧です。' },
+  { path: '/articles', title: '巡礼コラム・レポート一覧 - トリプルデートマップ', desc: 'イコノイジョイの聖地ロケ地巡礼に関する詳細なレポートコラムや、背景解説記事の一覧です。' }
 ];
 
 // 個別スポットを追加
@@ -166,6 +198,17 @@ courses.forEach(course => {
     desc: `${course.name}の巡礼コース。所要時間: ${course.duration}、移動手段: ${course.transportation}。効率的な回り方と周辺おすすめカフェ情報を掲載。`,
     isCourse: true,
     courseData: course
+  });
+});
+
+// コラムを追加
+articles.forEach(article => {
+  routes.push({
+    path: `/articles/${article.slug}`,
+    title: `${article.title} - トリプルデートマップ`,
+    desc: article.excerpt,
+    isArticle: true,
+    articleData: article
   });
 });
 
@@ -356,6 +399,63 @@ routes.forEach(route => {
         <p>${c.notes}</p>
         <h2>周辺おすすめ飲食店・カフェ情報</h2>
         <p>${c.cafeInfo}</p>
+      </div>
+    `;
+  } else if (route.isArticle) {
+    const a = route.articleData;
+    const structData = {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": a.title,
+      "description": a.excerpt,
+      "datePublished": a.publishedAt,
+      "author": {
+        "@type": "Person",
+        "name": "トリプルデートマップ編集部"
+      }
+    };
+
+    const relatedSpotItems = spots.filter(s => a.relatedSpotIds?.includes(s.id));
+    const relatedSpotsHtml = relatedSpotItems.length > 0 ? `
+      <h2>この記事に関連する聖地スポット</h2>
+      <ul>
+        ${relatedSpotItems.map(s => `<li><a href="/spots/${s.slug}">${s.name} (${s.group})</a></li>`).join('')}
+      </ul>
+    ` : '';
+
+    const formattedBodyHtml = a.content
+      .split('\n\n')
+      .map(p => {
+        const t = p.trim();
+        if (t.startsWith('####')) return `<h4>${t.replace(/^####\s*/, '')}</h4>`;
+        if (t.startsWith('###')) return `<h3>${t.replace(/^###\s*/, '')}</h3>`;
+        if (t.startsWith('##')) return `<h2>${t.replace(/^##\s*/, '')}</h2>`;
+        if (t.startsWith('>')) {
+          const blockContent = t.split('\n').map(line => line.replace(/^>\s*/, '')).join('<br/>');
+          return `<blockquote style="background:#f8fafc; border-left:4px solid #a78bfa; padding:12px 18px; margin:20px 0; font-style:italic; color:#475569;">${blockContent}</blockquote>`;
+        }
+        return `<p>${t.replace(/\n/g, '<br/>')}</p>`;
+      })
+      .join('\n');
+
+    bodyContent = `
+      <div class="prerendered-content" style="max-width: 800px; margin: 0 auto; padding: 20px;">
+        <script type="application/ld+json">${JSON.stringify(structData)}</script>
+        <h1>${a.title}</h1>
+        <p><small>公開日: ${a.publishedAt} | カテゴリ: ${a.category}</small></p>
+        <hr/>
+        <div class="article-text" style="font-size:14.5px; line-height:1.8; color:#334155;">
+          ${formattedBodyHtml}
+        </div>
+        <hr/>
+        ${relatedSpotsHtml}
+        
+        <!-- Ad Placeholder -->
+        <div style="width:100%; max-width:336px; min-height:250px; background:#f8fafc; border:1.5px dashed #cbd5e1; border-radius:12px; margin:30px auto; display:flex; align-items:center; justify-content:center; color:#94a3b8; font-size:11px;">
+          広告プレースホルダー (レクタングル広告)
+        </div>
+
+        <p><a href="/articles">← コラム一覧へ戻る</a></p>
       </div>
     `;
   } else {
