@@ -2,6 +2,7 @@ import React from 'react';
 import { Spot } from '../db';
 import { Course } from '../courses';
 import { MapPin, ArrowRight, Music, Users } from 'lucide-react';
+import { AdPlaceholder } from './AdPlaceholder';
 
 interface ListPagesProps {
   spots: Spot[];
@@ -38,21 +39,34 @@ export const SpotsListPage: React.FC<ListPagesProps> = ({ spots, onNavigate, onV
       <Breadcrumb items={[{ name: 'スポット一覧' }]} onNavigate={onNavigate} />
       <h1 style={{ fontSize: '24px', fontWeight: '900', color: '#0f172a', marginBottom: '24px', borderBottom: '3px solid #ff6897', paddingBottom: '10px' }}>📍 スポット一覧 ({publishedSpots.length}箇所)</h1>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
-        {publishedSpots.map(spot => (
-          <div key={spot.id} className="list-spot-card" style={{ display: 'flex', flexDirection: 'column', padding: '18px', background: '#fff', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.04)', border: '1px solid #f1f5f9' }}>
-            <span style={{ fontSize: '10px', fontWeight: 'bold', color: spot.group === '=LOVE' ? '#ff6897' : spot.group === '≠ME' ? '#58ccff' : spot.group === '≒JOY' ? '#ffdf3f' : '#cbd5e1', background: '#f8fafc', padding: '4px 8px', borderRadius: '8px', alignSelf: 'flex-start', marginBottom: '8px' }}>{spot.group}</span>
-            <h3 style={{ fontSize: '15px', fontWeight: 'bold', color: '#0f172a', margin: '0 0 8px 0' }}>{spot.name}</h3>
-            <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 16px 0', flexGrow: 1, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{spot.description.split('⚠️')[0]}</p>
-            <div style={{ display: 'flex', gap: '8px' }}>
-              <a href={`/spots/${spot.slug}`} onClick={(e) => { e.preventDefault(); onNavigate(`/spots/${spot.slug}`); }} style={{ flexGrow: 1, textAlign: 'center', background: '#f1f5f9', color: '#0f172a', textDecoration: 'none', padding: '8px', borderRadius: '10px', fontSize: '12px', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
-                詳細を見る <ArrowRight size={14} />
-              </a>
-              <button onClick={() => onViewOnMap(spot)} style={{ background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)', color: '#fff', border: 'none', padding: '8px 12px', borderRadius: '10px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <MapPin size={14} /> 地図
-              </button>
+        {publishedSpots.reduce<React.ReactNode[]>((acc, spot, index) => {
+          acc.push(
+            <div key={spot.id} className="list-spot-card" style={{ display: 'flex', flexDirection: 'column', padding: '18px', background: '#fff', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.04)', border: '1px solid #f1f5f9' }}>
+              <span style={{ fontSize: '10px', fontWeight: 'bold', color: spot.group === '=LOVE' ? '#ff6897' : spot.group === '≠ME' ? '#58ccff' : spot.group === '≒JOY' ? '#ffdf3f' : '#cbd5e1', background: '#f8fafc', padding: '4px 8px', borderRadius: '8px', alignSelf: 'flex-start', marginBottom: '8px' }}>{spot.group}</span>
+              <h3 style={{ fontSize: '15px', fontWeight: 'bold', color: '#0f172a', margin: '0 0 8px 0' }}>{spot.name}</h3>
+              <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 16px 0', flexGrow: 1, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{spot.description.split('⚠️')[0]}</p>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <a href={`/spots/${spot.slug}`} onClick={(e) => { e.preventDefault(); onNavigate(`/spots/${spot.slug}`); }} style={{ flexGrow: 1, textAlign: 'center', background: '#f1f5f9', color: '#0f172a', textDecoration: 'none', padding: '8px', borderRadius: '10px', fontSize: '12px', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
+                  詳細を見る <ArrowRight size={14} />
+                </a>
+                <button onClick={() => onViewOnMap(spot)} style={{ background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)', color: '#fff', border: 'none', padding: '8px 12px', borderRadius: '10px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <MapPin size={14} /> 地図
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+          
+          // 4件ごとに広告を追加 (0始まりなので index === 3, 7, 11... の後)
+          if ((index + 1) % 4 === 0) {
+            acc.push(
+              <div key={`ad-${spot.id}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', borderRadius: '16px', border: '1px solid #f1f5f9', padding: '12px' }}>
+                <AdPlaceholder />
+              </div>
+            );
+          }
+          
+          return acc;
+        }, [])}
       </div>
     </div>
   );

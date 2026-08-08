@@ -265,6 +265,32 @@ routes.forEach(route => {
       accessText = `<li><strong>最寄り駅:</strong> ${s.nearest_station}${walkText}</li>`;
     }
     
+    const showYoutube = s.youtube_title || s.youtube_url;
+    let youtubeSection = '';
+    if (showYoutube) {
+      youtubeSection = `
+        <h2>登場作品・関連動画</h2>
+        ${s.youtube_title ? `<p><strong>作品名:</strong> ${s.youtube_title.replace('🎥 関連映像: ', '').replace('🎥 関連映像：', '')}</p>` : ''}
+        ${s.youtube_url ? `
+        <div class="video-container" style="width: 100%; aspect-ratio: 16/9; max-width: 560px; margin: 16px 0; border-radius: 12px; overflow: hidden; background: #000;">
+          ${s.youtube_url.includes('<iframe') ? s.youtube_url.replace(/width="\d+"/, 'width="100%"').replace(/height="\d+"/, 'height="100%"') : `<iframe width="100%" height="100%" src="${s.youtube_url}" frameborder="0" allowfullscreen></iframe>`}
+        </div>` : ''}
+      `;
+    }
+
+    const rewardSection = s.reward_title ? `
+      <h2>巡礼チェックイン特典</h2>
+      <p>実際に現地を訪れてGPSチェックインを達成すると、限定アワード称号 <strong>✨【${s.reward_title}】</strong> を獲得できます！</p>
+    ` : '';
+
+    const adSectionPrerender = `
+      <!-- AdSense / Banner Ad Area -->
+      <div style="width: 100%; max-width: 336px; min-height: 250px; background: #f8fafc; border: 1.5px dashed #cbd5e1; border-radius: 12px; margin: 30px auto; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #94a3b8; font-size: 11px; gap: 8px;">
+        <span style="font-size: 16px;">📰</span>
+        <span>広告プレースホルダー (レクタングル広告)</span>
+      </div>
+    `;
+
     bodyContent = `
       <div class="prerendered-content" style="max-width: 800px; margin: 0 auto; padding: 20px;">
         ${breadcrumbs}
@@ -272,22 +298,28 @@ routes.forEach(route => {
         <h1>${s.name}</h1>
         <p><strong>グループ:</strong> ${s.group} | <strong>カテゴリ:</strong> ${s.category}</p>
         <hr/>
-        <h2>概要</h2>
+        <h2>聖地・ロケ地概要</h2>
         <p>${s.description}</p>
-        ${showScene ? `<h2>場面説明</h2>\n<p>${s.scene}</p>` : ''}
+        ${showScene ? `<h2>場面説明・見どころ</h2>\n<p>${s.scene}</p>` : ''}
         ${(showAddress || showAccess) ? `
-        <h2>ロケ地住所・最寄り駅</h2>
+        <h2>ロケ地住所・最寄り駅アクセス</h2>
         <ul>
           ${showAddress ? `<li><strong>所在地:</strong> ${s.address}</li>` : ''}
           ${accessText}
         </ul>
         ` : ''}
-        ${showNotes ? `<h2>訪問時の注意事項</h2>\n<p>${s.visitor_notes}</p>` : ''}
-        <h2>現地チェックポイント</h2>
+        ${showNotes ? `<h2>訪問時の注意事項・マナー</h2>\n<p>${s.visitor_notes}</p>` : ''}
+        
+        <h2>現地注目チェックポイント</h2>
         <ul>
           ${s.check_points.map(cp => `<li>${cp}</li>`).join('')}
         </ul>
-        <p><small>データ最終確認日: ${s.last_confirmed_date}</small></p>
+
+        ${youtubeSection}
+        ${rewardSection}
+        ${adSectionPrerender}
+
+        <p style="margin-top: 40px;"><small>データ最終確認日: ${s.last_confirmed_date}</small></p>
         <p><a href="/contact?subject=${encodeURIComponent(s.name + 'の修正・情報提供')}">⚠️ この聖地スポット情報の修正・提供はこちら</a></p>
       </div>
     `;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Map, Search, MapPin, Trophy, ShieldAlert, CheckCircle2, XCircle } from 'lucide-react';
 
 interface PageProps {
   onNavigate: (path: string) => void;
@@ -117,30 +118,129 @@ export const CopyrightPage: React.FC<PageProps> = ({ onNavigate }) => {
 
 export const GuidePage: React.FC<PageProps> = ({ onNavigate }) => {
   return (
-    <div className="static-page-container" style={{ maxWidth: '800px', margin: '40px auto', padding: '24px', background: '#ffffff', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
-      <h1 style={{ fontSize: '24px', fontWeight: '900', color: '#0f172a', marginBottom: '20px', borderBottom: '3px solid #ff6897', paddingBottom: '10px' }}>🔰 初めての方向けガイド</h1>
-      <div style={{ lineHeight: '1.8', color: '#334155', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <p>「トリプルデートマップ」をご利用いただきありがとうございます！当サイトは、イコノイジョイ（=LOVE、≠ME、≒JOY）のメンバーが活動の軌跡を残した聖地やロケ地を楽しく巡るための便利ツールです。</p>
+    <div className="static-page-container" style={{ maxWidth: '850px', margin: '40px auto', padding: '32px 24px', background: '#ffffff', borderRadius: '24px', boxShadow: '0 10px 30px rgba(15, 23, 42, 0.04)', border: '1px solid #f1f5f9' }}>
+      <h1 style={{ fontSize: '26px', fontWeight: '950', color: '#0f172a', marginBottom: '24px', borderBottom: '3.5px solid #ff6897', paddingBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        🔰 初めての方向けガイド
+      </h1>
+      
+      <div style={{ lineHeight: '1.8', color: '#334155', display: 'flex', flexDirection: 'column', gap: '28px' }}>
+        <p style={{ fontSize: '14.5px', color: '#475569', margin: 0 }}>
+          「トリプルデートマップ」をご利用いただきありがとうございます！当サイトは、イコノイジョイ（=LOVE、≠ME、≒JOY）のメンバーが活動の軌跡を残した聖地やロケ地を楽しく巡るための非公式ファンコミュニティサイトです。
+        </p>
         
-        <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginTop: '16px' }}>✨ 主な機能と楽しみ方</h2>
-        <ul style={{ paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <li><strong>🗺️ 聖地マップの活用：</strong> 地図上で視覚的に聖地を探すことができます。ピンをタップすると詳細ポップアップが表示され、関連MVをその場で再生できます。</li>
-          <li><strong>🔍 スポット検索と絞り込み：</strong> スポット名だけでなく、関連する楽曲や作品名、エリア（都道府県）で聖地を絞り込んで探すことができます。</li>
-          <li><strong>📍 GPSチェックイン：</strong> 聖地を実際に訪れた際、スマートフォンなどのGPSを使って「チェックイン」ができます。チェックインが完了すると、自分の訪問履歴に記録されます。</li>
-          <li><strong>🏆 称号・アワードコレクション：</strong> 特定のミッション（例：「この空がトリガー」の聖地12箇所をコンプリートする等）をクリアすると、プロフィールに設定できるユニークな「称号」を獲得できます！</li>
-        </ul>
+        {/* 🗺️ 機能カードグリッド */}
+        <div>
+          <h2 style={{ fontSize: '18px', fontWeight: '900', color: '#0f172a', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            ✨ 主な機能と楽しみ方
+          </h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px' }}>
+            
+            {/* カード1: マップ */}
+            <div style={{ padding: '20px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ background: '#ffe4e6', color: '#ff6897', padding: '8px', borderRadius: '10px', display: 'flex' }}>
+                  <Map size={20} />
+                </div>
+                <strong style={{ fontSize: '14.5px', color: '#0f172a', fontWeight: 'bold' }}>聖地マップの活用</strong>
+              </div>
+              <p style={{ fontSize: '12.5px', color: '#64748b', margin: 0, lineHeight: '1.6' }}>
+                地図上で視覚的に聖地を探すことができます。ピンをタップすると詳細画面が表示され、関連MVをその場で再生できます。
+              </p>
+            </div>
 
-        <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginTop: '16px' }}>🚨 聖地巡礼のマナー（必ずお読みください）</h2>
-        <p>多くの聖地は一般の住民の方が暮らしている地域や、学校、他のお客様が利用される商業施設です。トラブルを起こさず、巡礼を長く楽しむために以下のルールを守りましょう。</p>
-        <ol style={{ paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <li><strong>私有地や学校へ無断で立ち入らない：</strong> 撮影スタジオや現役の学校など、見学不可の場所は外観からそっと眺めるだけにしましょう。</li>
-          <li><strong>一般の方の写り込みに配慮する：</strong> 現地で写真を撮影する際は、通行人や他の利用者の顔が映らないようアングルを調整し、必要に応じてモザイク等の加工を行ってください。</li>
-          <li><strong>大声での会話や長時間の占有を避ける：</strong> 特に駅の改札付近や狭い道路などでは、通行の妨げにならないよう短時間で撮影を済ませましょう。</li>
-          <li><strong>ゴミは必ず持ち帰る・現地の店舗を利用する：</strong> 現地の発展のためにも、カフェや飲食店が聖地の場合はマナーよく注文し、お金を落とす「恩返し巡礼」を心がけましょう。</li>
-        </ol>
+            {/* カード2: 検索 */}
+            <div style={{ padding: '20px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ background: '#e0f2fe', color: '#0284c7', padding: '8px', borderRadius: '10px', display: 'flex' }}>
+                  <Search size={20} />
+                </div>
+                <strong style={{ fontSize: '14.5px', color: '#0f172a', fontWeight: 'bold' }}>スポット検索と絞り込み</strong>
+              </div>
+              <p style={{ fontSize: '12.5px', color: '#64748b', margin: 0, lineHeight: '1.6' }}>
+                スポット名だけでなく、関連する楽曲や作品名、エリア（都道府県）で聖地を絞り込んで効率よく探せます。
+              </p>
+            </div>
+
+            {/* カード3: チェックイン */}
+            <div style={{ padding: '20px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ background: '#f3e8ff', color: '#7c3aed', padding: '8px', borderRadius: '10px', display: 'flex' }}>
+                  <MapPin size={20} />
+                </div>
+                <strong style={{ fontSize: '14.5px', color: '#0f172a', fontWeight: 'bold' }}>GPSチェックイン</strong>
+              </div>
+              <p style={{ fontSize: '12.5px', color: '#64748b', margin: 0, lineHeight: '1.6' }}>
+                聖地を実際に訪れた際、スマートフォンなどのGPSを使って「チェックイン」を行い、自分の訪問履歴を記録できます。
+              </p>
+            </div>
+
+            {/* カード4: 称号 */}
+            <div style={{ padding: '20px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ background: '#fef3c7', color: '#d97706', padding: '8px', borderRadius: '10px', display: 'flex' }}>
+                  <Trophy size={20} />
+                </div>
+                <strong style={{ fontSize: '14.5px', color: '#0f172a', fontWeight: 'bold' }}>称号コレクション</strong>
+              </div>
+              <p style={{ fontSize: '12.5px', color: '#64748b', margin: 0, lineHeight: '1.6' }}>
+                特定のミッション（例：「この空がトリガー」の聖地巡礼）をクリアすると、プロフィールに設定できるユニークな「称号」を獲得できます！
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        {/* 🚨 聖地巡礼のマナー（アラート風ボックス） */}
+        <div style={{ background: '#fffbeb', border: '1.5px solid #fef3c7', borderRadius: '20px', padding: '24px 20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <h2 style={{ fontSize: '17px', fontWeight: '900', color: '#b45309', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <ShieldAlert size={22} style={{ color: '#d97706' }} /> 🚨 聖地巡礼のマナー（必ずお読みください）
+          </h2>
+          <p style={{ fontSize: '13px', color: '#78350f', margin: 0, lineHeight: '1.7' }}>
+            多くの聖地は一般の住民の方が暮らしている地域や、学校、他のお客様が利用される商業施設です。トラブルを起こさず、巡礼を長く楽しむために以下のルールを守りましょう。
+          </p>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            
+            <div style={{ display: 'flex', gap: '10px', fontSize: '13px' }}>
+              <XCircle size={18} style={{ color: '#ef4444', flexShrink: 0, marginTop: '2px' }} />
+              <div>
+                <strong style={{ color: '#991b1b', display: 'block' }}>私有地や学校へ無断で立ち入らない</strong>
+                <span style={{ color: '#78350f' }}>撮影スタジオや現役の学校など、見学不可の場所は敷地外からそっと眺めるだけにしましょう。</span>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '10px', fontSize: '13px' }}>
+              <XCircle size={18} style={{ color: '#ef4444', flexShrink: 0, marginTop: '2px' }} />
+              <div>
+                <strong style={{ color: '#991b1b', display: 'block' }}>一般の方の写り込みに配慮する</strong>
+                <span style={{ color: '#78350f' }}>現地で写真を撮影する際は、通行人や他の利用者の顔が映らないよう配慮し、モザイク処理等を施してください。</span>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '10px', fontSize: '13px' }}>
+              <XCircle size={18} style={{ color: '#ef4444', flexShrink: 0, marginTop: '2px' }} />
+              <div>
+                <strong style={{ color: '#991b1b', display: 'block' }}>大声での会話や長時間の占有を避ける</strong>
+                <span style={{ color: '#78350f' }}>改札付近や狭い生活道路などでは、一般の方の通行の妨げにならないよう短時間で譲り合って撮影を済ませましょう。</span>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '10px', fontSize: '13px' }}>
+              <CheckCircle2 size={18} style={{ color: '#10b981', flexShrink: 0, marginTop: '2px' }} />
+              <div>
+                <strong style={{ color: '#065f46', display: 'block' }}>ゴミは必ず持ち帰る・現地の店舗を利用する（恩返し巡礼）</strong>
+                <span style={{ color: '#78350f' }}>現地の発展のためにも、カフェや飲食店が聖地の場合はマナーよく注文し、お金を落とす巡礼を心がけましょう。</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
       </div>
-      <div style={{ textAlign: 'center', marginTop: '30px' }}>
-        <button onClick={() => onNavigate('/')} style={{ background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)', color: '#fff', border: 'none', padding: '10px 24px', borderRadius: '20px', fontWeight: 'bold', cursor: 'pointer' }}>マップを始める！</button>
+
+      <div style={{ textAlign: 'center', marginTop: '36px' }}>
+        <button onClick={() => onNavigate('/')} style={{ background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)', color: '#fff', border: 'none', padding: '12px 32px', borderRadius: '24px', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 15px rgba(255,104,151,0.2)', transition: 'transform 0.2s' }}>
+          マップを始める！
+        </button>
       </div>
     </div>
   );
