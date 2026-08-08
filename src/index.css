@@ -79,6 +79,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0; /* flexアイテムの最小幅制限を解除して子要素のellipsisを効かせる */
 }
 
 .header-icon-box {
@@ -108,6 +109,9 @@ body {
   background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .header-right {
@@ -1245,7 +1249,11 @@ input[type="range"].pop-slider::-webkit-slider-thumb:hover {
   }
 
   .header-title {
-    font-size: 15px !important;
+    font-size: 14px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px; /* スマホ画面でトグルボタン等と重ならない限界値 */
   }
 
   /* スマホではヘッダーのこれら要素を非表示にし、3本線ドロワーの中に格納します */

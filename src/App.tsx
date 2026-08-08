@@ -1710,11 +1710,11 @@ ${window.location.origin + window.location.pathname}
       <div className="app-container" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#f8fafc', fontFamily: "'Outfit', 'Noto Sans JP', sans-serif" }}>
         {/* 共通ヘッダー */}
         <header className="app-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 24px', background: '#ffffff', borderBottom: '1.5px solid #e2e8f0', boxShadow: '0 4px 12px rgba(15, 23, 42, 0.02)' }}>
-          <div className="header-left" onClick={() => navigateTo('/')} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div className="header-icon-box" style={{ background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)', width: '36px', height: '36px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '18px' }}>
+          <div className="header-left" onClick={() => navigateTo('/')} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 }}>
+            <div className="header-icon-box" style={{ background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)', width: '36px', height: '36px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '18px', flexShrink: 0 }}>
               🗺️
             </div>
-            <h1 className="header-title" style={{ fontSize: '16px', fontWeight: '900', color: '#0f172a', margin: 0 }}>
+            <h1 className="header-title" style={{ fontSize: '16px', fontWeight: '900', color: '#0f172a', margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               トリプルデート・マップ
             </h1>
           </div>
@@ -2320,7 +2320,7 @@ ${window.location.origin + window.location.pathname}
                   display: 'flex',
                   alignItems: 'center',
                   gap: '4px',
-                  padding: '6px 12px',
+                  padding: '6px 10px',
                   borderRadius: '8px',
                   border: 'none',
                   background: activeView === 'map' ? '#ffffff' : 'transparent',
@@ -2328,6 +2328,7 @@ ${window.location.origin + window.location.pathname}
                   fontSize: '11px',
                   fontWeight: 'bold',
                   cursor: 'pointer',
+                  whiteSpace: 'nowrap',
                   boxShadow: activeView === 'map' ? '0 2px 6px rgba(0,0,0,0.05)' : 'none',
                   transition: 'all 0.2s'
                 }}
@@ -2340,7 +2341,7 @@ ${window.location.origin + window.location.pathname}
                   display: 'flex',
                   alignItems: 'center',
                   gap: '4px',
-                  padding: '6px 12px',
+                  padding: '6px 10px',
                   borderRadius: '8px',
                   border: 'none',
                   background: activeView === 'list' ? '#ffffff' : 'transparent',
@@ -2348,6 +2349,7 @@ ${window.location.origin + window.location.pathname}
                   fontSize: '11px',
                   fontWeight: 'bold',
                   cursor: 'pointer',
+                  whiteSpace: 'nowrap',
                   boxShadow: activeView === 'list' ? '0 2px 6px rgba(0,0,0,0.05)' : 'none',
                   transition: 'all 0.2s'
                 }}
