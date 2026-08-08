@@ -2652,7 +2652,8 @@ ${window.location.origin + window.location.pathname}
                 <p style={{ fontSize: '13px', lineHeight: '1.8', color: '#475569', margin: 0, fontWeight: '500' }}>
                   アイドルやアーティストのMV、番組、作品などに登場した場所を、地図と詳しい解説から探せる非公式の聖地巡礼サイトです。イコノイジョイ（=LOVE、≠ME、≒JOY）のメンバーが実際に訪れた大切なロケ地を登録しており、GPSでのチェックイン（巡礼スタンプ）や称号のコレクションが楽しめます。
                 </p>
-                <div style={{ display: 'flex', gap: '10px', marginTop: '16px', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', gap: '10px', marginTop: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
+                  <a href="/articles" onClick={(e) => navigateTo('/articles', e)} style={{ background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)', color: '#fff', textDecoration: 'none', padding: '8px 18px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center', gap: '6px', boxShadow: '0 4px 12px rgba(255,104,151,0.25)' }}>📚 巡礼コラム・レポート</a>
                   <a href="/guide" onClick={(e) => navigateTo('/guide', e)} style={{ background: '#f1f5f9', color: '#334155', textDecoration: 'none', padding: '8px 16px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>🔰 初めての方向けガイド</a>
                   <a href="/about" onClick={(e) => navigateTo('/about', e)} style={{ background: '#f1f5f9', color: '#334155', textDecoration: 'none', padding: '8px 16px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>🧭 このサイトについて</a>
                 </div>

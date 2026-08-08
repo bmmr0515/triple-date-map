@@ -37,7 +37,7 @@ export const ProfilePage: React.FC<PageProps> = ({ onNavigate }) => {
           <tbody>
             <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
               <td style={{ padding: '12px', fontWeight: 'bold', width: '30%' }}>運営者名</td>
-              <td style={{ padding: '12px' }}>トリプルデートマップ運営事務局（管理人：しょこわき）</td>
+              <td style={{ padding: '12px' }}>トリプルデートマップ運営事務局（管理人：れつぴ）</td>
             </tr>
             <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
               <td style={{ padding: '12px', fontWeight: 'bold' }}>サイト運営の目的</td>
@@ -46,7 +46,7 @@ export const ProfilePage: React.FC<PageProps> = ({ onNavigate }) => {
             <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
               <td style={{ padding: '12px', fontWeight: 'bold' }}>管理人連絡先 (SNS)</td>
               <td style={{ padding: '12px' }}>
-                <a href="https://x.com/shoko_wakichan" target="_blank" rel="noopener noreferrer" style={{ color: '#ff6897', textDecoration: 'underline', fontWeight: 'bold' }}>@shoko_wakichan (X)</a>
+                <a href="https://x.com/ikonoijoy_tools" target="_blank" rel="noopener noreferrer" style={{ color: '#ff6897', textDecoration: 'underline', fontWeight: 'bold' }}>@ikonoijoy_tools (X)</a>
               </td>
             </tr>
             <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
