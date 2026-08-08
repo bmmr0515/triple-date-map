@@ -100,8 +100,10 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
   const getCleanDescription = () => {
     const iframeRegex = /<iframe[^>]*>.*?<\/iframe>/gi;
     let clean = spot.description.replace(iframeRegex, '').trim();
-    if (clean.includes('⚠️聖地巡礼に関する重要なお願い')) {
-      clean = clean.split('⚠️聖地巡礼に関する重要なお願い')[0].trim();
+    const warningRegex = /⚠️\s*聖地巡礼に関する重要なお願い[：:]?\s*/;
+    const match = clean.match(warningRegex);
+    if (match) {
+      clean = clean.split(match[0])[0].trim();
     }
     return clean;
   };
@@ -249,13 +251,19 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
           </span>
           <span style={{ display: 'block', whiteSpace: 'pre-wrap' }}>{spot.visitor_notes}</span>
         </div>
-      ) : spot.description.includes('⚠️') ? (
+      ) : spot.description.match(/⚠️\s*聖地巡礼に関する重要なお願い[：:]?\s*/) ? (
         // 旧仕様のdescription警告部パース
         <div style={{ padding: '16px', background: '#fff5f5', border: '2px solid #feb2b2', borderRadius: '14px', margin: '24px 0', fontSize: '12.5px', color: '#9b2c2c', lineHeight: '1.6' }}>
           <span style={{ fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px', color: '#c53030', fontWeight: 'bold' }}>
             <ShieldAlert size={18} /> ⚠️ 聖地巡礼に関する重要なお願い
           </span>
-          <span style={{ display: 'block', whiteSpace: 'pre-wrap' }}>{spot.description.split('⚠️聖地巡礼に関する重要なお願い')[1]?.trim()}</span>
+          <span style={{ display: 'block', whiteSpace: 'pre-wrap' }}>
+            {(() => {
+              const warningRegex = /⚠️\s*聖地巡礼に関する重要なお願い[：:]?\s*/;
+              const match = spot.description.match(warningRegex);
+              return match ? spot.description.split(match[0])[1]?.trim() : '';
+            })()}
+          </span>
         </div>
       ) : null}
 

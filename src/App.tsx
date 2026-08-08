@@ -467,8 +467,10 @@ export default function App() {
     // 2. クリーンになったテキストに対して従来の警告テキスト分割を行う
     let mainDesc = cleanDesc;
     let warningText = "";
-    if (cleanDesc.includes('⚠️聖地巡礼に関する重要なお願い')) {
-      const parts = cleanDesc.split('⚠️聖地巡礼に関する重要なお願い');
+    const warningRegex = /⚠️\s*聖地巡礼に関する重要なお願い[：:]?\s*/;
+    const match = cleanDesc.match(warningRegex);
+    if (match) {
+      const parts = cleanDesc.split(match[0]);
       mainDesc = parts[0];
       warningText = parts[1];
     }
