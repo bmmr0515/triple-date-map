@@ -1165,9 +1165,10 @@ export default function App() {
       attributionControl: false
     }).setView([35.6895, 139.6917], 6);
 
-    // ポップで明るい Voyager タイルをロード
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-      maxZoom: 20
+    // 🗺️ 完全日本語表記対応の Google Maps 日本語タイルをロード (language=ja, region=JP)
+    L.tileLayer('https://mt1.google.com/vt/lyrs=m&hl=ja&gl=jp&x={x}&y={y}&z={z}', {
+      maxZoom: 20,
+      attribution: '&copy; Google Maps'
     }).addTo(map);
 
     // ズームコントロールを右上にカスタマイズして追加
@@ -1387,23 +1388,24 @@ export default function App() {
     if (clusterGroup) {
       clusterGroupRef.current = clusterGroup;
       
-      // 🌟 クラスタクリック時にズームインさせる処理を明示的にバインドし、縮小・ズームアウトバグを根絶します
+      // 🌟 クラスタクリック時の挙動制御: ズームインまたはスパイダーファイ（重なり展開）
       clusterGroup.on('clusterclick', (a: any) => {
         const bounds = a.layer.getBounds();
         const currentZoom = map.getZoom();
-        
-        // Leafletが算出したターゲットズームレベルを事前取得
+        const maxZoom = map.getMaxZoom();
         const targetZoom = map.getBoundsZoom(bounds);
         
-        // 算出されたズームが現在のズームレベル以下（＝縮小されてしまう場合）は、
-        // fitBoundsをバイパスし、強制的に「現在のズームレベル + 2」または最低16へズームインさせます！
-        if (targetZoom <= currentZoom) {
-          const nextZoom = Math.min(Math.max(currentZoom + 2, 16), 18); // 最大18まで段階的に拡大
-          map.setView(a.latlng, nextZoom, { animate: true });
+        // すべてのマーカーが同一座標にあるか、あるいはこれ以上ズームしても広がらない（ターゲットズームが現在以下または最大ズーム超過）場合
+        const isSameLocation = bounds.getNorthEast().equals(bounds.getSouthWest());
+        const cannotZoomFurther = targetZoom <= currentZoom || currentZoom >= maxZoom;
+        
+        if (isSameLocation || cannotZoomFurther) {
+          // 密集スポットの場合は放射状にスパイダーファイ展開を実行
+          a.layer.spiderfy();
         } else {
           // 拡大方向の移動であれば、通常の境界フィットを実行します
           map.fitBounds(bounds, {
-            maxZoom: Math.max(currentZoom, 16),
+            maxZoom: Math.max(currentZoom + 2, 16),
             animate: true,
             padding: [30, 30]
           });
