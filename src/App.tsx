@@ -339,6 +339,7 @@ export default function App() {
   const [listSelectedArea, setListSelectedArea] = useState<string>('すべて');
   const [listSelectedMission, setListSelectedMission] = useState<string>('すべて');
   const [listSortKey, setListSortKey] = useState<'default' | 'song-asc' | 'date-desc' | 'date-asc'>('default');
+  const [showListAdvancedFilters, setShowListAdvancedFilters] = useState<boolean>(false);
   const [shokoriMissionStarted, setShokoriMissionStarted] = useState<boolean>(
     localStorage.getItem('tdm_shokori_started') === 'true'
   );
@@ -2802,81 +2803,88 @@ ${window.location.origin + window.location.pathname}
           >
               {/* リストヘッダー（検索・絞り込みフィルター） */}
               <div className="list-filters-box" style={{
-                padding: '20px',
+                padding: '16px 16px 12px 16px',
                 background: '#ffffff',
                 borderBottom: '1px solid #e2e8f0',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '12px'
+                gap: '10px'
               }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <h2 style={{ fontSize: '15px', fontWeight: 900, color: 'var(--text-main)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    📋 聖地一覧リスト <span style={{ fontSize: '10px', fontWeight: 'bold', color: '#64748b', background: '#f1f5f9', padding: '2px 8px', borderRadius: '8px' }}>{filteredListSpots.length} 件</span>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <h2 style={{ fontSize: "14px", fontWeight: 900, color: "var(--text-main)", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+                    📋 聖地一覧リスト <span style={{ fontSize: "10px", fontWeight: "bold", color: "#64748b", background: "#f1f5f9", padding: "2px 8px", borderRadius: "8px" }}>{filteredListSpots.length} 件</span>
                   </h2>
                 </div>
                 
-                {/* 🗺️ このサイトについて (Google AdSense 審査用のコンテンツ補強) */}
-                <div style={{
-                  padding: '12px 14px',
-                  background: '#f0fdf4',
-                  border: '1.5px solid #a7f3d0',
-                  borderRadius: '12px',
-                  fontSize: '11px',
-                  color: '#047857',
-                  lineHeight: '1.6',
-                  fontWeight: '700'
-                }}>
-                  イコラブ・ノイミー・ニアジョイのMVロケ地、ライブ会場、聖地店舗などを探せる非公式の「聖地巡礼ファンマップ（聖地巡礼支援マップ）」です。GPS機能を使った聖地へのチェックイン機能や巡礼ミッションによる称号バッジの獲得も楽しめます！
-                </div>
-                
-                {/* 検索入力欄 */}
-                <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-                  <Search size={16} style={{ position: 'absolute', left: '12px', color: '#94a3b8' }} />
-                  <input
-                    type="text"
-                    placeholder="スポット名、関連曲、住所、キーワードで検索..."
-                    value={listSearchKeyword}
-                    onChange={(e) => {
-                      setListSearchKeyword(e.target.value);
-                      setListLimit(20);
-                    }}
-                    style={{
-                      width: '100%',
-                      padding: '10px 12px 10px 38px',
-                      borderRadius: '12px',
-                      border: '2px solid #e2e8f0',
-                      outline: 'none',
-                      fontSize: '12px',
-                      transition: 'all 0.2s',
-                      boxShadow: '0 2px 6px rgba(0,0,0,0.02)'
-                    }}
-                  />
-                  {listSearchKeyword && (
-                    <button
-                      onClick={() => {
-                        setListSearchKeyword('');
+                {/* 検索入力欄 ＆ フィルターアイコンボタン */}
+                <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                  <div style={{ position: "relative", flex: 1, display: "flex", alignItems: "center" }}>
+                    <Search size={16} style={{ position: "absolute", left: "12px", color: "#94a3b8" }} />
+                    <input
+                      type="text"
+                      placeholder="スポット名、曲、住所などで検索..."
+                      value={listSearchKeyword}
+                      onChange={(e) => {
+                        setListSearchKeyword(e.target.value);
                         setListLimit(20);
                       }}
-                      style={{ position: 'absolute', right: '12px', background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', fontSize: '12px' }}
-                    >
-                      ✕
-                    </button>
-                  )}
+                      style={{
+                        width: "100%",
+                        padding: "9px 12px 9px 36px",
+                        borderRadius: "12px",
+                        border: "2px solid #e2e8f0",
+                        outline: "none",
+                        fontSize: "12px",
+                        transition: "all 0.2s",
+                        boxShadow: "0 2px 6px rgba(0,0,0,0.02)"
+                      }}
+                    />
+                    {listSearchKeyword && (
+                      <button
+                        onClick={() => {
+                          setListSearchKeyword("");
+                          setListLimit(20);
+                        }}
+                        style={{ position: "absolute", right: "12px", background: "none", border: "none", color: "#94a3b8", cursor: "pointer", fontSize: "12px" }}
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </div>
+
+                  <button
+                    onClick={() => setShowListAdvancedFilters(prev => !prev)}
+                    style={{
+                      background: showListAdvancedFilters ? "linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)" : "#f1f5f9",
+                      color: showListAdvancedFilters ? "#ffffff" : "#475569",
+                      border: "none",
+                      borderRadius: "12px",
+                      padding: "10px",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      transition: "all 0.2s",
+                      boxShadow: "0 2px 6px rgba(0,0,0,0.02)"
+                    }}
+                    title="詳細絞り込み"
+                  >
+                    🎛️
+                  </button>
                 </div>
 
-                {/* あいまい検索サジェスト (もしかして) */}
                 {searchSuggestion && (
                   <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    padding: '8px 12px',
-                    background: '#f0fdf4',
-                    border: '1px solid #bbf7d0',
-                    borderRadius: '10px',
-                    fontSize: '11px',
-                    color: '#166534',
-                    marginTop: '-4px'
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    padding: "8px 12px",
+                    background: "#f0fdf4",
+                    border: "1px solid #bbf7d0",
+                    borderRadius: "10px",
+                    fontSize: "11px",
+                    color: "#166534",
+                    marginTop: "-2px"
                   }}>
                     <span>💡 もしかして：</span>
                     <button
@@ -2885,17 +2893,17 @@ ${window.location.origin + window.location.pathname}
                         setListLimit(20);
                       }}
                       style={{
-                        background: '#e8f5e9',
-                        border: '1px solid #a5d6a7',
-                        borderRadius: '6px',
-                        padding: '2px 8px',
-                        color: '#2e7d32',
-                        fontWeight: 'bold',
-                        cursor: 'pointer',
-                        fontSize: '11px',
-                        transition: 'all 0.2s',
-                        display: 'inline-flex',
-                        alignItems: 'center'
+                        background: "#e8f5e9",
+                        border: "1px solid #a5d6a7",
+                        borderRadius: "6px",
+                        padding: "2px 8px",
+                        color: "#2e7d32",
+                        fontWeight: "bold",
+                        cursor: "pointer",
+                        fontSize: "11px",
+                        transition: "all 0.2s",
+                        display: "inline-flex",
+                        alignItems: "center"
                       }}
                       className="pop-button"
                     >
@@ -2905,122 +2913,129 @@ ${window.location.origin + window.location.pathname}
                   </div>
                 )}
 
-                {/* 📍 都道府県・ミッションフィルター ＆ 📋 ソート並べ替え */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {/* ミッションセレクト */}
-                  <div style={{ position: 'relative' }}>
-                    <select
-                      value={listSelectedMission}
-                      onChange={(e) => {
-                        setListSelectedMission(e.target.value);
-                        setListLimit(20);
-                      }}
-                      style={{
-                        width: '100%',
-                        padding: '8px 24px 8px 10px',
-                        borderRadius: '10px',
-                        border: '2px solid #e2e8f0',
-                        fontSize: '11px',
-                        fontWeight: 'bold',
-                        color: '#475569',
-                        outline: 'none',
-                        background: '#ffffff',
-                        cursor: 'pointer',
-                        appearance: 'none',
-                        WebkitAppearance: 'none'
-                      }}
-                    >
-                      <option value="すべて">🏅 すべてのミッション・タグ</option>
-                      <option value="trigger">☁️ この空がトリガー (全12箇所)</option>
-                      <option value="recipe">🍳 笑顔のレシピ (全6箇所)</option>
-                      <option value="hawaiians">🌺 常夏のハワイアンズ (全1箇所)</option>
-                      <option value="hokkaido">🚄 超特Q北海道 (全4箇所)</option>
-                      <option value="fighter">🥊 排他的ファイター (全3箇所)</option>
-                      <option value="kyunkawa">🎀 きゅんかわ人生 (全4箇所)</option>
-                      <option value="shokori">🌸 しょこりさんぽ (全2箇所)</option>
-                      <option value="byun">✈️ 大空、ビュンと (全7箇所)</option>
-                      <option value="mermaid">🧜 今すぐ海へと連れ去って (全3箇所)</option>
-                      <option value="escape">🏃 君は超特急で逃走中！ (全5箇所)</option>
-                      <option value="moratorium">🥀 大好きでずるい人 (全7箇所)</option>
-                    </select>
-                    <div style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', fontSize: '9px', color: '#94a3b8' }}>▼</div>
-                  </div>
+                {showListAdvancedFilters && (
+                  <div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "8px",
+                    padding: "12px",
+                    background: "#f8fafc",
+                    borderRadius: "14px",
+                    border: "1px solid #e2e8f0",
+                    marginTop: "2px"
+                  }}>
+                    <div style={{ position: "relative" }}>
+                      <select
+                        value={listSelectedMission}
+                        onChange={(e) => {
+                          setListSelectedMission(e.target.value);
+                          setListLimit(20);
+                        }}
+                        style={{
+                          width: "100%",
+                          padding: "7px 24px 7px 10px",
+                          borderRadius: "8px",
+                          border: "1.5px solid #cbd5e1",
+                          fontSize: "11px",
+                          fontWeight: "bold",
+                          color: "#475569",
+                          outline: "none",
+                          background: "#ffffff",
+                          cursor: "pointer",
+                          appearance: "none",
+                          WebkitAppearance: "none"
+                        }}
+                      >
+                        <option value="すべて">🏅 すべてのミッション・タグ</option>
+                        <option value="trigger">☁️ この空がトリガー (全12箇所)</option>
+                        <option value="recipe">🍳 笑顔のレシピ (全6箇所)</option>
+                        <option value="hawaiians">🌺 常夏のハワイアンズ (全1箇所)</option>
+                        <option value="hokkaido">🚄 超特Q北海道 (全4箇所)</option>
+                        <option value="fighter">🥊 排他的ファイター (全3箇所)</option>
+                        <option value="kyunkawa">🎀 きゅんかわ人生 (全4箇所)</option>
+                        <option value="shokori">🌸 しょこりさんぽ (全2箇所)</option>
+                        <option value="byun">✈️ 大空、ビュンと (全7箇所)</option>
+                        <option value="mermaid">🧜 今すぐ海へと連れ去って (全3箇所)</option>
+                        <option value="escape">🏃 君は超特急で逃走中！ (全5箇所)</option>
+                        <option value="moratorium">🥀 大好きでずるい人 (全7箇所)</option>
+                      </select>
+                      <div style={{ position: "absolute", right: "10px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", fontSize: "9px", color: "#94a3b8" }}>▼</div>
+                    </div>
 
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    {/* 都道府県セレクト */}
-                  <div style={{ flex: 1, position: 'relative' }}>
-                    <select
-                      value={listSelectedArea}
-                      onChange={(e) => {
-                        setListSelectedArea(e.target.value);
-                        setListLimit(20);
-                      }}
-                      style={{
-                        width: '100%',
-                        padding: '8px 24px 8px 10px',
-                        borderRadius: '10px',
-                        border: '2px solid #e2e8f0',
-                        fontSize: '11px',
-                        fontWeight: 'bold',
-                        color: '#475569',
-                        outline: 'none',
-                        background: '#ffffff',
-                        cursor: 'pointer',
-                        appearance: 'none',
-                        WebkitAppearance: 'none'
-                      }}
-                    >
-                      <option value="すべて">📍 すべてのエリア</option>
-                      {availableAreas.map(area => (
-                        <option key={area} value={area}>📍 {area}</option>
-                      ))}
-                    </select>
-                    <div style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', fontSize: '9px', color: '#94a3b8' }}>▼</div>
-                  </div>
+                    <div style={{ display: "flex", gap: "8px" }}>
+                      <div style={{ flex: 1, position: "relative" }}>
+                        <select
+                          value={listSelectedArea}
+                          onChange={(e) => {
+                            setListSelectedArea(e.target.value);
+                            setListLimit(20);
+                          }}
+                          style={{
+                            width: "100%",
+                            padding: "7px 24px 7px 10px",
+                            borderRadius: "8px",
+                            border: "1.5px solid #cbd5e1",
+                            fontSize: "11px",
+                            fontWeight: "bold",
+                            color: "#475569",
+                            outline: "none",
+                            background: "#ffffff",
+                            cursor: "pointer",
+                            appearance: "none",
+                            WebkitAppearance: "none"
+                          }}
+                        >
+                          <option value="すべて">📍 すべてのエリア</option>
+                          {availableAreas.map(area => (
+                            <option key={area} value={area}>📍 {area}</option>
+                          ))}
+                        </select>
+                        <div style={{ position: "absolute", right: "10px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", fontSize: "9px", color: "#94a3b8" }}>▼</div>
+                      </div>
 
-                  {/* ソートセレクト */}
-                  <div style={{ flex: 1, position: 'relative' }}>
-                    <select
-                      value={listSortKey}
-                      onChange={(e) => {
-                        setListSortKey(e.target.value as any);
-                        setListLimit(20);
-                      }}
-                      style={{
-                        width: '100%',
-                        padding: '8px 24px 8px 10px',
-                        borderRadius: '10px',
-                        border: '2px solid #e2e8f0',
-                        fontSize: '11px',
-                        fontWeight: 'bold',
-                        color: '#475569',
-                        outline: 'none',
-                        background: '#ffffff',
-                        cursor: 'pointer',
-                        appearance: 'none',
-                        WebkitAppearance: 'none'
-                      }}
-                    >
-                      <option value="default">✨ デフォルト順</option>
-                      <option value="song-asc">🎵 曲名五十音順</option>
-                      <option value="date-desc">📅 新しい順 (降順)</option>
-                      <option value="date-asc">📅 古い順 (昇順)</option>
-                    </select>
-                    <div style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', fontSize: '9px', color: '#94a3b8' }}>▼</div>
+                      <div style={{ flex: 1, position: "relative" }}>
+                        <select
+                          value={listSortKey}
+                          onChange={(e) => {
+                            setListSortKey(e.target.value as any);
+                            setListLimit(20);
+                          }}
+                          style={{
+                            width: "100%",
+                            padding: "7px 24px 7px 10px",
+                            borderRadius: "8px",
+                            border: "1.5px solid #cbd5e1",
+                            fontSize: "11px",
+                            fontWeight: "bold",
+                            color: "#475569",
+                            outline: "none",
+                            background: "#ffffff",
+                            cursor: "pointer",
+                            appearance: "none",
+                            WebkitAppearance: "none"
+                          }}
+                        >
+                          <option value="default">✨ デフォルト順</option>
+                          <option value="song-asc">🎵 曲名五十音順</option>
+                          <option value="date-desc">📅 新しい順 (降順)</option>
+                          <option value="date-asc">📅 古い順 (昇順)</option>
+                        </select>
+                        <div style={{ position: "absolute", right: "10px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", fontSize: "9px", color: "#94a3b8" }}>▼</div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                </div>
+                )}
 
                 {/* グループ別フィルタータブ */}
-                <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', paddingBottom: '2px' }} className="no-scrollbar">
-                  {(['すべて', '=LOVE', '≠ME', '≒JOY', '合同'] as const).map((group) => {
+                <div style={{ display: "flex", gap: "6px", overflowX: "auto", paddingBottom: "2px" }} className="no-scrollbar">
+                  {(["すべて", "=LOVE", "≠ME", "≒JOY", "合同"] as const).map((group) => {
                     const isSelected = listSearchGroup === group;
-                    let activeBg = 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)';
-                    let activeColor = '#ffffff';
-                    if (group === '=LOVE') activeBg = 'var(--color-equal-love)';
-                    else if (group === '≠ME') activeBg = 'var(--color-not-equal-me)';
-                    else if (group === '≒JOY') activeBg = 'var(--color-nearly-joy)';
-                    else if (group === '合同') activeBg = 'linear-gradient(135deg, #a78bfa 0%, #818cf8 100%)';
+                    let activeBg = "linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)";
+                    let activeColor = "#ffffff";
+                    if (group === "=LOVE") activeBg = "var(--color-equal-love)";
+                    else if (group === "≠ME") activeBg = "var(--color-not-equal-me)";
+                    else if (group === "≒JOY") activeBg = "var(--color-nearly-joy)";
+                    else if (group === "合同") activeBg = "linear-gradient(135deg, #a78bfa 0%, #818cf8 100%)";
 
                     return (
                       <button
@@ -3030,17 +3045,17 @@ ${window.location.origin + window.location.pathname}
                           setListLimit(20);
                         }}
                         style={{
-                          padding: '6px 12px',
-                          borderRadius: '20px',
-                          border: isSelected ? 'none' : '1px solid #e2e8f0',
-                          background: isSelected ? activeBg : '#ffffff',
-                          color: isSelected ? activeColor : '#64748b',
-                          fontSize: '11px',
-                          fontWeight: 'black',
-                          cursor: 'pointer',
-                          whiteSpace: 'nowrap',
-                          transition: 'all 0.2s',
-                          boxShadow: isSelected ? '0 4px 8px rgba(0,0,0,0.06)' : 'none'
+                          padding: "6px 12px",
+                          borderRadius: "20px",
+                          border: isSelected ? "none" : "1px solid #e2e8f0",
+                          background: isSelected ? activeBg : "#ffffff",
+                          color: isSelected ? activeColor : "#64748b",
+                          fontSize: "11px",
+                          fontWeight: "black",
+                          cursor: "pointer",
+                          whiteSpace: "nowrap",
+                          transition: "all 0.2s",
+                          boxShadow: isSelected ? "0 4px 8px rgba(0,0,0,0.06)" : "none"
                         }}
                       >
                         {group}
@@ -3060,9 +3075,9 @@ ${window.location.origin + window.location.pathname}
                 gap: '12px'
               }} className="custom-scrollbar">
                 {visibleSpots.length === 0 ? (
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px 0', color: '#94a3b8' }}>
-                    <span style={{ fontSize: '32px', marginBottom: '10px' }}>🔍</span>
-                    <span style={{ fontWeight: 'bold', fontSize: '13px' }}>該当する聖地が見つかりませんでした。</span>
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 0", color: "#94a3b8" }}>
+                    <span style={{ fontSize: "32px", marginBottom: "10px" }}>🔍</span>
+                    <span style={{ fontWeight: "bold", fontSize: "13px" }}>該当する聖地が見つかりませんでした。</span>
                   </div>
                 ) : (
                   <>
@@ -3076,7 +3091,6 @@ ${window.location.origin + window.location.pathname}
 
                       const isVisited = checkins.some(c => c.spot_id === spot.id);
                       
-                      // 都道府県等の大まかなエリアを説明文や住所から動的に抽出
                       let area = 'その他';
                       const areaMatch = spot.description.match(/(東京都|神奈川県|千葉県|埼玉県|群馬県|栃木県|茨城県|山梨県|静岡県|沖縄県|高知県|福島県|山口県|セブ島|韓国)/);
                       if (areaMatch) {
@@ -3091,125 +3105,117 @@ ${window.location.origin + window.location.pathname}
                           key={spot.id}
                           style={{
                             background: '#ffffff',
-                            border: isVisited ? '2px solid #84cc16' : '1px solid #e2e8f0',
-                            borderRadius: '20px',
-                            padding: '18px',
+                            border: isVisited ? '1px solid #84cc16' : '1px solid #e2e8f0',
+                            borderRadius: '16px',
+                            padding: '14px',
                             display: 'flex',
                             flexDirection: 'column',
-                            gap: '12px',
-                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                            gap: '10px',
+                            transition: 'all 0.2s ease',
                             position: 'relative',
-                            boxShadow: isVisited 
-                              ? '0 10px 20px -5px rgba(132, 204, 22, 0.1), 0 4px 6px -2px rgba(132, 204, 22, 0.05)'
-                              : '0 10px 25px -5px rgba(0,0,0,0.03), 0 8px 10px -6px rgba(0,0,0,0.03)'
+                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.02)'
                           }}
-                          className="list-spot-card"
+                          className="list-spot-card modern-flat-card"
                         >
-                          {/* 最上部バッジ行 */}
-                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', alignItems: 'center' }}>
-                            <span style={{
-                              fontSize: '10px',
+                          {/* 聖地場所名 と 巡礼ステータス（右端配置） */}
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px" }}>
+                            <h3 style={{
+                              fontSize: "14px",
                               fontWeight: 900,
-                              color: groupColor,
-                              background: groupBg,
-                              padding: '3px 9px',
-                              borderRadius: '8px',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '3px',
-                              boxShadow: '0 1px 2px rgba(0,0,0,0.02)'
+                              color: "#0f172a",
+                              margin: 0,
+                              lineHeight: 1.35,
+                              letterSpacing: "-0.02em",
+                              flex: 1
                             }}>
-                              ✨ {spot.group}
-                            </span>
-                            
-                            <span style={{
-                              fontSize: '10px',
-                              fontWeight: 'bold',
-                              color: '#475569',
-                              background: '#f1f5f9',
-                              padding: '3px 9px',
-                              borderRadius: '8px',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '3px'
-                            }}>
-                              📍 {area}
-                            </span>
-
-                            <span style={{
-                              fontSize: '10px',
-                              fontWeight: 'bold',
-                              color: '#7c3aed',
-                              background: '#f5f3ff',
-                              padding: '3px 9px',
-                              borderRadius: '8px',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '3px'
-                            }}>
-                              🎬 {spot.category}
-                            </span>
-
+                              {spot.name}
+                            </h3>
                             {isVisited ? (
                               <span style={{
-                                marginLeft: 'auto',
-                                fontSize: '10px',
-                                fontWeight: 800,
-                                color: '#16a34a',
-                                background: '#dcfce7',
-                                padding: '3px 9px',
-                                borderRadius: '8px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '3px',
-                                boxShadow: '0 1px 2px rgba(22, 163, 74, 0.1)'
+                                flexShrink: 0,
+                                fontSize: "10px",
+                                fontWeight: 900,
+                                color: "#16a34a",
+                                background: "#dcfce7",
+                                padding: "2px 8px",
+                                borderRadius: "20px",
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "3px",
+                                boxShadow: "0 1px 3px rgba(22, 163, 74, 0.1)"
                               }}>
-                                ✅ 巡礼完了
+                                <CheckCircle2 size={12} style={{ color: "#16a34a" }} /> 完了
                               </span>
                             ) : (
                               <span style={{
-                                marginLeft: 'auto',
-                                fontSize: '10px',
-                                fontWeight: 'bold',
-                                color: '#64748b',
-                                background: '#f8fafc',
-                                padding: '3px 9px',
-                                borderRadius: '8px'
+                                flexShrink: 0,
+                                fontSize: "10px",
+                                fontWeight: "bold",
+                                color: "#64748b",
+                                background: "#f1f5f9",
+                                padding: "2px 8px",
+                                borderRadius: "20px",
+                                display: "inline-flex",
+                                alignItems: "center"
                               }}>
                                 未訪問
                               </span>
                             )}
                           </div>
 
-                          {/* 聖地場所名 */}
-                          <h3 style={{
-                            fontSize: '16px',
-                            fontWeight: 900,
-                            color: '#0f172a',
-                            margin: 0,
-                            lineHeight: 1.35,
-                            letterSpacing: '-0.02em'
-                          }}>
-                            {spot.name}
-                          </h3>
+                          {/* バッジ・タグ行（小さめのバッジとして整理） */}
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: "4px", alignItems: "center" }}>
+                            <span style={{
+                              fontSize: "9px",
+                              fontWeight: 800,
+                              color: groupColor,
+                              background: groupBg,
+                              padding: "2px 7px",
+                              borderRadius: "6px",
+                              boxShadow: "0 1px 2px rgba(0,0,0,0.02)"
+                            }}>
+                              {spot.group}
+                            </span>
+                            
+                            <span style={{
+                              fontSize: "9px",
+                              fontWeight: "bold",
+                              color: "#475569",
+                              background: "#f1f5f9",
+                              padding: "2px 7px",
+                              borderRadius: "6px"
+                            }}>
+                              📍 {area}
+                            </span>
+
+                            <span style={{
+                              fontSize: "9px",
+                              fontWeight: "bold",
+                              color: "#7c3aed",
+                              background: "#f5f3ff",
+                              padding: "2px 7px",
+                              borderRadius: "6px"
+                            }}>
+                              🎬 {spot.category}
+                            </span>
+                          </div>
 
                           {/* 曲名 / 動画タイトル プレート */}
                           {getSpotSongOrVideoTitle(spot) && (
                             <div style={{
-                              fontSize: '11px',
-                              color: '#581c87',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '6px',
-                              background: 'linear-gradient(135deg, #f5f3ff 0%, #fae8ff 100%)',
-                              border: '1px solid #edd8fc',
-                              padding: '6px 12px',
-                              borderRadius: '10px',
-                              boxShadow: '0 1px 3px rgba(0,0,0,0.01)'
+                              fontSize: "10.5px",
+                              color: "#581c87",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "4px",
+                              background: "linear-gradient(135deg, #f5f3ff 0%, #fae8ff 100%)",
+                              border: "1px solid #edd8fc",
+                              padding: "4px 8px",
+                              borderRadius: "8px",
+                              alignSelf: "flex-start"
                             }}>
-                              <span style={{ fontSize: '12px' }}>🎵</span>
-                              <span>曲名：</span>
-                              <span style={{ fontWeight: 900 }}>
+                              <span style={{ fontSize: "11px" }}>🎵</span>
+                              <span style={{ fontWeight: 800 }}>
                                 {getSpotSongOrVideoTitle(spot)}
                               </span>
                             </div>
@@ -3217,85 +3223,84 @@ ${window.location.origin + window.location.pathname}
 
                           {/* 説明文 */}
                           <p style={{
-                            fontSize: '12px',
-                            color: '#475569',
+                            fontSize: "11.5px",
+                            color: "#64748b",
                             margin: 0,
-                            lineHeight: 1.55,
-                            display: '-webkit-box',
+                            lineHeight: 1.5,
+                            display: "-webkit-box",
                             WebkitLineClamp: 2,
-                            WebkitBoxOrient: 'vertical',
-                            overflow: 'hidden'
+                            WebkitBoxOrient: "vertical",
+                            overflow: "hidden"
                           }}>
                             {spot.description}
                           </p>
 
                           {/* 下部アクションボタン */}
-                          <div style={{ display: 'flex', gap: '10px', marginTop: '4px' }}>
+                          <div style={{ display: "flex", gap: "8px", marginTop: "2px" }}>
                             <button
                               onClick={() => handleViewOnMap(spot)}
                               style={{
                                 flex: 1,
-                                background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)',
-                                color: '#ffffff',
-                                border: 'none',
-                                borderRadius: '12px',
-                                padding: '8px 16px',
-                                fontSize: '11px',
+                                background: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)",
+                                color: "#ffffff",
+                                border: "none",
+                                borderRadius: "10px",
+                                padding: "8px 12px",
+                                fontSize: "11px",
                                 fontWeight: 900,
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '6px',
-                                transition: 'all 0.2s',
-                                boxShadow: '0 4px 10px rgba(99, 102, 241, 0.2)'
+                                cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                gap: "4px",
+                                transition: "all 0.2s",
+                                boxShadow: "0 2px 4px rgba(99,102,241,0.1)"
                               }}
-                              className="pop-button"
+                              className="modern-map-btn"
                             >
-                              🗺️ 地図で見る
+                              地図で見る
                             </button>
-                            
                             <button
-                              onClick={() => {
-                                setSelectedSpot(spot);
-                                setRightPanelTab('detail');
-                              }}
+                              onClick={() => navigateTo("/spots/" + spot.slug)}
                               style={{
-                                background: '#f1f5f9',
-                                color: '#334155',
-                                border: 'none',
-                                borderRadius: '12px',
-                                padding: '8px 16px',
-                                fontSize: '11.5px',
-                                fontWeight: 'bold',
-                                cursor: 'pointer',
-                                transition: 'all 0.2s',
-                                borderLeft: '1px solid #e2e8f0'
+                                flex: 1,
+                                background: "#f1f5f9",
+                                color: "#0f172a",
+                                border: "none",
+                                borderRadius: "10px",
+                                padding: "8px 12px",
+                                fontSize: "11px",
+                                fontWeight: 900,
+                                cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                gap: "4px",
+                                transition: "all 0.2s"
                               }}
-                              className="pop-button"
+                              className="modern-detail-btn"
                             >
-                              詳細 ➔
+                              詳細を見る
                             </button>
                           </div>
                         </div>
                       );
                     })}
-
                     {filteredListSpots.length > listLimit && (
                       <button
                         onClick={() => setListLimit(prev => prev + 20)}
                         style={{
-                          padding: '10px',
-                          background: '#ffffff',
-                          border: '2px dashed #cbd5e1',
-                          borderRadius: '12px',
-                          color: '#475569',
-                          fontSize: '11px',
-                          fontWeight: 'bold',
-                          cursor: 'pointer',
-                          textAlign: 'center',
-                          transition: 'all 0.2s',
-                          marginTop: '4px'
+                          padding: "10px",
+                          background: "#ffffff",
+                          border: "2px dashed #cbd5e1",
+                          borderRadius: "12px",
+                          color: "#475569",
+                          fontSize: "11px",
+                          fontWeight: "bold",
+                          cursor: "pointer",
+                          textAlign: "center",
+                          transition: "all 0.2s",
+                          marginTop: "4px"
                         }}
                         className="pop-button"
                       >
@@ -3306,9 +3311,7 @@ ${window.location.origin + window.location.pathname}
                 )}
               </div>
             </div>
-
         </div>
-
         {/* 📱 モバイルメニュー用暗幕オーバーレイ */}
         {isMobileMenuOpen && (
           <div 
