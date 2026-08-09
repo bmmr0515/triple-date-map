@@ -339,10 +339,12 @@ routes.forEach(route => {
         ${breadcrumbs}
         <script type="application/ld+json">${JSON.stringify(structData)}</script>
         <h1>${s.name}</h1>
-        <p><strong>グループ:</strong> ${s.group} | <strong>カテゴリ:</strong> ${s.category}</p>
+        <p><strong>グループ:</strong> ${s.group} | <strong>カテゴリ:</strong> ${s.category}${s.verification_status ? ` | <strong>ロケ地確認区分:</strong> ${s.verification_status}` : ''}</p>
+        ${s.verification_status ? `<p style="background: #f0fdf4; border: 1px solid #a7f3d0; padding: 10px 14px; border-radius: 8px; color: #065f46; font-size: 11.5px; font-weight: bold; margin: 12px 0;">🔎 MV映像・現地景観・独立した情報源との照合によって特定されたロケ地（非公式検証）</p>` : ''}
         <hr/>
         <h2>聖地・ロケ地概要</h2>
         <p>${s.description}</p>
+        ${s.holy_point ? `<h2>聖地注目ポイント</h2>\n<p style="background: #f5f3ff; border: 1px solid #ddd6fe; padding: 12px 14px; border-radius: 8px; color: #5b21b6; font-weight: bold; white-space: pre-wrap;">${s.holy_point}</p>` : ''}
         ${showScene ? `<h2>場面説明・見どころ</h2>\n<p>${s.scene}</p>` : ''}
         ${(showAddress || showAccess) ? `
         <h2>ロケ地住所・最寄り駅アクセス</h2>

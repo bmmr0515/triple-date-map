@@ -94,6 +94,8 @@ export interface Spot {
   last_confirmed_date?: string;
   images?: SpotImage[];
   twitter_url?: string;
+  verification_status?: string;
+  holy_point?: string;
 }
 
 export interface User {
@@ -2370,6 +2372,101 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["YouTube企画", "≒JOY", "特典映像", "大阪"],
     description: '≒JOY 3rdシングル『ブルーハワイレモン』特典映像「ニアジョイ エンジョイ部」の聖地として紹介されたスポットです。\n\nURL: https://suijo-bus.osaka\n住所: 〒540-0032 大阪府大阪市中央区天満橋京町１−１\n\n<iframe width="560" height="315" src="https://www.youtube.com/embed/F8V34JsNV4A?si=oOew38mBf06NtcYT&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
     address: "〒540-0032 大阪府大阪市中央区天満橋京町１−１"
+  },
+  {
+    id: "spot-real-summerhaze-umikaze",
+    name: "うみかぜ公園",
+    group: "≠ME",
+    category: "MVロケ地",
+    latitude: 35.276464,
+    longitude: 139.683507,
+    event_date: "2026-06-26",
+    youtube_title: "🎥 関連映像: 『Summer haze』公式MV",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/iIcpiUg_7NQ?si=k5in1qPZE_hyPT7X&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "Summer hazeの開拓者",
+    tags: ["Summer haze", "検証特定聖地"],
+    address: "神奈川県横須賀市平成町3丁目23",
+    description: "海を背景にした『Summer haze』の印象的な屋外シーンで使用されている場所。東京湾を望む開放的な公園で、MVでは広い空、海、横須賀らしい港湾風景を生かした映像になっています。MV公開後には、横須賀周辺を知る複数のユーザーから「うみかぜ公園ではないか」という反応があり、MV映像と実際の景観も一致しています。",
+    holy_point: "MVと同じように、海と空を大きく入れた構図を楽しみやすい場所です。猿島方面まで見渡せるため、『Summer haze』らしい夏の開放感を感じられるロケ地の一つです。",
+    visitor_notes: "⚠️聖地巡礼に関する重要なお願い\n一般利用者の多い公園なので、撮影時は通行や他の利用者の妨げにならないよう注意してください。公園内の立入禁止区域には入らないでください。",
+    verification_status: "映像照合・複数の独立したSNS情報による特定",
+    last_confirmed_date: "2026-08-09"
+  },
+  {
+    id: "spot-real-summerhaze-mabori",
+    name: "馬堀海岸遊歩道",
+    group: "≠ME",
+    category: "MVロケ地",
+    latitude: 35.262404,
+    longitude: 139.699891,
+    event_date: "2026-06-26",
+    youtube_title: "🎥 関連映像: 『Summer haze』公式MV",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/iIcpiUg_7NQ?si=k5in1qPZE_hyPT7X&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "Summer hazeの旅人",
+    tags: ["Summer haze", "検証特定聖地"],
+    address: "神奈川県横須賀市馬堀海岸1丁目周辺",
+    description: "『Summer haze』の海沿いシーンで使用されたとみられる遊歩道。馬堀海岸沿いに長く続く遊歩道で、特徴的な海岸線、柵、東京湾の景色がMV映像と一致しています。MV公開直後には、横須賀周辺を知るユーザーから「馬堀の遊歩道ではないか」という指摘も確認されています。",
+    holy_point: "海岸沿いを歩きながら、『Summer haze』の夏らしい世界観を体験できるスポット。晴れた日は東京湾を広く見渡すことができます。",
+    visitor_notes: "⚠️聖地巡礼に関する重要なお願い\n遊歩道は一般の散歩・ランニング利用者も多いため、長時間通路を占有しないでください。強風・高波・悪天候時は海側へ近づきすぎないよう注意してください。",
+    verification_status: "映像照合・独立したSNS情報による特定",
+    last_confirmed_date: "2026-08-09"
+  },
+  {
+    id: "spot-real-summerhaze-old-hashirimizu-school",
+    name: "旧走水小学校",
+    group: "≠ME",
+    category: "MVロケ地",
+    latitude: 35.265444,
+    longitude: 139.729111,
+    event_date: "2026-06-26",
+    youtube_title: "🎥 関連映像: 『Summer haze』公式MV",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/iIcpiUg_7NQ?si=k5in1qPZE_hyPT7X&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "Summer hazeの学生",
+    tags: ["Summer haze", "検証特定聖地"],
+    address: "神奈川県横須賀市走水2丁目周辺",
+    description: "『Summer haze』に登場する学校関連シーンの撮影場所として特定されている旧校舎。走水は海に非常に近い地域で、学校と海岸のシーンを一体的に撮影できるロケーションになっています。",
+    holy_point: "MVに登場する“夏の学校”という世界観を感じられる場所。周辺には海岸もあり、同じ作品の複数シーンをまとめて巡ることができます。",
+    visitor_notes: "⚠️聖地巡礼に関する重要なお願い\n旧学校施設は一般の観光施設ではありません。敷地内への無断立ち入りは禁止してください。現地では公道など、一般に立ち入り可能な場所から見学してください。施設の現在の利用状況や立入可否を必ず確認してください。",
+    verification_status: "MV映像・建物および周辺景観の照合による特定",
+    last_confirmed_date: "2026-08-09"
+  },
+  {
+    id: "spot-real-summerhaze-hashirimizu-beach",
+    name: "走水小学校前の海岸",
+    group: "≠ME",
+    category: "MVロケ地",
+    latitude: 35.2662,
+    longitude: 139.7285,
+    event_date: "2026-06-26",
+    youtube_title: "🎥 関連映像: 『Summer haze』公式MV",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/iIcpiUg_7NQ?si=k5in1qPZE_hyPT7X&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "Summer hazeの波音",
+    tags: ["Summer haze", "検証特定聖地"],
+    address: "神奈川県横須賀市走水1〜2丁目周辺",
+    description: "旧走水小学校周辺にある海岸で、『Summer haze』の海辺シーンの一部が撮影されたとみられる場所。学校から海まで非常に近く、MV内の「学校」と「夏の海」という二つの世界観を同じエリアで感じることができます。",
+    holy_point: "観光地化された大規模ビーチとは違い、走水らしい静かな海岸風景が残っています。『Summer haze』の少しノスタルジックな夏の雰囲気を感じやすいスポットです。",
+    visitor_notes: "⚠️聖地巡礼に関する重要なお願い\n海岸では高波・強風・潮位に注意してください。私有地や立入禁止区域には入らないでください。住宅地が近いため、大人数で騒ぐ、長時間滞在するなど周辺住民の迷惑になる行為は避けてください。",
+    verification_status: "MV映像・周辺地形の照合による特定",
+    last_confirmed_date: "2026-08-09"
+  },
+  {
+    id: "spot-real-summerhaze-imaginus",
+    name: "IMAGINUS（旧杉並第四小学校）",
+    group: "≠ME",
+    category: "MVロケ地",
+    latitude: 35.706412,
+    longitude: 139.653693,
+    event_date: "2026-06-26",
+    youtube_title: "🎥 関連映像: 『Summer haze』公式MV",
+    youtube_url: '<iframe width="560" height="315" src="https://www.youtube.com/embed/iIcpiUg_7NQ?si=k5in1qPZE_hyPT7X&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    reward_title: "Summer haze of 理科室",
+    tags: ["Summer haze", "検証特定聖地"],
+    address: "東京都杉並区高円寺北2丁目14-13",
+    description: "旧杉並第四小学校の校舎を活用した施設。『Summer haze』に登場する教室・学校関連シーンのロケ地として特定されています。現在も旧学校時代の教室、廊下、体育館などの構造が残っており、MVの「夏の学校」という世界観と重なるスポットです。",
+    holy_point: "『Summer haze』の学校シーンを現実の空間として感じられる場所。現在は科学体験施設として活用されているため、旧校舎の雰囲気を残しながら一般利用されています。",
+    visitor_notes: "⚠️聖地巡礼に関する重要なお願い\n現在は営業中の施設なので、撮影だけを目的とした迷惑行為はしないでください。施設内での撮影可否・立入可能エリア・営業時間についてはIMAGINUSの最新ルールに従ってください。イベント等によって入場できないエリアがある可能性があります。",
+    verification_status: "MV映像と旧校舎の構造・景観照合による特定",
+    last_confirmed_date: "2026-08-09"
   }
 ];
 
@@ -2399,7 +2496,9 @@ export const db = {
         visitor_notes: item.visitor_notes || '',
         last_confirmed_date: item.last_confirmed_date || '2026-06-29',
         images: item.images || [],
-        twitter_url: item.twitter_url || ''
+        twitter_url: item.twitter_url || '',
+        verification_status: item.verification_status || '',
+        holy_point: item.holy_point || ''
       }));
     };
 

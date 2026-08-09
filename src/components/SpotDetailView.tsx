@@ -2,7 +2,7 @@ import React from 'react';
 import { Spot } from '../db';
 import { Breadcrumb } from './ListViews';
 import { AdPlaceholder } from './AdPlaceholder';
-import { MapPin, Train, Calendar, ShieldAlert, Heart, HelpCircle, Compass } from 'lucide-react';
+import { MapPin, Train, Calendar, ShieldAlert, Heart, HelpCircle, Compass, ShieldCheck } from 'lucide-react';
 import { TwitterEmbed } from './TwitterEmbed';
 
 interface SpotDetailProps {
@@ -124,8 +124,29 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
             {spot.category}
           </span>
         </div>
-        <h1 style={{ fontSize: '26px', fontWeight: '900', color: '#0f172a', margin: '6px 0 0 0', lineHeight: '1.3' }}>{spot.name}</h1>
       </div>
+
+      {/* ⚠️ 検証特定ロケ地に関する注記（公式発表ではないロケ地の場合に表示） */}
+      {spot.verification_status && (
+        <div style={{
+          background: 'linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%)',
+          border: '1.5px solid #a7f3d0',
+          borderRadius: '12px',
+          padding: '10px 14px',
+          fontSize: '11px',
+          color: '#065f46',
+          lineHeight: '1.5',
+          marginBottom: '16px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          fontWeight: 'bold',
+          boxShadow: '0 2px 6px rgba(16,185,129,0.03)'
+        }}>
+          <span style={{ fontSize: '14px' }}>🔎</span>
+          <span>MV映像・現地景観・独立した情報源との照合によって特定されたロケ地（非公式検証）</span>
+        </div>
+      )}
 
       {/* メイン画像（あれば） */}
       {spot.images && spot.images.length > 0 ? (
@@ -202,6 +223,15 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
               </div>
             </div>
           )}
+          {spot.verification_status && (
+            <div style={{ display: 'flex', gap: '8px', fontSize: '13px' }}>
+              <ShieldCheck size={16} style={{ color: '#059669', flexShrink: 0, marginTop: '2px' }} />
+              <div>
+                <strong style={{ color: '#475569', display: 'block', fontSize: '11px' }}>ロケ地確認区分</strong>
+                <span style={{ color: '#059669', fontWeight: 'bold' }}>{spot.verification_status}</span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -210,6 +240,21 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
         <div style={{ marginBottom: '24px' }}>
           <h3 style={{ fontSize: '17px', fontWeight: 'bold', color: '#0f172a', marginBottom: '10px' }}>📝 聖地解説</h3>
           <p style={{ fontSize: '14px', lineHeight: '1.8', color: '#334155', whiteSpace: 'pre-wrap', margin: 0 }}>{cleanDescription}</p>
+        </div>
+      )}
+
+      {/* 聖地注目ポイント */}
+      {spot.holy_point && (
+        <div style={{
+          marginBottom: '24px',
+          background: 'linear-gradient(135deg, #f5f3ff 0%, #f3e8ff 100%)',
+          border: '1px solid #ddd6fe',
+          padding: '16px',
+          borderRadius: '16px',
+          boxShadow: '0 2px 6px rgba(109,40,217,0.02)'
+        }}>
+          <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#6d28d9', margin: '0 0 8px 0', display: 'flex', alignItems: 'center', gap: '4px' }}>✨ 聖地注目ポイント</h3>
+          <p style={{ fontSize: '13.5px', lineHeight: '1.7', color: '#5b21b6', margin: 0, whiteSpace: 'pre-wrap' }}>{spot.holy_point}</p>
         </div>
       )}
 

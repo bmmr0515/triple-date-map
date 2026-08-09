@@ -5576,6 +5576,28 @@ ${window.location.origin + window.location.pathname}
                       </div>
                     </div>
 
+                    {/* ⚠️ 検証特定ロケ地に関する注記 */}
+                    {selectedSpot.verification_status && (
+                      <div className="animate-fade-in-up" style={{
+                        background: 'linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%)',
+                        border: '1.5px solid #a7f3d0',
+                        borderRadius: '12px',
+                        padding: '10px 14px',
+                        fontSize: '11px',
+                        color: '#065f46',
+                        lineHeight: '1.5',
+                        marginTop: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        fontWeight: 'bold',
+                        boxShadow: '0 2px 6px rgba(16,185,129,0.03)'
+                      }}>
+                        <span style={{ fontSize: '14px' }}>🔎</span>
+                        <span>MV映像・現地景観・独立した情報源との照合によって特定されたロケ地（非公式検証）</span>
+                      </div>
+                    )}
+
                     {/* エピソード (改行対応) */}
                     <div className="episode-container animate-fade-in-up">
                       <h4 className="detail-meta-label">
@@ -5583,6 +5605,69 @@ ${window.location.origin + window.location.pathname}
                       </h4>
                       {renderDescription(selectedSpot.description)}
                     </div>
+
+                    {/* 聖地注目ポイント */}
+                    {selectedSpot.holy_point && (
+                      <div className="animate-fade-in-up" style={{
+                        marginTop: '16px',
+                        background: 'linear-gradient(135deg, #f5f3ff 0%, #f3e8ff 100%)',
+                        border: '1px solid #ddd6fe',
+                        padding: '14px 16px',
+                        borderRadius: '16px',
+                        boxShadow: '0 2px 6px rgba(109,40,217,0.02)'
+                      }}>
+                        <h4 style={{ fontSize: '11px', fontWeight: '900', color: '#6d28d9', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          ✨ 聖地注目ポイント
+                        </h4>
+                        <p className="episode-text" style={{ fontSize: '12.5px', lineHeight: '1.65', color: '#5b21b6', margin: 0, whiteSpace: 'pre-wrap', fontWeight: '700' }}>
+                          {selectedSpot.holy_point}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* ロケ地確認区分 */}
+                    {selectedSpot.verification_status && (
+                      <div className="animate-fade-in-up" style={{
+                        marginTop: '16px',
+                        background: '#f8fafc',
+                        border: '1px solid #e2e8f0',
+                        padding: '12px 16px',
+                        borderRadius: '14px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '4px'
+                      }}>
+                        <span style={{ fontSize: '10px', color: '#64748b', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                          🔍 ロケ地確認区分
+                        </span>
+                        <span style={{ fontSize: '12px', color: '#0f172a', fontWeight: 'bold' }}>
+                          {selectedSpot.verification_status}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* 注意事項の表示 */}
+                    {selectedSpot.visitor_notes && !selectedSpot.visitor_notes.includes('特になし') && (
+                      <div className="animate-fade-in-up" style={{
+                        marginTop: '16px',
+                        padding: '14px 16px',
+                        background: '#fff5f5',
+                        border: '2px solid #feb2b2',
+                        borderRadius: '14px',
+                        fontSize: '11.5px',
+                        color: '#9b2c2c',
+                        lineHeight: '1.55',
+                        fontWeight: 'bold',
+                        boxShadow: '0 4px 6px -1px rgba(155, 44, 44, 0.03)'
+                      }}>
+                        <span style={{ fontSize: '13px', display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '6px', color: '#c53030', fontWeight: '900' }}>
+                          ⚠️ 聖地巡礼に関する重要なお願い
+                        </span>
+                        <span style={{ display: 'block', whiteSpace: 'pre-wrap' }}>
+                          {selectedSpot.visitor_notes.replace('⚠️聖地巡礼に関する重要なお願い', '').trim()}
+                        </span>
+                      </div>
+                    )}
 
                     {/* 🎬 聖地解説・MV見どころガイド */}
                     {selectedSpot.commentary && (
@@ -7884,11 +7969,96 @@ ${window.location.origin + window.location.pathname}
                 </div>
               </div>
 
+              {/* ⚠️ 検証特定ロケ地に関する注記 (モバイル) */}
+              {selectedSpot.verification_status && (
+                <div className="animate-fade-in-up" style={{
+                  background: 'linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%)',
+                  border: '1.5px solid #a7f3d0',
+                  borderRadius: '12px',
+                  padding: '10px 12px',
+                  fontSize: '10.5px',
+                  color: '#065f46',
+                  lineHeight: '1.45',
+                  marginTop: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontWeight: 'bold',
+                  boxShadow: '0 2px 4px rgba(16,185,129,0.02)'
+                }}>
+                  <span style={{ fontSize: '13px' }}>🔎</span>
+                  <span>MV映像・現地景観・独立した情報源との照合による特定（非公式検証）</span>
+                </div>
+              )}
+
               {/* 聖地エピソード */}
               <div className="episode-container animate-fade-in-up" style={{ marginTop: '16px' }}>
                 <h4 className="detail-meta-label">聖地のエピソード</h4>
                 {renderDescription(selectedSpot.description)}
               </div>
+
+              {/* 聖地注目ポイント (モバイル) */}
+              {selectedSpot.holy_point && (
+                <div className="animate-fade-in-up" style={{
+                  marginTop: '12px',
+                  background: 'linear-gradient(135deg, #f5f3ff 0%, #f3e8ff 100%)',
+                  border: '1px solid #ddd6fe',
+                  padding: '12px 14px',
+                  borderRadius: '14px',
+                  boxShadow: '0 2px 4px rgba(109,40,217,0.01)'
+                }}>
+                  <h4 style={{ fontSize: '10.5px', fontWeight: '900', color: '#6d28d9', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    ✨ 聖地注目ポイント
+                  </h4>
+                  <p className="episode-text" style={{ fontSize: '12px', lineHeight: '1.6', color: '#5b21b6', margin: 0, whiteSpace: 'pre-wrap', fontWeight: '700' }}>
+                    {selectedSpot.holy_point}
+                  </p>
+                </div>
+              )}
+
+              {/* ロケ地確認区分 (モバイル) */}
+              {selectedSpot.verification_status && (
+                <div className="animate-fade-in-up" style={{
+                  marginTop: '12px',
+                  background: '#f8fafc',
+                  border: '1px solid #e2e8f0',
+                  padding: '10px 14px',
+                  borderRadius: '12px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '2px'
+                }}>
+                  <span style={{ fontSize: '9px', color: '#64748b', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    🔍 ロケ地確認区分
+                  </span>
+                  <span style={{ fontSize: '11.5px', color: '#0f172a', fontWeight: 'bold' }}>
+                    {selectedSpot.verification_status}
+                  </span>
+                </div>
+              )}
+
+              {/* 注意事項の表示 (モバイル) */}
+              {selectedSpot.visitor_notes && !selectedSpot.visitor_notes.includes('特になし') && (
+                <div className="animate-fade-in-up" style={{
+                  marginTop: '12px',
+                  padding: '12px 14px',
+                  background: '#fff5f5',
+                  border: '2px solid #feb2b2',
+                  borderRadius: '12px',
+                  fontSize: '11px',
+                  color: '#9b2c2c',
+                  lineHeight: '1.5',
+                  fontWeight: 'bold',
+                  boxShadow: '0 2px 4px rgba(155, 44, 44, 0.02)'
+                }}>
+                  <span style={{ fontSize: '12px', display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '4px', color: '#c53030', fontWeight: '900' }}>
+                    ⚠️ 聖地巡礼に関する重要なお願い
+                  </span>
+                  <span style={{ display: 'block', whiteSpace: 'pre-wrap' }}>
+                    {selectedSpot.visitor_notes.replace('⚠️聖地巡礼に関する重要なお願い', '').trim()}
+                  </span>
+                </div>
+              )}
 
               {/* 🎬 聖地解説・MV見どころガイド */}
               {selectedSpot.commentary && (
