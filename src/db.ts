@@ -2552,26 +2552,6 @@ const INITIAL_SPOTS: Spot[] = [
     coordinateAccuracy: "facility"
   },
   {
-    id: "spot-real-summerhaze-hashirimizu-beach",
-    name: "走水小学校前の海岸",
-    group: "≠ME",
-    category: "MVロケ地",
-    latitude: 35.2662,
-    longitude: 139.7285,
-    event_date: "2026-06-26",
-    youtube_title: "🎥 関連映像: 『Summer haze』公式MV",
-    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/iIcpiUg_7NQ?si=k5in1qPZE_hyPT7X&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
-    reward_title: "Summer hazeの波音",
-    tags: ["Summer haze","検証特定聖地"],
-    address: "神奈川県横須賀市走水1〜2丁目周辺",
-    description: "旧走水小学校周辺にある海岸で、『Summer haze』の海辺シーンの一部が撮影されたとみられる場所。学校から海まで非常に近く、MV内の「学校」と「夏の海」という二つの世界観を同じエリアで感じることができます。",
-    holy_point: "観光地化された大規模ビーチとは違い、走水らしい静かな海岸風景が残っています。『Summer haze』の少しノスタルジックな夏の雰囲気を感じやすいスポットです。",
-    visitor_notes: "⚠️聖地巡礼に関する重要なお願い\n海岸では高波・強風・潮位に注意してください。私有地や立入禁止区域には入らないでください。住宅地が近いため、大人数で騒ぐ、長時間滞在するなど周辺住民の迷惑になる行為は避けてください。",
-    verification_status: "MV映像・周辺地形の照合による特定",
-    last_confirmed_date: "2026-08-09",
-    coordinateAccuracy: "facility"
-  },
-  {
     id: "spot-real-summerhaze-imaginus",
     name: "IMAGINUS（旧杉並第四小学校）",
     group: "≠ME",
