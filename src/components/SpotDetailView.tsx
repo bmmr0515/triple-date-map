@@ -148,6 +148,28 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
         </div>
       )}
 
+      {/* ⚠️ このピンは撮影エリアのおおよその位置です（approximate の場合に表示） */}
+      {spot.coordinateAccuracy === 'approximate' && (
+        <div style={{
+          background: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)',
+          border: '1.5px solid #fde68a',
+          borderRadius: '12px',
+          padding: '10px 14px',
+          fontSize: '11px',
+          color: '#92400e',
+          lineHeight: '1.5',
+          marginBottom: '16px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          fontWeight: 'bold',
+          boxShadow: '0 2px 6px rgba(245,158,11,0.03)'
+        }}>
+          <span style={{ fontSize: '14px' }}>⚠️</span>
+          <span>このピンは撮影エリアのおおよその位置です。周辺の実際の地形や風景からロケ地をお探しください。</span>
+        </div>
+      )}
+
       {/* メイン画像（あれば） */}
       {spot.images && spot.images.length > 0 ? (
         <div style={{ width: '100%', maxHeight: '400px', borderRadius: '16px', overflow: 'hidden', marginBottom: '24px', position: 'relative' }}>
