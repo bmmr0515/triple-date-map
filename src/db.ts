@@ -2640,7 +2640,21 @@ export const db = {
       const sortedInitial = [...INITIAL_SPOTS].sort((a, b) => a.id.localeCompare(b.id));
       const sortedParsed = [...parsed].sort((a, b) => a.id.localeCompare(b.id));
       
-      if (sortedInitial.length !== sortedParsed.length || sortedInitial.some((val, i) => val.id !== sortedParsed[i].id)) {
+      if (
+        sortedInitial.length !== sortedParsed.length ||
+        sortedInitial.some((val, i) => {
+          const parsedVal = sortedParsed[i];
+          return (
+            val.id !== parsedVal.id ||
+            val.latitude !== parsedVal.latitude ||
+            val.longitude !== parsedVal.longitude ||
+            val.coordinateAccuracy !== parsedVal.coordinateAccuracy ||
+            val.verification_status !== parsedVal.verification_status ||
+            val.holy_point !== parsedVal.holy_point ||
+            val.description !== parsedVal.description
+          );
+        })
+      ) {
         const filled = fillDefaults(INITIAL_SPOTS);
         this.setSpots(filled);
         return filled;
