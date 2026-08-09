@@ -518,7 +518,7 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/qUzXtUsVgH8?si=Xmhb-YEBXHRNRcYB&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "無謀なる港の開拓者",
     description: "『無謀人』のMV撮影地。炎が燃え盛る中でハードなラップと力強いダンスを見せつけ、ニアジョイの底知れぬポテンシャルと圧倒的な覇気を証明した、闘争 of 聖地。\n\n⚠️聖地巡礼に関する重要なお願い\n稼働中の港湾施設および私有地の大型倉庫エリアです。大型トラック of 出入りが多く非常に危険なため、関係者以外の立ち入りは厳しく禁止されています。公道からの遠巻きの巡礼に留め、絶対に敷地内には入らないでください。",
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "exact"
   },
   {
     id: "spot-real-ushiku-chateau",
@@ -1693,8 +1693,8 @@ const INITIAL_SPOTS: Spot[] = [
     name: "原岡桟橋（岡本桟橋）",
     group: "=LOVE",
     category: "飲食店・その他",
-    latitude: 35.0439,
-    longitude: 139.8319,
+    latitude: 35.04428,
+    longitude: 139.8227,
     event_date: "2022-09-25",
     youtube_title: "🎥 関連映像: 『真夜中マーメイド』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/qzFBzJ2KWwY?si=377-mrldlU5CsZhk&amp;controls=0&amp;start=197\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
@@ -1708,8 +1708,8 @@ const INITIAL_SPOTS: Spot[] = [
     name: "上総湊海水浴場（湊６１０−９）",
     group: "=LOVE",
     category: "飲食店・その他",
-    latitude: 35.2236,
-    longitude: 139.8694,
+    latitude: 35.2227,
+    longitude: 139.8631,
     event_date: "2022-09-25",
     youtube_title: "🎥 関連映像: 『真夜中マーメイド』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/qzFBzJ2KWwY?si=377-mrldlU5CsZhk&amp;controls=0&amp;start=197\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
@@ -1723,8 +1723,8 @@ const INITIAL_SPOTS: Spot[] = [
     name: "日本大学理工学部 船橋キャンパス（プラザ習志野）",
     group: "=LOVE",
     category: "MVロケ地",
-    latitude: 35.7265,
-    longitude: 140.0545,
+    latitude: 35.7259,
+    longitude: 140.0558,
     event_date: "2026-06-02",
     youtube_title: "🎥 関連映像: 『超特急逃走中』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/d20dEAtbL08?si=3sVKsAnbhsACXs51&amp;controls=0&amp;start=197\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
@@ -1768,8 +1768,8 @@ const INITIAL_SPOTS: Spot[] = [
     name: "日本大学理工学部 船橋キャンパス（理工学部スポーツホール）",
     group: "=LOVE",
     category: "MVロケ地",
-    latitude: 35.726,
-    longitude: 140.057,
+    latitude: 35.7275,
+    longitude: 140.0573,
     event_date: "2026-06-02",
     youtube_title: "🎥 関連映像: 『超特急逃走中』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/d20dEAtbL08?si=3sVKsAnbhsACXs51&amp;controls=0&amp;start=197\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
@@ -1783,15 +1783,15 @@ const INITIAL_SPOTS: Spot[] = [
     name: "日本大学理工学部 船橋キャンパス（交通総合試験路）",
     group: "=LOVE",
     category: "MVロケ地",
-    latitude: 35.729,
-    longitude: 140.054,
+    latitude: 35.7262,
+    longitude: 140.0551,
     event_date: "2026-06-02",
     youtube_title: "🎥 関連映像: 『超特急逃走中』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/d20dEAtbL08?si=3sVKsAnbhsACXs51&amp;controls=0&amp;start=197\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "逃走中の超特急",
     tags: ["超特急逃走中巡礼"],
     description: "『超特急逃走中』のMVを象徴する、交通総合試験路のロケ地です。まさに「超特急で逃走中」な疾走感あふれるシーンが撮影されました。広大なテストコースを背景に、スリルと楽しさが混ざり合う最高の推し活スポットです。\n\n⚠️聖地巡礼に関する重要なお願い\nこちらは現在も学生が通う現役の大学キャンパスです。時期や時間帯によっては関係者以外の立ち入りが制限されている場合があります。敷地内に入る際は、必ず正門の警備員や窓口等で見学の許可を取るようにしてください。また、授業や学生生活の妨げにならないよう、マナーとモラルを厳守した節度ある行動をお願いいたします。",
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "exact"
   },
   {
     id: "spot-special-national-stadium",
@@ -2516,8 +2516,8 @@ const INITIAL_SPOTS: Spot[] = [
     name: "馬堀海岸遊歩道",
     group: "≠ME",
     category: "MVロケ地",
-    latitude: 35.2638,
-    longitude: 139.7001,
+    latitude: 35.263585,
+    longitude: 139.709385,
     event_date: "2026-06-26",
     youtube_title: "🎥 関連映像: 『Summer haze』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/iIcpiUg_7NQ?si=k5in1qPZE_hyPT7X&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
@@ -2569,7 +2569,7 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: "⚠️聖地巡礼に関する重要なお願い\n海岸では高波・強風・潮位に注意してください。私有地や立入禁止区域には入らないでください。住宅地が近いため、大人数で騒ぐ、長時間滞在するなど周辺住民の迷惑になる行為は避けてください。",
     verification_status: "MV映像・周辺地形の照合による特定",
     last_confirmed_date: "2026-08-09",
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility"
   },
   {
     id: "spot-real-summerhaze-imaginus",
@@ -2589,7 +2589,7 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: "⚠️聖地巡礼に関する重要なお願い\n現在は営業中の施設なので、撮影だけを目的とした迷惑行為はしないでください。施設内での撮影可否・立入可能エリア・営業時間についてはIMAGINUSの最新ルールに従ってください。イベント等によって入場できないエリアがある可能性があります。",
     verification_status: "MV映像と旧校舎の構造・景観照合による特定",
     last_confirmed_date: "2026-08-09",
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility"
   }
 ];
 
