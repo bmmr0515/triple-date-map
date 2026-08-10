@@ -139,7 +139,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: Documentary of =LOVE -Episode0-",
     youtube_url: "https://www.youtube.com/embed/zXR_xhihDOQ?si=4ram6tzvtxIfDN8t",
     reward_title: "すべての始まりの目撃者",
+    tags: undefined,
+    address: "東京都",
     description: "イコノイジョイ全グループのオーディション、初期の合宿やレッスンの舞台となったすべての始まりの場所。指原莉乃プロデューサーとメンバーの絆が生まれた絶対的聖地。\n\n⚠️聖地巡礼に関する重要なお願い\n現役の専門学校です。学生の迷惑になるため、校舎内への無断立ち入りや出入り待ちなどの行為は絶対にやめましょう。外観を眺めるのみにしてください。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -153,7 +159,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『青春”サブリミナル”』公式MV",
     youtube_url: "https://www.youtube.com/embed/8id6i_QeNJM?si=DummyForSeishun",
     reward_title: "青サビの約束を交わした者",
+    tags: undefined,
+    address: "山口県",
     description: "休養から復帰した髙松瞳をセンターに据えた、王道アイドルソング of 最高峰『青春”サブリミナル”』のロケ地。エメラルドグリーンの海と青空の下、この美しい橋を駆け抜けるシーンはまさに「青春」そのもの。山口県という遠方のため巡礼ハードルは高いが、景色を見た瞬間にイントロが脳内再生される、イコラブオタクなら一生に一度は訪れたい約束の地。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -167,7 +179,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『≠ME』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/wsKSUGDKRpQ?si=XLaiyg1-3lOZz8E9&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "ノイミー原点の走者",
+    tags: undefined,
+    address: "千葉県",
     description: "記念すべきノイミー最初のオリジナル曲『≠ME』のMV撮影地。青空の下、トラックでメンバーが全力で踊り、走り抜けるシーンは「泥臭い青春感」の原点。真夏に訪れれば、彼女たちの眩しい笑顔と青春のエネルギーがフラッシュバックすること間違いなし。\n\n⚠️聖地巡礼に関する重要なお願い\n公共のスポーツ施設です。大会や貸切利用時は一般の立ち入りやトラック内への入場が制限される場合があります。ルールを守って見学しましょう。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -181,7 +199,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『チョコレートメランコリー』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/rDVWtyXTuoU?si=OZbZ4RXmt8FmurZ5&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "チョコメラの虜",
+    tags: undefined,
+    address: "神奈川県",
     description: "≠ME 3rdシングル『チョコレートメランコリー』のロケ地。普段の爽やかなノイミーから一転、ゴシックでダークな世界観を見せつけた衝撃作。修道女風の衣装で踊った荘厳なチャペルや、狂気を感じさせるお茶会のシーンが撮影された。オタクたちの間で「推しにチョコで閉じ込められたい」という謎の願望を生み出した、美しくも恐ろしい狂気の館。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -195,7 +219,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『虹が架かる瞬間』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/DJdpqIGp1XA?si=vVIRDkcvR98o4RI5&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "大堤防に架かる虹を見た者",
+    tags: undefined,
+    address: undefined,
     description: "『虹が架かる瞬間』の撮影地. メンバーがそれぞれの場所から集まり、海と夕焼けをバックに歌い踊るエモさ1000%のMV。オーディションからの軌跡を描いた歌詞と相まって、ファンの涙腺を崩壊させた聖地。\n\n⚠️聖地巡礼に関する重要なお願い\n釣り人や観光客が多い公共エリアです。堤防の先端など足元の悪い場所もあるため安全に注意して巡礼してください。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -209,7 +239,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 日本武道館ライブ『青春サブリミナル』",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/bCvjbkE3iMI?si=jLacLiU_RLFeKvaq&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "日本武道館の証言者",
+    tags: undefined,
+    address: "東京都",
     description: "デビューから約3年半の月日を経て辿り着いた悲願の日本武道館公演「You all are \"My ideal\"」の会場。コロナ禍の困難を乗り越え、休養中のメンバーを待ち続け、ついに全員で立った夢のステージ。「次に会えた時は 何を話そうかな」という歌詞が現実に重なり、会場中のペンライトとオタクの涙が交差した、歴史に残る伝説の一夜。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -223,7 +259,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: イコノイジョイ合同曲『トリプルデート』",
     youtube_url: "https://www.youtube.com/embed/gkabNNfTjX4?si=TripleDateDummy",
     reward_title: "放水祭りのサバイバー",
+    tags: undefined,
+    address: "山梨県",
     description: "「イコノイフェス」や「イコノイジョイ」の舞台。夏の野外合同フェスといえば絶対にここ！大量 of 放水祭りでオタクもメンバーもずぶ濡れになりながら、グループの垣根を越えたバチバチのパフォーマンスと最高の笑顔が交差する。日が落ちてからのエモーショナルな演出と花火は、毎年の夏を締めくくる最高の思い出になる最強の聖地。\n\n⚠️聖地巡礼に関する重要なお願い\n富士急ハイランド自体は入園無料ですが、コニファーフォレスト内部はイベント時以外は基本的に立ち入ることができません。遊園地のアトラクション等を楽しむ場合は別途料金が必要です。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -237,7 +279,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『探せ ダイヤモンドリリー』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/t5r0rNwjXQU?si=jxG3rGTeYyzDb8-s&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "ダイヤモンドリリーの語り部",
+    tags: undefined,
+    address: "福島県郡山市開成5-22-1",
     description: "『探せ ダイヤモンドリリー』のロケ地。趣のあるレトロな木造校舎で、別れと旅立ちの切ない青春ストーリーが描かれたエモい聖地。\n\n⚠️聖地巡礼に関する重要なお願い\n博物館として一般公開されており、入館料（大人300円等）を払えば内部の見学が可能です。館内での撮影ルール（動画NGなど）に従ってオタ活を楽しみましょう。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -251,7 +299,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『あの子コンプレックス』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ShbfYtAPXuI?si=aaflUoEuepcTCdVZ&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "大谷資料館の目撃者",
+    tags: undefined,
+    address: "栃木県",
     description: "『あの子コンプレックス』のロケ地。佐々木舞香センターの儚く美しい世界観を見事に表現した広大な地下採石場跡。ミステリアスさ溢れる聖地。\n\n⚠️聖地巡礼に関する重要なお願い\n入場料（大人800円等）が必要です。地下空間は夏でも非常に寒いため上着の持参をおすすめします。また暗いため足元に注意してください。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -265,7 +319,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『ナツマトペ』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Y1Bboo5KXL4?si=GeyEtfxvv8MrNIz9&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "ナツマトペの漂流者",
+    tags: undefined,
+    address: undefined,
     description: "『ナツマトペ』のMVロケ地。イコラブの夏曲といえばここ！透き通るような青い海とリゾート感全開 of ロケーションで、メンバーたちの最高に弾けた笑顔が撮影された。海外遠征となるため巡礼ハードルは最強クラスだが、マップ上にピンがあるだけでも「ナツマトペ」の多幸感が蘇る。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -279,7 +339,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『Be Selfish』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/suf7S4AKdmY?si=qqNOS93njbn_34LB&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "Be Selfishの体現者",
+    tags: undefined,
+    address: undefined,
     description: "『Be Selfish』でイコラブが初めて海外MV撮影を敢行した場所。K-POPライクなバキバキのダンスと野口衣織の圧倒的センターオーラが炸裂した記念碑的作品。自己肯定感を爆上げしてくれる、都会的で洗練された空気感を感じられるグローバルな聖地。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -293,7 +359,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『ズルいよ ズルいね』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/J5eTB_0SEeg?si=KvMLe08R0cVhYO-R&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "ズルいよ駅の雨宿り人",
+    tags: undefined,
+    address: "東京都",
     description: "齊藤なぎさ初センター曲『ズルいよ ズルいね』の印象的なシーンが撮影された駅。雨降る誰もいないホームや改札前で、メンバーたちが魅せた本気の泣き演技と切ない表情が胸を締め付ける。オタクなら雨の日に訪れて、傘を差しながらMVの失恋 of 痛みに浸りたくなるエモさ満点の聖地。\n\n⚠️聖地巡礼に関する重要なお願い\n現在も営業している駅施設です。ホームや改札付近での長時間の滞留、一般の乗客の通行の妨げになる撮影、三脚の使用などは厳禁です。乗客としてのマナーを守り、周囲への配慮を徹底してください。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -307,7 +379,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『秘密インシデント』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/dpSgsHxhWbA?si=ThM3tT7HUI8lglLr&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "秘密インシデントの当事者",
+    tags: undefined,
+    address: "茨城県",
     description: "メジャーデビュー曲『秘密インシデント』の撮影が行われた学校スタジオ。屋上での爽やかなダンスシーンや、誰もが経験した「青春のきらめき」をギュッと詰め込んだようなロケーション。ノイミーの「青さ」を象徴する重要スポット。\n\n⚠️聖地巡礼に関する重要なお願い\n撮影・ハウススタジオとして運営されているため、一般のオタクが許可なく敷地内に入ることは厳禁です。周辺道路からの見学も近隣 of 迷惑になる場合があるため、巡礼時は十分に配慮してください。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -321,7 +399,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『夏が来たから』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/OGb7M9nvBHE?si=LHoyLkZp91Lu_KJe&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "足摺岬で風を浴びた者",
+    tags: undefined,
+    address: undefined,
     description: "『夏が来たから』のMVロケ地。果てしなく広がる青空と太平洋をバックに、冨田菜々風がエモーショナルに歌い上げる姿が印象的な絶景スポット。壮大な自然の中で、ノイミーのエモい夏曲のエネルギーを全身で浴びることができる、究極の浄化系聖地。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -335,7 +419,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『体育館ディスコ』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/pwT02lNsloU?si=ENJno4TyuIcdoZs7&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "体育館ディスコのダンサー",
+    tags: undefined,
+    address: "埼玉県",
     description: "1stシングル『体育館ディスコ』の舞台となった廃校スタジオ。ニアジョイカラーの黄色に装飾された体育館で、フレッシュなエネルギーを爆発させて踊るメンバーの姿が焼き付いている。ニアジョイのハッピーオーラを感じられる場所。\n\n⚠️聖地巡礼に関する重要なお願い\n撮影・ハウススタジオとして運営されているため、予約利用者以外の敷地内への無断立ち入りや見学は固く禁止されています。外観を遠くから眺めるのみにしてください。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -349,7 +439,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『チョコレートメランコリー』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/rDVWtyXTuoU?si=OZbZ4RXmt8FmurZ5&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "古城に閉じ込められし者",
+    tags: undefined,
+    address: "群馬県",
     description: "『チョコレートメランコリー』のジャケット撮影などでも使用された、中世ヨーロッパの古城を移築したテーマパーク。ゴシックでダークな世界観のノイミーを堪能できる場所であり、推しに閉じ込められる妄想を捗らせるには完璧すぎるシチュエーション。オタクの厨二心をくすぐる魅惑の聖地。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -363,7 +459,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『The 5th』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Q1-yYjZqk7o?si=HzwPTmY-d5WcQFTN&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "制服クリスマスの約束人",
+    tags: undefined,
+    address: "埼玉県",
     description: "『The 5th』のロケ地。きらびやかな冬のイルミネーションに包まれたクリスマスソングの舞台となった結婚式場。少し大人になったイコラブのメンバーたちが冬のラブソングを歌い上げた。クリスマスシーズンにここを歩けば、完全に「イコラブと過ごす特別な冬」の主人公になれる最強のデート気分聖地。\n\n⚠️聖地巡礼に関する重要なお願い\n現役の結婚式場（私有地）です。利用者以外の無断立ち入りや、営業の妨げになる敷地内での無断撮影は固く禁止されています。公道からの外観見学や、併設のカフェ等を利用する範囲でマナーを守って楽しみましょう。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -377,7 +479,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『Oh！Darling』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/E-mJ15dJ3Fg?si=9oxCdENFhn4UiEAD&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "Oh! Darlingの恋人",
+    tags: undefined,
+    address: "山梨県",
     description: "『Oh！Darling』のMV撮影地。メンバー全員が遊園地を全力で楽しみながら踊る姿が最高にハッピーな一曲。ライブでもタオルを振り回して爆上がりする定番曲やから、ここでアトラクションに乗りながら脳内再生すればテンションMAX間違いなし。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -391,7 +499,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『夏祭り恋慕う』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/8VBDO8ZQyDo?si=RTvUT1g5yJzaIL61&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "夏祭り恋慕うオタク",
+    tags: undefined,
+    address: "埼玉県",
     description: "佐々木舞香センターの最強夏曲『夏祭り恋慕う』のロケ地となった由緒ある神社。浴衣姿 of メンバーたちが境内や石段で見せた儚くも美しい表情は、オタクの「ひと夏の恋」の記憶を完全に書き換えた。夏祭りの時期に絶対に訪れたいエモさ爆発の聖地。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -405,7 +519,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『ドライブ デート 都内』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Y3aRUM8ebKE?si=YIxzuvSzTfxrjRO8&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "ドライブデートのナビゲーター",
+    tags: undefined,
+    address: "千葉県",
     description: "『ドライブ デート 都内』のMVで、メンバーと夜のドライブデートを楽しんでいるかのような彼氏ヅラ（彼女ヅラ）を極限まで味わえるロケーション。海沿いの開放的な施設で、MVのドライブ気分を味わいながら推しへの想いを馳せることができるスポット。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -419,7 +539,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『君はこの夏、恋をする』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Y6uOJ_jw6cQ?si=-QtsfH_XD9wIfDnf&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "君夏に恋した者",
+    tags: undefined,
+    address: "千葉県",
     description: "『君はこの夏、恋をする』のロケ地。広大な公園の緑やグラウンドで全力の恋心を歌う姿は疾走感の塊。学生時代の甘酸っぱい記憶が呼び起こされる、ノイミーオタクの魂の故郷。\n\n⚠️聖地巡礼に関する重要なお願い\n県内最大級の総合公園で一般開放されています。ピクニックや散策がてらの巡礼に最適ですが、休日は家族連れで混雑するため周囲への配慮をお願いします。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -433,7 +559,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『天使は何処へ』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/PQb1ZMMV1h0?si=4ZXn2X8Bdqn2HPB7&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "大慶園のネオンダンサー",
+    tags: undefined,
+    address: "千葉県",
     description: "『天使は何処へ』のMVロケ地。ネオン輝くアメリカンな巨大アミューズメントパークで, 過去最高難易度の激しいダンスを披露した。夜に訪れれば、MVの治安悪めなカッコいいノイミーの世界観にどっぷり浸れる映えスポット。\n\n⚠️聖地巡礼に関する重要なお願い\n24時間営業の施設のため、普通に遊びながらオタ活が可能です。ただし他のお客さんの迷惑になるような長時間の占有や本格的な撮影は控えましょう。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -447,7 +579,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『ラストチャンス、ラストダンス』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/TN--u8kgVM0?si=YrzK3um58T_ChdCF&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "ラスチャンの中学生",
+    tags: undefined,
+    address: "千葉県",
     description: "『ラストチャンス、ラストダンス』のMV撮影地。美しい木造校舎を背景に、切ない恋の終わりと始まりを描いた青春の痛みと眩しさが詰まったエモすぎるロケ地。\n【⚠️重要な注意】現在も生徒が通う「現役の公立中学校」です。関係者以外の敷地内への無断立ち入り、生徒が映り込む形での撮影、不審に思われる長時間の滞在は絶対に禁止です！オタクのモラルとして、巡礼はごく遠巻きに外観を眺める程度に留めてください。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -461,7 +599,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『=LOVE』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/xOAaBsPaPpY?si=DyZ02Gn3ZCQXA55S&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "イコラブ原点のダブルピース",
+    tags: undefined,
+    address: "茨城県",
     description: "記念すべきデビュー曲『=LOVE』のMVロケ地のひとつ。茨城県の花貫渓谷に位置する、大自然に囲まれた癒しの聖地。MV内でメンバーが笑顔で駆け回り、ダブルピースを決める印象的なシーンが撮影されており、多くのファンがそのポイントを特定して巡礼に訪れている。撮影時と同じ構図で写真を撮ったり、川のせせらぎなど自然音をBGMに散策したりと、オた活を満喫するには最高のロケーション。ただし、自然豊かな場所ゆえに雨の日などは足元が滑りやすいため、スニーカーなど歩きやすい靴で訪れるのがおすすめ。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -475,7 +619,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『=LOVE』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/xOAaBsPaPpY?si=DyZ02Gn3ZCQXA55S&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "うのしま海岸の開拓者",
+    tags: undefined,
+    address: "茨城県",
     description: "記念すべきデビュー曲『=LOVE』のもうひとつのMVロケ地。海辺のロケーションで初々しいメンバーたちの爽やかなダンスシーンが撮影された。ここからイコラブの歴史がスタートした、ファンにとっても特別な海辺の聖地。\n\n⚠️聖地巡礼に関する重要なお願い\n隣接する「うのしまヴィラ」は宿泊・飲食施設（私有地）です。海岸自体は公共の場所ですが、施設の駐車場への無断駐車や、宿泊客の迷惑になる騒音・長時間の占有は避け、節度あるオタ活を心がけてください。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -489,7 +639,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『笑って フラジール』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/YCbV-2dCyiM?si=YCbV-2dCyiM&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "笑ってフラジールの応援団",
+    tags: undefined,
+    address: "神奈川県",
     description: "≒JOYの2ndソング『笑って フラジール』のロケ地。学校の屋上や体育館で、不器用ながらも前を向いて「笑って！」とエールを送る姿に、多くのファンが救われたニアジョイの応援歌としての原点。\n\n⚠️聖地巡礼に関する重要なお願い\n現在も生徒が通う現役の学校施設です。敷地内への無断立ち入りや、生徒が映り込む形での撮影、周辺での長時間の滞留は絶対に禁止です。巡礼の際は公道から静かに校舎を眺める程度に留めてください。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -503,7 +659,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『今日も君の夢を見たんだ』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/2ltZx6FkU4w?si=t9baxpFeCmf2kH4g&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "君の夢を見た夢追い人",
+    tags: undefined,
+    address: "埼玉県",
     description: "『今日も君の夢を見たんだ』のロケ地となった中学校跡地。自然豊かな環境の中で、メンバーたちが無邪気に笑い合う多幸感あふれる映像が撮影された、ピースフルな空間。\n\n⚠️聖地巡礼に関する重要なお願い\n現在は廃校となっており、自治体（フィルムコミッション）が管理していますが、当面の間は撮影受け入れ自体が休止されています。敷地内への無断立ち入りは厳禁です。周辺から雰囲気を味わう程度にしましょう。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -517,7 +679,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『無謀人』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/qUzXtUsVgH8?si=Xmhb-YEBXHRNRcYB&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "無謀なる港の開拓者",
+    tags: undefined,
+    address: "千葉県",
     description: "『無謀人』のMV撮影地。炎が燃え盛る中でハードなラップと力強いダンスを見せつけ、ニアジョイの底知れぬポテンシャルと圧倒的な覇気を証明した、闘争 of 聖地。\n\n⚠️聖地巡礼に関する重要なお願い\n稼働中の港湾施設および私有地の大型倉庫エリアです。大型トラック of 出入りが多く非常に危険なため、関係者以外の立ち入りは厳しく禁止されています。公道からの遠巻きの巡礼に留め、絶対に敷地内には入らないでください。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -531,7 +699,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『≒JOY』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/2nOHrLolG08?si=4XIOKawh7ordSvTc&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "ニアジョイ始まりの乾杯者",
+    tags: undefined,
+    address: "茨城県",
     description: "ニアジョイの始まりの曲『≒JOY』の撮影地のひとつ。レンガ造りの美しい洋館（歴史的建造物）をバックに、夢への第一歩を踏み出したフレッシュなメンバーたちの輝かしい姿が撮影された。ここから始まった快進撃に思いを馳せることができる癒やしの聖地。\n\n⚠️聖地巡礼に関する重要なお願い\n入場・見学は無料です。神谷傳兵衛記念館などの内部見学（10:00〜16:00）や敷地内の散策が可能です（年末年始などは休園）。一部立ち入れない建物もありますが、写真撮影も楽しめます。レストラン等も併設されているため、オタ活の拠点にも最適です。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -545,7 +719,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『ウィークエンドシトロン』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/skgh3juWdFU?si=LMCBDuHmLA6XsZZx&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "ウィークエンドシトロンのお嬢様",
+    tags: undefined,
+    address: "福島県",
     description: "夏曲『ウィークエンドシトロン』の舞台となった、中世英国の街並みを再現したリゾート施設。ひまわり畑や豪華な洋館で踊るメンバーのお嬢様感がたまらない。オタク仲間とシトロンイエローの服を着て訪れたい、最高に映える聖地。\n\n⚠️聖地巡礼に関する重要なお願い\n宿泊利用のほか、日帰りでも入場料（大人400円等）で利用可能です。MVで登場するマナーハウス（洋館）の見学は別途ツアー料金が必要です。マナーを守って英国とイコラブの世界観を楽しみましょう。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -559,7 +739,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『P.I.C.』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/DJdpqIGp1XA?si=hMtsCSlsrD9al5Xs&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "地下神殿のステッキ使い",
+    tags: undefined,
+    address: "埼玉県",
     description: "冨田菜々風がバチバチに決める『P.I.C.』の撮影地。巨大な柱が立ち並ぶ「地下神殿」は、ノイミーのパフォーマンスの迫力を最大限に引き出した伝説の空間。ステッキを持った振り付けを真似して写真を撮りたくなる, 圧倒的スケールのロケ地。\n\n⚠️聖地巡礼に関する重要なお願い\n一般見学が可能ですが、完全事前予約制です。地下神殿コース（1,000円〜）など見学料金が必要です。施設稼働時などは見学できない場合があるため、必ず公式サイトで確認・予約をしてから訪れてください。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -573,7 +759,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『はにかみショート』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/JXchs8DEDWk?si=z8dnGQ32FPx0KLFD&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "はにかみショートの主人公",
+    tags: undefined,
+    address: "東京都",
     description: "冬の超王道アイドルソング『はにかみショート』のロケ地。まるでヨーロッパのようなオシャレな石畳とビルが立ち並ぶエリア。きらびやかな夜の街並みを背景に、メンバーがマフラー姿で歌い踊る姿がオタクの心に永遠に刻まれた。冬のデート気分を味わいながら映える写真を撮るならここ一択。\n\n⚠️聖地巡礼に関する重要なお願い\n公道ですので自由に散策・撮影が可能ですが、オフィスや商業施設が隣接するエリアです。一般の方の通行の妨げや、大声で騒ぐなどの行為は控え、マナーを守ってオタ活を楽しみましょう。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -587,7 +779,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『手遅れcaution』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/w0N0TiOlAY0?si=S7o-oHglt-uamNUE&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "手遅れ警告の発令者",
+    tags: undefined,
+    address: "千葉県",
     description: "イコラブのダークな魅力が爆発した3rdシングル『手遅れcaution』のロケ地。血まみれの制服や百合の愛憎劇という衝撃的な展開でオタクの心を鷲掴みにした。ここで「手遅れ」のイントロを流すだけで、あのヒリヒリした空気を味わえる。\n\n⚠️聖地巡礼に関する重要なお願い\n普段は大型の撮影スタジオおよびイベントスペースとして運営されています。イベント開催日など一般開放されている日を除き、敷地内への無断立ち入りは禁止されています。イベント等に参加して巡礼するか、外観を遠目に見る程度に留めてください。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -601,7 +799,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『僕らの制服クリスマス』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/YIjPbF-dKQA?si=YVeqA_tKJ_3RDx21&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "僕らの制服クリスマスの学生",
+    tags: undefined,
+    address: "山梨県",
     description: "冬の定番曲『僕らの制服クリスマス』のMV撮影地。大学院棟前の広場をはじめ、キャンパス全体を使ってマフラーを巻いたメンバーたちの甘酸っぱい青春ストーリーが撮影された。冬が来るたびに訪れたくなるエモすぎる学校ロケ地。\n\n⚠️聖地巡礼に関する重要なお願い\n現在も学生が通う現役の大学キャンパスです。関係者以外の無断立ち入りや、学生が映り込む撮影は厳禁です。大学祭など一般開放されている日を狙うか、外観を遠巻きに眺めるに留めてください。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -615,7 +819,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『ラストノートしか知らない』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/C8WMX7dEH7Y?si=gDweR-_vaEpgUrir&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "ラストノートの調香師",
+    tags: undefined,
+    address: "山梨県",
     description: "最年少・齋藤樹愛羅がセンターを務めた『ラストノートしか知らない』のMVロケ地。煌びやかなダンスオルガンが設置された「オルガンホール」で、美しくも切ないダンスシーンが撮影された。中世ヨーロッパのような館内は、イコラブの気品ある世界観に完全にマッチしている。\n\n⚠️聖地巡礼に関する重要なお願い\n美術館のため入館料（大人2,100円〜※季節変動あり）が必要です。館内は非常に美しく撮影も楽しめますが、他のお客さんの鑑賞の妨げにならないよう静かにオタ活を楽しみましょう。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -629,7 +839,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『Want you! Want you!』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Bot92Nn-ozk?si=G2dfc6nPxvh12RDc&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "Want you! のウェディングメイト",
+    tags: undefined,
+    address: "静岡県",
     description: "イコラブのポップでキュートな楽曲『Want you! Want you!』のMVロケ地となった静岡県沼津市の結婚式場・フォトスタジオ。テーマパークのような広大で多彩なセットがあり、MV的で可愛い世界観そのままの雰囲気を味わえるロケーション。\n\n⚠️聖地巡礼に関する重要なお願い\n実際の結婚式場およびスタジオとして営業しているため、無断での立ち入りや撮影は厳禁です。見学や撮影利用を希望する場合は、必ず事前に施設へ問い合わせ、営業の迷惑にならないようルールを守ってオタ活を楽しみましょう。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -643,7 +859,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『呪って呪って』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/cyRZGtNx_a4?si=lWyRvRwwEvULNyUC&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "不純喫茶の呪われし者",
+    tags: undefined,
+    address: "東京都",
     description: "ダークで情熱的な表題曲『呪って呪って』のMV内で、瀧脇笙古がお店から出てくる印象的なシーンで使われたレトロ喫茶。昭和レトロなネオンやクリームソーダがオタク心をくすぐる。アクスタを置いてMVのダークな世界観を再現したくなる人気スポット。\n\n⚠️聖地巡礼に関する重要なお願い\n実際の飲食店として営業しています。普通に来店して飲食しながらオタ活が可能ですが、店内撮影の際は他のお客さんが映り込まないよう配慮し、混雑時は長居を避けましょう。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -651,13 +873,19 @@ const INITIAL_SPOTS: Spot[] = [
     name: "西武園ゆうえんち（埼玉県所沢市）",
     group: "=LOVE",
     category: "飲食店・その他",
-    latitude: 35.7667,
-    longitude: 139.4439,
+    latitude: 35.7686,
+    longitude: 139.4447,
     event_date: "2024-07-31",
     youtube_title: "🎥 関連映像: 特典映像『イコラブ社員旅行 in 埼玉！』",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Rn0vbPbMGcQ?si=BBX-yLxa0KFk1ZWs&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "昭和レトロの旅人",
+    tags: undefined,
+    address: "埼玉県",
     description: "大ヒット曲『絶対アイドル辞めないで』のType Cに収録された特典映像『イコラブ社員旅行 in 埼玉！〜昭和レトロ編〜』のロケ地。大場花菜のプロデュースで、メンバーたちが昭和の街並みで大はしゃぎする姿が収められた。推しと同じアトラクションに乗って社員旅行気分を味わえる多幸感スポット。\n\n⚠️聖地巡礼に関する重要なお願い\n入園にはチケット（1日レヂャー切符など）が必要です。昭和の街並み（夕日の丘商店街）はフォトスポットとしても最高なので、推しのアクスタやグッズを持参して全力で満喫しましょう。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -672,7 +900,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/20QJax8CwQo?si=kPUEeAcfNct48srm\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "大森VEILLEの大人",
     tags: ["トリガー巡礼"],
+    address: "東京都",
     description: "諸橋沙夏が訪れた大人な雰囲気のバー。大森エリアの情緒ある路地に佇む名店。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -687,7 +920,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/20QJax8CwQo?si=kPUEeAcfNct48srm\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "SPBSの本の虫",
     tags: ["トリガー巡礼"],
+    address: "東京都",
     description: "音嶋莉沙が入ったオシャレな本屋さん。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -702,7 +940,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/20QJax8CwQo?si=kPUEeAcfNct48srm\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "渋谷1214のヘアスタイリスト",
     tags: ["トリガー巡礼"],
+    address: "東京都",
     description: "髙松瞳が髪を切っていた美容室。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -717,7 +960,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/20QJax8CwQo?si=kPUEeAcfNct48srm\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "表参道エアストリームの旅人",
     tags: ["トリガー巡礼"],
+    address: "東京都",
     description: "山本杏奈が働いていたキッチンカー。表参道エリアのカフェスペース。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -732,7 +980,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/20QJax8CwQo?si=kPUEeAcfNct48srm\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "みらい館大明の放課後メンバー",
     tags: ["トリガー巡礼"],
+    address: "東京都",
     description: "屋上や教室、男の子が走っているシーンが撮影された廃校活用施設。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -747,7 +1000,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/20QJax8CwQo?si=kPUEeAcfNct48srm\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "神山町LadyBugsの花屋",
     tags: ["トリガー巡礼"],
+    address: "東京都",
     description: "大場花菜が働いていた花屋さん。本屋（SPBS）のすぐ近く。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -762,7 +1020,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/20QJax8CwQo?si=kPUEeAcfNct48srm\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "豊洲水辺のランニングスター",
     tags: ["トリガー巡礼"],
+    address: "東京都",
     description: "瀧脇笙古が走っていた公園。レインボーブリッジが見える水辺のランニングスポット。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -777,7 +1040,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/20QJax8CwQo?si=kPUEeAcfNct48srm\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "KAIT広場の芸術鑑賞家",
     tags: ["トリガー巡礼"],
+    address: "神奈川県",
     description: "美しいダンスパートが撮影された特徴的な建築の広場。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -792,7 +1060,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/20QJax8CwQo?si=kPUEeAcfNct48srm\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "八王子キャンパスの卒業生",
     tags: ["トリガー巡礼"],
+    address: "東京都",
     description: "卒業式のキスシーンが撮影された場所。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -807,7 +1080,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/20QJax8CwQo?si=kPUEeAcfNct48srm\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "渋谷キャンパス of 夢追い人",
     tags: ["トリガー巡礼"],
+    address: "東京都",
     description: "佐々木舞香がビル街を見つめるシーンの撮影地。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -822,7 +1100,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/20QJax8CwQo?si=kPUEeAcfNct48srm\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "ミモザハウスの相合傘メイト",
     tags: ["トリガー巡礼"],
+    address: "東京都",
     description: "野口衣織が男の子と相合傘をするシーンが撮影されたハウススタジオ。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -836,7 +1119,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『絶対アイドル辞めないで』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/17NBPoc78oM?si=5jta82I7LorxasSC&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "クレープの絶対アイドル",
+    tags: undefined,
+    address: "東京都",
     description: "=LOVEの17thシングル『絶対アイドル辞めないで』Type A・B・Cのジャケット写真が撮影された場所です。ピンクのキュートな外観が目印！MIYASHITA PARKのロケ地とも近いので、一緒に巡るのがおすすめです。現地でクレープを食べながら、推しと同じポーズで写真を撮ってみてはいかがでしょうか？（※お店や他のお客様の迷惑にならないようご配慮をお願いします）",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -850,7 +1139,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『絶対アイドル辞めないで』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/17NBPoc78oM?si=5jta82I7LorxasSC&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "MIYASHITAのアイドル",
+    tags: undefined,
+    address: "東京都",
     description: "=LOVEの17thシングル『絶対アイドル辞めないで』Type D・Eのジャケット写真が撮影されたスポットです。原宿・渋谷エリアのシンボル的な施設。Type A〜Cのロケ地（サンタモニカクレープ）から歩いて行ける距離にあるので、同日の巡礼ルートにぴったりです！",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -864,7 +1159,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『CAMEO』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/iEYwHScdJFQ?si=ZUxSMM5k3y673C-V\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "CAMEOのスパイス",
+    tags: undefined,
+    address: "千葉県",
     description: "7thシングル『CAMEO』のジャケット写真撮影地です。独特な廃墟感・倉庫感のあるおしゃれなスタジオで、メンバーたちのエキゾチックでクールな衣装が非常に映えるビジュアルとなりました。\n【住所】千葉県木更津市中里2-1-14\n\n⚠️聖地巡礼に関する重要なお願い\n商業用の撮影スタジオ（私有地）です。一般の方の立ち入りや見学は一切禁止されています。オタクのモラルとして、巡礼は外観を遠目に見る程度に留め、近隣の迷惑になる行為は絶対にやめましょう。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -878,7 +1179,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『祝祭』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/m8WtzVPXxwU?si=TeFEVhohbbRImMwn\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "祝祭の参列者",
+    tags: undefined,
+    address: "群馬県",
     description: "9thシングルカップリング曲『祝祭』のMV撮影地です。重厚な洋館とアンティークな雰囲気を活かし、ミステリアスなダークファンタジー世界が繰り広げられました。執事や主人を演じるメンバーたちの格好良い姿が見どころです。\n【HP】https://lockheart.info/\n【住所】〒377-0702 群馬県吾妻郡高山村5583-1",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -893,7 +1200,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/LKwERkGBiog?si=5VY1_7ckKJEnuXLc\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "笑顔のレシピの夢追い人",
     tags: ["笑顔のレシピ巡礼"],
+    address: "東京都",
     description: "『笑顔のレシピ』MVに登場する目標の地。イコラブメンバーとファンがいつか辿り着くことを誓った約束の最高峰ドーム。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -908,7 +1220,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/LKwERkGBiog?si=5VY1_7ckKJEnuXLc\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "メッセモールの散歩者",
     tags: ["笑顔のレシピ巡礼"],
+    address: "千葉県",
     description: "『笑顔のレシピ』MV撮影地。幕張メッセ近くの広大な公園スペースで、メンバーたちが笑顔で絆を深め合うシーンが撮影されました。\n【住所】〒261-0023 千葉県千葉市美浜区中瀬２丁目５",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -923,7 +1240,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/LKwERkGBiog?si=5VY1_7ckKJEnuXLc\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "メッセモール交差点の夕陽人",
     tags: ["笑顔のレシピ巡礼"],
+    address: "千葉県",
     description: "『笑顔のレシピ』MV撮影地。メッセモール交差点にかかる歩道橋周辺で、美しい夕陽や都会的な背景と共にメンバーが佇むエモーショナルなシーンが描かれています。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -938,7 +1260,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/LKwERkGBiog?si=5VY1_7ckKJEnuXLc\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "メッセモール北側の開拓者",
     tags: ["笑顔のレシピ巡礼"],
+    address: "千葉県",
     description: "『笑顔のレシピ』MV撮影地。メッセモールの北側エリアで撮影された印象的なシーンです。\n【住所】〒261-0023 千葉県千葉市美浜区中瀬１丁目１１３",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -953,7 +1280,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/LKwERkGBiog?si=5VY1_7ckKJEnuXLc\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "幕張オフィス街の観測者",
     tags: ["笑顔のレシピ巡礼"],
+    address: "千葉県",
     description: "『笑顔のレシピ』MVに登場する特徴的なオフィスビル。近未来的なデザインのビル外観や周辺エリアが作品をモダンに彩ります。\n【住所】〒261-0023 千葉県千葉市美浜区中瀬１丁目６",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -968,7 +1300,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/LKwERkGBiog?si=5VY1_7ckKJEnuXLc\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "ビジネス通りを疾走せし者",
     tags: ["笑顔のレシピ巡礼"],
+    address: "千葉県",
     description: "『笑顔のレシピ』MV撮影地。ビジネス通りと交差する歩道橋で、リーダーの山本杏奈を中心に、夢に向かって走るメンバーたちの強い意志が込められたシーンが描かれています。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -982,7 +1319,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『My Voice Is For You』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/v3wVAbAWrE0?si=0JsgTiFFWDXKkWEs\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "オクマビーチの歌姫の伴奏者",
+    tags: undefined,
+    address: "沖縄県",
     description: "諸橋沙夏の初ソロ曲『My Voice Is For You』のMVロケ地。沖縄の澄み切った青い海と真っ白な砂浜が広がるリゾートビーチで、彼女の圧倒的で美しい歌声が響き渡る爽快な映像が撮影されました。\n【住所】沖縄県国頭群国頭村奥間913",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -996,7 +1339,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『My Voice Is For You』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/v3wVAbAWrE0?si=0JsgTiFFWDXKkWEs\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "大石林山のこだま",
+    tags: undefined,
+    address: "沖縄県",
     description: "諸橋沙夏のソロ曲『My Voice Is For You』のMVロケ地。沖縄本島北部のパワースポットとして有名な大石林山の雄大な岩山とガジュマルの森の中で、神秘的な歌唱シーンが撮影されました。\n【住所】沖縄県国頭郡国頭村宜名真1241",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1010,7 +1359,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『Sweetest girl』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/TA0oDNGCFHQ?si=eOaNpgzVzkEITW9T\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "スウィーテストガールの親友",
+    tags: undefined,
+    address: "千葉県",
     description: "6thシングルカップリング曲『Sweetest girl』のMV撮影地です。温かみのあるおしゃれで可愛い一軒家ハウススタジオで、メンバーたちのキュートでおめかしした日常シーンが描かれました。\n【HP】http://atelier-onze11.com/\n【住所】〒299-3241 千葉県大網白里市季美の森南2-28-24\n\n⚠️聖地巡礼に関する重要なお願い\n商業用のハウススタジオ（私有地）です。一般の方の立ち入りや見学は固く禁止されています。近隣住民の方のご迷惑にならないよう、配慮を徹底してください。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1025,7 +1380,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/drmYqT-jlj4?si=NmY3XAJ9ppYtyt8V\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "常夏のハワイアンズ",
     tags: ["ハワイアンズ巡礼"],
+    address: "福島県",
     description: "4thシングル特典映像「ノイミー学園〜初夏の遠足 編〜」の舞台。メンバー自身がカメラを回して手作りした『クルクルかき氷』MVが撮影された東北の聖地です。\n【住所】福島県いわき市常磐藤原町蕨平50",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1040,7 +1400,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/guphoEWrNKs?si=Ij7nSIaFxjzAQEsb\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "超特Qなクイズ王",
     tags: ["超特Q北海道巡礼"],
+    address: "北海道",
     description: "特典映像「ノイミー学園 雪遊び＆グルメ満喫！超特Q 北海道行き」のロケ地。美味しいグルメを堪能したスポットです。\n【住所】〒066-0026 北海道千歳市住吉１丁目１２−２",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1055,7 +1420,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/guphoEWrNKs?si=Ij7nSIaFxjzAQEsb\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "超特Qなクイズ王",
     tags: ["超特Q北海道巡礼"],
+    address: "北海道",
     description: "特典映像「ノイミー学園 雪遊び＆グルメ満喫！超特Q 北海道行き」にて、メンバーが雪遊びを満喫したスポットです。\n【住所】〒005-0862 北海道札幌市南区滝野２４７",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1070,7 +1440,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/guphoEWrNKs?si=Ij7nSIaFxjzAQEsb\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "超特Qなクイズ王",
     tags: ["超特Q北海道巡礼"],
+    address: "北海道",
     description: "特典映像「ノイミー学園 雪遊び＆グルメ満喫！超特Q 北海道行き」で訪れた、公園内にある美しい滝です。\n【住所】〒005-0862 北海道札幌市南区滝野２４７ 国営滝野すずらん丘陵公園内",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1085,7 +1460,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/guphoEWrNKs?si=Ij7nSIaFxjzAQEsb\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "超特Qなクイズ王",
     tags: ["超特Q北海道巡礼"],
+    address: "北海道",
     description: "特典映像「ノイミー学園 雪遊び＆グルメ満喫！超特Q 北海道行き」でメンバーが北海道グルメを堪能したスポットです。\n【住所】〒064-0806 北海道札幌市中央区南６条西４丁目１−３",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1100,7 +1480,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/wJ5Qe8g_P30?si=B5Tj22295z5O1B14\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "孤高のファイター",
     tags: ["排彼のファイター巡礼","排彼のファイター巡礼","排彼のファイター巡礼","排他的ファイター巡礼"],
+    address: "東京都",
     description: "11thシングル「排他的ファイター」表題曲のMV撮影地です。新宿西新宿にある廃校を再利用した芸能クリエイティブスペースで、メンバーたちが華麗で力強いダンスシーンを披露しました。\n【住所】〒160-0023 東京都新宿区西新宿６丁目１２−３０ A棟2階",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1115,7 +1500,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/wJ5Qe8g_P30?si=B5Tj22295z5O1B14\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "孤高のファイター",
     tags: ["排彼のファイター巡礼","排彼のファイター巡礼","排彼のファイター巡礼","排他的ファイター巡礼"],
+    address: "東京都",
     description: "『排他的ファイター』のMV撮影で使用されたスタジオです。港区海岸に位置する開放的で洗練されたマルチスペースで、MV内のスタイリッシュな個別カットやドラマパートが撮影されました。\n【住所】〒108-0022 東京都港区海岸３丁目５−１３ 五色橋ビル\n\n⚠️聖地巡礼に関する重要なお願い\n民間のレンタルスペース・スタジオ（私有地）です。予約利用者や関係者以外の無断立ち入りは禁止されています。巡礼時は外観を遠巻きに眺める程度に留めてください。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1130,7 +1520,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/wJ5Qe8g_P30?si=B5Tj22295z5O1B14\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "孤高のファイター",
     tags: ["排彼のファイター巡礼","排彼のファイター巡礼","排彼のファイター巡礼","排彼のファイター巡礼","排他的ファイター巡礼"],
+    address: "東京都",
     description: "『排彼のファイター』のMV内でも特に近未来的で特徴的なシーンが撮影された、江東区新砂にある大型メディア放送センターです。\n【住所】〒136-0075 東京都江東区新砂１丁目１−２",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1145,7 +1540,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/pZ03uFm0sSc?si=pZ03uFm0sSc\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "はんぶんこクリスマスの恋人",
     tags: ["はんぶんこクリスマス巡礼"],
+    address: "東京都",
     description: "超人気の切ないクリスマスバラード曲『はんぶんこクリスマス』のMV撮影地です。新木場のウォーターフロントに佇む、自然光が溢れるアンティーク調の大型ハウススタジオで、メンバーたちの胸がきゅんとするような切ない表情やクリスマスの物語が描かれました。\n【住所】〒136-0082 東京都江東区新木場３丁目４−１１",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1160,7 +1560,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/F4Sg8Lshmks?si=8Y7kX9T3z6-18s9J\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "きゅんかわマスター",
     tags: ["きゅんかわ人生巡礼"],
+    address: "千葉県",
     description: "≒JOYの胸きゅん王道アイドルソング『きゅんかわ人生』のMVロケ地です。幕張ベイタウンのカラフルでお洒落なヨーロッパ風の街並みを誇るパティオス18番街周辺で、メンバーたちの可愛い日常シーンやポップなダンスシーンが撮影されました。\n【住所】〒261-0013 千葉県千葉市美浜区打瀬３丁目",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1175,7 +1580,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/F4Sg8Lshmks?si=8Y7kX9T3z6-18s9J\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "きゅんかわマスター",
     tags: ["きゅんかわ人生巡礼"],
+    address: "千葉県",
     description: "『きゅんかわ人生』MV内で、メンバーたちが可愛らしく歩いたりコミカルな振付を見せたりする、パティオス12番街の美しい中庭や街路ロケ地です。\n【住所】〒261-0013 千葉県千葉市美浜区打瀬２丁目１２",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1190,7 +1600,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/F4Sg8Lshmks?si=8Y7kX9T3z6-18s9J\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "きゅんかわマスター",
     tags: ["きゅんかわ人生巡礼"],
+    address: "千葉県",
     description: "『きゅんかわ人生』MVのシンボル的な場所で、芝生の上でメンバーたちが元気に「きゅんかわ」ポーズで踊るダンスシーンの主ロケ地となった開放的な緑豊かな公園です。\n【住所】〒261-0013 千葉県千葉市美浜区打瀬３丁目６",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1205,7 +1620,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/F4Sg8Lshmks?si=8Y7kX9T3z6-18s9J\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "きゅんかわマスター",
     tags: ["きゅんかわ人生巡礼"],
+    address: "千葉県",
     description: "『きゅんかわ人生』のMVで、メンバーたちが可愛すぎるスパイに扮して「きゅんかわ会議」を行う近未来的でパノラマビューの円卓会議室です。\n【住所】〒261-0023 千葉県千葉市美浜区中瀬１丁目６",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1220,7 +1640,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/CEES6m9G268?si=7U9Innbv28VkWXNT&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "しょこりさ推し！",
     tags: ["しょこりさんぽ巡礼"],
+    address: "東京都",
     description: "瀧脇笙古さんと音嶋莉沙さんの仲良しコンビ「しょこりさ」のお散歩スタート地点です。\n【住所】〒100-0005 東京都千代田区丸の内１丁目９−１",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1235,7 +1660,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/CEES6m9G268?si=7U9Innbv28VkWXNT&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "しょこりさ推し！",
     tags: ["しょこりさんぽ巡礼","しょこりさんぽゴール"],
+    address: "東京都",
     description: "「鯉さん元気！？」でおなじみ、しょこりさんぽのゴール地点です。\n【住所】〒100-0004 東京都千代田区大手町２丁目６−４",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1246,8 +1676,16 @@ const INITIAL_SPOTS: Spot[] = [
     latitude: 35.9288,
     longitude: 139.6276,
     event_date: "2023-09-06",
+    youtube_title: undefined,
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/2udLA8-QuD8?si=IgDtzpDQw2op5mQH\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: undefined,
+    tags: undefined,
+    address: "埼玉県",
     description: "『お姫様の作り方』MV撮影地です。\n【住所】〒331-0813 埼玉県さいたま市北区植竹町１丁目８１６−７",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1258,8 +1696,16 @@ const INITIAL_SPOTS: Spot[] = [
     latitude: 35.4357,
     longitude: 139.4278,
     event_date: "2022-11-23",
+    youtube_title: undefined,
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Ry9UCc9H3nw?si=nI2koRtc6JzCfC1t\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: undefined,
+    tags: undefined,
+    address: "神奈川県",
     description: "『超孤独ライオン』MVロケ地です。\n【住所】〒252-1125 神奈川県綾瀬市吉岡東２丁目７−２２",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1270,8 +1716,16 @@ const INITIAL_SPOTS: Spot[] = [
     latitude: 35.4358,
     longitude: 139.4279,
     event_date: "2022-11-23",
+    youtube_title: undefined,
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Ry9UCc9H3nw?si=nI2koRtc6JzCfC1t\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: undefined,
+    tags: undefined,
+    address: "神奈川県",
     description: "『超孤独ライオン』MVロケ地です。\n【住所】〒252-1125 神奈川県綾瀬市吉岡東２丁目７−２２（同上）",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1282,8 +1736,16 @@ const INITIAL_SPOTS: Spot[] = [
     latitude: 35.109,
     longitude: 140.103,
     event_date: "2023-02-22",
+    youtube_title: undefined,
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/GuvkL9Gz9P0?si=6fuhxAVaoqwlBSW5\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: undefined,
+    tags: undefined,
+    address: "千葉県",
     description: "『スイートシックスティーン』MVロケ地です。\n【住所】〒296-0001 千葉県鴨川市横渚８１５",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -1294,8 +1756,16 @@ const INITIAL_SPOTS: Spot[] = [
     latitude: 36.1825,
     longitude: 140.4132,
     event_date: "2023-07-19",
+    youtube_title: undefined,
+    youtube_url: undefined,
+    reward_title: undefined,
     tags: ["大空、ビュンと巡礼"],
+    address: "茨城県",
     description: "『大空、ビュンと』巡礼スポット①。\n【住所】〒311-3416 茨城県小美玉市与沢１６０１−５５",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1306,8 +1776,16 @@ const INITIAL_SPOTS: Spot[] = [
     latitude: 36.1826,
     longitude: 140.4131,
     event_date: "2023-07-19",
+    youtube_title: undefined,
+    youtube_url: undefined,
+    reward_title: undefined,
     tags: ["大空、ビュンと巡礼"],
+    address: "茨城県",
     description: "『大空、ビュンと』巡礼スポット②。\n【住所】〒311-3416 茨城県小美玉市与沢１６０１−５５",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1318,8 +1796,16 @@ const INITIAL_SPOTS: Spot[] = [
     latitude: 36.1824,
     longitude: 140.413,
     event_date: "2023-07-19",
+    youtube_title: undefined,
+    youtube_url: undefined,
+    reward_title: undefined,
     tags: ["大空、ビュンと巡礼"],
+    address: "茨城県",
     description: "『大空、ビュンと』巡礼スポット③。\n【住所】〒311-3416 茨城県小美玉市与沢１６０１−５５",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1330,8 +1816,16 @@ const INITIAL_SPOTS: Spot[] = [
     latitude: 36.1827,
     longitude: 140.4133,
     event_date: "2023-07-19",
+    youtube_title: undefined,
+    youtube_url: undefined,
+    reward_title: undefined,
     tags: ["大空、ビュンと巡礼"],
+    address: "茨城県",
     description: "『大空、ビュンと』巡礼スポット④。\n【住所】〒311-3416 茨城県小美玉市与沢１６０１−５５",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1342,8 +1836,16 @@ const INITIAL_SPOTS: Spot[] = [
     latitude: 35.6595,
     longitude: 139.7005,
     event_date: "2023-07-19",
+    youtube_title: undefined,
+    youtube_url: undefined,
+    reward_title: undefined,
     tags: ["大空、ビュンと巡礼"],
+    address: "東京都",
     description: "『大空、ビュンと』巡礼スポット⑤。\n【住所】〒150-0042 東京都渋谷区道玄坂２丁目２",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1354,8 +1856,16 @@ const INITIAL_SPOTS: Spot[] = [
     latitude: 35.6744,
     longitude: 139.6644,
     event_date: "2023-07-19",
+    youtube_title: undefined,
+    youtube_url: undefined,
+    reward_title: undefined,
     tags: ["大空、ビュンと巡礼"],
+    address: "東京都",
     description: "『大空、ビュンと』巡礼スポット⑥。\n【住所】〒151-0073 東京都渋谷区笹塚２丁目１１−７ アーバンイマイII 102",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1366,9 +1876,16 @@ const INITIAL_SPOTS: Spot[] = [
     latitude: 35.6179,
     longitude: 139.6757,
     event_date: "2023-07-19",
+    youtube_title: undefined,
+    youtube_url: undefined,
     reward_title: "大空を駆ける者",
     tags: ["大空、ビュンと巡礼","大空、ビュンとゴール"],
+    address: "東京都",
     description: "『大空、ビュンと』巡礼スポット⑦（ゴール）。\n【住所】〒152-0031 東京都目黒区中根１丁目７−２３ ＳＴビル",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -1379,8 +1896,16 @@ const INITIAL_SPOTS: Spot[] = [
     latitude: 35.5312,
     longitude: 139.4355,
     event_date: "2023-09-06",
+    youtube_title: undefined,
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/x68AnwPpT-s?si=zIGRJITwcnj5BJ4H\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: undefined,
+    tags: undefined,
+    address: "神奈川県",
     description: "『その先はイグザルト』MVロケ地です。\n【住所】〒252-0303 神奈川県相模原市南区相模大野4丁目4-2",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1394,7 +1919,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『電話番号教えて』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/KZ0_Q66AgLk?si=F2qd1RlbVR6gHoLx\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "電話番号を知っている者",
+    tags: undefined,
+    address: "静岡県",
     description: "≒JOYの人気曲『電話番号教えて』のMVロケ地。広大な大学キャンパスを舞台に、ニアジョイメンバーたちの青春感あふれるシーンが撮影された。静岡屈指の国公立大学のキャンパスで、MVの爽やかな世界観が見事に表現されている。\n\n⚠️聖地巡礼に関する重要なお願い\n現在も学生が通う現役の大学キャンパスです。敷地内への無断立ち入りや、学生の迷惑になる長時間の滞留・撮影はご遠慮ください。\n【住所】〒422-8002 静岡県静岡市駿河区谷田52-1",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -1408,7 +1939,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『電話番号教えて』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/KZ0_Q66AgLk?si=F2qd1RlbVR6gHoLx\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "電話番号を知っている者",
+    tags: undefined,
+    address: "神奈川県",
     description: "≒JOYの人気曲『電話番号教えて』のMVロケ地。神奈川県横浜市鶴見区に位置する女子校で、制服姿のメンバーたちが青春ストーリーを繰り広げた。学校という舞台がMVの「好きな人に電話番号を聞けない」という切ない世界観にピッタリとはまった名ロケ地。\n\n⚠️聖地巡礼に関する重要なお願い\n現在も生徒が通う現役の高校です。敷地内への無断立ち入り、生徒が映り込む撮影、長時間の滞留は絶対に禁止です。公道から静かに外観を眺める程度に留めてください。\n【住所】〒230-0074 神奈川県横浜市鶴見区北寺尾4丁目10-13",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -1421,7 +1958,14 @@ const INITIAL_SPOTS: Spot[] = [
     event_date: "2026-02-24",
     youtube_title: "🎥 関連映像: 『電話番号教えて！』Special Dance ver.",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/KZ0_Q66AgLk?si=l28ao9rCkEF12uYX\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: undefined,
+    tags: undefined,
+    address: "東京都",
     description: "『電話番号教えて！』Special Dance ver.の撮影が行われた聖地です。広大なアーバンスポーツパーク（有明アーバンスポーツパーク）を背景に、メンバーのキレのあるダンスが披露されました。スポーティで開放感のあるロケーションをぜひ現地で体感してください。\n【住所】〒135-0063 東京都江東区有明1-13-7",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1434,7 +1978,14 @@ const INITIAL_SPOTS: Spot[] = [
     event_date: "2025-05-04",
     youtube_title: "🎥 関連映像: 『ブルーハワイレモン』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/cBtqEehEKuQ?si=rGMNCqbbSYD3FUuL\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: undefined,
+    tags: undefined,
+    address: "鹿児島県",
     description: "『ブルーハワイレモン』MVのメイン舞台となる学校シーンや、エモーショナルなダンスシーン等が撮影されたロケ地です。青い海と空に囲まれた美しいノスタルジーを感じる場所で、MVの世界観にどっぷりと浸ることができます。\n【住所】〒891-2313 鹿児島県鹿屋市天神町3629-1",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -1447,7 +1998,14 @@ const INITIAL_SPOTS: Spot[] = [
     event_date: "2025-05-04",
     youtube_title: "🎥 関連映像: 『ブルーハワイレモン』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/cBtqEehEKuQ?si=rGMNCqbbSYD3FUuL\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: undefined,
+    tags: undefined,
+    address: "鹿児島県",
     description: "『ブルーハワイレモン』MVの中で、メンバーが訪れるお洒落なお店シーン等の撮影地です。海沿いの風を感じながら、推したちが過ごしたひと夏のリゾート気分を味わえる最高のスポットです。\n【住所】〒891-2114 鹿児島県垂水市新城827-1",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1460,7 +2018,14 @@ const INITIAL_SPOTS: Spot[] = [
     event_date: "2025-05-04",
     youtube_title: "🎥 関連映像: 『ブルーハワイレモン』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/cBtqEehEKuQ?si=rGMNCqbbSYD3FUuL\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: undefined,
+    tags: undefined,
+    address: "鹿児島県",
     description: "『ブルーハワイレモン』MVにて、田舎の風景の中にぽつんと佇むバス停シーン等の撮影地です。ノスタルジックな夏の空気感がそのまま残っており、MVのワンシーンを再現しての記念撮影にぴったりです。\n【住所】鹿児島県鹿屋市白水町周辺",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1473,7 +2038,14 @@ const INITIAL_SPOTS: Spot[] = [
     event_date: "2025-05-04",
     youtube_title: "🎥 関連映像: 『ブルーハワイレモン』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/cBtqEehEKuQ?si=rGMNCqbbSYD3FUuL\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: undefined,
+    tags: undefined,
+    address: "鹿児島県",
     description: "『ブルーハワイレモン』MVのイントロ部分で、怜音が防波堤を全力で走っている印象的なシーンの撮影地です。果てしなく続く海と灯台のコントラストが美しく、楽曲の爽快感を体感できる聖地です。\n【住所】鹿児島県垂水市 垂水港西防波堤外端",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1486,7 +2058,14 @@ const INITIAL_SPOTS: Spot[] = [
     event_date: "2025-05-04",
     youtube_title: "🎥 関連映像: 『ブルーハワイレモン』ジャケット撮影メイキング",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/gS5sfnSuS6g?si=XINY3svDWqg7TQ_C\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: undefined,
+    tags: undefined,
+    address: "茨城県",
     description: "『ブルーハワイレモン』の全タイプ（Type A〜D）のジャケット写真が撮影された場所です。洗練された建築と自然の調和が美しく、メンバーたちの爽やかなビジュアルが最大限に引き出されたロケ地となっています。\n【住所】〒311-1412 茨城県鉾田市玉田336-2",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1499,7 +2078,14 @@ const INITIAL_SPOTS: Spot[] = [
     event_date: "2023-04-17",
     youtube_title: "🎥 関連映像: 『マシュマロフロート』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Vn0CYp7_MNs?si=EUm7u-eBNVRDdkXm\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: undefined,
+    tags: undefined,
+    address: "東京都",
     description: "『マシュマロフロート』のMV内に登場する聖地です。2番のサビのダンスシーンや、MVの最後を飾る印象的なシーンの撮影が行われました。都会的で洗練されたロケーションの雰囲気を、ぜひ現地で体感しながらMVを振り返ってみてください。\n【住所】〒163-1403 東京都新宿区西新宿3-20-2",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1513,7 +2099,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: メンバーだけで旅行に行ってきました！！！【大阪&京都旅】",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/YgOd8ZpFaUU?si=ST1XqCF26DF5Of94\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "なにわのハリポタアイドル",
+    tags: undefined,
+    address: "大阪府",
     description: "イコノイジョイ大運動会の優勝賞品として贈られた国内旅行で、メンバー全員で訪れた大人気テーマパークです。動画内では、みんなでカチューシャを選んだり、アトラクションを全力で楽しむ姿が見られました。メンバーたちが味わった興奮とハッピーな空間をぜひ現地で満喫してください！\n【住所】〒554-0031 大阪府大阪市此花区桜島２丁目１−３３",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -1527,7 +2119,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: メンバーだけで旅行に行ってきました！！！【大阪&京都旅】",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/YgOd8ZpFaUU?si=ST1XqCF26DF5Of94\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "京都湯豆腐の美食家",
+    tags: undefined,
+    address: "京都府",
     description: "京都の伝統的な湯豆腐が味わえる名店です。和の情緒あふれる店内で、メンバーたちが美味しそうに京都グルメを堪能していました。清水寺参拝のルートにも組み込みやすく、推しと同じお豆腐料理を味わう贅沢な巡礼が楽しめます。\n【住所】〒605-0862 京都府京都市東山区清水２丁目２３９",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1541,7 +2139,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: メンバーだけで旅行に行ってきました！！！【大阪&京都旅】",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/YgOd8ZpFaUU?si=ST1XqCF26DF5Of94\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "錦市場の食べ歩き達人",
+    tags: undefined,
+    address: "京都府",
     description: "「京都の台所」として有名な錦市場です。佐々木舞香さん、諸橋紗夏さん、山本杏奈さん、齊藤なぎささん、大谷映美里さん、音嶋莉沙さん、野口衣織さんのメンバーで食べ歩きを楽しみました。賑やかな商店街で、メンバーたちが何を食べたのか探しながら歩くのがおすすめです。\n【住所】〒604-8055 京都府京都市中京区東魚屋町",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1555,7 +2159,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: メンバーだけで旅行に行ってきました！！！【大阪&京都旅】",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/YgOd8ZpFaUU?si=ST1XqCF26DF5Of94\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "朱塗りの西楼門でポーズ",
+    tags: undefined,
+    address: "京都府",
     description: "祇園の象徴ともいえる鮮やかな朱塗りの門です。京都旅の定番スポットとしてメンバーたちも訪れ、美しい景観をバックに楽しんでいました。周辺には推し活にぴったりなお店も多く、京都巡礼の起点にふさわしい場所です。\n【住所】〒605-0073 京都府京都市東山区祇園町北側６２５",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1569,7 +2179,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: メンバーだけで旅行に行ってきました！！！【大阪&京都旅】",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/YgOd8ZpFaUU?si=ST1XqCF26DF5Of94\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "くくり猿と映えるオタク",
+    tags: undefined,
+    address: "京都府",
     description: "カラフルな「くくり猿」がSNSでも大人気の映えスポットです。メンバーたちも色鮮やかなお堂の前で、京都らしい華やかな雰囲気を楽しんでいました。ぜひお気に入りのアクスタや生写真を持って、同じ画角で記念撮影をしてみてください。\n【住所】〒605-0828 京都府京都市東山区金園町３９０",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1583,7 +2199,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: メンバーだけで旅行に行ってきました！！！【大阪&京都旅】",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/YgOd8ZpFaUU?si=ST1XqCF26DF5Of94\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "祇園の甘いお芋ちゃん",
+    tags: undefined,
+    address: "京都府",
     description: "祇園でおすすめの焼き芋スイーツ専門店です。動画内でメンバーたちが立ち寄り、美味しそうなスイーツに目を輝かせていました。食べ歩きにもぴったりで、甘いお芋を片手に祇園の街並みを散策するのが最高の推し活ルートです。\n【住所】〒605-0074 京都府京都市東山区祇園町南側５２４ ギオン和喜ビル 2階",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1597,7 +2219,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: メンバーだけで旅行に行ってきました！！！【大阪&京都旅】",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/YgOd8ZpFaUU?si=ST1XqCF26DF5Of94\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "まるんでお土産ハンター",
+    tags: undefined,
+    address: "京都府",
     description: "錦市場にある、可愛らしいお菓子や京都雑貨が並ぶお店です。お土産選びをしながらメンバーたちが楽しそうに過ごしていた空間です。カラフルで可愛い金平糖や京菓子など、巡礼の思い出になるお土産を探してみてください。\n【住所】〒604-8055 京都府京都市中京区東魚屋町 錦小路柳馬場東入東魚屋180",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1611,7 +2239,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: メンバーだけで旅行に行ってきました！！！【大阪&京都旅】",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/YgOd8ZpFaUU?si=ST1XqCF26DF5Of94\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "清水の舞台からの絶景者",
+    tags: undefined,
+    address: "京都府",
     description: "世界遺産にも登録されている、京都を代表する寺院です。ここでは髙松瞳さん、瀧脇笙古さん、齋藤樹愛羅さんのチームが訪れ、「清水の舞台」からの絶景を堪能したり、境内を仲良く散策していました。四季折々の美しい景色とともに、3人の足跡を辿ってみてください。\n【住所】〒605-0862 京都府京都市東山区清水１丁目２９４",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1625,7 +2259,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: メンバーだけで旅行に行ってきました！！！【大阪&京都旅】",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/YgOd8ZpFaUU?si=ST1XqCF26DF5Of94\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "京風お好み焼きの晩餐会",
+    tags: undefined,
+    address: "京都府",
     description: "京都旅の締めくくりに、メンバー全員集合で絶品のお好み焼きや京風鉄板焼きを囲んで晩御飯を食べたお店です。動画のラストで楽しそうに旅の思い出を語り合っていたエモーショナルな場所。聖地巡礼のディナーにこれ以上ない特別なロケーションです。\n【住所】〒604-8223 京都府京都市中京区新町通錦小路下ル小結棚町４３５ ジェイブライド四条烏丸1F",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1640,7 +2280,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/i024yWd9oiI?si=tZOucowvP2QK1PTp\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "甘酸っぱいレモンティー",
     tags: ["海とレモンティー巡礼"],
+    address: "千葉県",
     description: "『海とレモンティー』のMV撮影が行われたビーチです。青い海と空が広がる開放的なロケーションで、メンバーたちの爽やかで甘酸っぱい夏の思い出が詰まっています。潮風を感じながらMVの世界に浸ってみてください。\n【住所】〒299-4502 千葉県いすみ市岬町中原谷の平地74番地先",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1655,7 +2300,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/i024yWd9oiI?si=tZOucowvP2QK1PTp\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "海の家の看板娘・看板息子",
     tags: ["海とレモンティー巡礼"],
+    address: "千葉県",
     description: "同じく『海とレモンティー』のMVに登場する海の家です。レトロでどこか懐かしい雰囲気の中で、メンバーたちのキュートな笑顔が弾けていた場所。夏の海辺の特別な時間を追体験できる最高の聖地です。\n【住所】〒299-4502 千葉県いすみ市岬町中原谷の平地74番地先",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1670,7 +2320,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/8VBDO8ZQyDo?si=ZGyrP4rodp3fdKus&amp;controls=0&amp;start=197\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "夏祭りの夜の夢",
     tags: ["夏祭り恋慕う巡礼"],
+    address: "埼玉県",
     description: "『夏祭り恋慕う』のMVで、華やかなお祭りのセットが組まれたロケ地です。浴衣姿のメンバーたちが恋心を歌う、あのエモーショナルで儚い夏の夜の情景が浮かび上がってきます。目を閉じれば打ち上げ花火の音が聞こえてきそうな場所です。\n【住所】〒359-1133 埼玉県所沢市荒幡１４１７−２",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1685,7 +2340,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/qzFBzJ2KWwY?si=377-mrldlU5CsZhk&amp;controls=0&amp;start=197\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "海辺のダンスパートナー",
     tags: ["真夜中マーメイド巡礼"],
+    address: "千葉県",
     description: "『真夜中マーメイド』のMVで、切なくも美しいダンスシーンや海辺のシーンが撮影されたロケ地の一つです。静かな波音とともに、楽曲の持つ儚さと優雅さをじっくりと噛み締めることができる聖地です。\n【住所】〒299-1607 千葉県富津市湊752番2",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1700,7 +2360,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/qzFBzJ2KWwY?si=377-mrldlU5CsZhk&amp;controls=0&amp;start=197\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "桟橋のマーメイド",
     tags: ["真夜中マーメイド巡礼"],
+    address: undefined,
     description: "『真夜中マーメイド』の象徴的なシーンで登場する、海へと続く木製のノスタルジックな桟橋です。夕暮れ時や夜にかけての風景は息を呑むほど美しく、まるで本当にマーメイドが現れそうな幻想的な空気に包まれています。\n【住所】〒299-2403 千葉県南房総市富浦町原岡地先",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1715,7 +2380,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/qzFBzJ2KWwY?si=377-mrldlU5CsZhk&amp;controls=0&amp;start=197\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "潮風の歌姫・歌手",
     tags: ["真夜中マーメイド巡礼"],
+    address: undefined,
     description: "こちらも『真夜中マーメイド』のMV撮影で使用されたエリアです。広大な砂浜と海を背景に、楽曲の世界観にどっぷりと浸りながら、推しと同じ海風を感じてみてください。\n【住所】〒299-1607 千葉県富津市湊６１０−９",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1730,7 +2400,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/d20dEAtbL08?si=3sVKsAnbhsACXs51&amp;controls=0&amp;start=197\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "逃走中の超特急",
     tags: ["超特急逃走中巡礼"],
+    address: "千葉県",
     description: "=LOVE『超特急逃走中』のMV撮影が行われたプラザ習志野です。推しを追いかけるドキドキ感と疾走感あふれる楽曲の世界観が詰まった場所。メンバーたちが駆け抜けたエネルギッシュな空間をぜひ現地で体感してください。\n\n⚠️聖地巡礼に関する重要なお願い\nこちらは現在も学生が通う現役の大学キャンパスです。時期や時間帯によっては関係者以外の立ち入りが制限されている場合があります。敷地内に入る際は、必ず正門の警備員や窓口等で見学の許可を取るようにしてください。また、授業や学生生活の妨げにならないよう、マナーとモラルを厳守した節度ある行動をお願いいたします。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -1745,7 +2420,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/d20dEAtbL08?si=3sVKsAnbhsACXs51&amp;controls=0&amp;start=197\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "逃走中の超特急",
     tags: ["超特急逃走中巡礼"],
+    address: "千葉県",
     description: "『超特急逃走中』に登場する中央庭園です。広々としたキャンパス内で、キュートでハイテンションなパフォーマンスが繰り広げられた聖地。緑豊かな風景とともに、MVのシーンを思い出しながら散策するのがおすすめです。\n\n⚠️聖地巡礼に関する重要なお願い\nこちらは現在も学生が通う現役の大学キャンパスです。時期や時間帯によっては関係者以外の立ち入りが制限されている場合があります。敷地内に入る際は、必ず正門の警備員や窓口等で見学の許可を取るようにしてください。また、授業や学生生活の妨げにならないよう、マナーとモラルを厳守した節度ある行動をお願いいたします。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -1760,7 +2440,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/d20dEAtbL08?si=3sVKsAnbhsACXs51&amp;controls=0&amp;start=197\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "逃走中の超特急",
     tags: ["超特急逃走中巡礼"],
+    address: "千葉県",
     description: "『超特急逃走中』のロケ地となったテクノプレース15の西側エリアです。ハイスピードで駆け抜けるようなリズムに合わせて、メンバーの勢いと楽しさが弾けたスポット。同じ画角を探して記念撮影を楽しんでみてください。\n\n⚠️聖地巡礼に関する重要なお願い\nこちらは現在も学生が通う現役の大学キャンパスです。時期や時間帯によっては関係者以外の立ち入りが制限されている場合があります。敷地内に入る際は、必ず正門の警備員や窓口等で見学の許可を取るようにしてください。また、授業や学生生活の妨げにならないよう、マナーとモラルを厳守した節度ある行動をお願いいたします。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -1775,7 +2460,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/d20dEAtbL08?si=3sVKsAnbhsACXs51&amp;controls=0&amp;start=197\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "逃走中の超特急",
     tags: ["超特急逃走中巡礼"],
+    address: "千葉県",
     description: "同じく『超特急逃走中』の撮影で使用されたスポーツホールです。ライブの高揚感と熱量がそのまま伝わってくるような、元気いっぱいのシーンが印象的な聖地。楽曲を聴きながらテンションを上げて巡礼しましょう！\n\n⚠️聖地巡礼に関する重要なお願い\nこちらは現在も学生が通う現役の大学キャンパスです。時期や時間帯によっては関係者以外の立ち入りが制限されている場合があります。敷地内に入る際は、必ず正門の警備員や窓口等で見学の許可を取るようにしてください。また、授業や学生生活の妨げにならないよう、マナーとモラルを厳守した節度ある行動をお願いいたします。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -1790,7 +2480,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/d20dEAtbL08?si=3sVKsAnbhsACXs51&amp;controls=0&amp;start=197\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "逃走中の超特急",
     tags: ["超特急逃走中巡礼"],
+    address: "千葉県",
     description: "『超特急逃走中』のMVを象徴する、交通総合試験路のロケ地です。まさに「超特急で逃走中」な疾走感あふれるシーンが撮影されました。広大なテストコースを背景に、スリルと楽しさが混ざり合う最高の推し活スポットです。\n\n⚠️聖地巡礼に関する重要なお願い\nこちらは現在も学生が通う現役の大学キャンパスです。時期や時間帯によっては関係者以外の立ち入りが制限されている場合があります。敷地内に入る際は、必ず正門の警備員や窓口等で見学の許可を取るようにしてください。また、授業や学生生活の妨げにならないよう、マナーとモラルを厳守した節度ある行動をお願いいたします。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1805,7 +2500,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/2pbH_jW8q7E?si=OiiV7OPhsNOzgPBr&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "国立寄せ書きの証人",
     tags: ["国立競技場イベント"],
+    address: "東京都",
     description: "2026年6月20日・21日の2日間にわたり、＝LOVE史上最大規模となるスタジアムライブ『＝LOVE STADIUM LIVE「Beyond \"KYUN\"♡」』が開催された記念すべき聖地。\nメンバーとファンの夢が詰まった最高のステージが繰り広げられました。さらに、2日目のフィナーレでは次なる夢のステージである「東京ドーム」での公演がサプライズ発表され、会場全体が歓喜と感動の涙に包まれました。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1819,7 +2519,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『劇薬中毒』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Bco8bY9r_H4?si=jAFIsjJwkpuYBm1Q&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "劇薬に侵されし者",
+    tags: undefined,
+    address: "千葉県",
     description: "MV『劇薬中毒』のロケ地。千葉県木更津市の木更津倉庫 岩根営業所内にあるスタジオ。\n\n⚠️聖地巡礼に関する重要なお願い\n私有地（倉庫営業所内）のため、関係者以外の立ち入りは厳禁です。公道からの外観見学やマナーを守っての見学をお願いします。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1833,7 +2539,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『劇薬中毒』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Bco8bY9r_H4?si=jAFIsjJwkpuYBm1Q&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "ふじさんめっせの中毒者",
+    tags: undefined,
+    address: "静岡県",
     description: "MV『劇薬中毒』のロケ地。静岡県富士市にある産業交流展示場。\n\n⚠️聖地巡礼に関する重要なお願い\n開館日やイベント開催時以外は立ち入れない場合があります。公式サイトなどで予定をご確認の上、周囲の迷惑にならないよう見学してください。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1848,7 +2560,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ZROuG57QGls?si=JTRlWHstshh8ci-G&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "Stellatoの迷い人",
     tags: ["モラトリアム巡礼"],
+    address: "東京都",
     description: "MV『モラトリアム』のロケ地。東京都港区白金台の洋館レストラン「Stellato」（ステラート）。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1863,7 +2580,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ZROuG57QGls?si=JTRlWHstshh8ci-G&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "パークモールの散策者",
     tags: ["モラトリアム巡礼"],
+    address: "千葉県",
     description: "MV『モラトリアム』のロケ地。千葉県千葉市美浜区中瀬の幕張メッセ周辺 of 遊歩道エリア。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1878,7 +2600,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ZROuG57QGls?si=JTRlWHstshh8ci-G&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "中浜橋の佇む人",
     tags: ["モラトリアム巡礼"],
+    address: "千葉県",
     description: "MV『モラトリアム』のロケ地。千葉県千葉市美浜区にある、メンバーの葛藤と決意のシーンが描かれた橋。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1893,7 +2620,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ZROuG57QGls?si=JTRlWHstshh8ci-G&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "ビジネス通りの信号待ち",
     tags: ["モラトリアム巡礼"],
+    address: "千葉県",
     description: "MV『モラトリアム』のロケ地。千葉県千葉市美浜区中瀬のビジネス通り沿いにある交差点。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1908,7 +2640,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ZROuG57QGls?si=JTRlWHstshh8ci-G&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "モラトリアムロードの走者",
     tags: ["モラトリアム巡礼"],
+    address: "千葉県",
     description: "MV『モラトリアム』のロケ地。幕張メッセに近いビジネス通り。疾走感あふれるシーンが印象的。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1923,7 +2660,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ZROuG57QGls?si=JTRlWHstshh8ci-G&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "友好広場の旅人",
     tags: ["モラトリアム巡礼"],
+    address: "千葉県",
     description: "MV『モラトリアム』のロケ地。幕張新都心メッセモール内にある広場。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1938,7 +2680,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ZROuG57QGls?si=JTRlWHstshh8ci-G&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "デッキから見下ろす瞳",
     tags: ["モラトリアム巡礼"],
+    address: "千葉県",
     description: "MV『モラトリアム』のロケ地。交差点の上を通るペデストリアンデッキ。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1952,7 +2699,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『お姫様の作り方』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/2udLA8-QuD8?si=bgt8o53VBaUEoa-X&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "シャトーのプリンセス",
+    tags: undefined,
+    address: "埼玉県",
     description: "MV『お姫様の作り方』のロケ地。さいたま市北区にある結婚式場「大宮アートグレイスウエディングシャトー」内の「シャトー・シャンパーニュ」。\n\n⚠️聖地巡礼に関する重要なお願い\n現役の結婚式場（私有地）です。利用者以外の無断立ち入りは固く禁止されています。公道からの外観見学やマナーを守っての見学をお願いします。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1966,7 +2719,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『ラブソングに襲われる』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/_cf4UTe1qrY?si=2ijU0mTOnqqDWSf0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "No.5ステージの熱狂者",
+    tags: undefined,
+    address: "東京都",
     description: "MV『ラブソングに襲われる』のロケ地。練馬区東大泉にある東映東京撮影所内のNo.5ステージ。\n\n⚠️聖地巡礼に関する重要なお願い\nスタジオ施設につき、一般の方の敷地内への立ち入りは固く禁止されています。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -1980,7 +2739,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『ラブソングに襲われる』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/_cf4UTe1qrY?si=2ijU0mTOnqqDWSf0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "メイフラワーチャペルの巡礼者",
+    tags: undefined,
+    address: "栃木県",
     description: "MV『ラブソングに襲われる』のロケ地。栃木県矢板市にある、英国調で美しいゴルフ場のチャペル。\n\n⚠️聖地巡礼に関する重要なお願い\nゴルフ場およびプライベート施設につき、利用者以外の勝手な見学や立ち入りはご遠慮ください。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -1994,7 +2759,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『内緒バナシ』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/1Cy9oaBAxns?si=7GUpZxTU7GLrRZoV\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "VERITASの語り部",
+    tags: undefined,
+    address: "千葉県",
     description: "MV『内緒バナシ』のロケ地。松戸市にある光英VERITAS中学校・高等学校。\n\n⚠️聖地巡礼に関する重要なお願い\n現役の学校施設です。関係者以外の無断立ち入りや、生徒が映り込む形での撮影は絶対に禁止です。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -2008,7 +2779,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『内緒バナシ』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/1Cy9oaBAxns?si=7GUpZxTU7GLrRZoV\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "浅間神社の秘密の共有者",
+    tags: undefined,
+    address: "東京都",
     description: "MV『内緒バナシ』のロケ地。大田区田園調布にある神社。展望スペースから多摩川と電車、天気が良ければ富士山が望めます。\n\n⚠️聖地巡礼に関する重要なお願い\n参拝者用の施設につき、マナーを守ってご参拝ください。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2022,7 +2799,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 『木漏れ日メゾフォルテ』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/4xBmuiQNGdc?si=sigDn_3CfXaAss5J&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "木漏れ日のテラスの住人",
+    tags: undefined,
+    address: "神奈川県",
     description: "MV『木漏れ日メゾフォルテ』のロケ地。横浜みなとみらいの「MARINE ＆ WALK YOKOHAMA」内にあるウエディングゲストハウス。\n\n⚠️聖地巡礼に関する重要なお願い\n現役の式場（私有地）です。関係者以外の無断立ち入りは禁止されています。公道や周辺施設から外観を見学するに留めてください。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2036,7 +2819,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 【ノイミー年長組の夏休み】BBQで大はしゃぎ！今年もツッコミどころ満載です！！！",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/nZ2K-hyErl4?si=i3_6csBVt_slo3R-\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "鴨川のBBQ仲間",
+    tags: undefined,
+    address: "千葉県",
     description: "ノイミーお姉さんチーム（年長組）のYouTube企画でメンバーが訪れ、海を眺めながらBBQ（バーベキュー）を楽しんだ場所。千葉県鴨川市の海沿いにあるオシャレな複合施設です。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2050,7 +2839,13 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_title: "🎥 関連映像: 【ゆる旅】ノイミー年長組で鴨川シーワールドを大満満喫してきました🐬大迫力のシャチパフォーマンスに大興奮！",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/8PSIWxRJCi4?si=wT0r0jlzxP4SYRjL\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "シャチにずぶ濡らされた者",
+    tags: undefined,
+    address: "千葉県",
     description: "ノイミーお姉さんチーム（年長組）のYouTube企画でメンバーが訪れた水族館。大迫力のシャチパフォーマンスに大興奮したり、海の生き物たちと触れ合って大満満喫した日本屈指の水族館です。",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2065,7 +2860,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/0ImFNEs7P_Q?si=eQBaUPA0cQgOh_Ft&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "桜の咲く音を聞いた川奈の客",
     tags: ["桜の咲く音がした","川奈ホテル"],
+    address: "静岡県",
     description: "『桜の咲く音がした』のMVロケ地となった格式高いホテル。美しい洋館や庭園で、メンバーたちの可憐な姿が撮影されました。クラシカルな雰囲気が漂う特別な空間です。\n\nURL: https://www.princehotels.co.jp/kawana/\n住所: 〒414-0044 静岡県伊東市川奈１４５９\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/0ImFNEs7P_Q?si=eQBaUPA0cQgOh_Ft&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2080,7 +2880,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/0ImFNEs7P_Q?si=eQBaUPA0cQgOh_Ft&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "赤いやねの常連",
     tags: ["桜の咲く音がした","赤いやね"],
+    address: "静岡県",
     description: "『桜の咲く音がした』のMVに登場するレトロで可愛い喫茶店。赤い屋根が特徴的で、相模湾を望む高台に位置しています。\n\nURL: https://tabelog.com/\n住所: 〒414-0044 静岡県伊東市川奈１３２７−１１\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/0ImFNEs7P_Q?si=eQBaUPA0cQgOh_Ft&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2095,7 +2900,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/0ImFNEs7P_Q?si=eQBaUPA0cQgOh_Ft&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "伊豆高原駅の旅人",
     tags: ["桜の咲く音がした","伊豆高原駅"],
+    address: "静岡県",
     description: "『桜の咲く音がした』のMVでメンバーが出会いや別れを表現した伊豆高原駅の2番線ホーム。旅情を感じさせるホーム of 風景が印象的です。\n\nURL: https://www.izukyu.co.jp/\n住所: 〒413-0232 静岡県伊東市八幡野１１８３\n\n⚠️聖地巡礼に関する重要なお願い\n現在も多くの一般のお客様が利用する駅施設です。ホーム内での長時間の滞留や一般のお客様の通行の妨げになる行為、危険な撮影などは絶対にやめましょう。マナーを守って安全に見学してください。\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/0ImFNEs7P_Q?si=eQBaUPA0cQgOh_Ft&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2110,7 +2920,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/0ImFNEs7P_Q?si=eQBaUPA0cQgOh_Ft&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "やまもプラザの買い物客",
     tags: ["桜の咲く音がした","やまもプラザ"],
+    address: "静岡県",
     description: "『桜の咲く音がした』のMV撮影で使用された、伊豆高原駅に隣接するショッピングモール。メンバーが歩いた通路などがあり、お買い物や食事を楽しみながら巡礼できます。\n\nURL: http://www.yamamo-plaza.com/\n住所: 〒413-0232 静岡県伊東市八幡野１１８３\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/0ImFNEs7P_Q?si=eQBaUPA0cQgOh_Ft&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2125,7 +2940,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/0ImFNEs7P_Q?si=eQBaUPA0cQgOh_Ft&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "桜並木の散歩者",
     tags: ["桜の咲く音がした","桜並木"],
+    address: "静岡県",
     description: "『桜の咲く音がした』の象徴的なシーンである、美しい桜並木。春には見事な桜のトンネルができ、メンバーたちのダンスやストーリーを華やかに彩りました。\n\n住所: 〒413-0232 静岡県伊東市八幡野\n\n⚠️聖地巡礼に関する重要なお願い\n一般の道路ですので、車通りに十分注意し、歩行者や周囲の迷惑にならないよう撮影・見学を行ってください。\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/0ImFNEs7P_Q?si=eQBaUPA0cQgOh_Ft&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2140,7 +2960,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/17NBPoc78oM?si=TmajORGeC-AdkGb1&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "絶対アイドルを見届けし者",
     tags: ["絶対アイドル辞めないで","アバコスタジオ"],
+    address: "神奈川県",
     description: "ファンとアイドルの究極の絆を描いた名曲『絶対アイドル辞めないで』のMV撮影が行われたスタジオ。メンバーが華麗なパフォーマンスを披露した撮影の舞台です。\n\n住所: 〒216-0011 神奈川県川崎市宮前区犬蔵２丁目１７−７\n\n⚠️聖地巡礼に関する重要なお願い\n商業用の撮影スタジオ（私有地）です。一般の方の立ち入りや見学は一切禁止されています。周辺道路など近隣への迷惑になる行為も絶対にやめましょう。外観を遠目に見る程度に留めてください。\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/17NBPoc78oM?si=TmajORGeC-AdkGb1&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -2155,7 +2980,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/RxcNhst20uw?si=A4VcogqM9DQDxNGl&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "届いてLOVE YOUの告白者",
     tags: ["届いてLOVE YOU","浦和ルーテル"],
+    address: "埼玉県",
     description: "齊藤なぎさ初センター曲『届いてLOVE YOU♡』のMVロケ地。メンバーたちが学校を舞台に、甘酸っぱいスクールライフや告白ストーリーを演じた聖地です。\n\n住所: 〒330-0051 埼玉県さいたま市緑区大崎３６４２\n\n⚠️聖地巡礼に関する重要なお願い\n現在も生徒が通う「現役の私立学校」です。関係者以外の敷地内への無断立ち入り、生徒が映り込む形での撮影、周辺での長時間の滞留は絶対に禁止です！オタクのモラルとして、巡礼はごく遠巻きに外観を眺める程度に留めてください。\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/RxcNhst20uw?si=A4VcogqM9DQDxNGl&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "facility"
   },
   {
@@ -2170,7 +3000,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/juImxVpogRY?si=ggy-PMj9Z3jjRM2q&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "君と私の歌のファン",
     tags: ["君と私の歌","ロングウッドステーション"],
+    address: "千葉県",
     description: "『君と私の歌』のMVロケ地となった撮影スタジオ。メンバーたちがカラフルな衣装で元気いっぱいにパフォーマンスを披露した、ファンにとって愛着深い聖地です。\n\n住所: 〒297-0231 千葉県長生郡長柄町山之郷６７−１\n\n⚠️聖地巡礼に関する重要なお願い\n普段は大型の撮影スタジオおよびイベントスペースとして運営されています。イベント開催日など一般開放されている日を除き、敷地内への無断立ち入りは禁止されています。イベント等に参加して巡礼するか、外観を遠目に見る程度に留めてください。\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/juImxVpogRY?si=ggy-PMj9Z3jjRM2q&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2178,13 +3013,19 @@ const INITIAL_SPOTS: Spot[] = [
     name: "ポケパークカントー（よみうりランド）",
     group: "=LOVE",
     category: "ライブ会場",
-    latitude: 35.625238,
-    longitude: 139.518645,
+    latitude: 35.6275,
+    longitude: 139.515,
     event_date: "2026-07-04",
+    youtube_title: undefined,
+    youtube_url: undefined,
     reward_title: "とくべチュ、した者",
     tags: ["とくべチュ、して","ラブソングに襲われる","THE MUSIC DAY","よみうりランド"],
     address: "〒206-8725 東京都稲城市矢野口4015-1（よみうりランド内）",
     description: "2026年7月4日放送の『THE MUSIC DAY』にて、＝LOVEがパフォーマンスを披露した特別なステージ。\n\n住所: 〒206-8725 東京都稲城市矢野口4015-1（よみうりランド内）",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2201,6 +3042,10 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["YouTube企画","ハンバーガー部"],
     address: "〒106-0032 東京都港区六本木６丁目４−１ ヒルズ ハリウッドビューティプラザ 1F",
     description: "YouTube企画「イコラブハンバーガー部」の聖地として紹介されたスポットです。髙松瞳さんと瀧脇笙古さんが訪れました。\n\n■ 注文メニュー\n・O' バーガー\n・タルトゥーフォバーガー\n※現在提供されていない可能性があります。\n\nURL: https://obica.jp/\n住所: 〒106-0032 東京都港区六本木６丁目４−１ ヒルズ ハリウッドビューティプラザ 1F\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/LXebPFtWQhE?si=htglM-6j-KB5CAPo&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2217,6 +3062,10 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["YouTube企画","ハンバーガー部"],
     address: "〒106-0032 東京都港区六本木６丁目１５−１ 六本木ヒルズけやき坂 2F",
     description: "YouTube企画「イコラブハンバーガー部」の聖地として紹介されたスポットです。髙松瞳さんと瀧脇笙古さんが訪れました。\n\n■ 注文メニュー\n・21日間熟成ブラックアンガスビーフ×オーストラリアビーフのクラシックバーガー\n・21日間熟成ブラックアンガスビーフのハンバーガー カポナータと生ハム、モッツァレラ チーズを燻製BBQソースで\n※現在提供されていない可能性があります。\n\nURL: https://37steakhouse.com/roppongi\n住所: 〒106-0032 東京都港区六本木６丁目１５−１ 六本木ヒルズけやき坂 2F\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/LXebPFtWQhE?si=htglM-6j-KB5CAPo&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2233,6 +3082,10 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["YouTube企画","ハンバーガー部"],
     address: "〒150-0001 東京都渋谷区神宮前５丁目８−５ ジュビリープラザビル 2F",
     description: "YouTube企画「イコラブハンバーガー部」の聖地として紹介されたスポットです。髙松瞳さんと瀧脇笙古さんが訪れました。\n\n■ 注文メニュー\n・ダブル神戸牛 チーズ バーガー セット\n・BLTチーズバーガー＋アボカドトッピング セット\n※現在提供されていない可能性があります。\n\nURL: https://kichiri.jp/ishigamaya/gokuburger-omotesando/\n住所: 〒150-0001 東京都渋谷区神宮前５丁目８−５ ジュビリープラザビル 2F\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/LXebPFtWQhE?si=bUbtFoADpW1mY3Mp&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2247,8 +3100,12 @@ const INITIAL_SPOTS: Spot[] = [
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/xUoPnF8uUXY?si=4Ni-pe6ZQB0foiYI&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "ベイスターズコラボバーガーの目撃者",
     tags: ["YouTube企画","ハンバーガー部"],
-    address: "〒231-0022 横浜市中区横浜公園",
+    address: "〒231-0022 神奈川県横浜市中区横浜公園",
     description: "YouTube企画「イコラブハンバーガー部」の聖地として紹介されたスポットです。髙松瞳さんと瀧脇笙古さんが訪れました。\n\n■ 注文メニュー\n・コラボバーガー（※現在は提供終了しています）\n※現在提供されていない可能性があります。\n\n住所: 〒231-0022 横浜市中区横浜公園\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/xUoPnF8uUXY?si=4Ni-pe6ZQB0foiYI&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2265,6 +3122,10 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["YouTube企画","さなつんのはしご酒","浅草"],
     address: "〒111-0032 東京都台東区浅草２丁目５−２",
     description: "YouTube企画「さなつんのはしご酒（つんはしご）」浅草編の聖地として紹介されたスポットです。＝LOVEの諸橋沙夏さんが訪れました。\n\nURL: https://tabelog.com/\n住所: 〒111-0032 東京都台東区浅草２丁目５−２\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/tvUBTJDvKQI?si=iW7i9lYBkNnp5ooM&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2281,6 +3142,10 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["YouTube企画","さなつんのはしご酒","浅草"],
     address: "〒111-0032 東京都台東区浅草２丁目７−１３",
     description: "YouTube企画「さなつんのはしご酒（つんはしご）」浅草編の聖地として紹介されたスポットです。＝LOVEの諸橋沙夏さんが訪れました。\n\nURL: https://tabelog.com/\n住所: 〒111-0032 東京都台東区浅草２丁目７−１３\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/tvUBTJDvKQI?si=iW7i9lYBkNnp5ooM&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2297,6 +3162,10 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["YouTube企画","さなつんのはしご酒","高円寺"],
     address: "〒166-0003 東京都杉並区高円寺北３丁目６９−１",
     description: "YouTube企画「さなつんのはしご酒（つんはしご）」高円寺編の聖地として紹介されたスポットです。＝LOVEの諸橋沙夏さんが訪れました。\n\nURL: https://tabelog.com/\n住所: 〒166-0003 東京都杉並区高円寺北３丁目６９−１\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/BPvNgGIKoeU?si=HxyNk-c6bIqY--4h&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2313,6 +3182,10 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["YouTube企画","さなつんのはしご酒","高円寺"],
     address: "〒166-0003 東京都杉並区高円寺南３丁目５８−１８ 山本ビル 1F",
     description: "YouTube企画「さなつんのはしご酒（つんはしご）」高円寺編の聖地として紹介されたスポットです。＝LOVEの諸橋沙夏さんが訪れました。\n\nURL: https://www.instagram.com/nagara_yakiton/\n住所: 〒166-0003 東京都杉並区高円寺南３丁目５８−１８ 山本ビル 1F\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/BPvNgGIKoeU?si=HxyNk-c6bIqY--4h&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2329,6 +3202,10 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["YouTube企画","さなつんのはしご酒","高円寺"],
     address: "〒166-0003 東京都杉並区高円寺南４丁目２７−１８ ケーアイ高円寺ビル 1F",
     description: "YouTube企画「さなつんのはしご酒（つんはしご）」高円寺編の聖地として紹介されたスポットです。＝LOVEの諸橋沙夏さんが訪れました。\n\nURL: https://www.instagram.com/manmajiima/\n住所: 〒166-0003 東京都杉並区高円寺南４丁目２７−１８ ケーアイ高円寺ビル 1F\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/BPvNgGIKoeU?si=HxyNk-c6bIqY--4h&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2345,6 +3222,10 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["YouTube企画","さなつんのはしご酒","上野"],
     address: "〒110-0005 東京都台東区上野６丁目９−１３",
     description: "YouTube企画「さなつんのはしご酒（つんはしご）」上野編の聖地として紹介されたスポットです。＝LOVEの諸橋沙夏さんが訪れました。\n\nURL: https://tabelog.com/\n住所: 〒110-0005 東京都台東区上野６丁目９−１３\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Hj0HB_c5yKw?si=gxrX6XCaFSZ_77nz&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2361,6 +3242,10 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["YouTube企画","さなつんのはしご酒","上野"],
     address: "〒110-0005 東京都台東区上野４丁目８−９ Oakビル 1F",
     description: "YouTube企画「さなつんのはしご酒（つんはしご）」上野編の聖地として紹介されたスポットです。＝LOVEの諸橋沙夏さんが訪れました。\n\nURL: https://tabelog.com/\n住所: 〒110-0005 東京都台東区上野４丁目８−９ Oakビル 1F\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Hj0HB_c5yKw?si=gxrX6XCaFSZ_77nz&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2377,6 +3262,10 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["YouTube企画","さなつんのはしご酒","高円寺"],
     address: "〒166-0002 東京都杉並区高円寺北２丁目１０−７ ヴィラグリーン 3FA 店舗A号室",
     description: "YouTube企画「さなつんのはしご酒（つんはしご）」上野編の聖地として紹介されたスポットです。＝LOVEの諸橋沙夏さんが訪れました。（※店舗は上野編の動画に含まれていますが、実際の住所は高円寺エリアです）\n\nURL1: https://x.com/koenji_gang\nURL2: https://www.instagram.com/koenji_gang/\n住所: 〒166-0002 東京都杉並区高円寺北２丁目１０−７ ヴィラグリーン 3FA 店舗A号室\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Hj0HB_c5yKw?si=gxrX6XCaFSZ_77nz&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2393,6 +3282,10 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["YouTube企画","さなつんのはしご酒","新橋"],
     address: "〒105-0004 東京都港区新橋4-9-1 新橋プラザビルB102",
     description: "YouTube企画「さなつんのはしご酒（つんはしご）」新橋編の聖地として紹介されたスポットです。＝LOVEの諸橋沙夏さんが訪れました。（元AKB48の村山彩希さんがゲスト出演）\n\nURL: https://hareruya-shimbashi.foodre.jp/\n住所: 〒105-0004 東京都港区新橋4-9-1 新橋プラザビルB102\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/K7CCROY8Xm4?si=me_Y7jlLQ0HmBc_b&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2409,22 +3302,30 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["YouTube企画","さなつんのはしご酒","新橋"],
     address: "〒105-0004 東京都港区新橋２丁目９−６ 4F",
     description: "YouTube企画「さなつんのはしご酒（つんはしご）」新橋編の聖地として紹介されたスポットです。＝LOVEの諸橋沙夏さんが訪れました。（元AKB48の村山彩希さんがゲスト出演）\n\nURL: https://g733920.gorp.jp/\n住所: 〒105-0004 東京都港区新橋２丁目９−６ 4F\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/K7CCROY8Xm4?si=me_Y7jlLQ0HmBc_b&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
-    id: "spot-real-niajoy-3rd-shinkamonobashi",
-    name: "新鴨野橋 北側",
+    id: "spot-real-niajoy-3rd-shinshiginobashi",
+    name: "新鴫野橋 北側",
     group: "≒JOY",
     category: "飲食店・その他",
-    latitude: 35.43855,
-    longitude: 136.21625,
+    latitude: 34.69117,
+    longitude: 135.52808,
     event_date: "2025-06-24",
     youtube_title: "🎥 関連映像: ≒JOY 3rdシングル『ブルーハワイレモン』特典映像ダイジェスト",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/F8V34JsNV4A?si=oOew38mBf06NtcYT&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "大阪なんでやねんの目撃者",
     tags: ["YouTube企画","≒JOY","特典映像","大阪"],
-    address: "〒540-0002 大阪府大阪市中央区城見１丁目",
-    description: "≒JOY 3rdシングル『ブルーハワイレモン』特典映像「ニアジョイ エンジョイ部」の聖地として紹介されたスポットです。\n\n住所目安: 〒540-0002 大阪府大阪市中央区城見１丁目\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/F8V34JsNV4A?si=oOew38mBf06NtcYT&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    address: "〒540-0002 大阪府大阪市中央区大阪城",
+    description: "≒JOY 3rdシングル『ブルーハワイレモン』特典映像「ニアジョイ エンジョイ部」の聖地としてメンバーが訪れた、大阪ビジネスパーク（OBP）近くの第二寝屋川に架かる橋です。\n\n住所目安: 〒540-0002 大阪府大阪市中央区大阪城\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/F8V34JsNV4A?si=oOew38mBf06NtcYT&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2441,6 +3342,10 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["YouTube企画","≒JOY","特典映像","大阪"],
     address: "〒573-0054 大阪府枚方市枚方公園町１−１",
     description: "≒JOY 3rdシングル『ブルーハワイレモン』特典映像「ニアジョイ エンジョイ部」の聖地として紹介されたスポットです。\n\nURL: https://www.hirakatapark.co.jp/\n住所: 〒573-0054 大阪府枚方市枚方公園町１−１\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/F8V34JsNV4A?si=oOew38mBf06NtcYT&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2457,6 +3362,10 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["YouTube企画","≒JOY","特典映像","大阪"],
     address: "〒565-0826 大阪府吹田市千里万博公園２−１ ＮＩＦＲＥＬ EXPOCITY内",
     description: "≒JOY 3rdシングル『ブルーハワイレモン』特典映像「ニアジョイ エンジョイ部」の聖地として紹介されたスポットです。\n\nURL: https://www.nifrel.jp/\n住所: 〒565-0826 大阪府吹田市千里万博公園２−１ ＮＩＦＲＥＬ EXPOCITY内\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/F8V34JsNV4A?si=oOew38mBf06NtcYT&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2473,6 +3382,10 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["YouTube企画","≒JOY","特典映像","大阪"],
     address: "〒545-0052 大阪府大阪市阿倍野区阿倍野筋１丁目１−43-60F",
     description: "≒JOY 3rdシングル『ブルーハワイレモン』特典映像「ニアジョイ エンジョイ部」の聖地として紹介されたスポットです。\n\nURL: https://www.abenoharukas-300.jp/\n住所: 〒545-0052 大阪府大阪市阿倍野区阿倍野筋１丁目１−43-60F\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/F8V34JsNV4A?si=oOew38mBf06NtcYT&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2489,6 +3402,10 @@ const INITIAL_SPOTS: Spot[] = [
     tags: ["YouTube企画","≒JOY","特典映像","大阪"],
     address: "〒540-0032 大阪府大阪市中央区天満橋京町１−１",
     description: "≒JOY 3rdシングル『ブルーハワイレモン』特典映像「ニアジョイ エンジョイ部」の聖地として紹介されたスポットです。\n\nURL: https://suijo-bus.osaka\n住所: 〒540-0032 大阪府大阪市中央区天満橋京町１−１\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/F8V34JsNV4A?si=oOew38mBf06NtcYT&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    holy_point: undefined,
+    visitor_notes: undefined,
+    verification_status: undefined,
+    last_confirmed_date: undefined,
     coordinateAccuracy: "exact"
   },
   {
@@ -2576,8 +3493,8 @@ const INITIAL_SPOTS: Spot[] = [
     name: "星の村天文台",
     group: "≠ME",
     category: "MVロケ地",
-    latitude: 37.341850,
-    longitude: 140.676400,
+    latitude: 37.34185,
+    longitude: 140.6764,
     event_date: "2021-11-10",
     youtube_title: "🎥 関連映像: 『まほろばアスタリスク』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/WHjHo0qFXm8?si=oJgKj17C2NolyGVr&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
@@ -2596,8 +3513,8 @@ const INITIAL_SPOTS: Spot[] = [
     name: "天地人橋",
     group: "≠ME",
     category: "MVロケ地",
-    latitude: 37.342920,
-    longitude: 140.675150,
+    latitude: 37.34292,
+    longitude: 140.67515,
     event_date: "2021-11-10",
     youtube_title: "🎥 関連映像: 『まほろばアスタリスク』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/WHjHo0qFXm8?si=oJgKj17C2NolyGVr&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
@@ -2616,8 +3533,8 @@ const INITIAL_SPOTS: Spot[] = [
     name: "あぶくま洞 第二駐車場周辺",
     group: "≠ME",
     category: "MVロケ地",
-    latitude: 37.343200,
-    longitude: 140.674000,
+    latitude: 37.3432,
+    longitude: 140.674,
     event_date: "2021-11-10",
     youtube_title: "🎥 関連映像: 『まほろばアスタリスク』公式MV",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/WHjHo0qFXm8?si=oJgKj17C2NolyGVr&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
