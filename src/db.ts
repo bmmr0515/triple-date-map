@@ -97,6 +97,7 @@ export interface Spot {
   verification_status?: string;
   holy_point?: string;
   coordinateAccuracy?: 'exact' | 'facility' | 'approximate' | 'scene-area';
+  accuracyReason?: string;
 }
 
 export interface User {
@@ -146,7 +147,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-tsunoshima",
@@ -166,7 +168,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-futtsu-stadium",
@@ -186,7 +189,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-crystal-hotel",
@@ -206,7 +210,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-enoshima-daiteibo",
@@ -226,7 +231,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-budokan",
@@ -246,7 +252,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-conifer",
@@ -266,7 +273,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-asaka-school",
@@ -286,7 +294,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-oya-museum",
@@ -306,7 +315,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-cebu",
@@ -326,7 +336,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-seoul",
@@ -346,7 +357,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-fuchukeiba-seimon",
@@ -366,7 +378,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-mika-school",
@@ -386,7 +399,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-ashizuri",
@@ -406,7 +420,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-ogawa-school",
@@ -426,7 +441,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-lockhart",
@@ -446,7 +462,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-anniversaire-omiya",
@@ -466,7 +483,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-fujikyu-land",
@@ -486,7 +504,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-tokorozawa-shinmei",
@@ -506,7 +525,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-fw-soga",
@@ -526,7 +546,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-showanomori",
@@ -546,7 +567,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-daikeien",
@@ -566,7 +588,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-ooguronomori-school",
@@ -586,7 +609,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-kotakizawa-camp",
@@ -606,7 +630,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-unoshima-villa",
@@ -626,7 +651,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-kanto-gakuin",
@@ -646,7 +672,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-mitagawa-school",
@@ -666,7 +693,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-kisarazu-warehouse",
@@ -686,7 +714,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-ushiku-chateau",
@@ -706,7 +735,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-british-hills",
@@ -726,7 +756,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-shutoken-water",
@@ -746,7 +777,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-italia-town",
@@ -766,7 +798,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-longwood",
@@ -786,7 +819,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-yamanashi-eiwa",
@@ -806,7 +840,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-kawaguchiko-music-forest",
@@ -826,7 +861,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-ease-meguro",
@@ -846,7 +882,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-dopo-ueno",
@@ -866,7 +903,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-seibuen-yuenchi",
@@ -886,7 +924,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-trigger-veille",
@@ -906,7 +945,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-trigger-spbs",
@@ -926,7 +966,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-trigger-1214",
@@ -946,7 +987,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-trigger-airstream",
@@ -966,7 +1008,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-trigger-taimei",
@@ -986,7 +1029,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-trigger-ladybugs",
@@ -1006,7 +1050,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-trigger-toyosu",
@@ -1026,7 +1071,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-trigger-kait",
@@ -1046,7 +1092,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-trigger-tute",
@@ -1066,7 +1113,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-trigger-jissen",
@@ -1086,7 +1134,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-trigger-mimosa",
@@ -1106,7 +1155,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-santamonica-crepe",
@@ -1126,7 +1176,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-miyashita-park",
@@ -1146,7 +1197,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-cameo-zeronoir",
@@ -1166,7 +1218,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-lockhart-shukusai",
@@ -1186,7 +1239,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-tokyodome-recipe",
@@ -1206,7 +1260,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-messemall",
@@ -1226,7 +1281,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-messemall-hodoukyo",
@@ -1246,7 +1302,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-messemall-kita",
@@ -1266,7 +1323,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-mbp-makuhari",
@@ -1286,7 +1344,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-business-hodoukyo",
@@ -1306,7 +1365,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-mvify-okuma",
@@ -1326,7 +1386,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-mvify-sekiseizan",
@@ -1346,7 +1407,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-sweetest-atelier",
@@ -1366,7 +1428,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-me-hawaiians",
@@ -1386,7 +1449,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-me-iori",
@@ -1406,7 +1470,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-me-takino-snowworld",
@@ -1426,7 +1491,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-me-ashiribetsu",
@@ -1446,7 +1512,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-me-kanigen",
@@ -1466,7 +1533,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-me-fighter-kaden",
@@ -1486,7 +1554,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-me-fighter-goblin",
@@ -1506,7 +1575,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-me-fighter-sptv",
@@ -1526,7 +1596,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-me-hanbunko-vence",
@@ -1546,7 +1617,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-joy-kyunkawa-patio18",
@@ -1566,7 +1638,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-joy-kyunkawa-patio12",
@@ -1586,7 +1659,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-joy-kyunkawa-park",
@@ -1606,7 +1680,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-joy-kyunkawa-mbpoint",
@@ -1626,7 +1701,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-shokori-start",
@@ -1646,7 +1722,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-shokori-goal",
@@ -1666,7 +1743,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-love-ohimesama",
@@ -1686,7 +1764,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-joy-lion1",
@@ -1706,7 +1785,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-joy-lion2",
@@ -1726,7 +1806,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-joy-sweet16",
@@ -1746,7 +1827,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-joy-byun1",
@@ -1766,7 +1848,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-joy-byun2",
@@ -1786,7 +1869,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-joy-byun3",
@@ -1806,7 +1890,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-joy-byun4",
@@ -1826,7 +1911,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-joy-byun5",
@@ -1846,7 +1932,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-joy-byun6",
@@ -1866,7 +1953,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-joy-byun7",
@@ -1886,7 +1974,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-joy-exult",
@@ -1906,7 +1995,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-joy-denwabango1",
@@ -1926,7 +2016,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-joy-denwabango2",
@@ -1946,7 +2037,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-joy-denwabango-dance",
@@ -1966,7 +2058,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-joy-bluehawaii-1",
@@ -1986,7 +2079,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-joy-bluehawaii-2",
@@ -2006,7 +2100,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-joy-bluehawaii-3",
@@ -2026,7 +2121,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-joy-bluehawaii-4",
@@ -2046,7 +2142,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-joy-bluehawaii-jacket",
@@ -2066,7 +2163,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-me-marshmallow-float",
@@ -2086,7 +2184,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-osakakyoto-usj",
@@ -2106,7 +2205,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-osakakyoto-okabeya",
@@ -2126,7 +2226,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-osakakyoto-nishiki",
@@ -2146,7 +2247,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-osakakyoto-yasakaroumon",
@@ -2166,7 +2268,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-osakakyoto-yasakakoushindou",
@@ -2186,7 +2289,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-osakakyoto-imopippi",
@@ -2206,7 +2310,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-osakakyoto-nishikimarun",
@@ -2226,7 +2331,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-osakakyoto-kiyomizudera",
@@ -2246,7 +2352,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-osakakyoto-ikkakuju",
@@ -2266,7 +2373,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-taitobeach",
@@ -2286,7 +2394,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-ootani",
@@ -2306,7 +2415,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-seibuparking",
@@ -2326,7 +2436,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-kazusaminato-1",
@@ -2346,7 +2457,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-haraokasanbashi",
@@ -2366,7 +2478,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-kazusaminato-2",
@@ -2386,7 +2499,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-nihon-u-plaza",
@@ -2406,7 +2520,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-nihon-u-garden",
@@ -2426,7 +2541,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-nihon-u-tp15",
@@ -2446,7 +2562,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-nihon-u-sphall",
@@ -2466,7 +2583,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-nihon-u-road",
@@ -2486,7 +2604,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-special-national-stadium",
@@ -2506,7 +2625,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-gekiyakuchu-zeroblanc",
@@ -2526,7 +2646,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-gekiyakuchu-fujisanmesse",
@@ -2546,7 +2667,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-moratorium-stellato",
@@ -2566,7 +2688,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-moratorium-parkmall",
@@ -2586,7 +2709,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-moratorium-nakahamabashi",
@@ -2606,7 +2730,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-moratorium-businesscross",
@@ -2626,7 +2751,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-moratorium-businessstreet",
@@ -2646,7 +2772,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-moratorium-messemall",
@@ -2666,7 +2793,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-moratorium-businessdeck",
@@ -2686,7 +2814,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-ohimesama-artgrace",
@@ -2706,7 +2835,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-lovesong-toei5",
@@ -2726,7 +2856,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-lovesong-mayflower",
@@ -2746,7 +2877,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-naisho-veritas",
@@ -2766,7 +2898,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-naisho-sengen",
@@ -2786,7 +2919,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-komorebi-veranda",
@@ -2806,7 +2940,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-kamogawa-seaside-base",
@@ -2826,7 +2961,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-kamogawa-seaworld",
@@ -2846,7 +2982,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-sakurasaku-kawanahotel",
@@ -2866,7 +3003,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-sakurasaku-akaiyane",
@@ -2886,7 +3024,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-sakurasaku-izukogenstation",
@@ -2906,7 +3045,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-sakurasaku-yamamoplaza",
@@ -2926,7 +3066,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-sakurasaku-sakuranamiki",
@@ -2946,7 +3087,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-zettaiidol-avacosaginuma",
@@ -2966,7 +3108,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-todoitelove-urawalutheran",
@@ -2986,7 +3129,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-kimiwata-longwood",
@@ -3006,7 +3150,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-pokepark-yomiuri",
@@ -3026,7 +3171,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-hamburger-obica",
@@ -3046,7 +3192,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-hamburger-37steak",
@@ -3066,7 +3213,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-hamburger-gokuburger",
@@ -3086,7 +3234,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-hamburger-ballpark9",
@@ -3106,7 +3255,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-hashigozake-kinkaen",
@@ -3126,7 +3276,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-hashigozake-ebisu",
@@ -3146,7 +3297,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-hashigozake-achirabo",
@@ -3166,7 +3318,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-hashigozake-nagara",
@@ -3186,7 +3339,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-hashigozake-manmajiima",
@@ -3206,7 +3360,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-hashigozake-kaisho",
@@ -3226,7 +3381,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-hashigozake-shinobu",
@@ -3246,7 +3402,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-hashigozake-gang",
@@ -3266,7 +3423,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-hashigozake-hareruya",
@@ -3286,7 +3444,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-hashigozake-fukuenya",
@@ -3306,7 +3465,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-niajoy-3rd-shinshiginobashi",
@@ -3326,7 +3486,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-niajoy-3rd-hirakatapark",
@@ -3346,7 +3507,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-niajoy-3rd-nifrel",
@@ -3366,7 +3528,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-niajoy-3rd-harukas",
@@ -3386,7 +3549,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-niajoy-3rd-himawari",
@@ -3406,7 +3570,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: undefined,
     verification_status: undefined,
     last_confirmed_date: undefined,
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "exact",
+    accuracyReason: "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定"
   },
   {
     id: "spot-real-summerhaze-umikaze",
@@ -3426,7 +3591,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: "⚠️聖地巡礼に関する重要なお願い\n一般利用者の多い公園なので、撮影時は通行や他の利用者の妨げにならないよう注意してください。公園内の立入禁止区域には入らないでください。",
     verification_status: "映像照合・複数の独立したSNS情報による特定",
     last_confirmed_date: "2026-08-09",
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "facility",
+    accuracyReason: "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定"
   },
   {
     id: "spot-real-summerhaze-mabori",
@@ -3446,7 +3612,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: "⚠️聖地巡礼に関する重要なお願い\n遊歩道は一般の散歩・ランニング利用者も多いため、長時間通路を占有しないでください。強風・高波・悪天候時は海側へ近づきすぎないよう注意してください。",
     verification_status: "映像照合・独立したSNS情報による特定",
     last_confirmed_date: "2026-08-09",
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-summerhaze-old-hashirimizu-school",
@@ -3466,7 +3633,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: "⚠️聖地巡礼に関する重要なお願い\n旧学校施設は一般の観光施設ではありません。敷地内への無断立ち入りは禁止してください。現地では公道など、一般に立ち入り可能な場所から見学してください。施設の現在の利用状況や立入可否を必ず確認してください。",
     verification_status: "MV映像・建物および周辺景観の照合による特定",
     last_confirmed_date: "2026-08-09",
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-summerhaze-imaginus",
@@ -3486,7 +3654,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: "⚠️聖地巡礼に関する重要なお願い\n現在は営業中の施設なので、撮影だけを目的とした迷惑行為はしないでください。施設内での撮影可否・立入可能エリア・営業時間についてはIMAGINUSの最新ルールに従ってください。イベント等によって入場できないエリアがある可能性があります。",
     verification_status: "MV映像と旧校舎の構造・景観照合による特定",
     last_confirmed_date: "2026-08-09",
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-mahoroba-observatory",
@@ -3506,7 +3675,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: "⚠️聖地巡礼に関する重要なお願い\n現在も営業している施設です。営業時間・休館日・入館ルールは星の村天文台の公式情報を確認してください。施設利用者の妨げになる撮影や、立入禁止区域への進入は禁止してください。",
     verification_status: "映像照合・外部情報から特定されたロケ地",
     last_confirmed_date: "2026-08-10",
-    coordinateAccuracy: "facility"
+    coordinateAccuracy: "facility",
+    accuracyReason: undefined
   },
   {
     id: "spot-real-mahoroba-bridge",
@@ -3526,7 +3696,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: "⚠️聖地巡礼に関する重要なお願い\n歩道橋のため、他の観光客の通行を妨げる撮影は避けてください。橋上で長時間立ち止まったり、大人数で通路を塞いだりしないでください。悪天候・積雪時は足元に注意してください。",
     verification_status: "映像照合・外部情報から特定されたロケ地",
     last_confirmed_date: "2026-08-10",
-    coordinateAccuracy: "exact"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: "作品で使用された公園や道路、海岸等の撮影エリア・区間は特定できているが、詳細な数メートルの立ち位置までは特定が難しいためエリア内にピンを設定"
   },
   {
     id: "spot-real-mahoroba-abukuma-parking",
@@ -3546,7 +3717,8 @@ const INITIAL_SPOTS: Spot[] = [
     visitor_notes: "⚠️聖地巡礼に関する重要なお願い\n現役の駐車場なので、車両の通行・駐車を最優先してください。車道や駐車区画内で立ち止まって写真撮影をしないでください。歩行者が安全に立てる場所から見学してください。",
     verification_status: "映像照合・外部情報から特定されたロケ地",
     last_confirmed_date: "2026-08-10",
-    coordinateAccuracy: "scene-area"
+    coordinateAccuracy: "scene-area",
+    accuracyReason: undefined
   }
 ];
 
@@ -3579,7 +3751,8 @@ export const db = {
         twitter_url: item.twitter_url || '',
         verification_status: item.verification_status || '',
         holy_point: item.holy_point || '',
-        coordinateAccuracy: item.coordinateAccuracy || 'exact'
+        coordinateAccuracy: item.coordinateAccuracy || 'exact',
+        accuracyReason: item.accuracyReason || ''
       }));
     };
 
@@ -3606,6 +3779,7 @@ export const db = {
             val.latitude !== parsedVal.latitude ||
             val.longitude !== parsedVal.longitude ||
             val.coordinateAccuracy !== parsedVal.coordinateAccuracy ||
+            val.accuracyReason !== parsedVal.accuracyReason ||
             val.verification_status !== parsedVal.verification_status ||
             val.holy_point !== parsedVal.holy_point ||
             val.description !== parsedVal.description
