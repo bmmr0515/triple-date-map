@@ -342,6 +342,7 @@ routes.forEach(route => {
         <p><strong>グループ:</strong> ${s.group} | <strong>カテゴリ:</strong> ${s.category}${s.verification_status ? ` | <strong>ロケ地確認区分:</strong> ${s.verification_status}` : ''}</p>
         ${s.verification_status ? `<p style="background: #f0fdf4; border: 1px solid #a7f3d0; padding: 10px 14px; border-radius: 8px; color: #065f46; font-size: 11.5px; font-weight: bold; margin: 12px 0;">🔎 MV映像・現地景観・独立した情報源との照合によって特定されたロケ地（非公式検証）</p>` : ''}
         ${s.coordinateAccuracy === 'approximate' ? `<p style="background: #fffbeb; border: 1px solid #fde68a; padding: 10px 14px; border-radius: 8px; color: #92400e; font-size: 11.5px; font-weight: bold; margin: 12px 0;">⚠️ このピンは撮影エリアのおおよその位置です。周辺の実際の地形や風景からロケ地をお探しください。</p>` : ''}
+        ${s.coordinateAccuracy === 'scene-area' ? `<p style="background: #fffbeb; border: 1px solid #fde68a; padding: 10px 14px; border-radius: 8px; color: #92400e; font-size: 11.5px; font-weight: bold; margin: 12px 0;">⚠️ このピンはMVで撮影されたエリア全体（駐車場等）を示すものです。実際の撮影位置の特定が難しいため、現地の安全な歩道などから見学してください。</p>` : ''}
         <hr/>
         <h2>聖地・ロケ地概要</h2>
         <p>${s.description}</p>

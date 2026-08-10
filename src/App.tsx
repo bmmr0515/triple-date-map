@@ -5620,6 +5620,28 @@ ${window.location.origin + window.location.pathname}
                       </div>
                     )}
 
+                    {/* ⚠️ 撮影エリア警告 */}
+                    {selectedSpot.coordinateAccuracy === 'scene-area' && (
+                      <div className="animate-fade-in-up" style={{
+                        background: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)',
+                        border: '1.5px solid #fde68a',
+                        borderRadius: '12px',
+                        padding: '10px 14px',
+                        fontSize: '11px',
+                        color: '#92400e',
+                        lineHeight: '1.5',
+                        marginTop: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        fontWeight: 'bold',
+                        boxShadow: '0 2px 6px rgba(245,158,11,0.03)'
+                      }}>
+                        <span style={{ fontSize: '14px' }}>⚠️</span>
+                        <span>このピンはMVで撮影されたエリア全体（駐車場等）を示すものです。実際の撮影位置の特定が難しいため、現地の安全な歩道などから見学してください。</span>
+                      </div>
+                    )}
+
                     {/* エピソード (改行対応) */}
                     <div className="episode-container animate-fade-in-up">
                       <h4 className="detail-meta-label">
@@ -8032,6 +8054,28 @@ ${window.location.origin + window.location.pathname}
                 }}>
                   <span style={{ fontSize: '13px' }}>⚠️</span>
                   <span>このピンは撮影エリアのおおよその位置です。周辺の実際の地形や風景からロケ地をお探しください。</span>
+                </div>
+              )}
+
+              {/* ⚠️ 撮影エリア警告 (モバイル) */}
+              {selectedSpot.coordinateAccuracy === 'scene-area' && (
+                <div className="animate-fade-in-up" style={{
+                  background: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)',
+                  border: '1.5px solid #fde68a',
+                  borderRadius: '12px',
+                  padding: '10px 12px',
+                  fontSize: '10.5px',
+                  color: '#92400e',
+                  lineHeight: '1.45',
+                  marginTop: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontWeight: 'bold',
+                  boxShadow: '0 2px 4px rgba(245,158,11,0.02)'
+                }}>
+                  <span style={{ fontSize: '13px' }}>⚠️</span>
+                  <span>このピンはMVで撮影されたエリア全体（駐車場等）を示すものです。実際の撮影位置の特定が難しいため、現地の安全な歩道などから見学してください。</span>
                 </div>
               )}
 

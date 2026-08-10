@@ -72,6 +72,33 @@ export const INITIAL_COURSES: Course[] = [
     related_songs: ["この空がトリガー"],
     cafe_spots: ["大森駅近くの純喫茶", "SPBS周辺のコーヒースタンド"],
     status: "published"
+  },
+  {
+    slug: "mahoroba-asterisk-tamura",
+    name: "≠ME『まほろばアスタリスク』滝根・あぶくま洞巡礼コース",
+    duration: "約40分",
+    transportation: "徒歩",
+    recommended_time: "午前中または夕方（星空を楽しむなら夕暮れ以降）",
+    spots: [
+      {
+        spot_id: "spot-real-mahoroba-observatory",
+        short_commentary: "星空をテーマにした楽曲を象徴する天文台。施設周辺の山並みを含め、MVのノスタルジックな雰囲気を現地で味わえます。"
+      },
+      {
+        spot_id: "spot-real-mahoroba-bridge",
+        short_commentary: "星の村天文台とあぶくま洞を結ぶ歩道橋。特徴的な形状をしており、MVのカメラアングルが捉えやすい象徴的なスポットです。"
+      },
+      {
+        spot_id: "spot-real-mahoroba-abukuma-parking",
+        short_commentary: "天地人橋を渡った先にある、あぶくま洞の第二駐車場周辺。MVのシーンを脳裏に描きつつ、安全な歩道から見学しましょう。"
+      }
+    ],
+    external_map_url: "https://maps.google.com/?q=星の村天文台",
+    notes: "星の村天文台とあぶくま洞は山間部に位置するため、悪天候時や冬季・積雪時の移動は足元に十分ご注意ください。天文台は現役の施設ですので営業ルールを守って見学してください。",
+    related_groups: ["≠ME"],
+    related_songs: ["まほろばアスタリスク"],
+    cafe_spots: ["あぶくま洞売店", "星の村天文台周辺の自動販売機"],
+    status: "published"
   }
 ];
 
@@ -83,8 +110,30 @@ export const coursesDb = {
       return INITIAL_COURSES;
     }
     try {
-      return JSON.parse(data) as Course[];
+      const parsed = JSON.parse(data) as Course[];
+      
+      // コースマスタ(INITIAL_COURSES)の更新を検知し、自動同期するロジック
+      const sortedInitial = [...INITIAL_COURSES].sort((a, b) => a.slug.localeCompare(b.slug));
+      const sortedParsed = [...parsed].sort((a, b) => a.slug.localeCompare(b.slug));
+      
+      if (
+        sortedInitial.length !== sortedParsed.length ||
+        sortedInitial.some((val, i) => {
+          const parsedVal = sortedParsed[i];
+          return (
+            val.slug !== parsedVal.slug ||
+            val.name !== parsedVal.name ||
+            val.spots.length !== parsedVal.spots.length ||
+            val.spots.some((s, idx) => s.spot_id !== parsedVal.spots[idx]?.spot_id)
+          );
+        })
+      ) {
+        localStorage.setItem('tdm_courses', JSON.stringify(INITIAL_COURSES));
+        return INITIAL_COURSES;
+      }
+      return parsed;
     } catch (e) {
+      localStorage.setItem('tdm_courses', JSON.stringify(INITIAL_COURSES));
       return INITIAL_COURSES;
     }
   },

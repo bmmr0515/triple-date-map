@@ -96,7 +96,7 @@ export interface Spot {
   twitter_url?: string;
   verification_status?: string;
   holy_point?: string;
-  coordinateAccuracy?: 'exact' | 'facility' | 'approximate';
+  coordinateAccuracy?: 'exact' | 'facility' | 'approximate' | 'scene-area';
 }
 
 export interface User {
@@ -2570,6 +2570,66 @@ const INITIAL_SPOTS: Spot[] = [
     verification_status: "MV映像と旧校舎の構造・景観照合による特定",
     last_confirmed_date: "2026-08-09",
     coordinateAccuracy: "facility"
+  },
+  {
+    id: "spot-real-mahoroba-observatory",
+    name: "星の村天文台",
+    group: "≠ME",
+    category: "MVロケ地",
+    latitude: 37.341850,
+    longitude: 140.676400,
+    event_date: "2021-11-10",
+    youtube_title: "🎥 関連映像: 『まほろばアスタリスク』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/WHjHo0qFXm8?si=oJgKj17C2NolyGVr&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: "アスタリスクの観測者",
+    tags: ["まほろばアスタリスク","検証特定聖地"],
+    address: "福島県田村市滝根町神俣字糠塚60番地1",
+    description: "『まほろばアスタリスク』の主要な屋外ロケーションの一つ。星空をテーマにした楽曲の世界観と非常に相性の良い天文台で、MVでは施設周辺の独特な景観が使用されています。星の村天文台は福島県田村市の施設で、あぶくま洞から徒歩圏内に位置しています。",
+    holy_point: "『まほろばアスタリスク』というタイトルを象徴するような「星」に関係するロケーション。天文台と周囲の山並みを含め、MVの幻想的な雰囲気を現地で感じられる場所です。",
+    visitor_notes: "⚠️聖地巡礼に関する重要なお願い\n現在も営業している施設です。営業時間・休館日・入館ルールは星の村天文台の公式情報を確認してください。施設利用者の妨げになる撮影や、立入禁止区域への進入は禁止してください。",
+    verification_status: "映像照合・外部情報から特定されたロケ地",
+    last_confirmed_date: "2026-08-10",
+    coordinateAccuracy: "facility"
+  },
+  {
+    id: "spot-real-mahoroba-bridge",
+    name: "天地人橋",
+    group: "≠ME",
+    category: "MVロケ地",
+    latitude: 37.342920,
+    longitude: 140.675150,
+    event_date: "2021-11-10",
+    youtube_title: "🎥 関連映像: 『まほろばアスタリスク』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/WHjHo0qFXm8?si=oJgKj17C2NolyGVr&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: "まほろばをつなぐ架け橋",
+    tags: ["まほろばアスタリスク","検証特定聖地"],
+    address: "福島県田村市滝根町神俣・星の村天文台〜あぶくま洞間",
+    description: "星の村天文台とあぶくま洞を結ぶ歩道橋。観光情報でも紹介されており、『まほろばアスタリスク』MVでは、この特徴的な橋がロケーションとして使用されています。",
+    holy_point: "橋そのものの形状が非常に特徴的で、MV映像との照合がしやすいスポットです。星の村天文台とあぶくま洞を徒歩で巡る途中にあるため、1回の巡礼で複数の『まほろばアスタリスク』聖地を回ることができます。",
+    visitor_notes: "⚠️聖地巡礼に関する重要なお願い\n歩道橋のため、他の観光客の通行を妨げる撮影は避けてください。橋上で長時間立ち止まったり、大人数で通路を塞いだりしないでください。悪天候・積雪時は足元に注意してください。",
+    verification_status: "映像照合・外部情報から特定されたロケ地",
+    last_confirmed_date: "2026-08-10",
+    coordinateAccuracy: "exact"
+  },
+  {
+    id: "spot-real-mahoroba-abukuma-parking",
+    name: "あぶくま洞 第二駐車場周辺",
+    group: "≠ME",
+    category: "MVロケ地",
+    latitude: 37.343200,
+    longitude: 140.674000,
+    event_date: "2021-11-10",
+    youtube_title: "🎥 関連映像: 『まほろばアスタリスク』公式MV",
+    youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/WHjHo0qFXm8?si=oJgKj17C2NolyGVr&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    reward_title: "あぶくま洞の旅人",
+    tags: ["まほろばアスタリスク","検証特定聖地"],
+    address: "福島県田村市滝根町菅谷・あぶくま洞周辺",
+    description: "『まほろばアスタリスク』MVで使用されたと特定されている、あぶくま洞周辺の駐車場エリア。星の村天文台・天地人橋と非常に近く、3地点をまとめて巡ることができます。",
+    holy_point: "一つのMVのロケ地が狭いエリアに集中しているため、『まほろばアスタリスク』の聖地巡礼ルートとして非常に回りやすい場所です。星の村天文台→天地人橋→あぶくま洞という順番で徒歩巡礼できるようになっています。",
+    visitor_notes: "⚠️聖地巡礼に関する重要なお願い\n現役の駐車場なので、車両の通行・駐車を最優先してください。車道や駐車区画内で立ち止まって写真撮影をしないでください。歩行者が安全に立てる場所から見学してください。",
+    verification_status: "映像照合・外部情報から特定されたロケ地",
+    last_confirmed_date: "2026-08-10",
+    coordinateAccuracy: "scene-area"
   }
 ];
 
