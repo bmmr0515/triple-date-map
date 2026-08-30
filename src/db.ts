@@ -816,7 +816,8 @@ const INITIAL_SPOTS: Spot[] = [
       "youtube_url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/20QJax8CwQo?si=kPUEeAcfNct48srm\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
       "reward_title": "みらい館大明の放課後メンバー",
       "tags": [
-          "トリガー巡礼"
+          "トリガー巡礼",
+          "いらない ツインテール"
       ],
       "address": "東京都",
       "description": "屋上や教室、男の子が走っているシーンが撮影された廃校活用施設。",
@@ -854,7 +855,9 @@ const INITIAL_SPOTS: Spot[] = [
       "youtube_url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/20QJax8CwQo?si=kPUEeAcfNct48srm\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
       "reward_title": "豊洲水辺のランニングスター",
       "tags": [
-          "トリガー巡礼"
+          "トリガー巡礼",
+          "ドライブ デート 都内",
+          "だだだ、だって。"
       ],
       "address": "東京都",
       "description": "瀧脇笙古が走っていた公園。レインボーブリッジが見える水辺のランニングスポット。",
@@ -1268,7 +1271,8 @@ const INITIAL_SPOTS: Spot[] = [
           "排他的ファイター巡礼",
           "排他的ファイター巡礼",
           "排他的ファイター巡礼",
-          "排他的ファイター巡礼"
+          "排他的ファイター巡礼",
+          "だだだ、だって。"
       ],
       "address": "東京都",
       "description": "11thシングル「排他的ファイター」表題曲のMV撮影地です。新宿西新宿にある廃校を再利用した芸能クリエイティブスペースで、メンバーたちが華麗で力強いダンスシーンを披露しました。\n【住所】〒160-0023 東京都新宿区西新宿６丁目１２−３０ A棟2階",
@@ -2039,7 +2043,8 @@ const INITIAL_SPOTS: Spot[] = [
       "youtube_url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/d20dEAtbL08?si=3sVKsAnbhsACXs51&amp;controls=0&amp;start=197\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
       "reward_title": "逃走中の超特急",
       "tags": [
-          "超特急逃走中巡礼"
+          "超特急逃走中巡礼",
+          "「僕たちの歌」"
       ],
       "address": "千葉県",
       "description": "=LOVE『超特急逃走中』のMV撮影が行われたプラザ習志野です。推しを追いかけるドキドキ感と疾走感あふれる楽曲の世界観が詰まった場所。メンバーたちが駆け抜けたエネルギッシュな空間をぜひ現地で体感してください。\n\n⚠️聖地巡礼に関する重要なお願い\nこちらは現在も学生が通う現役の大学キャンパスです。時期や時間帯によっては関係者以外の立ち入りが制限されている場合があります。敷地内に入る際は、必ず正門の警備員や窓口等で見学の許可を取るようにしてください。また、授業や学生生活の妨げにならないよう、マナーとモラルを厳守した節度ある行動をお願いいたします。",
@@ -2364,7 +2369,11 @@ const INITIAL_SPOTS: Spot[] = [
       "reward_title": "VERITASの語り部",
       "address": "千葉県",
       "description": "MV『内緒バナシ』のロケ地。松戸市にある光英VERITAS中学校・高等学校。\n\n⚠️聖地巡礼に関する重要なお願い\n現役の学校施設です。関係者以外の無断立ち入りや、生徒が映り込む形での撮影は絶対に禁止です。",
-      "coordinateAccuracy": "facility"
+      "coordinateAccuracy": "facility",
+      "tags": [
+          "君の第3ボタン",
+          "君を見かけた"
+      ]
   },
   {
       "id": "spot-real-naisho-sengen",
@@ -4200,6 +4209,1362 @@ const INITIAL_SPOTS: Spot[] = [
       "description": "MV冒頭の洋館・ガーデンの場面に使われた結婚式場。外観、石造風の壁、庭の意匠が作品世界の導入として映る。婚礼施設のため無断見学は避け、フェア・イベント等の正規利用時のみ案内に従う。\n\n⚠️ 注意：婚礼施設のため無断立ち入り・無断撮影はご遠慮ください。",
       "visitor_notes": "婚礼施設のため無断立ち入り・無断撮影はご遠慮ください。",
       "primarySourceUrl": "https://ameblo.jp/hayabusa1043/entry-12885062101.html",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-hananuki-dam",
+      "name": "花貫ダム",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 36.725083,
+      "longitude": 140.647899,
+      "event_date": "2017-09-06",
+      "youtube_title": "🎥 関連映像: 『＝LOVE』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/xJ87q08cZ_w",
+      "youtubeId": "xJ87q08cZ_w",
+      "reward_title": "花貫の風を感じた者",
+      "tags": [
+          "＝LOVE"
+      ],
+      "address": "茨城県高萩市大字秋山",
+      "description": "デビューシングル『＝LOVE』MVのダンスシーンや自然豊かな場面で登場するダム湖・緑地ロケーション。高萩市の誇る景勝地で美しい水辺と木々が広がります。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-tachikawa-sozosha",
+      "name": "たちかわ創造舎（旧多摩川小学校）",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.701717,
+      "longitude": 139.394386,
+      "event_date": "2018-05-16",
+      "youtube_title": "🎥 関連映像: 『手遅れcaution』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/41j_7c96Tsk",
+      "youtubeId": "41j_7c96Tsk",
+      "reward_title": "廃校の廊下に佇む者",
+      "tags": [
+          "手遅れcaution"
+      ],
+      "address": "東京都立川市富士見町1-32-17",
+      "description": "『手遅れcaution』MVのシリアスな学校場面やドラマパートが撮影された元小学校施設。現在は文化・たまがわクリエイティブ拠点として活用されています。\n\n⚠️ 注意：文化・学びの複合施設です。一般利用者の妨げにならないよう見学ルールを守ってください。",
+      "visitor_notes": "文化・学びの複合施設です。一般利用者の妨げにならないよう見学ルールを守ってください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-monalisa-ebisu",
+      "name": "モナリザ恵比寿店前",
+      "group": "=LOVE",
+      "category": "聖地店舗",
+      "latitude": 35.647732,
+      "longitude": 139.707703,
+      "event_date": "2018-05-16",
+      "youtube_title": "🎥 関連映像: 『手遅れcaution』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/41j_7c96Tsk",
+      "youtubeId": "41j_7c96Tsk",
+      "reward_title": "恵比寿の路地を駆け抜けた者",
+      "tags": [
+          "手遅れcaution"
+      ],
+      "address": "東京都渋谷区恵比寿西1-14-4",
+      "description": "『手遅れcaution』MVの街頭・疾走シーン周辺に登場する有名フレンチレストラン前の通り。恵比寿の静かな街並みが印象的です。\n\n⚠️ 注意：営業中の店舗周辺です。他のお客様や通行人の邪魔にならないよう注意してください。",
+      "visitor_notes": "営業中の店舗周辺です。他のお客様や通行人の邪魔にならないよう注意してください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-koriyama-culture-park",
+      "name": "郡山カルチャーパーク",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 37.366994,
+      "longitude": 140.329478,
+      "event_date": "2019-04-24",
+      "youtube_title": "🎥 関連映像: 『探せ ダイヤモンドリリー』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/2_X0m3ZvhW8",
+      "youtubeId": "2_X0m3ZvhW8",
+      "reward_title": "観覧車の観測者",
+      "tags": [
+          "探せ ダイヤモンドリリー"
+      ],
+      "address": "福島県郡山市安積町成田字東丸山61",
+      "description": "『探せ ダイヤモンドリリー』MVの遊園地・観覧車やアトラクション周辺で撮影されたレジャースポット。メンバーたちの切なくも瑞々しい表情が収められています。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-toei-tokyo-studio-roof",
+      "name": "東映東京撮影所 屋上",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.753159,
+      "longitude": 139.594357,
+      "event_date": "2019-04-24",
+      "youtube_title": "🎥 関連映像: 『探せ ダイヤモンドリリー』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/2_X0m3ZvhW8",
+      "youtubeId": "2_X0m3ZvhW8",
+      "reward_title": "東映屋上の空を見上げた者",
+      "tags": [
+          "探せ ダイヤモンドリリー"
+      ],
+      "address": "東京都練馬区東大泉2-34-5",
+      "description": "『探せ ダイヤモンドリリー』MVのラストシーンや青空背景のダンスカットで使われた撮影所の屋上スペース。\n\n⚠️ 注意：映画・映像撮影スタジオ（私有地）につき関係者以外の無断立ち入り厳禁。公道側から見学してください。",
+      "visitor_notes": "映画・映像撮影スタジオ（私有地）につき関係者以外の無断立ち入り厳禁。公道側から見学してください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-shimokitazawa-garden",
+      "name": "下北沢GARDEN",
+      "group": "=LOVE",
+      "category": "ライブ会場",
+      "latitude": 35.660447,
+      "longitude": 139.668518,
+      "event_date": "2019-10-30",
+      "youtube_title": "🎥 関連映像: 『いらない ツインテール』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/7V8eS16Y-zY",
+      "youtubeId": "7V8eS16Y-zY",
+      "reward_title": "ツインテールパンクの熱狂者",
+      "tags": [
+          "いらない ツインテール"
+      ],
+      "address": "東京都世田谷区北沢2-4-5",
+      "description": "『いらない ツインテール』MVの激しいバンドステージ・ライブパフォーマンス場面で使われた下北沢の伝説的ライブハウス。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-kissa-ginza-ebisu",
+      "name": "喫茶 銀座（恵比寿）",
+      "group": "=LOVE",
+      "category": "飲食店・その他",
+      "latitude": 35.645862,
+      "longitude": 139.708174,
+      "event_date": "2019-10-30",
+      "youtube_title": "🎥 関連映像: 『ズルいよ ズルいね』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/zR7-eBv28_w",
+      "youtubeId": "zR7-eBv28_w",
+      "reward_title": "純喫茶の悲哀に浸った者",
+      "tags": [
+          "ズルいよ ズルいね"
+      ],
+      "address": "東京都渋谷区恵比寿南1-3-9",
+      "description": "『ズルいよ ズルいね』MVのレトロで切ないドラマパートに使われた恵比寿の老舗純喫茶。ネオンライトや深い色調の客席が印象的です。\n\n⚠️ 注意：通常営業の喫茶店です。ご来店のうえ店内撮影の際は必ず店舗スタッフの許可を得てください。",
+      "visitor_notes": "通常営業の喫茶店です。ご来店のうえ店内撮影の際は必ず店舗スタッフの許可を得てください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-tipness-kokuryo",
+      "name": "ティップネス国領店",
+      "group": "=LOVE",
+      "category": "飲食店・その他",
+      "latitude": 35.650789,
+      "longitude": 139.558315,
+      "event_date": "2019-10-30",
+      "youtube_title": "🎥 関連映像: 『ズルいよ ズルいね』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/zR7-eBv28_w",
+      "youtubeId": "zR7-eBv28_w",
+      "reward_title": "プールサイドの涙を知る者",
+      "tags": [
+          "ズルいよ ズルいね"
+      ],
+      "address": "東京都調布市国領町2-5-15",
+      "description": "『ズルいよ ズルいね』MVのスイミングプール場面で撮影されたスポーツクラブ施設。\n\n⚠️ 注意：会員制フィットネスクラブです。館内への無断立ち入りはご遠慮ください。",
+      "visitor_notes": "会員制フィットネスクラブです。館内への無断立ち入りはご遠慮ください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-ikebukuro-overpass",
+      "name": "池袋駅付近の架道橋",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.7328,
+      "longitude": 139.7125,
+      "event_date": "2019-10-30",
+      "youtube_title": "🎥 関連映像: 『ズルいよ ズルいね』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/zR7-eBv28_w",
+      "youtubeId": "zR7-eBv28_w",
+      "reward_title": "線路沿いの孤独を感じた者",
+      "tags": [
+          "ズルいよ ズルいね"
+      ],
+      "address": "東京都豊島区池袋2丁目周辺",
+      "description": "『ズルいよ ズルいね』MVの夜の街頭場面でメンバーが佇む池袋駅近くの架道橋・線路沿いスポット。交通量や歩行者に配慮して安全に見学してください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-toshimaen-record",
+      "name": "としまえん（閉園・記録用）",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.745042,
+      "longitude": 139.646099,
+      "event_date": "2019-10-30",
+      "youtube_title": "🎥 関連映像: 『ズルいよ ズルいね』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/zR7-eBv28_w",
+      "youtubeId": "zR7-eBv28_w",
+      "reward_title": "カルーセルエルドラドの記憶",
+      "tags": [
+          "ズルいよ ズルいね"
+      ],
+      "address": "東京都練馬区向山3-25-1",
+      "description": "『ズルいよ ズルいね』MVでメリーゴーラウンド（カルーセルエルドラド）の幻想的なカットが撮影された名遊園地。\n\n⚠️ 注意：2020年8月31日をもって閉園いたしました。現在はメイキング・オブ・ハリー・ポッターが営業中。歴史的記録用聖地として掲載しています。",
+      "visitor_notes": "2020年8月31日に閉園いたしました。記録用聖地として掲載しています。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-udagawacho-shimoda-bldg",
+      "name": "渋谷区宇田川町 下田ビル側面",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.662643,
+      "longitude": 139.695125,
+      "event_date": "2019-10-30",
+      "youtube_title": "🎥 関連映像: 『ズルいよ ズルいね』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/zR7-eBv28_w",
+      "youtubeId": "zR7-eBv28_w",
+      "reward_title": "渋谷路地裏の感傷者",
+      "tags": [
+          "ズルいよ ズルいね"
+      ],
+      "address": "東京都渋谷区宇田川町37-15",
+      "description": "『ズルいよ ズルいね』MVで雨や夜の都会カットで登場する渋谷宇田川町のビル外壁・路地裏スポット。公道から安全に見学してください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-tokyo-pool-labo",
+      "name": "TOKYO POOL LABO（営業終了・記録用）",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.769338,
+      "longitude": 139.828553,
+      "event_date": "2019-10-30",
+      "youtube_title": "🎥 関連映像: 『ズルいよ ズルいね』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/zR7-eBv28_w",
+      "youtubeId": "zR7-eBv28_w",
+      "reward_title": "水中撮影の余韻",
+      "tags": [
+          "ズルいよ ズルいね"
+      ],
+      "address": "東京都足立区綾瀬6-31-1",
+      "description": "『ズルいよ ズルいね』MVの水中ドラマ・ダンスシーンが撮影された特殊撮影プール施設。\n\n⚠️ 注意：現在は営業終了しています。記憶・記録用聖地として掲載しています。",
+      "visitor_notes": "現在は営業終了しています。記録用聖地として掲載しています。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-shibuya2-shinsei-bldg",
+      "name": "渋谷2丁目 新生ビル前",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.660096,
+      "longitude": 139.707796,
+      "event_date": "2019-10-30",
+      "youtube_title": "🎥 関連映像: 『ズルいよ ズルいね』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/zR7-eBv28_w",
+      "youtubeId": "zR7-eBv28_w",
+      "reward_title": "渋谷2丁目の佇まい",
+      "tags": [
+          "ズルいよ ズルいね"
+      ],
+      "address": "東京都渋谷区渋谷2-7-6",
+      "description": "『ズルいよ ズルいね』MVの移動カットや佇むシーンで使われた渋谷2丁目地区のビル前ストリート。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-arakawa-bridge-yanagihara",
+      "name": "京成本線 荒川橋梁下（足立区柳原）",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.7465,
+      "longitude": 139.815,
+      "event_date": "2019-10-30",
+      "youtube_title": "🎥 関連映像: 『ズルいよ ズルいね』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/zR7-eBv28_w",
+      "youtubeId": "zR7-eBv28_w",
+      "reward_title": "鉄橋下の河川敷を歩いた者",
+      "tags": [
+          "ズルいよ ズルいね"
+      ],
+      "address": "東京都足立区柳原2丁目",
+      "description": "『ズルいよ ズルいね』MVで荒川河川敷と頭上を走る電車（京成荒川橋梁）が映り込む切ないロケーション。河川敷公園から安全に見学できます。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-planear-ebisu-studio",
+      "name": "プラネアール恵比寿スタジオ",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.64621,
+      "longitude": 139.704976,
+      "event_date": "2019-10-30",
+      "youtube_title": "🎥 関連映像: 『ズルいよ ズルいね』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/zR7-eBv28_w",
+      "youtubeId": "zR7-eBv28_w",
+      "reward_title": "恵比寿スタジオの光",
+      "tags": [
+          "ズルいよ ズルいね"
+      ],
+      "address": "東京都渋谷区恵比寿南3-2-16",
+      "description": "『ズルいよ ズルいね』MVの室内・ドラマカットが撮影されたスタジオ。\n\n⚠️ 注意：民間撮影スタジオ（私有地）につき関係者以外の無断立ち入り禁止。",
+      "visitor_notes": "民間撮影スタジオ（私有地）につき関係者以外の無断立ち入り禁止。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-sakurajosui-studio",
+      "name": "桜上水スタジオ",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.666377,
+      "longitude": 139.629669,
+      "event_date": "2019-10-30",
+      "youtube_title": "🎥 関連映像: 『ズルいよ ズルいね』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/zR7-eBv28_w",
+      "youtubeId": "zR7-eBv28_w",
+      "reward_title": "桜上水ハウスの住人",
+      "tags": [
+          "ズルいよ ズルいね"
+      ],
+      "address": "東京都世田谷区桜上水5-10-18",
+      "description": "『ズルいよ ズルいね』MVの個別リップシーンや室内ドラマで使われたハウススタジオ。\n\n⚠️ 注意：民間撮影スタジオ（私有地）につき関係者以外の無断立ち入り禁止。",
+      "visitor_notes": "民間撮影スタジオ（私有地）につき関係者以外の無断立ち入り禁止。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-jingu-gaien-east-studio",
+      "name": "神宮外苑EAST STUDIO",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.678269,
+      "longitude": 139.715392,
+      "event_date": "2021-05-12",
+      "youtube_title": "🎥 関連映像: 『お姉さんじゃダメですか？』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/BkyRth1s_lM",
+      "youtubeId": "BkyRth1s_lM",
+      "reward_title": "お姉さんの部屋を覗いた者",
+      "tags": [
+          "お姉さんじゃダメですか？"
+      ],
+      "address": "東京都新宿区霞ヶ丘町周辺",
+      "description": "大谷映美里を中心としたユニット曲『お姉さんじゃダメですか？』MVのオシャレなリビング・インテリアカットが撮影されたスタジオ。\n\n⚠️ 注意：撮影スタジオ（私有地）につき無断立ち入り禁止。",
+      "visitor_notes": "撮影スタジオ（私有地）につき無断立ち入り禁止。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-hanahiroba-farm",
+      "name": "観光農園花ひろば",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 34.722251,
+      "longitude": 136.934388,
+      "event_date": "2021-08-25",
+      "youtube_title": "🎥 関連映像: 『ウィークエンドシトロン』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/p1022tthj7s",
+      "youtubeId": "p1022tthj7s",
+      "reward_title": "ひまわり畑を駆け抜けた者",
+      "tags": [
+          "ウィークエンドシトロン"
+      ],
+      "address": "愛知県知多郡南知多町豊丘高見台48",
+      "description": "『ウィークエンドシトロン』MVの広大なひまわり畑ダンスシーンで使われた知多半島の有名な花園。一面に咲き誇る黄色いひまわりと青空が感動的です。入園料・開園時間に従って見学してください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-heat-studio",
+      "name": "HEAT STUDIO",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.600082,
+      "longitude": 139.745677,
+      "event_date": "2021-08-25",
+      "youtube_title": "🎥 関連映像: 『ウィークエンドシトロン』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/p1022tthj7s",
+      "youtubeId": "p1022tthj7s",
+      "reward_title": "シトロンカラーのスタジオ",
+      "tags": [
+          "ウィークエンドシトロン"
+      ],
+      "address": "東京都品川区勝島1-4-11",
+      "description": "『ウィークエンドシトロン』MVのポップなイエロー背景や室内セット撮影が行われた大型スタジオ。\n\n⚠️ 注意：民間撮影スタジオ（私有地）につき無断立ち入り禁止。",
+      "visitor_notes": "民間撮影スタジオ（私有地）につき無断立ち入り禁止。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-love-kingdom",
+      "name": "LOVE KINGDOM",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.649626,
+      "longitude": 139.789062,
+      "event_date": "2021-12-15",
+      "youtube_title": "🎥 関連映像: 『ズッ友案件』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/t08XqB-E43k",
+      "youtubeId": "t08XqB-E43k",
+      "reward_title": "ズッ友のパーティ会場",
+      "tags": [
+          "ズッ友案件"
+      ],
+      "address": "東京都江東区豊洲6-1-23",
+      "description": "『ズッ友案件』MVのカジュアルなバーベキュー＆パーティー感溢れるアウトドア会場。メンバー同士のわちゃわちゃした笑顔が弾ける名スポットです。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-bookcafe-bousingot",
+      "name": "BOOK CAFE BOUSINGOT",
+      "group": "=LOVE",
+      "category": "飲食店・その他",
+      "latitude": 35.723662,
+      "longitude": 139.7629,
+      "event_date": "2021-12-15",
+      "youtube_title": "🎥 関連映像: 『The 5th』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/3e2s5Z_W0_8",
+      "youtubeId": "3e2s5Z_W0_8",
+      "reward_title": "谷中のブックカフェで温もった者",
+      "tags": [
+          "The 5th"
+      ],
+      "address": "東京都文京区千駄木2-33-2",
+      "description": "『The 5th』MVの温かな本棚・ブックカフェ場面で登場する千駄木の落ち着いたカフェ。\n\n⚠️ 注意：営業中の店舗です。ご利用時は静かにマナーを守ってお楽しみください。",
+      "visitor_notes": "営業中の店舗です。ご利用時は静かにマナーを守ってお楽しみください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-cafe-meursault",
+      "name": "カフェ ムルソー",
+      "group": "=LOVE",
+      "category": "飲食店・その他",
+      "latitude": 35.709013,
+      "longitude": 139.796993,
+      "event_date": "2021-12-15",
+      "youtube_title": "🎥 関連映像: 『The 5th』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/3e2s5Z_W0_8",
+      "youtubeId": "3e2s5Z_W0_8",
+      "reward_title": "隅田川テラスを望む席へ",
+      "tags": [
+          "The 5th"
+      ],
+      "address": "東京都台東区雷門2-1-3",
+      "description": "『The 5th』MVの冬のカフェシーンで登場する浅草・隅田川沿いのロマンチックなカフェレストラン。窓からスカイツリーや川辺が見渡せます。\n\n⚠️ 注意：営業中のカフェです。店舗ご利用のうえ店内撮影はマナーを守ってください。",
+      "visitor_notes": "営業中のカフェです。店舗ご利用のうえ店内撮影はマナーを守ってください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-gooya-shibuya-office",
+      "name": "GOOYA 渋谷オフィス",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.661307,
+      "longitude": 139.703597,
+      "event_date": "2021-12-15",
+      "youtube_title": "🎥 関連映像: 『The 5th』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/3e2s5Z_W0_8",
+      "youtubeId": "3e2s5Z_W0_8",
+      "reward_title": "渋谷のオフィスイルミネーション",
+      "tags": [
+          "The 5th"
+      ],
+      "address": "東京都渋谷区渋谷1-17-4",
+      "description": "『The 5th』MVのオフィスワークや街の煌めき場面で使用された渋谷のオフィスビル。\n\n⚠️ 注意：民間企業のオフィスビルにつき部外者の立ち入りはご遠慮ください。",
+      "visitor_notes": "民間企業のオフィスビルにつき部外者の立ち入りはご遠慮ください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-konan-ryokusui-park",
+      "name": "港南緑水公園",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.628111,
+      "longitude": 139.750615,
+      "event_date": "2021-12-15",
+      "youtube_title": "🎥 関連映像: 『The 5th』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/3e2s5Z_W0_8",
+      "youtubeId": "3e2s5Z_W0_8",
+      "reward_title": "冬の夜公園を歩いた者",
+      "tags": [
+          "The 5th"
+      ],
+      "address": "東京都港区港南4-7-47",
+      "description": "『The 5th』MVの夜の公園・ツリーや光の余韻が綺麗な運河沿いの公園。都会の夜の静けさが引き立ちます。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-tokyo-glamping-wbcafe",
+      "name": "Tokyo Glamping produced by WBcafe",
+      "group": "=LOVE",
+      "category": "飲食店・その他",
+      "latitude": 35.654589,
+      "longitude": 139.79652,
+      "event_date": "2021-12-15",
+      "youtube_title": "🎥 関連映像: 『The 5th』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/3e2s5Z_W0_8",
+      "youtubeId": "3e2s5Z_W0_8",
+      "reward_title": "グランピングでパーティーした者",
+      "tags": [
+          "The 5th"
+      ],
+      "address": "東京都江東区豊洲",
+      "description": "『The 5th』MVの豪華なグランピング・クリスマスパーティーシーンで使われた人気施設。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-mimosa-house-country",
+      "name": "ミモザハウス カントリー",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.613412,
+      "longitude": 139.666816,
+      "event_date": "2022-05-25",
+      "youtube_title": "🎥 関連映像: 『あの子コンプレックス』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/20QxaOu6B4g",
+      "youtubeId": "20QxaOu6B4g",
+      "reward_title": "雨の洋館に佇む者",
+      "tags": [
+          "あの子コンプレックス"
+      ],
+      "address": "東京都世田谷区自由が丘2-2-10",
+      "description": "『あの子コンプレックス』MVのナチュラルアンティークな室内・ドラマカットが撮影された美しい撮影ハウススタジオ。\n\n⚠️ 注意：ハウススタジオ（私有地）につき無断立ち入り禁止。",
+      "visitor_notes": "ハウススタジオ（私有地）につき無断立ち入り禁止。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-jingu-gaien-ichogo-namiki",
+      "name": "神宮外苑いちょう並木",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.673337,
+      "longitude": 139.719542,
+      "event_date": "2022-05-25",
+      "youtube_title": "🎥 関連映像: 『あの子コンプレックス』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/20QxaOu6B4g",
+      "youtubeId": "20QxaOu6B4g",
+      "reward_title": "銀杏並木の下を歩いた者",
+      "tags": [
+          "あの子コンプレックス"
+      ],
+      "address": "東京都港区北青山2丁目周辺",
+      "description": "『あの子コンプレックス』MVの街頭移動・散策カットで登場する青山通りの有名な銀杏並木。新緑や紅葉の季節に素晴らしいロケーションです。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-sundowner-zushi",
+      "name": "SUNDOWNER",
+      "group": "=LOVE",
+      "category": "飲食店・その他",
+      "latitude": 35.292362,
+      "longitude": 139.579213,
+      "event_date": "2022-05-25",
+      "youtube_title": "🎥 関連映像: 『僕のヒロイン』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/Y0rQz2K51sA",
+      "youtubeId": "Y0rQz2K51sA",
+      "reward_title": "逗子のダイナーで微笑む者",
+      "tags": [
+          "僕のヒロイン"
+      ],
+      "address": "神奈川県逗子市逗子6-5-1",
+      "description": "髙松瞳のソロ曲『僕のヒロイン』MVでオムライスやオムレツサンドを楽しむ笑顔が弾ける可愛い飲食店・ダイナー。\n\n⚠️ 注意：飲食店です。ご来店・ご利用のうえ撮影マナーをお守りください。",
+      "visitor_notes": "飲食店です。ご来店・ご利用のうえ撮影マナーをお守りください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-sakuta-beach",
+      "name": "作田海岸",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.547234,
+      "longitude": 140.459342,
+      "event_date": "2022-05-25",
+      "youtube_title": "🎥 関連映像: 『僕のヒロイン』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/Y0rQz2K51sA",
+      "youtubeId": "Y0rQz2K51sA",
+      "reward_title": "九十九里の砂浜にヒロインを見た者",
+      "tags": [
+          "僕のヒロイン"
+      ],
+      "address": "千葉県山武郡九十九里町作田",
+      "description": "『僕のヒロイン』MVのダンス・海辺カットで爽やかな潮風と青空が映し出された九十九里の美しい海岸スポット。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-snug-beach-house",
+      "name": "SNUG BEACH HOUSE",
+      "group": "=LOVE",
+      "category": "飲食店・その他",
+      "latitude": 35.289415,
+      "longitude": 139.575342,
+      "event_date": "2022-05-25",
+      "youtube_title": "🎥 関連映像: 『僕のヒロイン』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/Y0rQz2K51sA",
+      "youtubeId": "Y0rQz2K51sA",
+      "reward_title": "ビーチハウスの風を感じた者",
+      "tags": [
+          "僕のヒロイン"
+      ],
+      "address": "神奈川県逗子市新宿1-5-4",
+      "description": "『僕のヒロイン』MVの海の近くのカフェ・ハウスロケーション。\n\n⚠️ 注意：施設・店舗につき利用規則を守ってご訪問ください。",
+      "visitor_notes": "施設・店舗につき利用規則を守ってご訪問ください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-kujira-kabukicho",
+      "name": "KUJIRA（歌舞伎町）",
+      "group": "=LOVE",
+      "category": "飲食店・その他",
+      "latitude": 35.695214,
+      "longitude": 139.704164,
+      "event_date": "2022-05-25",
+      "youtube_title": "🎥 関連映像: 『知らんけど』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/g2f0W7s3Ves",
+      "youtubeId": "g2f0W7s3Ves",
+      "reward_title": "ネオンの夜に酔いしれた者",
+      "tags": [
+          "知らんけど"
+      ],
+      "address": "東京都新宿区歌舞伎町2-23-1",
+      "description": "野口衣織・佐々木舞香・諸橋沙夏の3人ユニット曲『知らんけど』MVのスタイリッシュ＆デンジャラスなネオン空間が広がるエンターテインメントラウンジ。\n\n⚠️ 注意：夜間営業店舗・ラウンジです。営業条件や利用ルールに従ってください。",
+      "visitor_notes": "夜間営業店舗・ラウンジです。営業条件や利用ルールに従ってください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-kyu-choshi-6th-jh-school",
+      "name": "旧銚子市立第六中学校",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.803008,
+      "longitude": 140.713182,
+      "event_date": "2022-09-28",
+      "youtube_title": "🎥 関連映像: 『好きって、言えなかった』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/V6dnp58i_Q8",
+      "youtubeId": "V6dnp58i_Q8",
+      "reward_title": "放課後の夕日を目撃した者",
+      "tags": [
+          "好きって、言えなかった"
+      ],
+      "address": "千葉県銚子市諸持町141",
+      "description": "『好きって、言えなかった』MVの校舎・教室・体育館・校庭シーンが撮影された旧中学校。切ない青春のストーリーが描かれます。\n\n⚠️ 注意：閉校施設につき敷地内への無断立ち入りは禁止です。公道から見学してください。",
+      "visitor_notes": "閉校施設につき敷地内への無断立ち入りは禁止です。公道から見学してください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-tenkubashi-a2-underpass",
+      "name": "天空橋駅〜A2出口 地下道",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.5489,
+      "longitude": 139.7558,
+      "event_date": "2023-11-29",
+      "youtube_title": "🎥 関連映像: 『ラストノートしか知らない』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "近未来の地下道を歩む者",
+      "tags": [
+          "ラストノートしか知らない"
+      ],
+      "address": "東京都大田区羽田空港1-1-4",
+      "description": "『ラストノートしか知らない』MVのSF感漂う白い幾何学デザインの地下通路カット。羽田イノベーションシティ直結の通路です。歩行者の通行を遮らないよう注意してください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-anniversaire-minatomirai",
+      "name": "アニヴェルセルみなとみらい横浜",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.4542,
+      "longitude": 139.6372,
+      "event_date": "2023-11-29",
+      "youtube_title": "🎥 関連映像: 『ラストノートしか知らない』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "みなとみらいの大聖堂を望む者",
+      "tags": [
+          "ラストノートしか知らない"
+      ],
+      "address": "神奈川県横浜市中区新港2-1-4",
+      "description": "『ラストノートしか知らない』MVで夜景や美しい大聖堂・水辺ロケーションとして映り込むみなとみらいの名結婚式場。\n\n⚠️ 注意：婚礼施設につき敷地内への無断立ち入り・無断撮影は禁止されています。",
+      "visitor_notes": "婚礼施設につき敷地内への無断立ち入り・無断撮影は禁止されています。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-shinko-chuo-hiroba",
+      "name": "新港中央広場・サークルウォーク周辺",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.4535,
+      "longitude": 139.641,
+      "event_date": "2023-11-29",
+      "youtube_title": "🎥 関連映像: 『ラストノートしか知らない』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "サークルウォークの夜景を見つめた者",
+      "tags": [
+          "ラストノートしか知らない"
+      ],
+      "address": "神奈川県横浜市中区新港1-5",
+      "description": "『ラストノートしか知らない』MVの夜のドレス・ダンスシーン周辺、洗練された横浜港の夜景が広がる中央広場と歩道橋。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-tomigaya-footbridge",
+      "name": "富ヶ谷歩道橋",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.6678,
+      "longitude": 139.6885,
+      "event_date": "2023-11-29",
+      "youtube_title": "🎥 関連映像: 『ラストノートしか知らない』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "山手通りを見下ろした者",
+      "tags": [
+          "ラストノートしか知らない"
+      ],
+      "address": "東京都渋谷区富ヶ谷1-38",
+      "description": "『ラストノートしか知らない』MVで車のライトの光流や夜の都市美が印象的な富ヶ谷交差点の歩道橋。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-saigo-bridge",
+      "name": "西郷橋",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.6492,
+      "longitude": 139.6975,
+      "event_date": "2023-11-29",
+      "youtube_title": "🎥 関連映像: 『ラストノートしか知らない』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "代官山の切なきアーチ橋",
+      "tags": [
+          "ラストノートしか知らない"
+      ],
+      "address": "東京都渋谷区鉢山町",
+      "description": "『ラストノートしか知らない』MVで印象的なヨーロッパ風クラシカルな西郷山公園横のアーチ橋。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-jre-aoyama-crystal-bldg",
+      "name": "JRE青山クリスタルビル前",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.6625,
+      "longitude": 139.7118,
+      "event_date": "2023-11-29",
+      "youtube_title": "🎥 関連映像: 『ラストノートしか知らない』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "表参道のガラス壁に映る影",
+      "tags": [
+          "ラストノートしか知らない"
+      ],
+      "address": "東京都港区南青山5-1-25",
+      "description": "『ラストノートしか知らない』MVのモダンなビル壁面・都市の光が反射する表参道エリアのスポット。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-nakagawa-minnano-hiroba",
+      "name": "中川駅前みんなの広場",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.563,
+      "longitude": 139.578,
+      "event_date": "2023-11-29",
+      "youtube_title": "🎥 関連映像: 『ラストノートしか知らない』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "中川の広場で光を求めた者",
+      "tags": [
+          "ラストノートしか知らない"
+      ],
+      "address": "神奈川県横浜市都筑区中川1-1-1",
+      "description": "『ラストノートしか知らない』MVの開放的な広場・コミュニティスペースで撮影されたロケーション。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-nakagawa-footbridge",
+      "name": "中川駅歩道橋",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.5635,
+      "longitude": 139.5785,
+      "event_date": "2023-11-29",
+      "youtube_title": "🎥 関連映像: 『ラストノートしか知らない』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "歩道橋の上で風に揺れた者",
+      "tags": [
+          "ラストノートしか知らない"
+      ],
+      "address": "神奈川県横浜市都筑区中川1",
+      "description": "『ラストノートしか知らない』MVの歩道橋シーンで使われた港北ニュータウンの穏やかな歩道橋。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-bar-gossip",
+      "name": "BAR GOSSIP",
+      "group": "=LOVE",
+      "category": "飲食店・その他",
+      "latitude": 35.663,
+      "longitude": 139.7315,
+      "event_date": "2023-11-29",
+      "youtube_title": "🎥 関連映像: 『ラストノートしか知らない』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "ゴシップバーの暗がりに佇む者",
+      "tags": [
+          "ラストノートしか知らない"
+      ],
+      "address": "東京都港区六本木7-17-14",
+      "description": "『ラストノートしか知らない』MVのラグジュアリーなバーカウンター・大人っぽいドラマカットが撮影された六本木のバー。\n\n⚠️ 注意：バー店舗です。営業中の撮影は必ずスタッフの許可を得てください。",
+      "visitor_notes": "バー店舗です。営業中の撮影は必ずスタッフの許可を得てください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-boogie-cafe",
+      "name": "Boogie Cafe",
+      "group": "=LOVE",
+      "category": "飲食店・その他",
+      "latitude": 35.4248,
+      "longitude": 139.658,
+      "event_date": "2023-11-29",
+      "youtube_title": "🎥 関連映像: 『ラストノートしか知らない』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "本牧アメリカンの風を感じた者",
+      "tags": [
+          "ラストノートしか知らない"
+      ],
+      "address": "神奈川県横浜市中区本牧間門19-28",
+      "description": "『ラストノートしか知らない』MVのアメリカンヴィンテージなダイナー・カフェシーンが撮影された本牧の名店。\n\n⚠️ 注意：カフェ店舗です。ご利用のうえ店内撮影はスタッフにお尋ねください。",
+      "visitor_notes": "カフェ店舗です。ご利用のうえ店内撮影はスタッフにお尋ねください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-ashikaga-scramble-studio",
+      "name": "足利スクランブルシティスタジオ",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 36.335,
+      "longitude": 139.423,
+      "event_date": "2024-03-06",
+      "youtube_title": "🎥 関連映像: 『呪って呪って』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/6iW_iO7W7pA",
+      "youtubeId": "6iW_iO7W7pA",
+      "reward_title": "渋谷スクランブルの幻影を歩く者",
+      "tags": [
+          "呪って呪って"
+      ],
+      "address": "栃木県足利市五十部町284-5",
+      "description": "野口衣織センター曲『呪って呪って』MVのダークかつ圧倒的な渋谷スクランブル交差点再現セットで撮影された映画ロケ用大型オープンセット。\n\n⚠️ 注意：撮影用オープンセット（私有地）につき関係者以外の無断進入厳禁。",
+      "visitor_notes": "撮影用オープンセット（私有地）につき関係者以外の無断進入厳禁。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-myojinyu",
+      "name": "明神湯",
+      "group": "=LOVE",
+      "category": "飲食店・その他",
+      "latitude": 35.5898,
+      "longitude": 139.6958,
+      "event_date": "2024-03-06",
+      "youtube_title": "🎥 関連映像: 『呪って呪って』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/6iW_iO7W7pA",
+      "youtubeId": "6iW_iO7W7pA",
+      "reward_title": "レトロ銭湯の湯気に佇む者",
+      "tags": [
+          "呪って呪って"
+      ],
+      "address": "東京都大田区南雪谷5-14-13",
+      "description": "『呪って呪って』MVのレトロで風情漂う銭湯カットで登場する歴史ある宮造りの伝統銭湯。\n\n⚠️ 注意：営業中の銭湯です。入浴利用のうえ他のお客様の迷惑となる撮影はご遠慮ください。",
+      "visitor_notes": "営業中の銭湯です。入浴利用のうえ他のお客様の迷惑となる撮影はご遠慮ください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-tokyo-budokan",
+      "name": "東京武道館",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.766,
+      "longitude": 139.827,
+      "event_date": "2024-03-06",
+      "youtube_title": "🎥 関連映像: 『呪って呪って』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/6iW_iO7W7pA",
+      "youtubeId": "6iW_iO7W7pA",
+      "reward_title": "菱形幾何学の回廊に立つ者",
+      "tags": [
+          "呪って呪って"
+      ],
+      "address": "東京都足立区綾瀬3-20-1",
+      "description": "『呪って呪って』MVの前衛的・幾何学的な建築外観や大広間で撮影された綾瀬の武道館施設。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-konno-hachimangu",
+      "name": "金王八幡宮",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.6575,
+      "longitude": 139.7058,
+      "event_date": "2024-03-06",
+      "youtube_title": "🎥 関連映像: 『呪って呪って』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/6iW_iO7W7pA",
+      "youtubeId": "6iW_iO7W7pA",
+      "reward_title": "渋谷の鎮守に祈りを捧げた者",
+      "tags": [
+          "呪って呪って"
+      ],
+      "address": "東京都渋谷区渋谷3-5-12",
+      "description": "『呪って呪って』MVの境内・鳥居・厳かな和の雰囲気カットが撮影された渋谷最古の歴史ある神社。参拝マナーを守ってお参りしてください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-yoyogi-noh-stage",
+      "name": "代々木能舞台",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.6815,
+      "longitude": 139.689,
+      "event_date": "2024-03-06",
+      "youtube_title": "🎥 関連映像: 『呪って呪って』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/6iW_iO7W7pA",
+      "youtubeId": "6iW_iO7W7pA",
+      "reward_title": "能舞台の幽玄を垣間見た者",
+      "tags": [
+          "呪って呪って"
+      ],
+      "address": "東京都渋谷区代々木4-36-12",
+      "description": "『呪って呪って』MVの和の伝統・能舞台シーンで登場する歴史的建築。\n\n⚠️ 注意：伝統芸能施設につき無断進入厳禁。",
+      "visitor_notes": "伝統芸能施設につき無断進入厳禁。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-florist-fujimi",
+      "name": "フローリスト富士美",
+      "group": "=LOVE",
+      "category": "聖地店舗",
+      "latitude": 35.7125,
+      "longitude": 139.7042,
+      "event_date": "2024-03-06",
+      "youtube_title": "🎥 関連映像: 『呪って呪って』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/6iW_iO7W7pA",
+      "youtubeId": "6iW_iO7W7pA",
+      "reward_title": "呪いの花束を抱く者",
+      "tags": [
+          "呪って呪って"
+      ],
+      "address": "東京都新宿区高田馬場",
+      "description": "『呪って呪って』MVの花屋・赤い花束シーンで使われた高田馬場の生花店。\n\n⚠️ 注意：営業中の生花店です。お買い物・店内確認のうえマナーを守ってください。",
+      "visitor_notes": "営業中の生花店です。お買い物・店内確認のうえマナーを守ってください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-yotsukaido-culture-center",
+      "name": "四街道市文化センター 大ホール",
+      "group": "=LOVE",
+      "category": "ライブ会場",
+      "latitude": 35.666,
+      "longitude": 140.165,
+      "event_date": "2024-07-31",
+      "youtube_title": "🎥 関連映像: 『誰にもバレずに』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/4yW4m_S_7wY",
+      "youtubeId": "4yW4m_S_7wY",
+      "reward_title": "静寂のホールのオーディエンス",
+      "tags": [
+          "誰にもバレずに"
+      ],
+      "address": "千葉県四街道市大日397",
+      "description": "佐々木舞香センター曲『誰にもバレずに』MVの重厚なホールステージ・照明・客席パフォーマンスシーンが撮影されたホール施設。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-royal-chester-maebashi",
+      "name": "ロイヤルチェスター前橋",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 36.398,
+      "longitude": 139.052,
+      "event_date": "2024-07-31",
+      "youtube_title": "🎥 関連映像: 『Queens』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "宮殿の女王となった者",
+      "tags": [
+          "Queens"
+      ],
+      "address": "群馬県前橋市大友町1-2-11",
+      "description": "『Queens』MVの豪華絢爛なヨーロッパ風宮殿・回廊・シャンデリアのカットが撮影された美しい婚礼・パーティ施設。\n\n⚠️ 注意：婚礼・宴会施設のため無断立ち入りはご遠慮ください。",
+      "visitor_notes": "婚礼・宴会施設のため無断立ち入りはご遠慮ください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-okutama-field-school",
+      "name": "奥多摩フィールド（旧小河内小学校）",
+      "group": "≠ME",
+      "category": "MVロケ地",
+      "latitude": 35.789,
+      "longitude": 139.015,
+      "event_date": "2021-04-07",
+      "youtube_title": "🎥 関連映像: 『自分賛歌』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/g2qM40T0F2Y",
+      "youtubeId": "g2qM40T0F2Y",
+      "reward_title": "奥多摩の空に賛歌を響かせた者",
+      "tags": [
+          "自分賛歌"
+      ],
+      "address": "東京都西多摩郡奥多摩町原",
+      "description": "≠ME『自分賛歌』MVの緑豊かな校庭・グラウンドや木造校舎で撮影された奥多摩のロケ地。\n\n⚠️ 注意：閉校活用施設（私有地）につき許可なく入構しないでください。",
+      "visitor_notes": "閉校活用施設（私有地）につき許可なく入構しないでください。",
+      "primarySourceUrl": "https://ameblo.jp/nix52/entry-12668751619.html",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-meisei-univ-ome",
+      "name": "明星大学 青梅校",
+      "group": "≠ME",
+      "category": "MVロケ地",
+      "latitude": 35.772,
+      "longitude": 139.278,
+      "event_date": "2022-08-03",
+      "youtube_title": "🎥 関連映像: 『す、好きじゃない！』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/G6jWn6_n4jU",
+      "youtubeId": "G6jWn6_n4jU",
+      "reward_title": "学園の告白を目撃した者",
+      "tags": [
+          "す、好きじゃない！"
+      ],
+      "address": "東京都青梅市長淵2-590",
+      "description": "≠ME『す、好きじゃない！』MVのアニメコメディ風学園ドラマや大階段シーンが撮影されたキャンパス施設。\n\n⚠️ 注意：大学施設につき無断入構は禁止されています。",
+      "visitor_notes": "大学施設につき無断入構は禁止されています。",
+      "primarySourceUrl": "https://blog.livedoor.jp/fumichen2/archives/56787153.html",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-kyu-ashikaga-girls-hs",
+      "name": "旧栃木県立足利女子高等学校",
+      "group": "≠ME",
+      "category": "MVロケ地",
+      "latitude": 36.338,
+      "longitude": 139.448,
+      "event_date": "2019-10-30",
+      "youtube_title": "🎥 関連映像: 『君の音だったんだ』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/R28z0qBqO_k",
+      "youtubeId": "R28z0qBqO_k",
+      "reward_title": "君の音を聴いた者",
+      "tags": [
+          "君の音だったんだ"
+      ],
+      "address": "栃木県足利市本城3-2120",
+      "description": "≠ME『君の音だったんだ』MVの吹奏楽部・校舎・音楽室の青春グラフィティが撮影された伝統校舎。\n\n⚠️ 注意：統合閉校した旧校舎施設です。無断進入は厳禁です。",
+      "visitor_notes": "統合閉校した旧校舎施設です。無断進入は厳禁です。",
+      "primarySourceUrl": "https://x.com/sznk_/status/2083469319816823019",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-ashikaga-gas-ground",
+      "name": "足利ガスグラウンド",
+      "group": "≠ME",
+      "category": "MVロケ地",
+      "latitude": 36.345,
+      "longitude": 139.462,
+      "event_date": "2019-10-30",
+      "youtube_title": "🎥 関連映像: 『君の音だったんだ』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/R28z0qBqO_k",
+      "youtubeId": "R28z0qBqO_k",
+      "reward_title": "グラウンドのスタンドで佇む者",
+      "tags": [
+          "君の音だったんだ"
+      ],
+      "address": "栃木県足利市大豆生田町",
+      "description": "≠ME『君の音だったんだ』MVの屋外野球場・スタンドダンスシーンが撮影されたスポーツ施設。",
+      "primarySourceUrl": "https://x.com/sznk_/status/2083469319816823019",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-kamimeguro-hikawa-shrine",
+      "name": "上目黒氷川神社",
+      "group": "≠ME",
+      "category": "MVロケ地",
+      "latitude": 35.6515,
+      "longitude": 139.6895,
+      "event_date": "2023-04-12",
+      "youtube_title": "🎥 関連映像: 『君を見かけた』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/kIm4dcF6XDY",
+      "youtubeId": "kIm4dcF6XDY",
+      "reward_title": "階段の参道で君を見かけた者",
+      "tags": [
+          "君を見かけた"
+      ],
+      "address": "東京都目黒区大橋2-16-21",
+      "description": "≠ME『君を見かけた』MVの長い石段・鳥居・神社参道でメンバーが擦れ違う切ないロケーション。参拝マナーを守ってご訪問ください。",
+      "primarySourceUrl": "https://ameblo.jp/hayabusa1043/entry-12924543312.html",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-royal-crest-house-record",
+      "name": "ロイヤルクレストハウス（閉業情報あり）",
+      "group": "≠ME",
+      "category": "MVロケ地",
+      "latitude": 35.908,
+      "longitude": 139.608,
+      "event_date": "2021-11-10",
+      "youtube_title": "🎥 関連映像: 『モブノデレラ』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "モブノデレラの舞踏会",
+      "tags": [
+          "モブノデレラ"
+      ],
+      "address": "埼玉県さいたま市大宮区三橋",
+      "description": "≠ME『モブノデレラ』MVのシックな洋館・螺旋階段・ドレスシーンで撮影された施設。\n\n⚠️ 注意：閉業した施設です。記録用聖地として掲載しています。無断立ち入り厳禁。",
+      "visitor_notes": "閉業した施設です。記録用聖地として掲載しています。無断立ち入り厳禁。",
+      "primarySourceUrl": "https://x.com/hoshi_hokuto/status/1910794518296944814",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-ariake-kyoiku-junior-college",
+      "name": "有明教育芸術短期大学",
+      "group": "≠ME",
+      "category": "MVロケ地",
+      "latitude": 35.6315,
+      "longitude": 139.7925,
+      "event_date": "2022-11-23",
+      "youtube_title": "🎥 関連映像: 『神様の言うとーり！』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "神様の教卓の前に立つ者",
+      "tags": [
+          "神様の言うとーり！"
+      ],
+      "address": "東京都江東区有明3-9-25",
+      "description": "≠ME『神様の言うとーり！』MVのモダンな講義室や学内ロケーション。\n\n⚠️ 注意：学校施設につき関係者以外の無断入構は禁止されています。",
+      "visitor_notes": "学校施設につき関係者以外の無断入構は禁止されています。",
+      "primarySourceUrl": "https://ameblo.jp/tanmen2021/entry-12891358050.html",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-ariake-shinsui-kaihin-park",
+      "name": "有明親水海浜公園",
+      "group": "≠ME",
+      "category": "MVロケ地",
+      "latitude": 35.634,
+      "longitude": 139.789,
+      "event_date": "2022-11-23",
+      "youtube_title": "🎥 関連映像: 『神様の言うとーり！』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "有明の海風を浴びた者",
+      "tags": [
+          "神様の言うとーり！"
+      ],
+      "address": "東京都江東区有明2-1",
+      "description": "≠ME『神様の言うとーり！』MVの湾岸プロムナード・海辺の公園シーン。",
+      "primarySourceUrl": "https://equallove-2017.blog.jp/archives/38202911.html",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-coffee-seibu-honten",
+      "name": "珈琲西武本店",
+      "group": "≠ME",
+      "category": "飲食店・その他",
+      "latitude": 35.6948,
+      "longitude": 139.7025,
+      "event_date": "2023-04-12",
+      "youtube_title": "🎥 関連映像: 『カフェ樂園』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "ステンドグラスの純喫茶で憩う者",
+      "tags": [
+          "カフェ樂園"
+      ],
+      "address": "東京都新宿区歌舞伎町1-6-12",
+      "description": "≠ME『カフェ樂園』MVの豪華なステンドグラスと赤ソファが広がる昭和レトロな名純喫茶。\n\n⚠️ 注意：通常営業の喫茶店です。店舗利用のうえ他のお客様へのご配慮をお願いします。",
+      "visitor_notes": "通常営業の喫茶店です。店舗利用のうえ他のお客様へのご配慮をお願いします。",
+      "primarySourceUrl": "https://ameblo.jp/tanmen2021/entry-12896953250.html",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-wayo-kokubun-campus",
+      "name": "和洋学園 国分キャンパス（旧校舎）",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.741,
+      "longitude": 139.905,
+      "event_date": "2023-09-06",
+      "youtube_title": "🎥 関連映像: 『きっと、青い』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "青い春の校庭を奔る者",
+      "tags": [
+          "きっと、青い"
+      ],
+      "address": "千葉県市川市国分4-20-1",
+      "description": "≒JOY『きっと、青い』MVの爽やかな校舎・グラウンド・廊下で撮影されたロケーション。\n\n⚠️ 注意：学園施設につき敷地内への無断立ち入りは禁止されています。",
+      "visitor_notes": "学園施設につき敷地内への無断立ち入りは禁止されています。",
+      "primarySourceUrl": "https://ameblo.jp/tanmen2021/entry-12832272052.html",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-anea-cafe-matsumizaka",
+      "name": "ANEA CAFE 松見坂",
+      "group": "≒JOY",
+      "category": "飲食店・その他",
+      "latitude": 35.6558,
+      "longitude": 139.6872,
+      "event_date": "2024-06-12",
+      "youtube_title": "🎥 関連映像: 『だだだ、だって。』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "松見坂のカフェで恋を知る者",
+      "tags": [
+          "だだだ、だって。"
+      ],
+      "address": "東京都目黒区駒場1-16-7",
+      "description": "≒JOY『だだだ、だって。』MVのオシャレなドラマ・カフェシーンで登場する有名カフェ。\n\n⚠️ 注意：通常営業のカフェです。ご来店のうえ撮影マナーをお守りください。",
+      "visitor_notes": "通常営業のカフェです。ご来店のうえ撮影マナーをお守りください。",
+      "primarySourceUrl": "https://prtimes.jp/main/html/rd/p/000004367.000013546.html",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-r-for-d",
+      "name": "R for D",
+      "group": "≒JOY",
+      "category": "聖地店舗",
+      "latitude": 35.6562,
+      "longitude": 139.688,
+      "event_date": "2024-06-12",
+      "youtube_title": "🎥 関連映像: 『だだだ、だって。』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "セレクトショップの目撃者",
+      "tags": [
+          "だだだ、だって。"
+      ],
+      "address": "東京都目黒区神林1-2-5",
+      "description": "≒JOY『だだだ、だって。』MVのファッションセレクトショップロケーション。\n\n⚠️ 注意：営業中のアパレル店舗です。営業ルールを守ってご利用ください。",
+      "visitor_notes": "営業中のアパレル店舗です。営業ルールを守ってご利用ください。",
+      "primarySourceUrl": "https://x.com/hoshi_hokuto/status/1850086374940213414",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-yoyogi-park-keyaki-street",
+      "name": "代々木公園 ケヤキ並木",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.6685,
+      "longitude": 139.6965,
+      "event_date": "2024-06-12",
+      "youtube_title": "🎥 関連映像: 『だだだ、だって。』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "ケヤキ並木を歩んだ者",
+      "tags": [
+          "だだだ、だって。"
+      ],
+      "address": "東京都渋谷区代々木神園町2-1",
+      "description": "≒JOY『だだだ、だって。』MVでメンバーが楽しそうに歩く緑豊かな代々木公園ケヤキ並木通り。",
+      "primarySourceUrl": "https://www.muse.ac.jp/news/yoyogipark-mv/",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-space-odd",
+      "name": "SPACE ODD",
+      "group": "≒JOY",
+      "category": "ライブ会場",
+      "latitude": 35.6518,
+      "longitude": 139.7022,
+      "event_date": "2024-10-16",
+      "youtube_title": "🎥 関連映像: 『The rock is you!』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "ロックの熱量を鳴らした者",
+      "tags": [
+          "The rock is you!"
+      ],
+      "address": "東京都渋谷区猿楽町2-11",
+      "description": "≒JOY『The rock is you!』MVの重厚でロックなライブハウスパフォーマンスシーンが撮影された渋谷・代官山エリアのライブ会場。",
+      "primarySourceUrl": "https://ameblo.jp/tanmen2021/entry-12956597424.html",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-urayasu-hinode-seawall",
+      "name": "浦安海岸 日の出地区護岸",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.638,
+      "longitude": 139.932,
+      "event_date": "2024-10-16",
+      "youtube_title": "🎥 関連映像: 『The rock is you!』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "日の出護岸の空と海",
+      "tags": [
+          "The rock is you!"
+      ],
+      "address": "千葉県浦安市日の出",
+      "description": "≒JOY『The rock is you!』MVのオープンで解放感溢れる浦安海岸の護岸・水平線ロケーション。",
+      "primarySourceUrl": "https://ameblo.jp/tanmen2021/entry-12956597424.html",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-yoyogi-oyama-park",
+      "name": "代々木大山公園",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.674,
+      "longitude": 139.6805,
+      "event_date": "2024-10-16",
+      "youtube_title": "🎥 関連映像: 『The rock is you!』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
+      "youtubeId": "5F_3l4n2k8Y",
+      "reward_title": "大山公園のプレイグラウンド",
+      "tags": [
+          "The rock is you!"
+      ],
+      "address": "東京都渋谷区大山町35-22",
+      "description": "≒JOY『The rock is you!』MVでジャングルジムなどのアトラクションや広場でメンバーが笑顔を咲かせる公園。",
+      "primarySourceUrl": "https://ameblo.jp/tanmen2021/entry-12956597424.html",
       "coordinateAccuracy": "exact"
   }
 ];
