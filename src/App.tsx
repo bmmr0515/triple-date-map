@@ -147,7 +147,7 @@ export const APP_NOTICES: Notice[] = [
     id: 'notice-20260520-fighter-kyunkawa',
     date: '2026/05/20',
     title: '🎉 【新ミッション】「排他的ファイター」「きゅんかわ人生」巡礼ミッションが同時開放！',
-    content: '【新ミッション＆聖地追加のお知らせ】\n≠MEおよび≒JOYの人気楽曲から、計8箇所の新規スポットデータが追加され、2つの巡礼ミッションが同時始動しました！\n\n・ミッションA：『輝け、僕の世界。』 (排彼のファイター)\n　├ 対象スポット：芸能花伝舎、GOBLIN. 海岸HALL店、スカパー東京メディアセンター\n　└ 報酬称号：孤高のファイター\n・ミッションB：『きゅんかわアイドルどこですか!?』 (きゅんかわ人生)\n　├ 対象スポット：パティオス18番街、パティオス12番街、打瀬３丁目公園、エムベイポイント幕張 25階円卓会議室\n　└ 報酬称号：きゅんかわマスター\n\nさらに、『はんぶんこクリスマス』MV撮影地の「Studio vence BAYSIDE」（新木場）も新規登録！\nぜひチェックインして限定称号を獲得しましょう！',
+    content: '【新ミッション＆聖地追加のお知らせ】\n≠MEおよび≒JOYの人気楽曲から、計8箇所の新規スポットデータが追加され、2つの巡礼ミッションが同時始動しました！\n\n・ミッションA：『輝け、僕の世界。』 (排他的ファイター)\n　├ 対象スポット：芸能花伝舎、GOBLIN. 海岸HALL店、スカパー東京メディアセンター\n　└ 報酬称号：孤高のファイター\n・ミッションB：『きゅんかわアイドルどこですか!?』 (きゅんかわ人生)\n　├ 対象スポット：パティオス18番街、パティオス12番街、打瀬３丁目公園、エムベイポイント幕張 25階円卓会議室\n　└ 報酬称号：きゅんかわマスター\n\nさらに、『はんぶんこクリスマス』MV撮影地の「Studio vence BAYSIDE」（新木場）も新規登録！\nぜひチェックインして限定称号を獲得しましょう！',
     type: 'update'
   },
   {
@@ -658,7 +658,7 @@ export default function App() {
           if (listSelectedMission === 'recipe') return tag.includes('笑顔のレシピ巡礼');
           if (listSelectedMission === 'hawaiians') return tag.includes('ハワイアンズ巡礼');
           if (listSelectedMission === 'hokkaido') return tag.includes('超特Q北海道巡礼');
-          if (listSelectedMission === 'fighter') return tag.includes('排他的ファイター巡礼') || tag.includes('排彼のファイター巡礼');
+          if (listSelectedMission === 'fighter') return tag.includes('排他的ファイター巡礼') || tag.includes('排他的ファイター巡礼');
           if (listSelectedMission === 'kyunkawa') return tag.includes('きゅんかわ人生巡礼');
           if (listSelectedMission === 'shokori') return tag.includes('しょこりさんぽ巡礼');
           if (listSelectedMission === 'byun') return tag.includes('大空、ビュンと巡礼');
@@ -967,7 +967,7 @@ export default function App() {
     }
 
     // 9. 孤高のファイター (3箇所)
-    const fighterSpots = spots.filter(s => s.tags && (s.tags.includes("排彼のファイター巡礼") || s.tags.includes("排彼のファイター巡礼") || s.tags.includes("排彼のファイター巡礼") || s.tags.includes("排他的ファイター巡礼")));
+    const fighterSpots = spots.filter(s => s.tags && (s.tags.includes("排他的ファイター巡礼") || s.tags.includes("排他的ファイター巡礼") || s.tags.includes("排他的ファイター巡礼") || s.tags.includes("排他的ファイター巡礼")));
     const fighterTitle = "孤高のファイター";
     if (fighterSpots.length > 0 && isAllChecked(fighterSpots)) {
       if (!currentAcquired.includes(fighterTitle) && !newlyEarnedTitles.includes(fighterTitle)) {
@@ -4222,10 +4222,10 @@ ${window.location.origin + window.location.pathname}
 
                   {/* 🌟 排他的ファイター 巡礼ミッション */}
                   {(() => {
-                    const fighterSpots = spots.filter(s => s.tags && (s.tags.includes("排彼のファイター巡礼") || s.tags.includes("排彼のファイター巡礼") || s.tags.includes("排彼のファイター巡礼") || s.tags.includes("排他的ファイター巡礼")));
+                    const fighterSpots = spots.filter(s => s.tags && (s.tags.includes("排他的ファイター巡礼") || s.tags.includes("排他的ファイター巡礼") || s.tags.includes("排他的ファイター巡礼") || s.tags.includes("排他的ファイター巡礼")));
                     const checkedFighterSpots = checkins.filter(c => {
                       const spot = spots.find(s => s.id === c.spot_id);
-                      return spot && spot.tags && (spot.tags.includes("排彼のファイター巡礼") || spot.tags.includes("排他的ファイター巡礼"));
+                      return spot && spot.tags && (spot.tags.includes("排他的ファイター巡礼") || spot.tags.includes("排他的ファイター巡礼"));
                     });
                     const uniqueCheckedCount = new Set(checkedFighterSpots.map(c => c.spot_id)).size;
                     const totalCount = fighterSpots.length || 3;
@@ -5758,90 +5758,7 @@ ${window.location.origin + window.location.pathname}
                       </div>
                     )}
 
-                    {/* 国立競技場特設イベントボタン群 */}
-                    {selectedSpot.id === 'spot-special-national-stadium' && (
-                      <div className="animate-fade-in-up" style={{ marginTop: '4px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                        <div style={{ display: 'flex', gap: '8px' }}>
-                          <button
-                            onClick={() => setShowStadiumBoardModal(true)}
-                            style={{
-                              flex: 1,
-                              background: 'linear-gradient(135deg, #ffd700 0%, #f59e0b 100%)',
-                              color: '#ffffff',
-                              border: 'none',
-                              borderRadius: '16px',
-                              padding: '12px 14px',
-                              fontSize: '12px',
-                              fontWeight: '900',
-                              cursor: 'pointer',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              gap: '6px',
-                              boxShadow: '0 4px 12px rgba(245, 158, 11, 0.2)',
-                              transition: 'all 0.2s'
-                            }}
-                            className="pop-button"
-                          >
-                            ✍️ メッセージを書く
-                          </button>
-                          <button
-                            onClick={() => {
-                              window.history.pushState({}, '', '/gallery');
-                              window.dispatchEvent(new Event('pushstate'));
-                            }}
-                            style={{
-                              flex: 1,
-                              background: 'linear-gradient(135deg, #db2777 0%, #a855f7 100%)',
-                              color: '#ffffff',
-                              border: 'none',
-                              borderRadius: '16px',
-                              padding: '12px 14px',
-                              fontSize: '12px',
-                              fontWeight: '900',
-                              cursor: 'pointer',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              gap: '6px',
-                              boxShadow: '0 4px 12px rgba(219, 39, 119, 0.2)',
-                              transition: 'all 0.2s'
-                            }}
-                            className="pop-button"
-                          >
-                            🌌 ボードを見る
-                          </button>
-                        </div>
-                        
-                        <a
-                          href="https://encount-support-app.vercel.app"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{
-                            width: '100%',
-                            background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
-                            color: '#ffffff',
-                            border: 'none',
-                            borderRadius: '16px',
-                            padding: '12px 14px',
-                            fontSize: '12px',
-                            fontWeight: '900',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '6px',
-                            boxShadow: '0 4px 12px rgba(59, 130, 246, 0.2)',
-                            transition: 'all 0.2s',
-                            textDecoration: 'none',
-                            textAlign: 'center'
-                          }}
-                          className="pop-button"
-                        >
-                          📢 物販情報、混雑状況を見る
-                        </a>
-                      </div>
-                    )}
+
 
 
 
@@ -8202,90 +8119,7 @@ ${window.location.origin + window.location.pathname}
                 </div>
               )}
 
-              {/* 国立競技場特設イベントボタン群 (モバイル) */}
-              {selectedSpot.id === 'spot-special-national-stadium' && (
-                <div className="animate-fade-in-up" style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    <button
-                      onClick={() => setShowStadiumBoardModal(true)}
-                      style={{
-                        flex: 1,
-                        background: 'linear-gradient(135deg, #ffd700 0%, #f59e0b 100%)',
-                        color: '#ffffff',
-                        border: 'none',
-                        borderRadius: '16px',
-                        padding: '12px 14px',
-                        fontSize: '12px',
-                        fontWeight: '900',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '6px',
-                        boxShadow: '0 4px 12px rgba(245, 158, 11, 0.2)',
-                        transition: 'all 0.2s'
-                      }}
-                      className="pop-button"
-                    >
-                      ✍️ メッセージを書く
-                    </button>
-                    <button
-                      onClick={() => {
-                        window.history.pushState({}, '', '/gallery');
-                        window.dispatchEvent(new Event('pushstate'));
-                      }}
-                      style={{
-                        flex: 1,
-                        background: 'linear-gradient(135deg, #db2777 0%, #a855f7 100%)',
-                        color: '#ffffff',
-                        border: 'none',
-                        borderRadius: '16px',
-                        padding: '12px 14px',
-                        fontSize: '12px',
-                        fontWeight: '900',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '6px',
-                        boxShadow: '0 4px 12px rgba(219, 39, 119, 0.2)',
-                        transition: 'all 0.2s'
-                      }}
-                      className="pop-button"
-                    >
-                      🌌 ギャラリーを見る
-                    </button>
-                  </div>
-                  
-                  <a
-                    href="https://encount-support-app.vercel.app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      width: '100%',
-                      background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
-                      color: '#ffffff',
-                      border: 'none',
-                      borderRadius: '16px',
-                      padding: '12px 14px',
-                      fontSize: '12px',
-                      fontWeight: '900',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '6px',
-                      boxShadow: '0 4px 12px rgba(59, 130, 246, 0.2)',
-                      transition: 'all 0.2s',
-                      textDecoration: 'none',
-                      textAlign: 'center'
-                    }}
-                    className="pop-button"
-                  >
-                    📢 物販情報、混雑状況を見る
-                  </a>
-                </div>
-              )}
+
 
 
 

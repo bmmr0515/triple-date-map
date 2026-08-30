@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: 未登録の聖地32箇所の一括追加、既存スポットの作品更新、レスポンシブYouTube埋め込み共通化対応';
+  const commitMsg = 'feat: 聖地データ一括更新(20件追加・1件HOLD)、作品名統一、メモリアルデイ更新、国立競技場イベント終了処理';
+
 
   execSync(`git commit -m "${commitMsg}"`, { stdio: 'inherit' });
   console.log('✅ Commit complete!');
