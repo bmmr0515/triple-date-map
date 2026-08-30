@@ -32,6 +32,8 @@ import { CourseDetailView } from './components/CourseDetailView';
 import { ContactForm } from './components/ContactForm';
 import { INITIAL_ARTICLES } from './articles';
 import { ArticlesListPage, ArticleDetailView } from './components/ArticleViews';
+import { YouTubeEmbed } from './components/YouTubeEmbed';
+
 
 // 🔔 アプリ内新着お知らせのインターフェースとデータ定義
 export interface Notice {
@@ -43,6 +45,13 @@ export interface Notice {
 }
 
 export const APP_NOTICES: Notice[] = [
+  {
+    id: 'notice-20260830-new-spots-32',
+    date: '2026/08/30',
+    title: '🎉 【新スポット一括追加】＝LOVE、≠ME、≒JOYの最新聖地32箇所を追加しました！',
+    content: '【新規聖地32箇所一括追加のお知らせ】\nイコノイジョイ各グループの最新MVロケ地およびジャケット撮影地など、計32箇所の聖地スポットを一括追加しました！\nあわせて全スポットの詳細ページに公式YouTube MVのレスポンシブ埋め込み動画を搭載しました。\n\n■ 追加された聖地スポット（計32箇所）\n\n【＝LOVE】（5箇所）\n・外苑西通り（『夢の続き』MVロケ地）\n・ファーマシーガーデン浦賀（『夢の続き』MV撮影地）\n・袖ヶ浦海浜公園（『夏名残サマーチューン』MVロケ地）\n・Palms 22（『夏名残サマーチューン』MVロケ地）\n・みなとみらいグランドセントラルタワー（『恋、はじめました。』MVロケ地）\n\n【≠ME】（7箇所）\n・外苑スタジオ PART2 1 STUDIO（『愛くださいませ／ここでファーストキッス』ジャケ写撮影地）\n・木更津木材港倉庫 A棟（『ここでファーストキッス』MVロケ地）\n・ハーバーシティ蘇我 共用第2駐車場（『ここでファーストキッス』MVロケ地）\n・ウェスレアン・ホーリネス教団 淀橋教会（『愛くださいませ』MVロケ地）\n・桐ケ丘中央商店街（『愛くださいませ』MVロケ地）\n・都営桐ヶ丘団地（『愛くださいませ』MVロケ地）\n・Gallery-o13 NOBLESSE（『愛くださいませ』MVロケ地）\n\n【≒JOY】（20箇所）\n・リビエラ逗子マリーナ（『夏はジュエリー』MVロケ地）\n・旧小津安二郎邸（『夏はジュエリー』MV撮影地）\n・材木座海岸（『夏はジュエリー』MVロケ地）\n・東京ドーム ローラースケートアリーナ（『わたし注意報』MVロケ地）\n・REPAIR PLANT（『わたし注意報』MVロケ地）\n・国立天文台 野辺山宇宙電波観測所（『サマーツインテール』MVロケ地）\n・山梨県立韮崎高等学校（『サマーツインテール』MVロケ地）\n・肉の安田屋／今井畜産商事（『サマーツインテール』MVロケ地）\n・JR小海線 矢出踏切（『サマーツインテール』MVロケ地）\n・旧秩父橋（『サマーツインテール』MVロケ地）\n・ウップスセカンド（『サマーツインテール』MVロケ地）\n・カラオケボックスセゾン（『サマーツインテール』MVロケ地）\n・羊山公園 見晴しの丘（『サマーツインテール』MVロケ地）\n・武州中川駅（『サマーツインテール』MVロケ地）\n・秩父今宮神社（『サマーツインテール』MVロケ地）\n・秩父パリー食堂（『サマーツインテール』MVロケ地）\n・高秀牧場（『ノンフィクション』MVロケ地）\n・日本大学理工学部 船橋キャンパス12号館（『ノンフィクション』MVロケ地）\n・日本大学習志野高等学校（『ノンフィクション』MVロケ地）\n・ラッキーバッティングドーム 八千代店（『ノンフィクション』MVロケ地）\n\n■ 既存スポットへの作品追加\n・国立競技場、東京ドームに『夢の続き』を追加\n・上総湊海水浴場（2地点）に『夏名残サマーチューン』を追加\n\n※学校、私有地、住宅地、倉庫、踏切などはマナーを守り、無断立ち入りをせず公道等の見学可能範囲からお楽しみください。',
+    type: 'update'
+  },
   {
     id: 'notice-20260711-hamburger-club',
     date: '2026/07/11',
@@ -5837,7 +5846,15 @@ ${window.location.origin + window.location.pathname}
 
 
                     {/* YouTube動画自動埋め込み */}
-                    {selectedSpot.youtube_url && (() => {
+                    {selectedSpot.youtubeId ? (
+                      <div className="video-section">
+                        <div className="video-label-bold" style={{ fontWeight: 'bold', fontSize: '11px', color: '#1e293b', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                          <Play className="w-3 h-3 text-red-500 fill-red-500" />
+                          {selectedSpot.youtube_title || "🎥 関連映像"}
+                        </div>
+                        <YouTubeEmbed youtubeId={selectedSpot.youtubeId} title={selectedSpot.youtube_title || "YouTube Music Video"} />
+                      </div>
+                    ) : (selectedSpot.youtube_url && (() => {
                       const isIframe = selectedSpot.youtube_url.includes('<iframe');
                       let watchUrl = "";
                       
@@ -5893,7 +5910,8 @@ ${window.location.origin + window.location.pathname}
                           )}
                         </div>
                       );
-                    })()}
+                    })())}
+
 
                     {/* 🗺️ Googleマップで経路案内ボタン */}
                     <a
@@ -8272,7 +8290,15 @@ ${window.location.origin + window.location.pathname}
 
 
               {/* YouTube動画自動埋め込み (完全再現) */}
-              {selectedSpot.youtube_url && (() => {
+              {selectedSpot.youtubeId ? (
+                <div className="video-section" style={{ marginTop: '16px' }}>
+                  <div className="video-label-bold" style={{ fontWeight: 'bold', fontSize: '11px', color: '#1e293b', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <Play className="w-3 h-3 text-red-500 fill-red-500" />
+                    {selectedSpot.youtube_title || "🎥 関連映像"}
+                  </div>
+                  <YouTubeEmbed youtubeId={selectedSpot.youtubeId} title={selectedSpot.youtube_title || "YouTube Music Video"} />
+                </div>
+              ) : (selectedSpot.youtube_url && (() => {
                 const isIframe = selectedSpot.youtube_url.includes('<iframe');
                 let watchUrl = "";
                 
@@ -8329,7 +8355,7 @@ ${window.location.origin + window.location.pathname}
                     )}
                   </div>
                 );
-              })()}
+              })())}
 
               {/* 🗺️ Googleマップで経路案内ボタン */}
               <a

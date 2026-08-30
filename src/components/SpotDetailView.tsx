@@ -4,6 +4,7 @@ import { Breadcrumb } from './ListViews';
 import { AdPlaceholder } from './AdPlaceholder';
 import { MapPin, Train, Calendar, ShieldAlert, Heart, HelpCircle, Compass, ShieldCheck } from 'lucide-react';
 import { TwitterEmbed } from './TwitterEmbed';
+import { YouTubeEmbed } from './YouTubeEmbed';
 
 interface SpotDetailProps {
   spot: Spot;
@@ -24,7 +25,7 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
       const prefIndex = text.indexOf(pref);
       if (prefIndex !== -1) {
         const rest = text.substring(prefIndex + pref.length);
-        const cityMatch = rest.match(/^[^0-9\s]*?[市区町村]/); // 数字やスペースを含まない市区町村名
+        const cityMatch = rest.match(/^[^0-9\s]*?[市区町村]/);
         if (cityMatch) {
           city = cityMatch[0].trim();
         }
@@ -43,20 +44,10 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
     return items;
   };
 
-  // 周辺の関連スポット（同じグループ or 同じ都道府県の他のスポットから3つ）
+  // 関連記事スポット（同じグループ or 同じ楽曲など）
   const getRelatedSpots = () => {
-    const text = spot.address || spot.description;
-    const prefMatch = text.match(/(東京都|北海道|京都府|大阪府|神奈川県|千葉県|埼玉県|愛知県|兵庫県|福岡県|静岡県|茨城県|広島県|宮城県|新潟県|長野県|栃木県|群馬県|熊本県|岡山県|三重県|鹿児島県|山口県|愛媛県|福島県|滋賀県|青森県|山形県|石川県|秋田県|香川県|和歌山県|宮崎県|富山県|佐賀県|鳥取県|徳島県|高知県|島根県|岩手県|山梨県|長崎県|大分県|沖縄県|奈良県|福井県|岐阜県)/);
-    const pref = prefMatch ? prefMatch[0] : '';
-
     return allSpots
-      .filter(s => s.id !== spot.id && s.status === 'published')
-      .filter(s => {
-        const sText = s.address || s.description;
-        const isSamePref = pref && sText.includes(pref);
-        const isSameGroup = s.group === spot.group;
-        return isSamePref || isSameGroup;
-      })
+      .filter(s => s.id !== spot.id && (s.group === spot.group || s.category === spot.category))
       .slice(0, 3);
   };
 
@@ -64,6 +55,13 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
 
   // YouTube埋め込みURLの処理
   const renderYoutube = () => {
+    if (spot.youtubeId) {
+      return (
+        <div style={{ margin: '16px 0' }}>
+          <YouTubeEmbed youtubeId={spot.youtubeId} title={spot.youtube_title || "YouTube Music Video"} />
+        </div>
+      );
+    }
     if (!spot.youtube_url) return null;
     const isIframe = spot.youtube_url.includes('<iframe');
     

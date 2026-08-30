@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'fix: 聖地解説・MV見どころガイドの定型文デフォルト表示を削除（解説がある場合のみ表示）';
+  const commitMsg = 'feat: 未登録の聖地32箇所の一括追加、既存スポットの作品更新、レスポンシブYouTube埋め込み共通化対応';
+
   execSync(`git commit -m "${commitMsg}"`, { stdio: 'inherit' });
   console.log('✅ Commit complete!');
 

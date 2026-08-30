@@ -70,13 +70,14 @@ export interface Spot {
   id: string;
   name: string;
   group: "=LOVE" | "≠ME" | "≒JOY" | "合同";
-  category: "MVロケ地" | "ライブ会場" | "聖地店舗" | "飲食店・その他";
+  category: "MVロケ地" | "ライブ会場" | "聖地店舗" | "飲食店・その他" | "ジャケット・アーティスト写真撮影地";
   description: string;
   latitude: number;
   longitude: number;
   event_date: string;
   youtube_title?: string;
   youtube_url?: string;
+  youtubeId?: string;
   tags?: string[];
   reward_title?: string;
   memorial_date?: string;
@@ -1245,6 +1246,7 @@ const INITIAL_SPOTS: Spot[] = [
   {
     id: "spot-real-tokyodome-recipe",
     name: "東京ドーム",
+    youtubeId: "RjHjQlEjs_E",
     group: "=LOVE",
     category: "ライブ会場",
     latitude: 35.7055,
@@ -2442,6 +2444,7 @@ const INITIAL_SPOTS: Spot[] = [
   {
     id: "spot-real-kazusaminato-1",
     name: "上総湊海水浴場（湊752番2）",
+    youtubeId: "_Bm66BRnM1A",
     group: "=LOVE",
     category: "飲食店・その他",
     latitude: 35.2202,
@@ -2484,6 +2487,7 @@ const INITIAL_SPOTS: Spot[] = [
   {
     id: "spot-real-kazusaminato-2",
     name: "上総湊海水浴場（湊６１０−９）",
+    youtubeId: "_Bm66BRnM1A",
     group: "=LOVE",
     category: "飲食店・その他",
     latitude: 35.2227,
@@ -2615,7 +2619,8 @@ const INITIAL_SPOTS: Spot[] = [
     latitude: 35.6778,
     longitude: 139.7145,
     event_date: "2026-06-20",
-    youtube_title: "🎥 関連映像: 東京ドーム公演サプライズ発表",
+    youtube_title: "🎥 関連映像: 『夢の続き』公式MV",
+    youtubeId: "RjHjQlEjs_E",
     youtube_url: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/2pbH_jW8q7E?si=OiiV7OPhsNOzgPBr&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
     reward_title: "国立寄せ書きの証人",
     tags: ["国立競技場イベント"],
@@ -3719,6 +3724,624 @@ const INITIAL_SPOTS: Spot[] = [
     last_confirmed_date: "2026-08-10",
     coordinateAccuracy: "scene-area",
     accuracyReason: undefined
+  },
+  {
+      "id": "spot-real-gaiennishidori",
+      "name": "外苑西通り",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.67809029483834,
+      "longitude": 139.7129505654808,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『夢の続き』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/RjHjQlEjs_E",
+      "youtubeId": "RjHjQlEjs_E",
+      "reward_title": "夢の続きの歩行者",
+      "tags": [
+          "夢の続きロケ地"
+      ],
+      "address": "東京都",
+      "description": "『夢の続き』MVに登場する外苑西通りのロケ地。国立競技場へと続く風景の中で、グループが歩んできた軌跡と未来を感じられるスポットです。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-pharmacygarden-uraga",
+      "name": "ファーマシーガーデン浦賀",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.230218,
+      "longitude": 139.726414,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『夢の続き』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/RjHjQlEjs_E",
+      "youtubeId": "RjHjQlEjs_E",
+      "reward_title": "浦賀の緑に包まれた者",
+      "tags": [
+          "夢の続きロケ地"
+      ],
+      "address": "〒239-0824 神奈川県横須賀市西浦賀6丁目10",
+      "description": "『夢の続き』MVの撮影地。緑に囲まれたガーデンの風景が、楽曲の温かく希望に満ちた世界観を表現しています。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-sodegaura-kaihin-park",
+      "name": "袖ヶ浦海浜公園",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.455910756883526,
+      "longitude": 139.9512918477635,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『夏名残サマーチューン』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/_Bm66BRnM1A",
+      "youtubeId": "_Bm66BRnM1A",
+      "reward_title": "名残る夏の海辺を見つめた者",
+      "tags": [
+          "夏名残サマーチューンロケ地"
+      ],
+      "address": "〒299-0268 千葉県袖ケ浦市南袖36",
+      "description": "『夏名残サマーチューン』MVのロケ地。海と空が広がる開放的な風景の中で、夏の終わりの切なさが描かれました。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-palms-22",
+      "name": "Palms 22",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.221493,
+      "longitude": 139.870018,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『夏名残サマーチューン』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/_Bm66BRnM1A",
+      "youtubeId": "_Bm66BRnM1A",
+      "reward_title": "ノスタルジックな夏の訪問者",
+      "tags": [
+          "夏名残サマーチューンロケ地"
+      ],
+      "address": "〒299-1607 千葉県富津市湊610-3",
+      "description": "『夏名残サマーチューン』MVに登場する海辺のロケーション。MVのノスタルジックな夏の空気を感じられるスポットです。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-minatomirai-grandcentral",
+      "name": "みなとみらいグランドセントラルタワー",
+      "group": "=LOVE",
+      "category": "MVロケ地",
+      "latitude": 35.458667,
+      "longitude": 139.629333,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『恋、はじめました。』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/ikFaEAlO5N0",
+      "youtubeId": "ikFaEAlO5N0",
+      "reward_title": "恋のはじまりを感じた者",
+      "tags": [
+          "恋、はじめました。ロケ地"
+      ],
+      "address": "〒220-0012 神奈川県横浜市西区みなとみらい4丁目6-2",
+      "description": "21stシングル『恋、はじめました。』MVのメインロケ地。近未来的な建築と開放的な空間の中で、恋が始まる瞬間を描いたダンスシーンが撮影されました。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-gaien-studio-part2",
+      "name": "外苑スタジオ PART2 1 STUDIO",
+      "group": "≠ME",
+      "category": "ジャケット・アーティスト写真撮影地",
+      "latitude": 35.6896,
+      "longitude": 139.7214,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『愛くださいませ』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/oWRCXGvcU9s",
+      "youtubeId": "oWRCXGvcU9s",
+      "reward_title": "ジャケ写の光を浴びた者",
+      "tags": [
+          "愛くださいませロケ地",
+          "ここでファーストキッスロケ地"
+      ],
+      "address": "〒160-0006 東京都新宿区舟町7-47",
+      "description": "≠ME 12th両A面シングル『愛くださいませ／ここでファーストキッス』のアーティスト写真・ジャケット撮影地です。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-kisarazu-mokuzai-port-warehouse",
+      "name": "木更津木材港倉庫 A棟",
+      "group": "≠ME",
+      "category": "MVロケ地",
+      "latitude": 35.367621,
+      "longitude": 139.902552,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『ここでファーストキッス』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/UQ8-9SKYApo",
+      "youtubeId": "UQ8-9SKYApo",
+      "reward_title": "ファーストキッスのステージ目撃者",
+      "tags": [
+          "ここでファーストキッスロケ地"
+      ],
+      "address": "〒292-0837 千葉県木更津市木材港7",
+      "description": "『ここでファーストキッス』MVのロケ地。巨大な倉庫を生かした印象的なパフォーマンスシーンが撮影されました。\n\n⚠️ 注意：施設内への無断立ち入り禁止。敷地内への無断立ち入りは禁止です。公道または見学可能範囲からお楽しみください。",
+      "visitor_notes": "施設内への無断立ち入り禁止。敷地内への無断立ち入りは禁止です。公道または見学可能範囲からお楽しみください。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-harborcity-soga-p2",
+      "name": "ハーバーシティ蘇我 共用第2駐車場",
+      "group": "≠ME",
+      "category": "MVロケ地",
+      "latitude": 35.592186,
+      "longitude": 140.118787,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『ここでファーストキッス』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/UQ8-9SKYApo",
+      "youtubeId": "UQ8-9SKYApo",
+      "reward_title": "屋外ステージの目撃者",
+      "tags": [
+          "ここでファーストキッスロケ地"
+      ],
+      "address": "〒260-0835 千葉県千葉市中央区川崎町51-1",
+      "description": "『ここでファーストキッス』MVの屋外シーンが撮影された駐車場です。利用者や車両の妨げにならないよう注意してください。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-yodobashi-church",
+      "name": "ウェスレアン・ホーリネス教団 淀橋教会",
+      "group": "≠ME",
+      "category": "MVロケ地",
+      "latitude": 35.701194,
+      "longitude": 139.697719,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『愛くださいませ』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/oWRCXGvcU9s",
+      "youtubeId": "oWRCXGvcU9s",
+      "reward_title": "愛を祈る聖堂の訪問者",
+      "tags": [
+          "愛くださいませロケ地"
+      ],
+      "address": "〒169-0073 東京都新宿区百人町1丁目17-8",
+      "description": "『愛くださいませ』MVに登場する教会。荘厳な建築が、楽曲の祈りや愛を感じさせる世界観を作り上げています。\n\n⚠️ 注意：礼拝や施設利用者を最優先し、撮影目的だけでの無断立ち入りは行わないでください。",
+      "visitor_notes": "礼拝や施設利用者を最優先し、撮影目的だけでの無断立ち入りは行わないでください。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-kirigaoka-shopping-street",
+      "name": "桐ケ丘中央商店街",
+      "group": "≠ME",
+      "category": "MVロケ地",
+      "latitude": 35.7765,
+      "longitude": 139.708322,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『愛くださいませ』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/oWRCXGvcU9s",
+      "youtubeId": "oWRCXGvcU9s",
+      "reward_title": "昭和レトロな街並みを歩いた者",
+      "tags": [
+          "愛くださいませロケ地"
+      ],
+      "address": "〒115-0054 東京都北区桐ケ丘1丁目9-2周辺",
+      "description": "『愛くださいませ』MVの街中シーンが撮影された商店街。昔ながらの街並みがMVの物語を印象的に彩っています。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-toei-kirigaoka-danchi",
+      "name": "都営桐ヶ丘団地",
+      "group": "≠ME",
+      "category": "MVロケ地",
+      "latitude": 35.7765,
+      "longitude": 139.708322,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『愛くださいませ』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/oWRCXGvcU9s",
+      "youtubeId": "oWRCXGvcU9s",
+      "reward_title": "団地の風景を見守る者",
+      "tags": [
+          "愛くださいませロケ地"
+      ],
+      "address": "〒115-0054 東京都北区桐ケ丘1丁目9-2周辺",
+      "description": "『愛くださいませ』MVに登場する団地エリア。生活空間のため、住民の方への配慮を最優先にしてください。\n\n⚠️ 注意：住宅敷地への立ち入りや住民が写り込む撮影は禁止。",
+      "visitor_notes": "住宅敷地への立ち入りや住民が写り込む撮影は禁止。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-gallery-o13-noblesse",
+      "name": "Gallery-o13 NOBLESSE",
+      "group": "≠ME",
+      "category": "MVロケ地",
+      "latitude": 35.72894,
+      "longitude": 139.705956,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『愛くださいませ』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/oWRCXGvcU9s",
+      "youtubeId": "oWRCXGvcU9s",
+      "reward_title": "幻想ギャラリーの探訪者",
+      "tags": [
+          "愛くださいませロケ地"
+      ],
+      "address": "〒171-0021 東京都豊島区西池袋3丁目3-9",
+      "description": "『愛くださいませ』MVに登場するギャラリースペース。独特の内装がMVの幻想的な世界観を演出しています。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-riviera-zushi-marina",
+      "name": "リビエラ逗子マリーナ",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.294944,
+      "longitude": 139.553399,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『夏はジュエリー』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/kIm4dcF6XDY",
+      "youtubeId": "kIm4dcF6XDY",
+      "reward_title": "シーサイドリゾートの光を感じた者",
+      "tags": [
+          "夏はジュエリーロケ地"
+      ],
+      "address": "〒249-0008 神奈川県逗子市小坪5丁目23-9",
+      "description": "『夏はジュエリー』MVのロケ地。SEASCAPEとSEASIDE GARDENを中心に、海辺のリゾート感あふれる映像が撮影されました。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-kyu-ozu-yasujiro-tei",
+      "name": "旧小津安二郎邸",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.33257538331114,
+      "longitude": 139.54685637577825,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『夏はジュエリー』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/kIm4dcF6XDY",
+      "youtubeId": "kIm4dcF6XDY",
+      "reward_title": "鎌倉の風情に浸る者",
+      "tags": [
+          "夏はジュエリーロケ地"
+      ],
+      "address": "〒247-0062 神奈川県鎌倉市山ノ内1445",
+      "description": "『夏はジュエリー』MVの撮影地。鎌倉らしい落ち着いた建物と庭が、夏の物語を彩っています。\n\n⚠️ 注意：一般住宅・私有地の場合は外観のみ。無断立ち入り禁止。敷地内への無断立ち入りは禁止です。公道または見学可能範囲からお楽しみください。",
+      "visitor_notes": "一般住宅・私有地の場合は外観のみ。無断立ち入り禁止。敷地内への無断立ち入りは禁止です。公道または見学可能範囲からお楽しみください。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-zaimokuza-beach",
+      "name": "材木座海岸",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.30150842638666,
+      "longitude": 139.55287604676897,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『夏はジュエリー』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/kIm4dcF6XDY",
+      "youtubeId": "kIm4dcF6XDY",
+      "reward_title": "夕暮れの海岸ラインに立つ者",
+      "tags": [
+          "夏はジュエリーロケ地"
+      ],
+      "address": "〒248-0013 神奈川県鎌倉市材木座6丁目",
+      "description": "『夏はジュエリー』MVの海岸シーンが撮影された場所。夕暮れと海が楽曲の青春感を引き立てています。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-tokyodome-rollerskate-arena",
+      "name": "東京ドーム ローラースケートアリーナ",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.703689,
+      "longitude": 139.752946,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『わたし注意報』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/RUEnyZLCtW4",
+      "youtubeId": "RUEnyZLCtW4",
+      "reward_title": "カラフルアリーナのすべり手",
+      "tags": [
+          "わたし注意報ロケ地"
+      ],
+      "address": "〒112-0004 東京都文京区後楽1丁目3-61 黄色いビル4F",
+      "description": "『わたし注意報』MVのメインアリーナ撮影地。ローラースケート場のカラフルな空間でパフォーマンスが撮影されました。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-repair-plant",
+      "name": "REPAIR PLANT",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.738309,
+      "longitude": 139.33868,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『わたし注意報』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/RUEnyZLCtW4",
+      "youtubeId": "RUEnyZLCtW4",
+      "reward_title": "ポップアートスタジオの来訪者",
+      "tags": [
+          "わたし注意報ロケ地"
+      ],
+      "address": "〒197-0011 東京都福生市福生2356-7 ART GALLERY STUDIO P2H",
+      "description": "『わたし注意報』MVに登場するアートギャラリー・撮影スタジオです。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-nobeyama-radio-observatory",
+      "name": "国立天文台 野辺山宇宙電波観測所",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.940812,
+      "longitude": 138.470304,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『サマーツインテール』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/wO2z79qqB1Y",
+      "youtubeId": "wO2z79qqB1Y",
+      "reward_title": "電波望遠鏡と空を見上げた者",
+      "tags": [
+          "サマーツインテールロケ地"
+      ],
+      "address": "〒384-1305 長野県南佐久郡南牧村野辺山462-2",
+      "description": "巨大な電波望遠鏡を背景に撮影された、『サマーツインテール』を象徴するロケ地です。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-nirasaki-high-school",
+      "name": "山梨県立韮崎高等学校",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.715531,
+      "longitude": 138.449697,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『サマーツインテール』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/wO2z79qqB1Y",
+      "youtubeId": "wO2z79qqB1Y",
+      "reward_title": "ツインテールの校舎を見つめた者",
+      "tags": [
+          "サマーツインテールロケ地"
+      ],
+      "address": "〒407-0015 山梨県韮崎市若宮3丁目2-1",
+      "description": "『サマーツインテール』の学校シーンが撮影された場所です。\n\n⚠️ 注意：学校敷地内への無断立ち入り禁止。敷地内への無断立ち入りは禁止です。公道または見学可能範囲からお楽しみください。",
+      "visitor_notes": "学校敷地内への無断立ち入り禁止。敷地内への無断立ち入りは禁止です。公道または見学可能範囲からお楽しみください。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-nikuno-yasudaya",
+      "name": "肉の安田屋／今井畜産商事",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.994188,
+      "longitude": 139.083672,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『サマーツインテール』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/wO2z79qqB1Y",
+      "youtubeId": "wO2z79qqB1Y",
+      "reward_title": "秩父の街角グルメを味わう者",
+      "tags": [
+          "サマーツインテールロケ地"
+      ],
+      "address": "〒368-0041 埼玉県秩父市番場町19-9",
+      "description": "『サマーツインテール』MVに登場する秩父の精肉店です。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-koumi-line-yade-fumikiri",
+      "name": "JR小海線 矢出踏切",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.951616145084216,
+      "longitude": 138.4726666401532,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『サマーツインテール』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/wO2z79qqB1Y",
+      "youtubeId": "wO2z79qqB1Y",
+      "reward_title": "高原列車の踏切に佇む者",
+      "tags": [
+          "サマーツインテールロケ地"
+      ],
+      "address": "〒384-1305 長野県南佐久郡南牧村野辺山301-5周辺",
+      "description": "『サマーツインテール』MVに登場するJR小海線の踏切です。\n\n⚠️ 注意：線路内立入禁止。道路上で長時間滞留しないでください。",
+      "visitor_notes": "線路内立入禁止。道路上で長時間滞留しないでください。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-kyu-chichibubashi",
+      "name": "旧秩父橋",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 36.018688,
+      "longitude": 139.086236,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『サマーツインテール』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/wO2z79qqB1Y",
+      "youtubeId": "wO2z79qqB1Y",
+      "reward_title": "歴史の橋を渡る青春",
+      "tags": [
+          "サマーツインテールロケ地"
+      ],
+      "address": "〒368-0056 埼玉県秩父市阿保町3795周辺",
+      "description": "『サマーツインテール』MVに登場する、秩父を代表する歴史的な橋です。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-oops-second",
+      "name": "ウップスセカンド",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.993119,
+      "longitude": 139.083377,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『サマーツインテール』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/wO2z79qqB1Y",
+      "youtubeId": "wO2z79qqB1Y",
+      "reward_title": "秩父ストリートの探検家",
+      "tags": [
+          "サマーツインテールロケ地"
+      ],
+      "address": "〒368-0042 埼玉県秩父市東町8-6",
+      "description": "『サマーツインテール』MVに登場する秩父の店舗です。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-karaokebox-saison",
+      "name": "カラオケボックスセゾン",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 36.02351,
+      "longitude": 139.115999,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『サマーツインテール』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/wO2z79qqB1Y",
+      "youtubeId": "wO2z79qqB1Y",
+      "reward_title": "サマーツインテールを歌い明かした者",
+      "tags": [
+          "サマーツインテールロケ地"
+      ],
+      "address": "〒368-0004 埼玉県秩父市山田192-4",
+      "description": "『サマーツインテール』MVのカラオケシーンが撮影された店舗です。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-hitsujiyama-park-miharashinookha",
+      "name": "羊山公園 見晴しの丘",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.989975,
+      "longitude": 139.089089,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『サマーツインテール』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/wO2z79qqB1Y",
+      "youtubeId": "wO2z79qqB1Y",
+      "reward_title": "秩父のパノラマを眺めた者",
+      "tags": [
+          "サマーツインテールロケ地"
+      ],
+      "address": "〒368-0023 埼玉県秩父市熊木町41-1",
+      "description": "秩父の街並みを見渡せる、『サマーツインテール』MVのロケ地です。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-bushu-nakagawa-station",
+      "name": "武州中川駅",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.941966,
+      "longitude": 139.036264,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『サマーツインテール』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/wO2z79qqB1Y",
+      "youtubeId": "wO2z79qqB1Y",
+      "reward_title": "ローカル駅の旅人",
+      "tags": [
+          "サマーツインテールロケ地"
+      ],
+      "address": "〒369-1802 埼玉県秩父市荒川上田野",
+      "description": "『サマーツインテール』MVに登場する秩父鉄道の駅です。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-chichibu-imamiya-shrine",
+      "name": "秩父今宮神社",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.995036,
+      "longitude": 139.079992,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『サマーツインテール』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/wO2z79qqB1Y",
+      "youtubeId": "wO2z79qqB1Y",
+      "reward_title": "大樹に見守られ参拝した者",
+      "tags": [
+          "サマーツインテールロケ地"
+      ],
+      "address": "〒368-0043 埼玉県秩父市中町16-10",
+      "description": "『サマーツインテール』MVに登場する秩父の神社です。\n\n⚠️ 注意：参拝者や神社行事を優先してください。",
+      "visitor_notes": "参拝者や神社行事を優先してください。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-chichibu-parry-shokudo",
+      "name": "秩父パリー食堂",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.994211,
+      "longitude": 139.083574,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『サマーツインテール』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/wO2z79qqB1Y",
+      "youtubeId": "wO2z79qqB1Y",
+      "reward_title": "レトロ食堂の温もりに触れた者",
+      "tags": [
+          "サマーツインテールロケ地"
+      ],
+      "address": "〒368-0041 埼玉県秩父市番場町19-8",
+      "description": "『サマーツインテール』MVに登場する、昭和レトロな建物で知られる食堂です。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-takahide-farm",
+      "name": "高秀牧場",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.32006238847045,
+      "longitude": 140.2921952461523,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『ノンフィクション』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/TCYJnm0oIfY",
+      "youtubeId": "TCYJnm0oIfY",
+      "reward_title": "ノンフィクションの風を感じた者",
+      "tags": [
+          "ノンフィクションロケ地"
+      ],
+      "address": "〒298-0106 千葉県いすみ市須賀谷1339-1",
+      "description": "『ノンフィクション』MVの牧場シーンが撮影された場所です。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-nihon-univ-funabashi-building12",
+      "name": "日本大学理工学部 船橋キャンパス12号館",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.725197,
+      "longitude": 140.0578,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『ノンフィクション』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/TCYJnm0oIfY",
+      "youtubeId": "TCYJnm0oIfY",
+      "reward_title": "キャンパスの学び舎を見上げた者",
+      "tags": [
+          "ノンフィクションロケ地"
+      ],
+      "address": "〒274-0063 千葉県船橋市習志野台7丁目24-1",
+      "description": "『ノンフィクション』MVに登場する大学校舎です。\n\n⚠️ 注意：大学敷地への無断立ち入りや授業中の撮影は禁止。敷地内への無断立ち入りは禁止です。公道または見学可能範囲からお楽しみください。",
+      "visitor_notes": "大学敷地への無断立ち入りや授業中の撮影は禁止。敷地内への無断立ち入りは禁止です。公道または見学可能範囲からお楽しみください。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-nihon-univ-narashino-high-school",
+      "name": "日本大学習志野高等学校",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.725091,
+      "longitude": 140.054442,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『ノンフィクション』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/TCYJnm0oIfY",
+      "youtubeId": "TCYJnm0oIfY",
+      "reward_title": "青春の校庭を遠くから見つめた者",
+      "tags": [
+          "ノンフィクションロケ地"
+      ],
+      "address": "〒274-0063 千葉県船橋市習志野台7丁目24-24",
+      "description": "『ノンフィクション』MVの学校シーンが撮影された場所です。\n\n⚠️ 注意：学校敷地内への無断立ち入り禁止。敷地内への無断立ち入りは禁止です。公道または見学可能範囲からお楽しみください。",
+      "visitor_notes": "学校敷地内への無断立ち入り禁止。敷地内への無断立ち入りは禁止です。公道または見学可能範囲からお楽しみください。",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-lucky-batting-dome-yachiyo",
+      "name": "ラッキーバッティングドーム 八千代店",
+      "group": "≒JOY",
+      "category": "MVロケ地",
+      "latitude": 35.723053,
+      "longitude": 140.067334,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『ノンフィクション』公式MV",
+      "youtube_url": "https://www.youtube.com/embed/TCYJnm0oIfY",
+      "youtubeId": "TCYJnm0oIfY",
+      "reward_title": "快音を響かせたバッター",
+      "tags": [
+          "ノンフィクションロケ地"
+      ],
+      "address": "〒276-0046 千葉県八千代市大和田新田1088",
+      "description": "『ノンフィクション』MVのバッティングセンターシーンが撮影された店舗です。",
+      "coordinateAccuracy": "exact"
   }
 ];
 
