@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: 全YouTube動画リアルタイム自動監査ダッシュボード(/admin/youtube-audit)の実装・16列CSV(youtube-audit.csv)出力機能の追加';
+  const commitMsg = 'feat: 実地再生(PLAYING)検知必須の厳格監査ロジック導入・localStorage進捗保存・20本分割監査・youtube-audit-errors.csv追加';
+
 
 
 
