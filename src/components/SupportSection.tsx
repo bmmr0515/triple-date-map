@@ -6,7 +6,8 @@ interface SupportSectionProps {
 }
 
 export const SupportSection: React.FC<SupportSectionProps> = ({ 
-  ofuseUrl = import.meta.env.VITE_OFUSE_URL || 'https://ofuse.me/XXXXXXXX' 
+  ofuseUrl = import.meta.env.VITE_OFUSE_URL || 'https://ofuse.me/o?uid=180694' 
+
 }) => {
   return (
     <div style={{

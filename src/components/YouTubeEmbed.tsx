@@ -59,24 +59,10 @@ export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ youtubeIdOrUrl, yout
   const extractedVideoId = extractYouTubeVideoId(originalYoutubeValue);
   const generatedEmbedUrl = extractedVideoId ? `https://www.youtube.com/embed/${extractedVideoId}` : null;
 
-  // デバッグ用ログ出力（『The 5th』など各スポット選択時に検証可能）
-  if (typeof window !== 'undefined') {
-    console.log({
-      title,
-      originalYoutubeValue,
-      extractedVideoId,
-      generatedEmbedUrl
-    });
-  }
-
   if (!generatedEmbedUrl) return null;
 
-  // テストページで100%再生成功した固定iframe実装と完全同一の要素構造・属性
   return (
-    <div 
-      className="youtube-embed-box" 
-      style={{ position: 'relative', width: '100%', aspectRatio: '16/9', borderRadius: '16px', overflow: 'hidden', backgroundColor: '#000000' }}
-    >
+    <div className="video-wrapper">
       <iframe
         width="100%"
         height="100%"
@@ -91,6 +77,7 @@ export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ youtubeIdOrUrl, yout
     </div>
   );
 };
+
 
 export default YouTubeEmbed;
 

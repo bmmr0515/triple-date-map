@@ -1807,20 +1807,19 @@ body.normal-scroll-page .right-panel {
   display: none !important; /* 詳細・一覧ページ表示中は右側マップ連動パネルを非表示 */
 }
 
-/* YouTube動画レスポンシブ埋め込みコンポーネント用 */
-.youtube-embed {
+.video-wrapper {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  border-radius: 12px;
-  background: #000;
+  border-radius: 16px;
+  background-color: #000000;
 }
 
-.youtube-embed iframe {
+.video-wrapper iframe {
   width: 100%;
   height: 100%;
   border: 0;
-  display: block;
 }
+
 

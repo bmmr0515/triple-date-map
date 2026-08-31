@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'fix: テストページで動作実証された固定iframe構造を通常の全スポット詳細画面へ完全適用・一重変換処理＆デバッグログ追加';
+  const commitMsg = 'fix: 全スポットのYouTube埋め込み実装統一・16:9レスポンシブスタイル適用・OFUSE公式URL統一・テストコード削除';
+
 
 
 

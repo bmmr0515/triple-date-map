@@ -319,14 +319,7 @@ export default function App() {
   const [showSupportModal, setShowSupportModal] = useState<boolean>(false);
 
 
-  // 🎥 検証用固定iframeモーダル状態
-  const [showTestEmbedModal, setShowTestEmbedModal] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      return params.get('test_embed') === 'true' || params.get('test') === '1';
-    }
-    return false;
-  });
+
 
   // 🚀 新着お知らせの既読未読＆自動ポップアップ判定
   useEffect(() => {
@@ -8312,49 +8305,7 @@ ${window.location.origin + window.location.pathname}
         </div>
       )}
 
-      {/* 🧪 固定iframe再生検証用モーダル（URLパラメータ ?test_embed=true で表示） */}
-      {showTestEmbedModal && (
-        <div style={{
-          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
-          backgroundColor: 'rgba(15, 23, 42, 0.85)', backdropFilter: 'blur(8px)', zIndex: 99999,
-          display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px'
-        }}>
-          <div style={{ background: '#ffffff', borderRadius: '24px', width: '100%', maxWidth: '600px', padding: '24px', position: 'relative' }}>
-            <button 
-              onClick={() => setShowTestEmbedModal(false)} 
-              style={{ position: 'absolute', top: '16px', right: '16px', border: 'none', background: '#f1f5f9', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
-            >
-              <X size={16} />
-            </button>
-            <h2 style={{ fontSize: '18px', fontWeight: '900', marginBottom: '12px', color: '#1e293b' }}>
-              🎥 YouTube 埋め込み固定値再生検証
-            </h2>
-            <p style={{ fontSize: '12px', color: '#64748b', marginBottom: '16px', lineHeight: '1.6' }}>
-              サイト全体（CSP / Referrer-Policy / Vercel ヘッダー）の影響を確定するためのテスト用固定 iframe です。
-            </p>
-            <div style={{ width: '100%', aspectRatio: '16/9', borderRadius: '12px', overflow: 'hidden', background: '#000' }}>
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/Q1-yYjZqk7o"
-                title="The 5th"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-                style={{ border: 'none' }}
-              ></iframe>
-            </div>
-            <button 
-              onClick={() => setShowTestEmbedModal(false)} 
-              className="pop-button font-black" 
-              style={{ background: '#e2e8f0', color: '#475569', border: 'none', padding: '10px', borderRadius: '12px', width: '100%', cursor: 'pointer', marginTop: '16px', fontSize: '13px' }}
-            >
-              検証モーダルを閉じる
-            </button>
-          </div>
-        </div>
-      )}
+
 
     </div>
   );
