@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'fix: 「きっと、青い。」動画IDを公式MV full (G11fOq-eKj4)へ修正・全作品の公式動画監査一元反映';
+  const commitMsg = 'fix: HISTORYチャプタースキップ不具合の完全修正・goToChapter一元化＆単一Playerインスタンス・loadVideoById・transitionId非同期同期の導入';
+
 
 
 
