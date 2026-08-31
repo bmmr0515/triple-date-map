@@ -59,9 +59,11 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
     return (
       <div style={{ margin: '16px 0' }}>
         <YouTubeEmbed 
+          key={spot.youtubeId || spot.youtube_url}
           youtubeIdOrUrl={spot.youtube_url || spot.youtubeId} 
           title={spot.youtube_title || `${spot.name} 関連動画`} 
         />
+
       </div>
     );
   };

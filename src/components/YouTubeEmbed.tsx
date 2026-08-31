@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import YouTube, { YouTubeProps } from 'react-youtube';
+import React from 'react';
 
 /**
  * YouTube URL / IDから 11桁の videoId を正確に抽出する関数
@@ -49,158 +48,40 @@ export const extractYouTubeVideoId = (input: string | null | undefined): string 
 // 互換性のためのエイリアス
 export const extractYouTubeId = extractYouTubeVideoId;
 
-export type YouTubeDisplayMode = 'embed' | 'link' | 'none';
-
 interface YouTubeEmbedProps {
   youtubeIdOrUrl?: string;
   youtubeId?: string;
   title?: string;
-  displayMode?: YouTubeDisplayMode;
 }
 
-export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ 
-  youtubeIdOrUrl, 
-  youtubeId, 
-  title = "公式動画",
-  displayMode = 'embed'
-}) => {
-  const [playbackError, setPlaybackError] = useState<boolean>(false);
+export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ youtubeIdOrUrl, youtubeId, title = "公式動画" }) => {
   const originalYoutubeValue = youtubeIdOrUrl || youtubeId;
   const videoId = extractYouTubeVideoId(originalYoutubeValue);
 
-  // スポット変更時（videoId 変更時）に再生エラー状態を安全にリセット
-  useEffect(() => {
-    setPlaybackError(false);
-  }, [videoId]);
+  if (!videoId) return null;
 
-  if (displayMode === 'none' || !videoId) {
-    return null;
-  }
-
-  const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
-  const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
-
-  // 手動 displayMode === 'link' または YouTube Player API の onError イベント検知時
-  if (displayMode === 'link' || playbackError) {
-    return (
-      <div 
-        className="youtube-link-card"
-        style={{
-          position: 'relative',
-          width: '100%',
-          aspectRatio: '16/9',
-          borderRadius: '16px',
-          overflow: 'hidden',
-          backgroundColor: '#0f172a',
-          backgroundImage: `url(${thumbnailUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          boxShadow: '0 8px 24px rgba(0,0,0,0.18)'
-        }}
-      >
-        <div 
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'linear-gradient(to top, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0.3) 100%)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '16px',
-            textAlign: 'center',
-            gap: '8px'
-          }}
-        >
-          <div style={{ fontSize: '14px', fontWeight: 'bold', color: '#ffffff' }}>
-            {title}
-          </div>
-          <div style={{ fontSize: '11px', color: '#cbd5e1', marginBottom: '4px' }}>
-            この動画はサイト内で再生できないため、YouTubeでご覧ください。
-          </div>
-          <a
-            href={watchUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="pop-button font-bold"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              backgroundColor: '#ff0000',
-              color: '#ffffff',
-              padding: '10px 20px',
-              borderRadius: '9999px',
-              fontSize: '12px',
-              textDecoration: 'none',
-              boxShadow: '0 4px 16px rgba(255, 0, 0, 0.4)'
-            }}
-          >
-            YouTubeで公式動画を見る ↗
-          </a>
-        </div>
-      </div>
-    );
-  }
-
-  // react-youtube のプレイヤーオプション
-  const opts: YouTubeProps['opts'] = {
-    width: '100%',
-    height: '100%',
-    playerVars: {
-      rel: 0,
-      playsinline: 1,
-      origin: typeof window !== 'undefined' ? window.location.origin : undefined
-    }
-  };
+  const generatedEmbedUrl = `https://www.youtube.com/embed/${videoId}`;
 
   return (
-    <div className="youtube-embed-container" style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
-      <div className="youtube-embed">
-        <YouTube
-          videoId={videoId}
-          title={`${title} 公式動画`}
-          opts={opts}
-          onError={(event: { data: number }) => {
-            console.warn("YouTube playback error detected via Player API onError:", {
-              videoId,
-              errorCode: event.data
-            });
-            setPlaybackError(true);
-          }}
-
-          style={{ width: '100%', height: '100%' }}
-          iframeClassName="youtube-player-iframe"
-        />
-      </div>
-      <a
-        href={watchUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="youtube-external-link"
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '6px',
-          padding: '8px 16px',
-          borderRadius: '10px',
-          backgroundColor: '#f1f5f9',
-          color: '#0f172a',
-          fontSize: '12px',
-          fontWeight: 'bold',
-          textDecoration: 'none',
-          border: '1px solid #e2e8f0',
-          transition: 'all 0.2s ease'
-        }}
-      >
-        YouTubeで公式動画を見る ↗
-      </a>
+    <div className="youtube-embed" key={videoId}>
+      <iframe
+        key={videoId}
+        width="100%"
+        height="100%"
+        src={generatedEmbedUrl}
+        title={title}
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+        style={{ width: '100%', height: '100%', border: 'none' }}
+      />
     </div>
   );
 };
 
 export default YouTubeEmbed;
+
 
 
 

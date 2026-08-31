@@ -5673,9 +5673,11 @@ ${window.location.origin + window.location.pathname}
                           {selectedSpot.youtube_title || "🎥 関連映像"}
                         </div>
                         <YouTubeEmbed 
+                          key={selectedSpot.id + '_' + (selectedSpot.youtubeId || selectedSpot.youtube_url)}
                           youtubeIdOrUrl={selectedSpot.youtube_url || selectedSpot.youtubeId} 
                           title={selectedSpot.youtube_title || `${selectedSpot.name} 関連動画`} 
                         />
+
                       </div>
                     )}
 

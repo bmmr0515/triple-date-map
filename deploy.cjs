@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: react-youtube導入・YouTube Player APIのonError動的検知によるフォールバックカード切り替え＆videoId変更時の状態リセット実装';
+  const commitMsg = 'fix: 正常動作している「モラトリアム」と完全に同一の純粋iframe構造へ全動画統一・key={videoId}による状態完全リセット適用';
+
 
 
 
