@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'fix: 事前API検証・誤判定表示の完全排除＆純粋な直接iframe埋め込みコンポーネント構造への完全復元';
+  const commitMsg = 'fix: youtube-nocookie.com埋め込み(rel=0)への統一・直下「YouTubeで公式動画を見る ↗」常時表示ボタンの追加';
+
 
 
 

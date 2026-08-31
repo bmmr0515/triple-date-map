@@ -63,20 +63,46 @@ export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ youtubeIdOrUrl, yout
   }
 
   return (
-    <div className="youtube-embed">
-      <iframe
-        src={`https://www.youtube.com/embed/${videoId}`}
-        title={`${title} 公式動画`}
-        loading="lazy"
-        referrerPolicy="strict-origin-when-cross-origin"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-      />
+    <div className="youtube-embed-container" style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
+      <div className="youtube-embed">
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${videoId}?rel=0`}
+          title={`${title} 公式動画`}
+          loading="eager"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      </div>
+      <a
+        href={`https://www.youtube.com/watch?v=${videoId}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="youtube-external-link"
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '6px',
+          padding: '8px 16px',
+          borderRadius: '10px',
+          backgroundColor: '#f1f5f9',
+          color: '#0f172a',
+          fontSize: '12px',
+          fontWeight: 'bold',
+          textDecoration: 'none',
+          border: '1px solid #e2e8f0',
+          transition: 'all 0.2s ease'
+        }}
+      >
+        YouTubeで公式動画を見る ↗
+      </a>
     </div>
   );
 };
 
 export default YouTubeEmbed;
+
 
 
 
