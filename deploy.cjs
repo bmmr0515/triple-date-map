@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'fix: 「きっと、青い」動画IDを正解公式MV(gQ81Vl0OBlQ)へ一括修正・動画マスタOFFICIAL_VIDEOS一元参照構造の確定適用';
+  const commitMsg = 'revert: HISTORY FILM機能の完全撤去';
+
 
 
 

@@ -23,7 +23,7 @@ import { db, Spot, User, CheckIn, GroupType } from './db';
 import { authService, AuthSession } from './auth';
 import { SupportSection } from './components/SupportSection';
 import { AdPlaceholder } from './components/AdPlaceholder';
-import HistoryTheater from './components/HistoryTheater';
+
 
 import { AdminPage } from './components/AdminPage';
 import { coursesDb, Course } from './courses';
@@ -299,7 +299,7 @@ export default function App() {
   const [welcomeNotice, setWelcomeNotice] = useState<Notice | null>(null);
   const [hasUnreadNotices, setHasUnreadNotices] = useState<boolean>(false);
   const [showNoticeHistoryModal, setShowNoticeHistoryModal] = useState<boolean>(false);
-  const [showHistoryTheaterModal, setShowHistoryTheaterModal] = useState<boolean>(false);
+
 
   const [listSearchKeyword, setListSearchKeyword] = useState<string>('');
   const [listSearchGroup, setListSearchGroup] = useState<string>('すべて');
@@ -6798,32 +6798,8 @@ ${window.location.origin + window.location.pathname}
                 flexWrap: 'wrap',
                 marginBottom: '4px'
               }}>
-                {/* 🎬 HISTORY FILM モーダル起動ボタン */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowHistoryTheaterModal(true);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  style={{
-                    background: 'linear-gradient(135deg, #e11d48, #be123c)',
-                    color: '#ffffff',
-                    border: 'none',
-                    fontSize: '10px',
-                    fontWeight: '900',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    padding: '4px 10px',
-                    borderRadius: '10px',
-                    boxShadow: '0 2px 8px rgba(225,29,72,0.3)',
-                    transition: 'all 0.2s'
-                  }}
-                >
-                  🎬 HISTORY FILM
-                </button>
                 {/* 🔔 アプリお知らせ・更新情報リンク */}
+
 
                 <button
                   type="button"
@@ -8339,12 +8315,8 @@ ${window.location.origin + window.location.pathname}
 
 
 
-      {/* 🎬 イコノイジョイ HISTORY FILM THEATER モーダル */}
-      <HistoryTheater 
-        isOpen={showHistoryTheaterModal} 
-        onClose={() => setShowHistoryTheaterModal(false)} 
-      />
     </div>
+
 
   );
 
