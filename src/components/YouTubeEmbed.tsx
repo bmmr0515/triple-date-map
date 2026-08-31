@@ -1,5 +1,4 @@
 import React from 'react';
-import { Play, ExternalLink } from 'lucide-react';
 
 /**
  * YouTube URL / IDから 11桁の videoId を正確に抽出する関数
@@ -55,85 +54,46 @@ interface YouTubeEmbedProps {
   title?: string;
 }
 
-export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ youtubeIdOrUrl, youtubeId }) => {
+export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ youtubeIdOrUrl, youtubeId, title = "公式動画" }) => {
+  const originalYoutubeValue = youtubeIdOrUrl || youtubeId;
+  const extractedVideoId = extractYouTubeVideoId(originalYoutubeValue);
+  const generatedEmbedUrl = extractedVideoId ? `https://www.youtube.com/embed/${extractedVideoId}` : null;
 
-  const videoId = extractYouTubeVideoId(youtubeIdOrUrl || youtubeId);
+  // デバッグ用ログ出力（『The 5th』など各スポット選択時に検証可能）
+  if (typeof window !== 'undefined') {
+    console.log({
+      title,
+      originalYoutubeValue,
+      extractedVideoId,
+      generatedEmbedUrl
+    });
+  }
 
-  if (!videoId) return null;
+  if (!generatedEmbedUrl) return null;
 
-  const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
-  const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
-
+  // テストページで100%再生成功した固定iframe実装と完全同一の要素構造・属性
   return (
-    <a
-      href={watchUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="youtube-thumbnail-card pop-button"
-      style={{
-        position: 'relative',
-        display: 'block',
-        width: '100%',
-        aspectRatio: '16/9',
-        borderRadius: '16px',
-        overflow: 'hidden',
-        backgroundColor: '#0f172a',
-        backgroundImage: `url(${thumbnailUrl})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        boxShadow: '0 8px 24px rgba(0,0,0,0.18)',
-        textDecoration: 'none',
-        transition: 'transform 0.2s ease, box-shadow 0.2s ease'
-      }}
+    <div 
+      className="youtube-embed-box" 
+      style={{ position: 'relative', width: '100%', aspectRatio: '16/9', borderRadius: '16px', overflow: 'hidden', backgroundColor: '#000000' }}
     >
-      <div 
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(to top, rgba(15, 23, 42, 0.88) 0%, rgba(15, 23, 42, 0.4) 50%, rgba(15, 23, 42, 0.2) 100%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '16px',
-          textAlign: 'center',
-          gap: '12px'
-        }}
-      >
-        <div style={{
-          width: '56px',
-          height: '56px',
-          borderRadius: '50%',
-          backgroundColor: '#ff0000',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: '0 6px 18px rgba(255, 0, 0, 0.5)',
-          transition: 'transform 0.2s ease'
-        }}>
-          <Play className="w-8 h-8 text-white fill-white ml-1" />
-        </div>
-        <div style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '6px',
-          backgroundColor: '#ff0000',
-          color: '#ffffff',
-          padding: '10px 22px',
-          borderRadius: '9999px',
-          fontSize: '13px',
-          fontWeight: 'bold',
-          boxShadow: '0 4px 16px rgba(255, 0, 0, 0.4)'
-        }}>
-          YouTubeで公式動画を見る
-          <ExternalLink size={14} />
-        </div>
-      </div>
-    </a>
+      <iframe
+        width="100%"
+        height="100%"
+        src={generatedEmbedUrl}
+        title={title}
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+        style={{ width: '100%', height: '100%', border: 'none' }}
+      />
+    </div>
   );
 };
 
 export default YouTubeEmbed;
+
 
 
 

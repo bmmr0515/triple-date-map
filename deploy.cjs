@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: 埋め込みトラブル根本解決までサムネイル＋YouTube公式動画直通カードへ統一＆検証用固定iframeモーダル(?test_embed=true)の追加';
+  const commitMsg = 'fix: テストページで動作実証された固定iframe構造を通常の全スポット詳細画面へ完全適用・一重変換処理＆デバッグログ追加';
+
 
 
 
