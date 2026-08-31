@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'fix: 全283スポットのyoutubeId11文字完全正規化・モラトリアム基準純粋iframeコンポーネント＆直下公式YouTubeリンク一元適用';
+  const commitMsg = 'fix: 作品単位の動画マスタOFFICIAL_VIDEOS構築・「排他的ファイター」全スポットの公式MV(aXp14lrdymc)一元化適用';
+
 
 
 
