@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: ＝LOVE『齋藤樹愛羅presents 東京プレミアムツアー』および聖地2件の追加';
+  const commitMsg = 'feat: 指定5作品(青春サブリミナル・流星群・狂想カタストロフィ・仲直りシュークリーム・恋人以上好き未満)のMV公開日とYouTube IDを完全補完・最終整合';
+
 
 
 

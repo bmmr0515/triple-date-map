@@ -4178,8 +4178,8 @@ const INITIAL_SPOTS: Spot[] = [
       "longitude": 140.0575,
       "event_date": "2025-01-28",
       "youtube_title": "🎥 関連映像: 『恋人以上、好き未満』",
-      "youtube_url": "",
-      "youtubeId": "",
+      "youtube_url": "https://www.youtube.com/embed/p-jc9qMpMp4",
+      "youtubeId": "p-jc9qMpMp4",
       "reward_title": "青春のテラスを歩んだ者",
       "tags": [
           "恋人以上、好き未満"
@@ -4199,8 +4199,8 @@ const INITIAL_SPOTS: Spot[] = [
       "longitude": 140.11353,
       "event_date": "2025-01-28",
       "youtube_title": "🎥 関連映像: 『恋人以上、好き未満』",
-      "youtube_url": "",
-      "youtubeId": "",
+      "youtube_url": "https://www.youtube.com/embed/p-jc9qMpMp4",
+      "youtubeId": "p-jc9qMpMp4",
       "reward_title": "洋館のガーデンに佇む者",
       "tags": [
           "恋人以上、好き未満"
