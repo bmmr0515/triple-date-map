@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'revert: HISTORY FILM機能の完全撤去';
+  const commitMsg = 'feat: 全YouTube動画リアルタイム自動監査ダッシュボード(/admin/youtube-audit)の実装・16列CSV(youtube-audit.csv)出力機能の追加';
+
 
 
 

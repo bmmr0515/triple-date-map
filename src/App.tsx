@@ -23,6 +23,8 @@ import { db, Spot, User, CheckIn, GroupType } from './db';
 import { authService, AuthSession } from './auth';
 import { SupportSection } from './components/SupportSection';
 import { AdPlaceholder } from './components/AdPlaceholder';
+import AdminYouTubeAudit from './components/AdminYouTubeAudit';
+
 
 
 import { AdminPage } from './components/AdminPage';
@@ -738,6 +740,10 @@ export default function App() {
     if (cleanPath === '/admin/messages') {
       return { path: '/admin/messages', params: {} };
     }
+    if (cleanPath === '/admin/youtube-audit') {
+      return { path: '/admin/youtube-audit', params: {} };
+    }
+
     if (cleanPath === '/') {
       return { path: '/', params: {} };
     }
@@ -1657,7 +1663,10 @@ ${window.location.origin + window.location.pathname}
         <main style={{ flexGrow: 1, padding: '20px 16px 60px' }}>
           {(() => {
             switch (currentRoute.path) {
+              case '/admin/youtube-audit':
+                return <AdminYouTubeAudit />;
               case '/about':
+
                 return <AboutPage onNavigate={navigateTo} />;
               case '/profile':
                 return <ProfilePage onNavigate={navigateTo} />;
