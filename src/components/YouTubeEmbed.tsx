@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Play, ExternalLink } from 'lucide-react';
 
 /**
- * 瀧脇笙古ファンサイト準拠: YouTube URL / IDから 11桁の videoId を正確に抽出する関数
+ * YouTube URL / IDから 11桁の videoId を正確に抽出する関数
  */
 export const extractYouTubeVideoId = (input: string | null | undefined): string | null => {
   if (!input || typeof input !== 'string') return null;
@@ -55,109 +55,86 @@ interface YouTubeEmbedProps {
   title?: string;
 }
 
-export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ youtubeIdOrUrl, youtubeId, title = "公式動画" }) => {
-  const [hasError, setHasError] = useState(false);
+export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ youtubeIdOrUrl, youtubeId }) => {
+
   const videoId = extractYouTubeVideoId(youtubeIdOrUrl || youtubeId);
 
   if (!videoId) return null;
 
   const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
   const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
-  const embedSrc = `https://www.youtube.com/embed/${videoId}`;
 
-  // 再生不能時・エラー検知時は黒いプレーヤーを見せず、サムネイル＋YouTubeで公式動画を見るボタンへ自動フォールバック
-  if (hasError) {
-    return (
+  return (
+    <a
+      href={watchUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="youtube-thumbnail-card pop-button"
+      style={{
+        position: 'relative',
+        display: 'block',
+        width: '100%',
+        aspectRatio: '16/9',
+        borderRadius: '16px',
+        overflow: 'hidden',
+        backgroundColor: '#0f172a',
+        backgroundImage: `url(${thumbnailUrl})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        boxShadow: '0 8px 24px rgba(0,0,0,0.18)',
+        textDecoration: 'none',
+        transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+      }}
+    >
       <div 
-        className="youtube-thumbnail-fallback-card"
         style={{
-          position: 'relative',
-          width: '100%',
-          aspectRatio: '16/9',
-          borderRadius: '16px',
-          overflow: 'hidden',
-          backgroundColor: '#0f172a',
-          backgroundImage: `url(${thumbnailUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          boxShadow: '0 8px 24px rgba(0,0,0,0.18)'
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(to top, rgba(15, 23, 42, 0.88) 0%, rgba(15, 23, 42, 0.4) 50%, rgba(15, 23, 42, 0.2) 100%)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '16px',
+          textAlign: 'center',
+          gap: '12px'
         }}
       >
-        <div 
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'linear-gradient(to top, rgba(15, 23, 42, 0.88) 0%, rgba(15, 23, 42, 0.45) 50%, rgba(15, 23, 42, 0.25) 100%)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '16px',
-            textAlign: 'center',
-            gap: '12px'
-          }}
-        >
-          <div style={{
-            width: '52px',
-            height: '52px',
-            borderRadius: '50%',
-            backgroundColor: '#ff0000',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 4px 14px rgba(255, 0, 0, 0.45)'
-          }}>
-            <Play className="w-7 h-7 text-white fill-white ml-1" />
-          </div>
-          <a
-            href={watchUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              backgroundColor: '#ff0000',
-              color: '#ffffff',
-              padding: '10px 22px',
-              borderRadius: '9999px',
-              fontSize: '13px',
-              fontWeight: 'bold',
-              textDecoration: 'none',
-              boxShadow: '0 4px 16px rgba(255, 0, 0, 0.4)',
-              transition: 'all 0.2s ease'
-            }}
-            className="pop-button"
-          >
-            YouTubeで公式動画を見る
-            <ExternalLink size={14} />
-          </a>
+        <div style={{
+          width: '56px',
+          height: '56px',
+          borderRadius: '50%',
+          backgroundColor: '#ff0000',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 6px 18px rgba(255, 0, 0, 0.5)',
+          transition: 'transform 0.2s ease'
+        }}>
+          <Play className="w-8 h-8 text-white fill-white ml-1" />
+        </div>
+        <div style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '6px',
+          backgroundColor: '#ff0000',
+          color: '#ffffff',
+          padding: '10px 22px',
+          borderRadius: '9999px',
+          fontSize: '13px',
+          fontWeight: 'bold',
+          boxShadow: '0 4px 16px rgba(255, 0, 0, 0.4)'
+        }}>
+          YouTubeで公式動画を見る
+          <ExternalLink size={14} />
         </div>
       </div>
-    );
-  }
-
-  // 瀧脇笙古ファンサイトの構成
-  return (
-    <div 
-      className="youtube-embed-box" 
-      style={{ position: 'relative', width: '100%', aspectRatio: '16/9', borderRadius: '16px', overflow: 'hidden', backgroundColor: '#000000' }}
-    >
-      <iframe
-        src={embedSrc}
-        title={title}
-        loading="lazy"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerPolicy="strict-origin-when-cross-origin"
-        allowFullScreen
-        style={{ width: '100%', height: '100%', border: 'none' }}
-        onError={() => setHasError(true)}
-      />
-    </div>
+    </a>
   );
 };
 
 export default YouTubeEmbed;
+
 
 
 

@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'fix: 瀧脇笙古ファンサイトの正常動作YouTube埋め込み実装へ完全置換・Referrer-Policy厳格化・再生エラー時サムネイルカードフォールバック構造導入';
+  const commitMsg = 'feat: 埋め込みトラブル根本解決までサムネイル＋YouTube公式動画直通カードへ統一＆検証用固定iframeモーダル(?test_embed=true)の追加';
+
 
 
 
