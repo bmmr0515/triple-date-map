@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import YouTube, { YouTubeProps } from 'react-youtube';
 
 /**
  * YouTube URL / IDから 11桁の videoId を正確に抽出する関数
@@ -63,20 +64,24 @@ export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({
   title = "公式動画",
   displayMode = 'embed'
 }) => {
-  if (displayMode === 'none') return null;
-
+  const [playbackError, setPlaybackError] = useState<boolean>(false);
   const originalYoutubeValue = youtubeIdOrUrl || youtubeId;
   const videoId = extractYouTubeVideoId(originalYoutubeValue);
 
-  if (!videoId) {
+  // スポット変更時（videoId 変更時）に再生エラー状態を安全にリセット
+  useEffect(() => {
+    setPlaybackError(false);
+  }, [videoId]);
+
+  if (displayMode === 'none' || !videoId) {
     return null;
   }
 
   const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
+  const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
 
-  // link モード: サムネイル + 作品名 + 公式YouTubeボタン + 説明
-  if (displayMode === 'link') {
-    const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+  // 手動 displayMode === 'link' または YouTube Player API の onError イベント検知時
+  if (displayMode === 'link' || playbackError) {
     return (
       <div 
         className="youtube-link-card"
@@ -111,7 +116,7 @@ export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({
             {title}
           </div>
           <div style={{ fontSize: '11px', color: '#cbd5e1', marginBottom: '4px' }}>
-            この動画はYouTube上でご覧ください
+            この動画はサイト内で再生できないため、YouTubeでご覧ください。
           </div>
           <a
             href={watchUrl}
@@ -138,17 +143,34 @@ export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({
     );
   }
 
-  // embed モード: iframe + 直下に「YouTubeで公式動画を見る ↗」ボタン
+  // react-youtube のプレイヤーオプション
+  const opts: YouTubeProps['opts'] = {
+    width: '100%',
+    height: '100%',
+    playerVars: {
+      rel: 0,
+      playsinline: 1,
+      origin: typeof window !== 'undefined' ? window.location.origin : undefined
+    }
+  };
+
   return (
     <div className="youtube-embed-container" style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
       <div className="youtube-embed">
-        <iframe
-          src={`https://www.youtube-nocookie.com/embed/${videoId}?rel=0`}
+        <YouTube
+          videoId={videoId}
           title={`${title} 公式動画`}
-          loading="eager"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
+          opts={opts}
+          onError={(event: { data: number }) => {
+            console.warn("YouTube playback error detected via Player API onError:", {
+              videoId,
+              errorCode: event.data
+            });
+            setPlaybackError(true);
+          }}
+
+          style={{ width: '100%', height: '100%' }}
+          iframeClassName="youtube-player-iframe"
         />
       </div>
       <a
@@ -179,6 +201,7 @@ export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({
 };
 
 export default YouTubeEmbed;
+
 
 
 

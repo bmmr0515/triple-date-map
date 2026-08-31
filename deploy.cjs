@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: youtubeDisplayMode(embed/link/none)プロパティ追加・linkモードサムネイルカード＆直下YouTube公式ボタンの共通適用';
+  const commitMsg = 'feat: react-youtube導入・YouTube Player APIのonError動的検知によるフォールバックカード切り替え＆videoId変更時の状態リセット実装';
+
 
 
 
