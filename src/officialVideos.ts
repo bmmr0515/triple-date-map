@@ -788,8 +788,8 @@ export const OFFICIAL_VIDEOS: Record<string, OfficialVideo> = {
     workKey: "kitto-aoi",
     title: "きっと、青い",
     group: "≒JOY",
-    youtubeId: "G11fOq-eKj4",
-    officialUrl: "https://www.youtube.com/watch?v=G11fOq-eKj4"
+    youtubeId: "gQ81Vl0OBlQ",
+    officialUrl: "https://www.youtube.com/watch?v=gQ81Vl0OBlQ"
   },
 };
 

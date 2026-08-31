@@ -5868,8 +5868,8 @@ const INITIAL_SPOTS: Spot[] = [
         "longitude": 139.905,
         "event_date": "2023-09-06",
         "youtube_title": "🎥 関連映像: 『きっと、青い』公式MV",
-        "youtube_url": "https://www.youtube.com/embed/G11fOq-eKj4",
-        "youtubeId": "G11fOq-eKj4",
+        "youtube_url": "https://www.youtube.com/embed/gQ81Vl0OBlQ",
+        "youtubeId": "gQ81Vl0OBlQ",
         "reward_title": "青い春の校庭を奔る者",
         "tags": [
             "きっと、青い"
@@ -6058,6 +6058,8 @@ const INITIAL_SPOTS: Spot[] = [
         "workKey": "presents"
     }
 ];
+
+
 
 
 
