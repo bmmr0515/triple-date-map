@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: 地図初期表示を東京都内に変更、国立競技場ライブ特設モーダル完全撤去、YouTube埋め込み・ID解析の統一修正';
+  const commitMsg = 'fix: YouTube埋め込み再生不可(Error 153)解消のためoriginパラメータ付与・Referrer-Policy/CSP強化・サムネイルカードフォールバック実装';
+
 
 
 
