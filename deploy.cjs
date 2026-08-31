@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'fix: YouTube埋め込み再生不可(Error 153)解消のためoriginパラメータ付与・Referrer-Policy/CSP強化・サムネイルカードフォールバック実装';
+  const commitMsg = 'fix: 瀧脇笙古ファンサイトの正常動作YouTube埋め込み実装へ完全置換・Referrer-Policy厳格化・再生エラー時サムネイルカードフォールバック構造導入';
+
 
 
 
