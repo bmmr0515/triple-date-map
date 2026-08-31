@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: 未実装MVロケ地一括追加(64件新規・5箇所統合・1件保留)と安全表示の設定';
+  const commitMsg = 'feat: ＝LOVE『齋藤樹愛羅presents 東京プレミアムツアー』および聖地2件の追加';
+
 
 
 

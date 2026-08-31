@@ -5566,6 +5566,52 @@ const INITIAL_SPOTS: Spot[] = [
       "description": "≒JOY『The rock is you!』MVでジャングルジムなどのアトラクションや広場でメンバーが笑顔を咲かせる公園。",
       "primarySourceUrl": "https://ameblo.jp/tanmen2021/entry-12956597424.html",
       "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-white-atelier-converse-harajuku",
+      "name": "White atelier BY CONVERSE 原宿店",
+      "group": "=LOVE",
+      "category": "聖地店舗",
+      "latitude": 35.665427,
+      "longitude": 139.703832,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『齋藤樹愛羅presents 東京プレミアムツアー』公式YouTube EDIT",
+      "youtube_url": "https://www.youtube.com/embed/6TDaGcSbm9M",
+      "youtubeId": "6TDaGcSbm9M",
+      "reward_title": "世界に一つのスニーカーの贈主",
+      "tags": [
+          "YouTube企画",
+          "特典映像",
+          "齋藤樹愛羅presents 東京プレミアムツアー"
+      ],
+      "address": "〒150-0001 東京都渋谷区神宮前6-16-5 HOLON-Ⅲ",
+      "description": "『齋藤樹愛羅presents 東京プレミアムツアー』で、齋藤樹愛羅が諸橋沙夏と音嶋莉沙へ、世界に一つだけのスニーカーをサプライズプレゼントした場所です。\n\nWhite atelier BY CONVERSEは、「Design Yourself」をテーマに、自分だけのオリジナルスニーカーを作ることができるコンバースのコンセプトショップ。店舗限定のオールホワイトの「オールスター」をベースに、好きなデザインや文字をプリントし、シューレースやチャームなどを組み合わせてカスタマイズできます。\n\n映像では、樹愛羅が諸橋沙夏と音嶋莉沙のためにオリジナルスニーカーを用意。2人へ感謝の気持ちを込めたサプライズプレゼントを贈った、心温まる場面の舞台となりました。\n\n■ 営業時間：11:00～20:00（不定休）\n※営業時間は変更される場合があります。最新情報は公式サイトをご確認ください。\n公式サイト: https://converse.co.jp/pages/shop-white-atelier-by-converse-harajuku",
+      "visitor_notes": "カスタマイズサービスの内容、料金、受付方法、完成までの時間は変更される場合があります。制作を希望する場合は、来店前に公式サイトで最新情報を確認してください。営業中の店舗のため、一般のお客様やスタッフが写り込む撮影、通路を塞ぐ行為、長時間の撮影は控えてください。",
+      "primarySourceUrl": "https://converse.co.jp/pages/shop-white-atelier-by-converse-harajuku",
+      "coordinateAccuracy": "exact"
+  },
+  {
+      "id": "spot-real-shibuya-bowling-est",
+      "name": "シブヤボウリング",
+      "group": "=LOVE",
+      "category": "飲食店・その他",
+      "latitude": 35.660093,
+      "longitude": 139.702812,
+      "event_date": "2026-08-30",
+      "youtube_title": "🎥 関連映像: 『齋藤樹愛羅presents 東京プレミアムツアー』公式YouTube EDIT",
+      "youtube_url": "https://www.youtube.com/embed/6TDaGcSbm9M",
+      "youtubeId": "6TDaGcSbm9M",
+      "reward_title": "イコラブ最強ボウラーの目撃者",
+      "tags": [
+          "YouTube企画",
+          "特典映像",
+          "齋藤樹愛羅presents 東京プレミアムツアー"
+      ],
+      "address": "〒150-0002 東京都渋谷区渋谷1-14-14 EST渋谷東口会館",
+      "description": "『齋藤樹愛羅presents 東京プレミアムツアー』で、「めざせ21！イコラブ最強ボウラー決定戦」が行われたボウリング場です。\n\nメンバーがボウリングの腕を競う企画が行われるなか、齋藤樹愛羅は“リアルドッキリ”を仕掛けようとします。しかし、企画は思惑どおりに進まず、ドッキリは失敗する結果に。樹愛羅らしい予測不能な展開と、メンバー同士のにぎやかなやり取りが楽しめる場面の舞台となりました。\n\nシブヤボウリングは、渋谷駅宮益坂口から徒歩約1分、地下鉄渋谷駅B3出口を出てすぐのEST渋谷東口会館内にあるボウリング場です。複数のフロアに、それぞれ雰囲気の異なるボウリングレーンが設けられています。\n\n■ 営業時間：11:00～翌5:00（最終受付 翌4:30）\n※営業時間は変更される可能性があるため、最新情報は公式サイトで確認してください。\n公式サイト: https://www.shibuyaest.co.jp/bowling/",
+      "visitor_notes": "映像と同じフロアやレーンを利用できるとは限りません。一般のお客様が多い施設のため、人物の無断撮影、プレーをせずにレーン付近へ立ち入る行為、長時間の場所の占有は控えてください。貸切営業や営業時間の変更が行われる可能性があるため、訪問前に公式サイトを確認してください。",
+      "primarySourceUrl": "https://www.shibuyaest.co.jp/bowling/",
+      "coordinateAccuracy": "exact"
   }
 ];
 
