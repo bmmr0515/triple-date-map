@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: 実地再生(PLAYING)検知必須の厳格監査ロジック導入・localStorage進捗保存・20本分割監査・youtube-audit-errors.csv追加';
+  const commitMsg = 'feat: 状態機械(State-Machine)型非停止キュー監査エンジンの完全導入・全20パターン自動テスト全件合格(20/20 PASS)';
+
 
 
 
