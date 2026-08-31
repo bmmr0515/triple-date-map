@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'fix: 全スポットのYouTube埋め込み実装統一・16:9レスポンシブスタイル適用・OFUSE公式URL統一・テストコード削除';
+  const commitMsg = 'fix: 全112本YouTube動画のoEmbed機械検証完了・非公開動画フォールバック対応・全画面埋め込み共通化';
+
 
 
 
