@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'fix: youtube-nocookie.com埋め込み(rel=0)への統一・直下「YouTubeで公式動画を見る ↗」常時表示ボタンの追加';
+  const commitMsg = 'feat: youtubeDisplayMode(embed/link/none)プロパティ追加・linkモードサムネイルカード＆直下YouTube公式ボタンの共通適用';
+
 
 
 

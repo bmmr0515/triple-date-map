@@ -48,13 +48,23 @@ export const extractYouTubeVideoId = (input: string | null | undefined): string 
 // 互換性のためのエイリアス
 export const extractYouTubeId = extractYouTubeVideoId;
 
+export type YouTubeDisplayMode = 'embed' | 'link' | 'none';
+
 interface YouTubeEmbedProps {
   youtubeIdOrUrl?: string;
   youtubeId?: string;
   title?: string;
+  displayMode?: YouTubeDisplayMode;
 }
 
-export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ youtubeIdOrUrl, youtubeId, title = "公式動画" }) => {
+export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ 
+  youtubeIdOrUrl, 
+  youtubeId, 
+  title = "公式動画",
+  displayMode = 'embed'
+}) => {
+  if (displayMode === 'none') return null;
+
   const originalYoutubeValue = youtubeIdOrUrl || youtubeId;
   const videoId = extractYouTubeVideoId(originalYoutubeValue);
 
@@ -62,6 +72,73 @@ export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ youtubeIdOrUrl, yout
     return null;
   }
 
+  const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
+
+  // link モード: サムネイル + 作品名 + 公式YouTubeボタン + 説明
+  if (displayMode === 'link') {
+    const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+    return (
+      <div 
+        className="youtube-link-card"
+        style={{
+          position: 'relative',
+          width: '100%',
+          aspectRatio: '16/9',
+          borderRadius: '16px',
+          overflow: 'hidden',
+          backgroundColor: '#0f172a',
+          backgroundImage: `url(${thumbnailUrl})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.18)'
+        }}
+      >
+        <div 
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(to top, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0.3) 100%)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '16px',
+            textAlign: 'center',
+            gap: '8px'
+          }}
+        >
+          <div style={{ fontSize: '14px', fontWeight: 'bold', color: '#ffffff' }}>
+            {title}
+          </div>
+          <div style={{ fontSize: '11px', color: '#cbd5e1', marginBottom: '4px' }}>
+            この動画はYouTube上でご覧ください
+          </div>
+          <a
+            href={watchUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="pop-button font-bold"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              backgroundColor: '#ff0000',
+              color: '#ffffff',
+              padding: '10px 20px',
+              borderRadius: '9999px',
+              fontSize: '12px',
+              textDecoration: 'none',
+              boxShadow: '0 4px 16px rgba(255, 0, 0, 0.4)'
+            }}
+          >
+            YouTubeで公式動画を見る ↗
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  // embed モード: iframe + 直下に「YouTubeで公式動画を見る ↗」ボタン
   return (
     <div className="youtube-embed-container" style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
       <div className="youtube-embed">
@@ -75,7 +152,7 @@ export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ youtubeIdOrUrl, yout
         />
       </div>
       <a
-        href={`https://www.youtube.com/watch?v=${videoId}`}
+        href={watchUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="youtube-external-link"
@@ -102,6 +179,7 @@ export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ youtubeIdOrUrl, yout
 };
 
 export default YouTubeEmbed;
+
 
 
 
