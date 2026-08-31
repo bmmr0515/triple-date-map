@@ -18,7 +18,7 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'fix: 正常動作している「モラトリアム」と完全に同一の純粋iframe構造へ全動画統一・key={videoId}による状態完全リセット適用';
+  const commitMsg = 'fix: 全283スポットのyoutubeId11文字完全正規化・モラトリアム基準純粋iframeコンポーネント＆直下公式YouTubeリンク一元適用';
 
 
 
