@@ -5868,8 +5868,8 @@ const INITIAL_SPOTS: Spot[] = [
         "longitude": 139.905,
         "event_date": "2023-09-06",
         "youtube_title": "🎥 関連映像: 『きっと、青い』公式MV",
-        "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
-        "youtubeId": "5F_3l4n2k8Y",
+        "youtube_url": "https://www.youtube.com/embed/G11fOq-eKj4",
+        "youtubeId": "G11fOq-eKj4",
         "reward_title": "青い春の校庭を奔る者",
         "tags": [
             "きっと、青い"
@@ -5879,7 +5879,7 @@ const INITIAL_SPOTS: Spot[] = [
         "visitor_notes": "学園施設につき敷地内への無断立ち入りは禁止されています。",
         "primarySourceUrl": "https://ameblo.jp/tanmen2021/entry-12832272052.html",
         "coordinateAccuracy": "exact",
-        "workKey": "work-5F_3l4n2k8Y"
+        "workKey": "kitto-aoi"
     },
     {
         "id": "spot-real-anea-cafe-matsumizaka",
@@ -6058,6 +6058,8 @@ const INITIAL_SPOTS: Spot[] = [
         "workKey": "presents"
     }
 ];
+
+
 
 
 

@@ -784,6 +784,13 @@ export const OFFICIAL_VIDEOS: Record<string, OfficialVideo> = {
     youtubeId: "6TDaGcSbm9M",
     officialUrl: "https://www.youtube.com/watch?v=6TDaGcSbm9M"
   },
+  "kitto-aoi": {
+    workKey: "kitto-aoi",
+    title: "きっと、青い",
+    group: "≒JOY",
+    youtubeId: "G11fOq-eKj4",
+    officialUrl: "https://www.youtube.com/watch?v=G11fOq-eKj4"
+  },
 };
 
 export const getOfficialVideoBySpot = (spot: { workKey?: string; youtubeId?: string }): OfficialVideo | null => {
