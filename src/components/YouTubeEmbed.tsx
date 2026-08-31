@@ -58,20 +58,18 @@ export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ youtubeIdOrUrl, yout
   const originalYoutubeValue = youtubeIdOrUrl || youtubeId;
   const videoId = extractYouTubeVideoId(originalYoutubeValue);
 
-  if (!videoId) return null;
-
-  const generatedEmbedUrl = `https://www.youtube.com/embed/${videoId}`;
+  if (!videoId) {
+    return null;
+  }
 
   return (
-    <div className="video-wrapper">
+    <div className="youtube-embed">
       <iframe
-        width="100%"
-        height="100%"
-        src={generatedEmbedUrl}
-        title={title}
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        src={`https://www.youtube.com/embed/${videoId}`}
+        title={`${title} 公式動画`}
+        loading="lazy"
         referrerPolicy="strict-origin-when-cross-origin"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowFullScreen
       />
     </div>
@@ -79,6 +77,7 @@ export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ youtubeIdOrUrl, yout
 };
 
 export default YouTubeEmbed;
+
 
 
 
