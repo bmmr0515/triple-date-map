@@ -55,44 +55,17 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
 
   // YouTube埋め込みURLの処理
   const renderYoutube = () => {
-    if (spot.youtubeId) {
-      return (
-        <div style={{ margin: '16px 0' }}>
-          <YouTubeEmbed youtubeId={spot.youtubeId} title={spot.youtube_title || "YouTube Music Video"} />
-        </div>
-      );
-    }
-    if (!spot.youtube_url) return null;
-    const isIframe = spot.youtube_url.includes('<iframe');
-    
-    if (isIframe) {
-      return (
-        <div 
-          className="video-box" 
-          style={{ width: '100%', aspectRatio: '16/9', borderRadius: '16px', overflow: 'hidden', margin: '16px 0' }}
-          dangerouslySetInnerHTML={{ 
-            __html: spot.youtube_url
-              .replace(/width="\d+"/, 'width="100%"')
-              .replace(/height="\d+"/, 'height="100%"')
-          }} 
-        />
-      );
-    }
-
+    if (!spot.youtubeId && !spot.youtube_url) return null;
     return (
-      <div className="video-box" style={{ width: '100%', aspectRatio: '16/9', borderRadius: '16px', overflow: 'hidden', margin: '16px 0' }}>
-        <iframe
-          width="100%"
-          height="100%"
-          src={`${spot.youtube_url}?modestbranding=1&rel=0`}
-          title={spot.youtube_title || "YouTube video player"}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
+      <div style={{ margin: '16px 0' }}>
+        <YouTubeEmbed 
+          youtubeIdOrUrl={spot.youtube_url || spot.youtubeId} 
+          title={spot.youtube_title || `${spot.name} 関連動画`} 
         />
       </div>
     );
   };
+
 
   // メイン説明文の警告を除去したクリーンアップ
   const getCleanDescription = () => {

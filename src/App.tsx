@@ -190,25 +190,7 @@ export const APP_NOTICES: Notice[] = [
 // CDNで読み込んだグローバルな Leaflet (L) をTypeScriptに認識させる
 declare const L: any;
 
-// 🏟️ 国立競技場ライブ開催日設定 (YYYY-MM-DD)
-export const LIVE_RELEASE_DATE = "2026-06-04";
 
-// 📅 エンドロール特設ページが公開中か、またはティザー（前日以前）であるかを判定するヘルパー
-export const getStadiumEventStatus = (): { isAvailable: boolean; isTeaser: boolean; timeDiffMs: number } => {
-  const liveDate = new Date(LIVE_RELEASE_DATE + "T00:00:00+09:00");
-  const teaserStartDate = new Date(liveDate.getTime() - 24 * 60 * 60 * 1000); // 1日前（前日の0:00）
-  const eventEndDate = new Date(liveDate.getTime() + 30 * 24 * 60 * 60 * 1000); // 30日後
-  
-  const now = new Date();
-  const timeDiffMs = teaserStartDate.getTime() - now.getTime();
-  
-  // teaserStartDate 以降かつ eventEndDate 以前なら公開中
-  const isAvailable = now >= teaserStartDate && now <= eventEndDate;
-  // teaserStartDate より前ならティザー表示
-  const isTeaser = now < teaserStartDate;
-  
-  return { isAvailable, isTeaser, timeDiffMs };
-};
 
 // YouTube動画ID抽出関数（以前使われていた関数、現在はiframe対応のため削除）
 
@@ -283,35 +265,8 @@ export default function App() {
   const [escapeMissionExpanded, setEscapeMissionExpanded] = useState<boolean>(true);
   const [moratoriumMissionExpanded, setMoratoriumMissionExpanded] = useState<boolean>(true);
 
-  // 🏟️ 国立競技場デジタル寄せ書きボード状態
-  const [showStadiumBoardModal, setShowStadiumBoardModal] = useState<boolean>(false);
-  const [stadiumMessages, setStadiumMessages] = useState<any[]>([]);
-  const [_isLoadingMessages, setIsLoadingMessages] = useState<boolean>(false);
-  const [deviceId, setDeviceId] = useState<string>('');
-  const [showStadiumWelcomeModal, setShowStadiumWelcomeModal] = useState<boolean>(false);
-  const [showStadiumPinPopup, setShowStadiumPinPopup] = useState<boolean>(false);
-  // stadiumCountdown, autoScrollActive, isEndrollHovered は廃止（エンドロールページ廃止のため）
 
-  // カウントダウンは廃止（エンドロールページ廃止のため）;
 
-  useEffect(() => {
-    let id = localStorage.getItem('tdm_device_id');
-    if (!id) {
-      id = 'device-' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-      localStorage.setItem('tdm_device_id', id);
-    }
-    setDeviceId(id);
-  }, []);
-
-  useEffect(() => {
-    const shown = localStorage.getItem('tdm_stadium_welcome_shown');
-    if (!shown) {
-      const timer = setTimeout(() => {
-        setShowStadiumWelcomeModal(true);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  }, []);
 
   // 📱 スマホレスポンシブ判定用ステートとリサイズ監視
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
@@ -421,15 +376,7 @@ export default function App() {
     return areaMatch ? areaMatch[0] : '';
   };
 
-  // 🎨 背景色からコントラストの高いテキスト色(黒または白)を自動判定するヘルパー
-  const getContrastTextColor = (hexColor: string): string => {
-    const hex = hexColor.replace('#', '');
-    const r = parseInt(hex.substring(0, 2), 16);
-    const g = parseInt(hex.substring(2, 4), 16);
-    const b = parseInt(hex.substring(4, 6), 16);
-    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-    return luminance > 0.65 ? '#1e293b' : '#ffffff';
-  };
+
 
   // 🎵 聖地データから正確な曲名または動画タイトルを抽出するヘルパー
   const getSpotSongOrVideoTitle = (spot: Spot): string => {
@@ -854,8 +801,7 @@ export default function App() {
     pageshowListener: null
   });
 
-  // 非同期通信のキャンセル用
-  const stadiumAbortControllerRef = useRef<AbortController | null>(null);
+
 
   // データ初期ロード ＆ 認証変更購読
   useEffect(() => {
@@ -1116,54 +1062,9 @@ export default function App() {
     }
   }, [checkins, spots, currentUser, authSession]);
 
-  // 🏟️ 国立競技場デジタル寄せ書きボード機能のロード・投稿ロジック
-  const loadStadiumMessages = async () => {
-    // 既存の通信があればキャンセル
-    if (stadiumAbortControllerRef.current) {
-      stadiumAbortControllerRef.current.abort();
-    }
-    const controller = new AbortController();
-    stadiumAbortControllerRef.current = controller;
 
-    setIsLoadingMessages(true);
-    try {
-      const msgs = await db.getStadiumMessages();
-      if (!controller.signal.aborted) {
-        setStadiumMessages(msgs);
-      }
-    } catch (e: any) {
-      if (e.name !== 'AbortError') {
-        console.error(e);
-      }
-    } finally {
-      if (!controller.signal.aborted) {
-        setIsLoadingMessages(false);
-      }
-    }
-  };
 
-  useEffect(() => {
-    if (showStadiumBoardModal) {
-      loadStadiumMessages();
-    }
-    return () => {
-      if (stadiumAbortControllerRef.current) {
-        stadiumAbortControllerRef.current.abort();
-        stadiumAbortControllerRef.current = null;
-      }
-    };
-  }, [showStadiumBoardModal]);
 
-  // 🏟️ 国立競技場の特別ピンにマップカメラをフォーカスする
-  const focusOnNationalStadium = () => {
-    const stadiumSpot = spots.find(s => s.id === 'spot-special-national-stadium');
-    if (stadiumSpot && mapRef.current) {
-      setSelectedSpot(stadiumSpot);
-      setRightPanelTab('detail');
-      setShowStadiumPinPopup(true);
-      mapRef.current.setView([stadiumSpot.latitude, stadiumSpot.longitude], 16, { animate: true });
-    }
-  };
 
   // 1. 地図の初期化処理
   const initializeMapPage = () => {
@@ -1180,11 +1081,12 @@ export default function App() {
       (container as any)._leaflet_id = null;
     }
 
-    // 2. 地図の初期設定: 日本中心（35.6895, 139.6917）、ズームレベル6
+    // 2. 地図の初期設定: 東京都内中心（35.6812, 139.7671）、ズームレベル11
     const map = L.map('map-canvas', {
       zoomControl: false,
       attributionControl: false
-    }).setView([35.6895, 139.6917], 6);
+    }).setView([35.6812, 139.7671], 11);
+
 
     // 🗺️ 完全日本語表記対応の Google Maps 日本語タイルをロード (language=ja, region=JP)
     L.tileLayer('https://mt1.google.com/vt/lyrs=m&hl=ja&gl=jp&x={x}&y={y}&z={z}', {
@@ -1444,9 +1346,7 @@ export default function App() {
         .on('click', () => {
           setSelectedSpot(spot);
           setRightPanelTab('detail'); // ピンをタップしたら自動的に「詳細」タブを表示
-          if (spot.id === 'spot-special-national-stadium') {
-            setShowStadiumPinPopup(true);
-          }
+
           
           // 既にズームイン（16以上）している状態でピンを押しても、ズームレベルを下げず（動かさず）に滑らかに中央移動のみ行います
           const currentZoom = map.getZoom();
@@ -5763,71 +5663,19 @@ ${window.location.origin + window.location.pathname}
 
 
                     {/* YouTube動画自動埋め込み */}
-                    {selectedSpot.youtubeId ? (
+                    {(selectedSpot.youtubeId || selectedSpot.youtube_url) && (
                       <div className="video-section">
                         <div className="video-label-bold" style={{ fontWeight: 'bold', fontSize: '11px', color: '#1e293b', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '4px' }}>
                           <Play className="w-3 h-3 text-red-500 fill-red-500" />
                           {selectedSpot.youtube_title || "🎥 関連映像"}
                         </div>
-                        <YouTubeEmbed youtubeId={selectedSpot.youtubeId} title={selectedSpot.youtube_title || "YouTube Music Video"} />
+                        <YouTubeEmbed 
+                          youtubeIdOrUrl={selectedSpot.youtube_url || selectedSpot.youtubeId} 
+                          title={selectedSpot.youtube_title || `${selectedSpot.name} 関連動画`} 
+                        />
                       </div>
-                    ) : (selectedSpot.youtube_url && (() => {
-                      const isIframe = selectedSpot.youtube_url.includes('<iframe');
-                      let watchUrl = "";
-                      
-                      if (isIframe) {
-                        const match = selectedSpot.youtube_url.match(/src="([^"]+)"/);
-                        if (match && match[1]) {
-                          watchUrl = match[1].replace('/embed/', '/watch?v=');
-                        }
-                      } else {
-                        watchUrl = selectedSpot.youtube_url.replace('/embed/', '/watch?v=');
-                      }
+                    )}
 
-                      return (
-                        <div className="video-section">
-                          <div className="video-label-bold" style={{ fontWeight: 'bold', fontSize: '11px', color: '#1e293b', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                            <Play className="w-3 h-3 text-red-500 fill-red-500" />
-                            {selectedSpot.youtube_title || "🎥 関連映像"}
-                          </div>
-                          <div className="video-box" style={{ width: '100%', aspectRatio: '16/9', borderRadius: '16px', overflow: 'hidden' }}>
-                            {isIframe ? (
-                              <div 
-                                style={{ width: '100%', height: '100%', border: 'none' }}
-                                dangerouslySetInnerHTML={{ 
-                                  __html: selectedSpot.youtube_url
-                                    .replace(/width="\d+"/, 'width="100%"')
-                                    .replace(/height="\d+"/, 'height="100%"')
-                                    .replace(/style="[^"]*"/, '')
-                                }} 
-                              />
-                            ) : (
-                              <iframe 
-                                width="100%" 
-                                height="100%" 
-                                src={`${selectedSpot.youtube_url}?modestbranding=1&rel=0`} 
-                                title={selectedSpot.youtube_title || "YouTube video player"} 
-                                frameBorder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowFullScreen
-                                style={{ width: '100%', height: '100%', border: 'none' }}
-                              ></iframe>
-                            )}
-                          </div>
-                          {watchUrl && (
-                            <a 
-                              href={watchUrl} 
-                              target="_blank" 
-                              rel="noopener noreferrer" 
-                              className="video-link"
-                            >
-                              YouTubeアプリで視聴する
-                              <ExternalLink className="w-3 h-3" />
-                            </a>
-                          )}
-                        </div>
-                      );
-                    })())}
 
 
                     {/* 🗺️ Googleマップで経路案内ボタン */}
@@ -8124,72 +7972,19 @@ ${window.location.origin + window.location.pathname}
 
 
               {/* YouTube動画自動埋め込み (完全再現) */}
-              {selectedSpot.youtubeId ? (
-                <div className="video-section" style={{ marginTop: '16px' }}>
-                  <div className="video-label-bold" style={{ fontWeight: 'bold', fontSize: '11px', color: '#1e293b', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <Play className="w-3 h-3 text-red-500 fill-red-500" />
-                    {selectedSpot.youtube_title || "🎥 関連映像"}
-                  </div>
-                  <YouTubeEmbed youtubeId={selectedSpot.youtubeId} title={selectedSpot.youtube_title || "YouTube Music Video"} />
-                </div>
-              ) : (selectedSpot.youtube_url && (() => {
-                const isIframe = selectedSpot.youtube_url.includes('<iframe');
-                let watchUrl = "";
-                
-                if (isIframe) {
-                  const match = selectedSpot.youtube_url.match(/src="([^"]+)"/);
-                  if (match && match[1]) {
-                    watchUrl = match[1].replace('/embed/', '/watch?v=');
-                  }
-                } else {
-                  watchUrl = selectedSpot.youtube_url.replace('/embed/', '/watch?v=');
-                }
-
-                return (
+                {(selectedSpot.youtubeId || selectedSpot.youtube_url) && (
                   <div className="video-section" style={{ marginTop: '16px' }}>
                     <div className="video-label-bold" style={{ fontWeight: 'bold', fontSize: '11px', color: '#1e293b', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '4px' }}>
                       <Play className="w-3 h-3 text-red-500 fill-red-500" />
                       {selectedSpot.youtube_title || "🎥 関連映像"}
                     </div>
-                    <div className="video-box" style={{ width: '100%', aspectRatio: '16/9', borderRadius: '16px', overflow: 'hidden' }}>
-                      {isIframe ? (
-                        <div 
-                          style={{ width: '100%', height: '100%', border: 'none' }}
-                          dangerouslySetInnerHTML={{ 
-                            __html: selectedSpot.youtube_url
-                              .replace(/width="\d+"/, 'width="100%"')
-                              .replace(/height="\d+"/, 'height="100%"')
-                              .replace(/style="[^"]*"/, '')
-                          }} 
-                        />
-                      ) : (
-                        <iframe 
-                          width="100%" 
-                          height="100%" 
-                          src={`${selectedSpot.youtube_url}?modestbranding=1&rel=0`} 
-                          title={selectedSpot.youtube_title || "YouTube video player"} 
-                          frameBorder="0" 
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                          allowFullScreen
-                          style={{ width: '100%', height: '100%', border: 'none' }}
-                        ></iframe>
-                      )}
-                    </div>
-                    {watchUrl && (
-                      <a 
-                        href={watchUrl} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="video-link"
-                        style={{ marginTop: '6px', fontSize: '11px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
-                      >
-                        YouTubeアプリで視聴する
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
-                    )}
+                    <YouTubeEmbed 
+                      youtubeIdOrUrl={selectedSpot.youtube_url || selectedSpot.youtubeId} 
+                      title={selectedSpot.youtube_title || `${selectedSpot.name} 関連動画`} 
+                    />
                   </div>
-                );
-              })())}
+                )}
+
 
               {/* 🗺️ Googleマップで経路案内ボタン */}
               <a
@@ -8507,380 +8302,7 @@ ${window.location.origin + window.location.pathname}
         </div>
       )}
 
-      {/* 🏟️ 国立競技場デジタル寄せ書きボードモーダル */}
-      {showStadiumBoardModal && (
-        <div style={{
-          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
-          backgroundColor: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(8px)', zIndex: 3000,
-          display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px'
-        }} className="animate-fade-in-up">
-          <div style={{
-            background: '#ffffff',
-            borderRadius: '28px',
-            width: '100%',
-            maxWidth: '600px',
-            maxHeight: '90vh',
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-            position: 'relative'
-          }}>
-            {/* ヘッダー */}
-            <div style={{
-              background: 'linear-gradient(135deg, #ffd700 0%, #f59e0b 50%, #db2777 100%)',
-              padding: '24px',
-              color: '#ffffff',
-              position: 'relative'
-            }}>
-              <button 
-                onClick={() => setShowStadiumBoardModal(false)} 
-                style={{
-                  position: 'absolute', top: '16px', right: '16px',
-                  border: 'none', background: 'rgba(255,255,255,0.2)', color: '#ffffff',
-                  borderRadius: '50%', width: '32px', height: '32px',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
-                  transition: 'all 0.2s'
-                }}
-                className="pop-button"
-              >
-                <X size={16} />
-              </button>
-              <span style={{ fontSize: '9px', fontWeight: '900', background: 'rgba(255,255,255,0.25)', padding: '3px 8px', borderRadius: '6px', letterSpacing: '0.05em' }}>
-                🏟️ 国立競技場ライブ特設
-              </span>
-              <h2 style={{ fontSize: '20px', fontWeight: '900', marginTop: '6px', marginBottom: '2px', textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-                デジタル寄せ書きボード
-              </h2>
-              <p style={{ fontSize: '11px', opacity: 0.9, margin: 0 }}>
-                メンバーへの熱い応援メッセージを書いて届けましょう！
-              </p>
 
-              {/* エンドロールページへのリンクは廃止 */}
-            </div>
-
-            {/* コンテンツエリア (スクロール可能) */}
-            <div className="info-scroll-area" style={{ flex: 1, overflowY: 'auto', padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              
-              {(() => {
-                const myMessages = stadiumMessages.filter(m => m.device_id === deviceId);
-
-                return (
-                  <>
-                    {/* 1. 投稿フォーム または サンクスメッセージ */}
-                    <div style={{
-                      background: 'linear-gradient(135deg, rgba(251, 191, 36, 0.06) 0%, rgba(219, 39, 119, 0.06) 100%)',
-                      border: '1.5px solid #cbd5e1',
-                      borderRadius: '20px',
-                      padding: '20px 16px',
-                      textAlign: 'center',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      gap: '8px',
-                      boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
-                    }}>
-                      <span style={{ fontSize: '28px' }}>📣</span>
-                      <h3 style={{ fontSize: '14.5px', fontWeight: '900', color: '#1e293b', margin: 0 }}>
-                        メッセージの募集は終了いたしました
-                      </h3>
-                      <p style={{ fontSize: '11.5px', color: '#475569', margin: 0, lineHeight: '1.6', fontWeight: '800' }}>
-                        たくさんの温かい寄せ書きメッセージをいただき、本当にありがとうございました！<br />
-                        現在、お寄せいただいたメッセージを掲載する特設サイトを開発中ですので、公開まで今しばらくお待ちください。<br /><br />
-                        引き続き、トリプルデートマップをよろしくお願いします！
-                      </p>
-                    </div>
-
-                    {/* 2. 自分のメッセージ (ハイライト表示) */}
-                    {myMessages.length > 0 && (
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                        <h4 style={{ fontSize: '11px', fontWeight: '900', color: '#b45309', marginBottom: '2px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                          ✨ あなたの寄せ書き ({myMessages.length} / 10)
-                        </h4>
-                        {myMessages.map((msg) => (
-                          <div
-                            key={msg.id}
-                            style={{
-                              backgroundColor: msg.color,
-                              color: getContrastTextColor(msg.color),
-                              border: '2.5px solid #fbbf24',
-                              borderRadius: '16px',
-                              padding: '12px 16px',
-                              boxShadow: '0 6px 15px rgba(251,191,36,0.12)',
-                              position: 'relative',
-                              animation: 'fadeInUp 0.3s ease'
-                            }}
-                          >
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                              <span style={{ fontSize: '11px', fontWeight: '900', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: getContrastTextColor(msg.color), border: '1px solid currentColor' }} />
-                                {msg.name || '匿名オタク'}
-                              </span>
-                              <span style={{ fontSize: '8px', opacity: 0.8, fontFamily: 'Outfit' }}>
-                                {new Date(msg.created_at).toLocaleDateString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
-                              </span>
-                            </div>
-                            <p style={{ fontSize: '12px', margin: 0, lineHeight: '1.5', fontWeight: '900', whiteSpace: 'pre-wrap' }}>
-                              {msg.message}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* 3. みんなの寄せ書き公開機能は廃止（管理者ダッシュボードで管理。公開前は完全に非表示）*/}
-                  </>
-                );
-              })()}
-            </div>
-
-            {/* フッター */}
-            <div style={{
-              background: '#f8fafc',
-              borderTop: '1px solid #e2e8f0',
-              padding: '16px 24px',
-              textAlign: 'center'
-            }}>
-              <button
-                onClick={() => setShowStadiumBoardModal(false)}
-                style={{
-                  background: '#e2e8f0',
-                  color: '#475569',
-                  border: 'none',
-                  borderRadius: '12px',
-                  padding: '8px 24px',
-                  fontSize: '12px',
-                  fontWeight: 'bold',
-                  cursor: 'pointer'
-                }}
-                className="pop-button"
-              >
-                閉じる
-              </button>
-            </div>
-
-          </div>
-        </div>
-      )}
-      {/* 🏟️ 国立競技場ピンタップ時誘導ポップアップ */}
-      {showStadiumPinPopup && (
-        <div style={{
-          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
-          backgroundColor: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(8px)', zIndex: 3500,
-          display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px'
-        }} className="animate-fade-in-up">
-          <div style={{
-            background: '#ffffff',
-            borderRadius: '28px',
-            width: '100%',
-            maxWidth: '480px',
-            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.3)',
-            overflow: 'hidden',
-            border: '3px solid #ffffff'
-          }}>
-            {/* 上部ゴールドグラデーションヘッダー */}
-            <div style={{
-              background: 'linear-gradient(135deg, #ffd700 0%, #f59e0b 50%, #db2777 100%)',
-              padding: '24px',
-              textAlign: 'center',
-              color: '#ffffff',
-              position: 'relative'
-            }}>
-              <button 
-                onClick={() => setShowStadiumPinPopup(false)} 
-                style={{
-                  position: 'absolute', top: '16px', right: '16px',
-                  border: 'none', background: 'rgba(255,255,255,0.2)', color: '#ffffff',
-                  borderRadius: '50%', width: '32px', height: '32px',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
-                  transition: 'all 0.2s'
-                }}
-                className="pop-button"
-              >
-                <X size={16} />
-              </button>
-              <span style={{ fontSize: '28px', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.15))' }}>🏟️</span>
-              <h2 style={{ fontSize: '18px', fontWeight: '950', marginTop: '10px', marginBottom: '4px', letterSpacing: '0.02em', textShadow: '0 2px 4px rgba(0,0,0,0.15)' }}>
-                国立競技場ライブ特設
-              </h2>
-              <p style={{ fontSize: '11px', fontWeight: '800', opacity: 0.95, margin: 0, letterSpacing: '0.05em' }}>
-                デジタル寄せ書き＆ギャラリー
-              </p>
-            </div>
-
-            {/* モーダル本文 */}
-            <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <p style={{ fontSize: '13px', color: '#475569', lineHeight: '1.7', fontWeight: '800', margin: 0, textAlign: 'center' }}>
-                🎊 =LOVE 国立競技場ライブ特設エリアです！メッセージの募集は終了いたしました。たくさんの温かいメッセージをありがとうございました！ 🎊
-              </p>
-              <p style={{ fontSize: '12px', color: '#64748b', lineHeight: '1.6', margin: 0, background: '#f8fafc', padding: '14px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                メッセージの新規募集は終了しましたが、お寄せいただいたメッセージが飾られたギャラリーボードをご覧いただけます。現在、特設サイトを開発中ですので、公開まで今しばらくお待ちください。
-              </p>
-            </div>
-
-            {/* アクションボタン */}
-            <div style={{
-              padding: '0 24px 24px 24px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '10px'
-            }}>
-              <button
-                onClick={() => {
-                  setShowStadiumPinPopup(false);
-                  window.history.pushState({}, '', '/gallery');
-                  window.dispatchEvent(new Event('pushstate'));
-                }}
-                style={{
-                  background: 'linear-gradient(135deg, #db2777 0%, #a855f7 100%)',
-                  color: '#ffffff',
-                  border: 'none',
-                  borderRadius: '14px',
-                  padding: '12px',
-                  fontSize: '12.5px',
-                  fontWeight: '900',
-                  cursor: 'pointer',
-                  boxShadow: '0 4px 12px rgba(219, 39, 119, 0.2)',
-                  transition: 'all 0.2s',
-                  textAlign: 'center',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '6px'
-                }}
-                className="pop-button"
-              >
-                🌌 寄せ書きギャラリーを見る
-              </button>
-
-              <button
-                onClick={() => {
-                  setShowStadiumPinPopup(false);
-                  setShowStadiumBoardModal(true);
-                }}
-                style={{
-                  background: '#f1f5f9',
-                  color: '#475569',
-                  border: 'none',
-                  borderRadius: '14px',
-                  padding: '12px',
-                  fontSize: '12px',
-                  fontWeight: 'bold',
-                  cursor: 'pointer',
-                  textAlign: 'center',
-                  transition: 'all 0.2s'
-                }}
-                className="pop-button"
-              >
-                詳細・お知らせを見る
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* 🎊 国立競技場ライブ特設告知モーダル */}
-      {showStadiumWelcomeModal && (
-        <div style={{
-          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
-          backgroundColor: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(8px)', zIndex: 3500,
-          display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px'
-        }} className="animate-fade-in-up">
-          <div style={{
-            background: '#ffffff',
-            borderRadius: '28px',
-            width: '100%',
-            maxWidth: '480px',
-            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.3)',
-            overflow: 'hidden',
-            border: '3px solid #ffffff'
-          }}>
-            {/* 上部ゴールドグラデーションヘッダー */}
-            <div style={{
-              background: 'linear-gradient(135deg, #ffd700 0%, #f59e0b 50%, #db2777 100%)',
-              padding: '28px 24px',
-              textAlign: 'center',
-              color: '#ffffff'
-            }}>
-              <span style={{ fontSize: '28px', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.15))' }}>🏟️</span>
-              <h2 style={{ fontSize: '20px', fontWeight: '950', marginTop: '10px', marginBottom: '4px', letterSpacing: '0.02em', textShadow: '0 2px 4px rgba(0,0,0,0.15)' }}>
-                ＝LOVE 国立競技場ライブ特設
-              </h2>
-              <p style={{ fontSize: '12px', fontWeight: '800', opacity: 0.95, margin: 0, letterSpacing: '0.05em' }}>
-                デジタル寄せ書きボードオープン！
-              </p>
-            </div>
-
-            {/* モーダル本文 */}
-            <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <p style={{ fontSize: '13px', color: '#475569', lineHeight: '1.7', fontWeight: '800', margin: 0, textAlign: 'center' }}>
-                🎊 ＝LOVE 初の国立競技場ライブ開催を記念して、デジタル寄せ書きボードがオープンしました！ 🎊
-              </p>
-              <p style={{ fontSize: '12px', color: '#64748b', lineHeight: '1.6', margin: 0, background: '#f8fafc', padding: '14px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                メッセージの投稿は<strong style={{ color: '#db2777' }}>1人1回限定</strong>。メンバーそれぞれのメンバーカラーを選択して、あなたの想いを乗せたメッセージをカラフルに残すことができます！
-              </p>
-              <p style={{ fontSize: '12.5px', color: '#334155', lineHeight: '1.6', margin: 0, textAlign: 'center', fontWeight: '900' }}>
-                マップ上の「国立競技場ピン」をタップしてメッセージボードを確認しましょう！
-              </p>
-            </div>
-
-            {/* アクションボタン */}
-            <div style={{
-              padding: '16px 24px 24px 24px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '10px'
-            }}>
-              <button
-                onClick={() => {
-                  setShowStadiumWelcomeModal(false);
-                  localStorage.setItem('tdm_stadium_welcome_shown', 'true');
-                  focusOnNationalStadium();
-                }}
-                style={{
-                  background: 'linear-gradient(135deg, #ffd700 0%, #f59e0b 50%, #db2777 100%)',
-                  color: '#ffffff',
-                  border: 'none',
-                  borderRadius: '14px',
-                  padding: '12px',
-                  fontSize: '12.5px',
-                  fontWeight: '900',
-                  cursor: 'pointer',
-                  boxShadow: '0 8px 20px rgba(245, 158, 11, 0.25)',
-                  transition: 'all 0.2s',
-                  textAlign: 'center'
-                }}
-                className="pop-button"
-              >
-                🏟️ マップで国立競技場を見る
-              </button>
-              
-              <button
-                onClick={() => {
-                  setShowStadiumWelcomeModal(false);
-                  localStorage.setItem('tdm_stadium_welcome_shown', 'true');
-                }}
-                style={{
-                  background: '#f1f5f9',
-                  color: '#475569',
-                  border: 'none',
-                  borderRadius: '14px',
-                  padding: '10px',
-                  fontSize: '12px',
-                  fontWeight: 'bold',
-                  cursor: 'pointer',
-                  textAlign: 'center',
-                  transition: 'all 0.2s'
-                }}
-                className="pop-button"
-              >
-                閉じる
-              </button>
-            </div>
-
-          </div>
-        </div>
-      )}
 
     </div>
   );

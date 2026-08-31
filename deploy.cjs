@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: 指定5作品(青春サブリミナル・流星群・狂想カタストロフィ・仲直りシュークリーム・恋人以上好き未満)のMV公開日とYouTube IDを完全補完・最終整合';
+  const commitMsg = 'feat: 地図初期表示を東京都内に変更、国立競技場ライブ特設モーダル完全撤去、YouTube埋め込み・ID解析の統一修正';
+
 
 
 
