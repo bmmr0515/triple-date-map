@@ -5516,8 +5516,8 @@ const INITIAL_SPOTS: Spot[] = [
       "longitude": 139.7022,
       "event_date": "2024-10-16",
       "youtube_title": "🎥 関連映像: 『The rock is you!』公式MV",
-      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
-      "youtubeId": "5F_3l4n2k8Y",
+      "youtube_url": "https://www.youtube.com/embed/kDgadIAsQf4",
+      "youtubeId": "kDgadIAsQf4",
       "reward_title": "ロックの熱量を鳴らした者",
       "tags": [
           "The rock is you!"
@@ -5536,8 +5536,8 @@ const INITIAL_SPOTS: Spot[] = [
       "longitude": 139.932,
       "event_date": "2024-10-16",
       "youtube_title": "🎥 関連映像: 『The rock is you!』公式MV",
-      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
-      "youtubeId": "5F_3l4n2k8Y",
+      "youtube_url": "https://www.youtube.com/embed/kDgadIAsQf4",
+      "youtubeId": "kDgadIAsQf4",
       "reward_title": "日の出護岸の空と海",
       "tags": [
           "The rock is you!"
@@ -5556,8 +5556,8 @@ const INITIAL_SPOTS: Spot[] = [
       "longitude": 139.6805,
       "event_date": "2024-10-16",
       "youtube_title": "🎥 関連映像: 『The rock is you!』公式MV",
-      "youtube_url": "https://www.youtube.com/embed/5F_3l4n2k8Y",
-      "youtubeId": "5F_3l4n2k8Y",
+      "youtube_url": "https://www.youtube.com/embed/kDgadIAsQf4",
+      "youtubeId": "kDgadIAsQf4",
       "reward_title": "大山公園のプレイグラウンド",
       "tags": [
           "The rock is you!"

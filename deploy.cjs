@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'fix: 全112本YouTube動画のoEmbed機械検証完了・非公開動画フォールバック対応・全画面埋め込み共通化';
+  const commitMsg = 'fix: 誤判定による「非公開・削除」表示の全件撤去・動画ID直埋め表示への一貫化・The rock is you!(kDgadIAsQf4)データの更新';
+
 
 
 
