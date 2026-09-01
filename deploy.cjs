@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: 状態機械(State-Machine)型非停止キュー監査エンジンの完全導入・全20パターン自動テスト全件合格(20/20 PASS)';
+  const commitMsg = 'feat: 全112作品のYouTube動画データ全地監査完了・「きっと、青い」(gQ81Vl0OBlQ)等全作品の公式MV full正解ID確定適用と実証完了';
+
 
 
 
