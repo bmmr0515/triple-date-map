@@ -615,22 +615,27 @@ export const OFFICIAL_VIDEOS: Record<string, OfficialVideo> = {
     title: "夏はジュエリー",
     group: "≒JOY",
     youtubeId: "kIm4dcF6XDY",
-    officialUrl: "https://www.youtube.com/watch?v=kIm4dcF6XDY"
+    officialUrl: "https://www.youtube.com/watch?v=kIm4dcF6XDY",
+    memorialDate: "2026-07-31"
   },
   "work-RUEnyZLCtW4": {
     workKey: "work-RUEnyZLCtW4",
     title: "わたし注意報",
     group: "≒JOY",
     youtubeId: "RUEnyZLCtW4",
-    officialUrl: "https://www.youtube.com/watch?v=RUEnyZLCtW4"
+    officialUrl: "https://www.youtube.com/watch?v=RUEnyZLCtW4",
+    memorialDate: "2026-07-30"
   },
+
   "work-wO2z79qqB1Y": {
     workKey: "work-wO2z79qqB1Y",
     title: "サマーツインテール",
     group: "≒JOY",
     youtubeId: "wO2z79qqB1Y",
-    officialUrl: "https://www.youtube.com/watch?v=wO2z79qqB1Y"
+    officialUrl: "https://www.youtube.com/watch?v=wO2z79qqB1Y",
+    memorialDate: "2026-07-08"
   },
+
   "work-TCYJnm0oIfY": {
     workKey: "work-TCYJnm0oIfY",
     title: "ノンフィクション",

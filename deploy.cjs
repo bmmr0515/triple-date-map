@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: ≒JOY聖地候補6箇所の判定B公式根拠照合・正式店名/運営事業者分離・聖地解説＆注意事項の全件適用';
+  const commitMsg = 'refactor: ≒JOY聖地候補6箇所の客観的照合分析・断定表現排除・特定URL資料・operatorName分離・厳格完全性チェック適用';
+
 
 
 
