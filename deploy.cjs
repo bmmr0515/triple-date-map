@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: ＝LOVE最新MV 3作品(夢の続き/恋、はじめました。/夏名残サマーチューン)の作品マスター登録＆情報更新';
+  const commitMsg = 'feat: アプリ内新着お知らせ「＝LOVE最新MV 3作品のマスター情報一元反映」を追加・本番公開';
+
 
 
 
