@@ -299,10 +299,12 @@ export const OFFICIAL_VIDEOS: Record<string, OfficialVideo> = {
   "my-voice-is-for-you": {
     workKey: "my-voice-is-for-you",
     title: "My Voice Is For You",
-    group: "=LOVE",
+    group: "＝LOVE",
     youtubeId: "v3wVAbAWrE0",
-    officialUrl: "https://www.youtube.com/watch?v=v3wVAbAWrE0"
+    officialUrl: "https://www.youtube.com/watch?v=v3wVAbAWrE0",
+    memorialDate: "2022-08-03"
   },
+
   "sweetest-girl": {
     workKey: "sweetest-girl",
     title: "Sweetest girl",

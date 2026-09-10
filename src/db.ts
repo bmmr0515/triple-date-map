@@ -6064,8 +6064,28 @@ const INITIAL_SPOTS: Spot[] = [
         "primarySourceUrl": "https://www.shibuyaest.co.jp/bowling/",
         "coordinateAccuracy": "exact",
         "workKey": "presents"
+    },
+    {
+        "id": "spot-real-mvify-hiji-waterfall",
+        "name": "比地大滝キャンプ場",
+        "operatorName": "国頭村観光物産株式会社",
+        "group": "=LOVE",
+
+        "category": "MVロケ地",
+        "description": "＝LOVE・諸橋沙夏のソロ曲『My Voice Is For You』in Okinawaに登場する、沖縄県国頭村の自然スポットです。やんばるの森と清流に囲まれた比地大滝周辺で、諸橋沙夏が自然の中を歩く場面などが撮影されました。本作品は、2020年の楽曲発売時に予定されていた沖縄ロケがコロナ禍の影響で延期され、約2年越しに実現した思い入れの深いMVです。\n\n⚠️【訪問時の注意事項】\n比地大滝へ向かう遊歩道を含む自然施設です。営業時間、入場料金、遊歩道の利用状況を公式サイトで確認してください。指定された散策路から外れず、動植物を傷つける行為や、ごみの放置、大人数での長時間撮影は行わないでください。",
+        "latitude": 26.715278,
+        "longitude": 128.178333,
+        "event_date": "2022-08-03",
+        "memorial_date": "2022-08-03",
+        "youtube_title": "My Voice Is For You in Okinawa",
+        "youtube_url": "https://www.youtube.com/embed/v3wVAbAWrE0",
+        "youtubeId": "v3wVAbAWrE0",
+        "workKey": "my-voice-is-for-you",
+        "address": "〒905-1413 沖縄県国頭郡国頭村字比地781-1"
     }
 ];
+
+
 
 
 

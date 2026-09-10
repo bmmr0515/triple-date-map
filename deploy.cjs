@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'refactor: ≒JOY聖地候補6箇所の客観的照合分析・断定表現排除・特定URL資料・operatorName分離・厳格完全性チェック適用';
+  const commitMsg = 'feat: ＝LOVE諸橋沙夏「My Voice Is For You」聖地スポット「比地大滝キャンプ場」(spot-real-mvify-hiji-waterfall)を新規追加・本番公開';
+
 
 
 
