@@ -6067,6 +6067,8 @@ const INITIAL_SPOTS: Spot[] = [
 
 
 
+
+
 // 初期ユーザー（デフォルト）
 const DEFAULT_USER: User = {
   id: "user-default-ikonoijoy",

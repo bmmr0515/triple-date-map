@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: 全112作品のYouTube動画データ全地監査完了・「きっと、青い」(gQ81Vl0OBlQ)等全作品の公式MV full正解ID確定適用と実証完了';
+  const commitMsg = 'feat: ＝LOVE最新MV 3作品(夢の続き/恋、はじめました。/夏名残サマーチューン)の作品マスター登録＆情報更新';
+
 
 
 

@@ -4,6 +4,8 @@ export interface OfficialVideo {
   group: string;
   youtubeId: string;
   officialUrl: string;
+  memorialDate?: string;
+  contentType?: string;
 }
 
 export const OFFICIAL_VIDEOS: Record<string, OfficialVideo> = {
@@ -437,9 +439,11 @@ export const OFFICIAL_VIDEOS: Record<string, OfficialVideo> = {
   "work-RjHjQlEjs_E": {
     workKey: "work-RjHjQlEjs_E",
     title: "夢の続き",
-    group: "=LOVE",
+    group: "＝LOVE",
     youtubeId: "RjHjQlEjs_E",
-    officialUrl: "https://www.youtube.com/watch?v=RjHjQlEjs_E"
+    officialUrl: "https://www.youtube.com/watch?v=RjHjQlEjs_E",
+    memorialDate: "2026-08-25",
+    contentType: "MV"
   },
   "work-Bco8bY9r_H4": {
     workKey: "work-Bco8bY9r_H4",
@@ -577,16 +581,20 @@ export const OFFICIAL_VIDEOS: Record<string, OfficialVideo> = {
   "work-_Bm66BRnM1A": {
     workKey: "work-_Bm66BRnM1A",
     title: "夏名残サマーチューン",
-    group: "=LOVE",
+    group: "＝LOVE",
     youtubeId: "_Bm66BRnM1A",
-    officialUrl: "https://www.youtube.com/watch?v=_Bm66BRnM1A"
+    officialUrl: "https://www.youtube.com/watch?v=_Bm66BRnM1A",
+    memorialDate: "2026-08-24",
+    contentType: "MV"
   },
   "work-ikFaEAlO5N0": {
     workKey: "work-ikFaEAlO5N0",
     title: "恋、はじめました。",
-    group: "=LOVE",
+    group: "＝LOVE",
     youtubeId: "ikFaEAlO5N0",
-    officialUrl: "https://www.youtube.com/watch?v=ikFaEAlO5N0"
+    officialUrl: "https://www.youtube.com/watch?v=ikFaEAlO5N0",
+    memorialDate: "2026-08-24",
+    contentType: "MV"
   },
   "work-oWRCXGvcU9s": {
     workKey: "work-oWRCXGvcU9s",
