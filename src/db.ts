@@ -69,7 +69,9 @@ export interface SpotImage {
 export interface Spot {
   id: string;
   name: string;
+  operatorName?: string;
   group: "=LOVE" | "≠ME" | "≒JOY" | "合同";
+
   category: "MVロケ地" | "ライブ会場" | "聖地店舗" | "飲食店・その他" | "ジャケット・アーティスト写真撮影地";
   description: string;
   latitude: number;
@@ -3806,9 +3808,10 @@ const INITIAL_SPOTS: Spot[] = [
             "夏はジュエリー"
         ],
         "address": "〒248-0013 神奈川県鎌倉市材木座6丁目",
-        "description": "『夏はジュエリー』MVの海岸シーンが撮影された場所。夕暮れと海が楽曲の青春感を引き立てています。",
+        "description": "【≒JOY『夏はジュエリー』ロケ地（MV 0:45〜1:20）】\n鎌倉の広大な砂浜海岸。メンバーが波打ち際で戯れるシーンや、夕景をバックにダンスパフォーマンスを繰り広げるメインロケーションです。\n\n【巡礼のポイント】\n和賀江島方面を望む海岸線や開放感あふれる夕景のロケーションを楽しめます。\n\n⚠️【訪問時の注意事項】\n海水浴シーズン中の遊泳ルールや天候・高波に十分ご注意ください。海岸の環境保全のため、ゴミは必ず持ち帰るようご協力お願いいたします。",
         "coordinateAccuracy": "exact",
-        "workKey": "work-kIm4dcF6XDY"
+        "workKey": "work-kIm4dcF6XDY",
+        "operatorName": "鎌倉市"
     },
     {
         "id": "spot-real-tokyodome-rollerskate-arena",
@@ -3826,9 +3829,10 @@ const INITIAL_SPOTS: Spot[] = [
             "わたし注意報"
         ],
         "address": "〒112-0004 東京都文京区後楽1丁目3-61 黄色いビル4F",
-        "description": "『わたし注意報』MVのメインアリーナ撮影地。ローラースケート場のカラフルな空間でパフォーマンスが撮影されました。",
+        "description": "【≒JOY『わたし注意報』ロケ地（MV 0:10〜1:05）】\n都内最大級の屋内ローラースケートリンク。カラフルな壁面や照明が輝くリンク内で、メンバーがローラースケートを履いてダイナミックに踊るメインダンスシーンが撮影されました。\n\n【巡礼のポイント】\n鮮やかなカラーリングのリンク壁面や広大な室内スケートフロアの雰囲気を体験できます。\n\n⚠️【訪問時の注意事項】\n施設営業情報や一般利用時間・撮影規約は変更される場合があります。訪問前には必ず東京ドームシティ公式HPにて最新の営業時間や館内規則をご確認ください。",
         "coordinateAccuracy": "exact",
-        "workKey": "work-RUEnyZLCtW4"
+        "workKey": "work-RUEnyZLCtW4",
+        "operatorName": "株式会社東京ドーム"
     },
     {
         "id": "spot-real-repair-plant",
@@ -3893,7 +3897,7 @@ const INITIAL_SPOTS: Spot[] = [
     },
     {
         "id": "spot-real-nikuno-yasudaya",
-        "name": "肉の安田屋／今井畜産商事",
+        "name": "肉の安田屋",
         "group": "≒JOY",
         "category": "MVロケ地",
         "latitude": 35.994188,
@@ -3907,9 +3911,10 @@ const INITIAL_SPOTS: Spot[] = [
             "サマーツインテール"
         ],
         "address": "〒368-0041 埼玉県秩父市番場町19-9",
-        "description": "『サマーツインテール』MVに登場する秩父の精肉店です。",
+        "description": "【≒JOY『サマーツインテール』ロケ地（MV 2:18〜2:25）】\n秩父・番場商店街にある老舗精肉店。メンバーが名物の特製メンチカツ・コロッケをテイクアウトして味わうシーンが印象的に登場します。\n\n【巡礼のポイント】\n店頭の赤い暖簾と昭和レトロな佇まいがMVにそのまま登場します。\n\n⚠️【訪問時の注意事項】\n購入せずに撮影のみ行う行為や商店街の交通の妨げとなる長時間の居座りは避けてください。名物のコロッケやメンチカツを購入して街歩きをお楽しみください。",
         "coordinateAccuracy": "exact",
-        "workKey": "work-wO2z79qqB1Y"
+        "workKey": "work-wO2z79qqB1Y",
+        "operatorName": "今井畜産商事株式会社"
     },
     {
         "id": "spot-real-koumi-line-yade-fumikiri",
@@ -4028,9 +4033,10 @@ const INITIAL_SPOTS: Spot[] = [
             "サマーツインテール"
         ],
         "address": "〒369-1802 埼玉県秩父市荒川上田野",
-        "description": "『サマーツインテール』MVに登場する秩父鉄道の駅です。",
+        "description": "【≒JOY『サマーツインテール』ロケ地（MV 1:15〜1:28）】\nレトロな木造駅舎の外観や改札口、ホームの木造待合所にてメンバーが旅のワンシーンを撮影したスポットです。\n\n【巡礼のポイント】\n木造の趣ある駅舎ファサードや改札前の雰囲気がMVそのままに残されています。\n\n⚠️【訪問時の注意事項】\n駅ホームや線路付近、改札前で撮影のために立ち止まる行為は大変危険です。一般の列車利用者や鉄道運行を最優先にし、マナーを守ってご見学ください。",
         "coordinateAccuracy": "exact",
-        "workKey": "work-wO2z79qqB1Y"
+        "workKey": "work-wO2z79qqB1Y",
+        "operatorName": "秩父鉄道株式会社"
     },
     {
         "id": "spot-real-chichibu-imamiya-shrine",
@@ -4048,10 +4054,11 @@ const INITIAL_SPOTS: Spot[] = [
             "サマーツインテール"
         ],
         "address": "〒368-0043 埼玉県秩父市中町16-10",
-        "description": "『サマーツインテール』MVに登場する秩父の神社です。\n\n⚠️ 注意：参拝者や神社行事を優先してください。",
+        "description": "【≒JOY『サマーツインテール』ロケ地（MV 1:42〜1:48）】\nメンバーが境内の八角堂や樹齢1000年を超える大欅（龍神木）の前で参拝し、絵馬を納めるシーンで登場する歴史ある神社です。\n\n【巡礼のポイント】\nMV内に映し出される八角堂や立派な鳥居、神木の大欅の背景構図を現地で確認できます。\n\n⚠️【訪問時の注意事項】\n参拝者や神社神事・祭事の妨げにならないよう、静かにご参拝ください。撮影時は境内での他参拝者へのご配慮をお願いいたします。",
         "visitor_notes": "参拝者や神社行事を優先してください。",
         "coordinateAccuracy": "exact",
-        "workKey": "work-wO2z79qqB1Y"
+        "workKey": "work-wO2z79qqB1Y",
+        "operatorName": "秩父今宮神社（八大龍王宮）"
     },
     {
         "id": "spot-real-chichibu-parry-shokudo",
@@ -4069,9 +4076,10 @@ const INITIAL_SPOTS: Spot[] = [
             "サマーツインテール"
         ],
         "address": "〒368-0041 埼玉県秩父市番場町19-8",
-        "description": "『サマーツインテール』MVに登場する、昭和レトロな建物で知られる食堂です。",
+        "description": "【≒JOY『サマーツインテール』ロケ地（MV 2:05〜2:15）】\n国の登録有形文化財に指定されている昭和初期建設のレトロ建築店舗。メンバーがお店の前のテーブルでクリームソーダやオムライスを楽しむシーンが撮影されました。\n\n【巡礼のポイント】\n石造り風の印象的なファサードと「パリー」のレトロ看板が目印です。\n\n⚠️【訪問時の注意事項】\n人気飲食店のため、注文を行わず撮影のみで立ち寄る行為はお控えください。店舗営業や他のお客様の迷惑にならないよう配慮してお食事をお楽しみください。",
         "coordinateAccuracy": "exact",
-        "workKey": "work-wO2z79qqB1Y"
+        "workKey": "work-wO2z79qqB1Y",
+        "operatorName": "パリー食堂"
     },
     {
         "id": "spot-real-takahide-farm",
@@ -6058,6 +6066,8 @@ const INITIAL_SPOTS: Spot[] = [
         "workKey": "presents"
     }
 ];
+
+
 
 
 

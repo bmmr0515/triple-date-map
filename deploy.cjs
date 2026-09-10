@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: アプリ内新着お知らせ「＝LOVE最新MV 3作品のマスター情報一元反映」を追加・本番公開';
+  const commitMsg = 'feat: ≒JOY聖地候補6箇所の判定B公式根拠照合・正式店名/運営事業者分離・聖地解説＆注意事項の全件適用';
+
 
 
 
