@@ -806,6 +806,15 @@ export const OFFICIAL_VIDEOS: Record<string, OfficialVideo> = {
     youtubeId: "gQ81Vl0OBlQ",
     officialUrl: "https://www.youtube.com/watch?v=gQ81Vl0OBlQ"
   },
+  "youtube-86XlfukroBA": {
+    workKey: "youtube-86XlfukroBA",
+    title: "【ep4 PR】≒JOY冠番組「フライングジョイ」シーズン2｜Huluにて独占配信中",
+    group: "≒JOY",
+    youtubeId: "86XlfukroBA",
+    officialUrl: "https://www.youtube.com/watch?v=86XlfukroBA",
+    memorialDate: "2026-10-09",
+    contentType: "公式YouTube企画"
+  },
 };
 
 export const getOfficialVideoBySpot = (spot: { workKey?: string; youtubeId?: string }): OfficialVideo | null => {

@@ -18,7 +18,8 @@ try {
   execSync('git add -A', { stdio: 'inherit' });
   
   console.log('💾 Committing files...');
-  const commitMsg = 'feat: ＝LOVE諸橋沙夏「My Voice Is For You」聖地スポット「比地大滝キャンプ場」(spot-real-mvify-hiji-waterfall)を新規追加・本番公開';
+  const commitMsg = 'feat: ≒JOY市原愛弓・江角怜音訪問「瀬長島ウミカジテラス 恋のテラス」(spot-real-senagajima-koi-no-terrace)を新規追加・本番公開';
+
 
 
 
