@@ -9,19 +9,92 @@ export const AboutPage: React.FC<PageProps> = ({ onNavigate }) => {
   return (
     <div className="static-page-container" style={{ maxWidth: '800px', margin: '40px auto', padding: '24px', background: '#ffffff', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
       <h1 style={{ fontSize: '24px', fontWeight: '900', color: '#0f172a', marginBottom: '20px', borderBottom: '3px solid #ff6897', paddingBottom: '10px' }}>🗺️ このサイトについて</h1>
-      <div style={{ lineHeight: '1.8', color: '#334155', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <p>「トリプルデートマップ」は、=LOVE（イコラブ）、≠ME（ノイミー）、≒JOY（ニアジョイ）のメンバーが訪れたロケ地や聖地を検索・共有できる非公式の聖地巡礼メディアサイトです。</p>
+      <div style={{ lineHeight: '1.8', color: '#334155', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <p>「トリプルデートマップ」は、指原莉乃プロデュースのアイドルグループ「＝LOVE（イコラブ）」「≠ME（ノイミー）」「≒JOY（ニアジョイ）」のメンバーが訪れたミュージックビデオ（MV）ロケ地、イベント会場、番組ロケ地等の聖地を検索・記録できる非公式の聖地巡礼ファンメディアです。</p>
         
-        <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginTop: '16px' }}>📌 サイトの目的</h2>
-        <p>当サイトは、ファン同士の交流や聖地巡礼文化の活性化を目的として運営されています。公式の情報や映像をもとに、ファン目線での詳細な解説や巡礼の際の注意点を提供し、安心・安全で楽しい巡礼ライフをサポートします。</p>
+        <div>
+          <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>📌 サイトの目的</h2>
+          <p>当サイトは、イコノイジョイの楽曲や映像作品の魅力をより深く体験し、ファン同士が安全かつマナーを守って聖地巡礼を楽しめる文化の活性化を目的として運営されています。作品の背景や現地の見どころ、アクセス、訪問時のマナーを分かりやすく整理・提供します。</p>
+        </div>
 
-        <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginTop: '16px' }}>📌 掲載情報の確認方針</h2>
-        <p>掲載されている聖地情報は、公式YouTube動画、公式SNS、および当サイト運営者や有志のファンによる現地確認情報をもとに作成しています。情報は可能な限り正確に保つよう努めておりますが、店舗の移転・閉店や施設の状況変化により、最新の情報と異なる場合があります。訪問の際は事前にお調べいただくようお願いいたします。</p>
+        <div>
+          <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>👤 運営者情報</h2>
+          <p>当サイトは、個人のファン・開発者である<strong>「れつぴ」</strong>（運営事務局）によって企画・開発・運営されています。<br/>
+          連絡先SNS：<a href="https://x.com/ikonoijoy_tools" target="_blank" rel="noopener noreferrer" style={{ color: '#ff6897', textDecoration: 'underline', fontWeight: 'bold' }}>@ikonoijoy_tools (X)</a></p>
+        </div>
 
-        <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginTop: '16px' }}>⚠️ 非公式ファンサイトであることの明記</h2>
-        <p>当サイトは個人が運営する<strong>非公式のファンサイト</strong>であり、各グループの所属事務所、関連レコード会社、および各自治体・施設運営者とは一切関係がありません。お問い合わせは当サイトの窓口へお願いいたします。</p>
+        <div>
+          <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>⚠️ 非公式ファンサイトであることの明記</h2>
+          <p>当サイトは個人が運営する<strong>非公式ファンサイト</strong>であり、各グループの所属事務所（代々木アニメーション学院等）、所属レコード会社（ソニー・ミュージックエンタテインメント、キングレコード等）、および各自治体・施設・店舗の運営元とは一切関係ありません。</p>
+        </div>
+
+        <div>
+          <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>📋 情報収集と掲載方針（公式情報と独自調査の区別）</h2>
+          <p>当サイトでは、公式YouTube動画、公式SNS、CDブックレット等の公表資料を最優先の根拠とし、管理者が現地景観や施設公式情報と照合する「独自調査」を行ってロケ地を特定・掲載しています。個人のSNSやブログのみの噂情報は掲載せず、特定根拠が不十分な場所は確認待ちとしています。詳細は<a href="#" onClick={(e) => { e.preventDefault(); onNavigate('/editorial-policy'); }} style={{ color: '#ff6897', textDecoration: 'underline', fontWeight: 'bold' }}>編集方針ページ</a>をご覧ください。</p>
+        </div>
+
+        <div>
+          <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>🔄 誤情報の修正と更新方針</h2>
+          <p>ロケ地情報や施設情報（営業時間、利用可否、移転等）は定期的に見直しを行っています。万が一掲載内容に誤りがある場合や施設の営業状況に変更が生じた場合は、ユーザー様からのご指摘を受け付け、速やかに調査・修正履歴の更新を行います。<a href="#" onClick={(e) => { e.preventDefault(); onNavigate('/contact'); }} style={{ color: '#ff6897', textDecoration: 'underline', fontWeight: 'bold' }}>お問い合わせフォーム</a>よりご連絡ください。</p>
+        </div>
+
+        <div>
+          <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>📰 広告掲載方針</h2>
+          <p>当サイトはサーバー維持費および現地調査・取材等の運営費用の一部を補うため、Google AdSenseをはじめとする第三者配信広告を掲載する場合があります。コンテンツの閲覧性を損なわない適切な配置に努め、薄いページや規約上不適切なページには広告を配信しません。</p>
+        </div>
+
+        <div>
+          <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>🛡️ 権利者様からの連絡窓口</h2>
+          <p>当サイトは著作権および肖像権の尊重を徹底しております。掲載内容（文章・画像・リンク等）に関して権利者様より削除・修正のご要望がございましたら、権利関係を確認の上、速やかに対応いたします。<a href="#" onClick={(e) => { e.preventDefault(); onNavigate('/contact'); }} style={{ color: '#ff6897', textDecoration: 'underline', fontWeight: 'bold' }}>お問い合わせ窓口</a>よりご連絡いただけますようお願い申し上げます。</p>
+        </div>
       </div>
-      <div style={{ textAlign: 'center', marginTop: '30px' }}>
+      <div style={{ textAlign: 'center', marginTop: '30px', display: 'flex', gap: '12px', justifyContent: 'center' }}>
+        <button onClick={() => onNavigate('/editorial-policy')} style={{ background: '#f8fafc', color: '#0f172a', border: '1px solid #cbd5e1', padding: '10px 20px', borderRadius: '20px', fontWeight: 'bold', cursor: 'pointer' }}>編集方針を見る</button>
+        <button onClick={() => onNavigate('/')} style={{ background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)', color: '#fff', border: 'none', padding: '10px 24px', borderRadius: '20px', fontWeight: 'bold', cursor: 'pointer' }}>マップへ戻る</button>
+      </div>
+    </div>
+  );
+};
+
+export const EditorialPolicyPage: React.FC<PageProps> = ({ onNavigate }) => {
+  return (
+    <div className="static-page-container" style={{ maxWidth: '800px', margin: '40px auto', padding: '24px', background: '#ffffff', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
+      <h1 style={{ fontSize: '24px', fontWeight: '900', color: '#0f172a', marginBottom: '20px', borderBottom: '3px solid #ff6897', paddingBottom: '10px' }}>📜 編集方針・ファクトチェック指針</h1>
+      <div style={{ lineHeight: '1.8', color: '#334155', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <p>「トリプルデートマップ」では、正確で信頼性の高い聖地巡礼情報を提供し、ファンが安心して訪問できるようにするため、以下の編集方針・検証基準を厳格に定めて運営しています。</p>
+
+        <div>
+          <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>1. 公式情報および施設公式情報の優先</h2>
+          <p>作品に紐づく聖地の特定においては、各グループの公式YouTube動画、公式SNS、公式ファンクラブ等の一次情報を最優先の調査元とします。また、施設名や所在地、利用条件の確認には、自治体や施設・店舗の公式サイト・公式発表資料を用います。</p>
+        </div>
+
+        <div>
+          <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>2. 個人ブログやSNSの噂のみを根拠にしない</h2>
+          <p>個人のブログ、掲示板、SNSの投稿のみを根拠としてスポットを「確定聖地」として登録することはありません。必ず公式MVや動画の映像シーンと、国土地理院地図・ストリートビュー・自治体資料・現地写真等の客観的特徴を多角的に比較照合した上で登録します。</p>
+        </div>
+
+        <div>
+          <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>3. 場所を特定できない情報は「確認待ち」とする</h2>
+          <p>映像に登場しても、具体的な施設名や公道上の位置が特定できない場合、または類似の風景が多く確証が得られない場所は登録せず、十分な照合情報が揃うまで「確認待ち」として扱います。推測や未確認情報を事実であるかのように掲載することはありません。</p>
+        </div>
+
+        <div>
+          <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>4. 住所・座標・施設名を公開前に多重照合</h2>
+          <p>すべてのスポットは、公開前に正式な施設名称、正確な所在地住所（郵便番号・都道府県・市区町村）、および地図座標（緯度・経度）を公的データベースや自治体情報と照合して設定しています。私有地や立ち入り禁止区域にピンが置かれないよう配慮しています。</p>
+        </div>
+
+        <div>
+          <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>5. 誤りが判明した場合は速やかに修正履歴を反映</h2>
+          <p>店舗の閉店、建物の解体、施設の利用規則変更、または特定箇所の誤りが判明した場合は、速やかにデータベースを修正し、必要に応じて更新日や注意事項を更新します。</p>
+        </div>
+
+        <div>
+          <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>6. 画像・動画の著作権・権利関係の尊重</h2>
+          <p>公式MVの紹介にはYouTube公式の標準埋め込みプレイヤーを使用し、公式動画の再生数が正当にカウントされる仕様を遵守しています。私有地や撮影専用スタジオ等の掲載にあたっては、敷地外からの見学マナーや注意事項を明記し、権利者・近隣住民への迷惑防止を徹底します。</p>
+        </div>
+      </div>
+      <div style={{ textAlign: 'center', marginTop: '30px', display: 'flex', gap: '12px', justifyContent: 'center' }}>
+        <button onClick={() => onNavigate('/about')} style={{ background: '#f8fafc', color: '#0f172a', border: '1px solid #cbd5e1', padding: '10px 20px', borderRadius: '20px', fontWeight: 'bold', cursor: 'pointer' }}>このサイトについてへ</button>
         <button onClick={() => onNavigate('/')} style={{ background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)', color: '#fff', border: 'none', padding: '10px 24px', borderRadius: '20px', fontWeight: 'bold', cursor: 'pointer' }}>マップへ戻る</button>
       </div>
     </div>

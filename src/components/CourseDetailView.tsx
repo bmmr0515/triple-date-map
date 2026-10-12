@@ -61,6 +61,33 @@ export const CourseDetailView: React.FC<CourseDetailProps> = ({ course, allSpots
             <strong style={{ fontSize: '14px', color: '#0f172a' }}>{course.recommended_time}</strong>
           </div>
         </div>
+        {course.start_point && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span style={{ fontSize: '18px' }}>🚩</span>
+            <div>
+              <span style={{ fontSize: '11px', color: '#64748b', display: 'block' }}>出発地 / 目的地</span>
+              <strong style={{ fontSize: '13px', color: '#0f172a' }}>{course.start_point} → {course.end_point}</strong>
+            </div>
+          </div>
+        )}
+        {course.estimated_cost && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span style={{ fontSize: '18px' }}>💰</span>
+            <div>
+              <span style={{ fontSize: '11px', color: '#64748b', display: 'block' }}>費用目安</span>
+              <strong style={{ fontSize: '13px', color: '#0f172a' }}>{course.estimated_cost}</strong>
+            </div>
+          </div>
+        )}
+        {course.updated_at && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span style={{ fontSize: '18px' }}>📅</span>
+            <div>
+              <span style={{ fontSize: '11px', color: '#64748b', display: 'block' }}>最終更新日</span>
+              <strong style={{ fontSize: '13px', color: '#0f172a' }}>{course.updated_at}</strong>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* 広告枠（コース中） */}

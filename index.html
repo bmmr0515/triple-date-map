@@ -1,85 +1,28 @@
 <!doctype html>
 <html lang="ja" class="app-loading">
   <head>
-    <!-- ⚡ FOUC対策用初期表示CSS (ヘッド最上部に配置) -->
+    <!-- ⚡ 初期表示用CSS -->
     <style>
-      html.app-loading body {
+      body {
         margin: 0;
-        overflow: hidden;
-        background: #0b1020;
+        background: #f8fafc;
+        color: #0f172a;
+        font-family: 'Outfit', 'Noto Sans JP', sans-serif;
       }
 
-      html.app-loading #root {
-        visibility: hidden;
+      #root {
+        min-height: 100vh;
       }
 
       html.app-loading #app-loader {
-        display: flex;
-      }
-
-      html.app-ready #root {
-        visibility: visible;
+        display: none;
       }
 
       html.app-ready #app-loader {
         display: none;
       }
-
-      #app-loader {
-        position: fixed;
-        inset: 0;
-        z-index: 999999;
-        align-items: center;
-        justify-content: center;
-        background: #0b1020;
-        font-family: 'Outfit', 'Noto Sans JP', sans-serif;
-        flex-direction: column;
-      }
-
-      .loader-spinner {
-        width: 48px;
-        height: 48px;
-        border: 4px solid rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        border-top-color: #ff6897; /* テーマカラー */
-        animation: spin 1s ease-in-out infinite;
-      }
-
-      @keyframes spin {
-        to { transform: rotate(360deg); }
-      }
-
-      #app-error[hidden] {
-        display: none !important;
-      }
-
-      #app-error {
-        position: fixed;
-        inset: 0;
-        z-index: 999999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #0b1020;
-        color: #f8fafc;
-        font-family: sans-serif;
-        font-size: 15px;
-        font-weight: bold;
-        text-align: center;
-        padding: 20px;
-      }
     </style>
-    <script>
-      // 8秒後に初期化成功（app-ready）していなければエラーを表示する
-      window.setTimeout(function() {
-        if (!document.documentElement.classList.contains('app-ready')) {
-          var loader = document.getElementById('app-loader');
-          if (loader) loader.setAttribute('hidden', '');
-          var errorEl = document.getElementById('app-error');
-          if (errorEl) errorEl.removeAttribute('hidden');
-        }
-      }, 8000);
-    </script>
+
     <meta charset="UTF-8" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4748794057004872"
          crossorigin="anonymous"></script>
@@ -90,24 +33,9 @@
 
 
     
-    <!-- 📄 メタデータ & SEO 最適化 -->
-    <title>トリプルデート・マップ | イコノイジョイ聖地巡礼</title>
-    <meta name="description" content="イコノイジョイ（=LOVE、≠ME、≒JOY）のロケ地・聖地巡礼マップ。位置情報（GPS）によるスタンプラリーやアワード称号コレクションを搭載した、ファンコミュニティ向けの非公式インフラアプリです。" />
-    <meta name="keywords" content="イコラブ, ノイミー, ニアジョイ, トリプルデート, 聖地巡礼, ロケ地, スタンプラリー, チェックイン, 位置情報" />
-    
-    <!-- 🌐 SNSシェア / OGP (Open Graph Protocol) 設定 (X/Twitter対応) -->
-    <meta property="og:title" content="トリプルデート・マップ | イコノイジョイ聖地巡礼" />
-    <meta property="og:description" content="イコノイジョイの聖地巡礼をもっと楽しく！GPSスタンプラリーで限定の称号やアワードを集めよう🗺️✨" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://triple-date-map.vercel.app/" />
-    <meta property="og:image" content="https://triple-date-map.vercel.app/ogp.png" />
-    <meta property="og:site_name" content="トリプルデート・マップ" />
-    <meta property="og:locale" content="ja_JP" />
-    
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="トリプルデート・マップ | イコノイジョイ聖地巡礼" />
-    <meta name="twitter:description" content="イコノイジョイの聖地巡礼をもっと楽しく！GPSスタンプラリーで限定の称号やアワードを集めよう🗺️✨" />
-    <meta name="twitter:image" content="https://triple-date-map.vercel.app/ogp.png" />
+    <!-- 📄 メタデータ & SEO (scripts/prerender.cjs によりページごとに固有生成) -->
+    <title>トリプルデートマップ - イコノイジョイ聖地巡礼ファンマップ</title>
+    <meta name="description" content="＝LOVE・≠ME・≒JOY（イコノイジョイ）のMVロケ地、ライブ会場、番組ロケ地を網羅した非公式聖地巡礼メディア。" />
     <!-- Google Fonts (Outfit & Noto Sans JP) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -131,15 +59,8 @@
     <script async src="https://ofuse.me/assets/platform/widget.js" charset="utf-8"></script>
   </head>
   <body>
-    <div id="app-loader" role="status" aria-label="読み込み中">
-      <div class="loader-spinner"></div>
-    </div>
-
-    <div id="app-error" hidden>
-      読み込みに失敗しました。ページを再読み込みしてください。
-    </div>
-
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
+
 </html>

@@ -1,5 +1,4 @@
 {
-  "rewrites": [
-    { "source": "/((?!ads\\.txt|robots\\.txt|favicon\\.ico|assets/.*|index\\.html).*)", "destination": "/index.html" }
-  ]
+  "cleanUrls": true,
+  "trailingSlash": false
 }

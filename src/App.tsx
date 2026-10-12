@@ -29,7 +29,7 @@ import AdminYouTubeAudit from './components/AdminYouTubeAudit';
 
 import { AdminPage } from './components/AdminPage';
 import { coursesDb, Course } from './courses';
-import { AboutPage, ProfilePage, DisclaimerPage, CopyrightPage, GuidePage, PrivacyPageContent, TermsPageContent } from './components/StaticPages';
+import { AboutPage, ProfilePage, DisclaimerPage, CopyrightPage, GuidePage, PrivacyPageContent, TermsPageContent, EditorialPolicyPage } from './components/StaticPages';
 import { SpotsListPage, AreasListPage, GroupsListPage, SongsListPage, CoursesListPage } from './components/ListViews';
 import { SpotDetailView } from './components/SpotDetailView';
 import { CourseDetailView } from './components/CourseDetailView';
@@ -728,7 +728,7 @@ export default function App() {
 
     const validPaths = [
       '/spots', '/areas', '/groups', '/songs', '/courses', '/guide',
-      '/about', '/profile', '/contact', '/privacy', '/terms', '/disclaimer', '/copyright',
+      '/about', '/editorial-policy', '/profile', '/contact', '/privacy', '/terms', '/disclaimer', '/copyright',
       '/articles'
     ];
     
@@ -1674,8 +1674,9 @@ ${window.location.origin + window.location.pathname}
               case '/admin/youtube-audit':
                 return <AdminYouTubeAudit />;
               case '/about':
-
                 return <AboutPage onNavigate={navigateTo} />;
+              case '/editorial-policy':
+                return <EditorialPolicyPage onNavigate={navigateTo} />;
               case '/profile':
                 return <ProfilePage onNavigate={navigateTo} />;
               case '/disclaimer':
@@ -1706,7 +1707,7 @@ ${window.location.origin + window.location.pathname}
                 return <div style={{ textAlign: 'center', padding: '100px 20px', fontSize: '14px', color: '#64748b' }}>コラムが見つかりません。</div>;
               }
               case '/spots/:slug': {
-                const spot = spots.find(s => s.slug === currentRoute.params.slug);
+                const spot = spots.find(s => s.slug === currentRoute.params.slug || s.id === currentRoute.params.slug);
                 if (spot) {
                   return <SpotDetailView spot={spot} allSpots={spots} onNavigate={navigateTo} onViewOnMap={handleViewOnMap} />;
                 }
@@ -1742,6 +1743,8 @@ ${window.location.origin + window.location.pathname}
               <a href="/articles" onClick={(e) => { e.preventDefault(); navigateTo('/articles'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>巡礼コラム・レポート</a>
               <span style={{ color: '#334155' }}>|</span>
               <a href="/about" onClick={(e) => { e.preventDefault(); navigateTo('/about'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>このサイトについて</a>
+              <span style={{ color: '#334155' }}>|</span>
+              <a href="/editorial-policy" onClick={(e) => { e.preventDefault(); navigateTo('/editorial-policy'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>編集方針</a>
               <span style={{ color: '#334155' }}>|</span>
               <a href="/profile" onClick={(e) => { e.preventDefault(); navigateTo('/profile'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>運営者情報</a>
               <span style={{ color: '#334155' }}>|</span>
@@ -2699,6 +2702,8 @@ ${window.location.origin + window.location.pathname}
               <footer style={{ background: '#0f172a', color: '#94a3b8', padding: '40px 20px', borderTop: '1px solid #1e293b', borderRadius: '24px', fontSize: '11px', textAlign: 'center', marginTop: '20px' }}>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'center', fontWeight: 'bold', marginBottom: '20px' }}>
                   <a href="/about" onClick={(e) => { e.preventDefault(); navigateTo('/about'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>このサイトについて</a>
+                  <span style={{ color: '#334155' }}>|</span>
+                  <a href="/editorial-policy" onClick={(e) => { e.preventDefault(); navigateTo('/editorial-policy'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>編集方針</a>
                   <span style={{ color: '#334155' }}>|</span>
                   <a href="/profile" onClick={(e) => { e.preventDefault(); navigateTo('/profile'); }} style={{ color: '#cbd5e1', textDecoration: 'none' }}>運営者情報</a>
                   <span style={{ color: '#334155' }}>|</span>
