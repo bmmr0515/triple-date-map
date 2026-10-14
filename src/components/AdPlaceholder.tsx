@@ -2,47 +2,39 @@ import React from 'react';
 
 interface AdPlaceholderProps {
   children?: React.ReactNode;
+  className?: string;
+  label?: string;
 }
 
-export const AdPlaceholder: React.FC<AdPlaceholderProps> = ({ children }) => {
+/**
+ * 広告配信コンテナ
+ * - children（実際のAdSenseコードやアフィリエイトバナー）が存在する場合のみ表示します。
+ * - 広告未設定・未配信時はダミー枠を表示せず null を返し、レイアウト崩れや「未完成コンテンツ」判定を防ぎます。
+ */
+export const AdPlaceholder: React.FC<AdPlaceholderProps> = ({ children, className, label = 'SPONSORED' }) => {
+  if (!children) {
+    return null;
+  }
+
   return (
-    <div style={{
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      margin: '24px 0',
-      padding: '16px 0',
-      borderTop: '1px solid #f1f5f9',
-      borderBottom: '1px solid #f1f5f9'
-    }}>
-      <span style={{ fontSize: '9px', color: '#cbd5e1', marginBottom: '8px', letterSpacing: '0.05em' }}>
-        SPONSORED
+    <div 
+      className={className}
+      style={{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: '24px 0',
+        padding: '16px 0',
+        borderTop: '1px solid #f1f5f9',
+        borderBottom: '1px solid #f1f5f9'
+      }}
+    >
+      <span style={{ fontSize: '9px', color: '#94a3b8', marginBottom: '8px', letterSpacing: '0.05em', fontWeight: 'bold' }}>
+        {label}
       </span>
-      {children ? (
-        children
-      ) : (
-        <div style={{
-          width: '100%',
-          maxWidth: '336px',
-          minHeight: '250px',
-          background: '#f8fafc',
-          borderRadius: '12px',
-          border: '1.5px dashed #cbd5e1',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: '#94a3b8',
-          fontSize: '11px',
-          gap: '8px'
-        }}>
-          {/* 将来的にGoogle AdSenseやASPバナーを配置する安全なコンテナ */}
-          <span style={{ fontSize: '18px' }}>📰</span>
-          <span>広告プレースホルダー (レクタングル広告)</span>
-        </div>
-      )}
+      {children}
     </div>
   );
 };

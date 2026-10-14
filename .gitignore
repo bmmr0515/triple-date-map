@@ -13,6 +13,12 @@ dist
 dist-ssr
 *.local
 
+# Environment Variables
+.env
+.env.*
+*.env
+!.env.example
+
 # OS Files
 .DS_Store
 Thumbs.db

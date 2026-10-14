@@ -376,11 +376,19 @@ export const PrivacyPageContent: React.FC<PageProps> = ({ onNavigate }) => {
           </ul>
         </div>
 
-        <h2 style={{ fontSize: '16px', fontWeight: 'bold', color: '#0f172a', margin: '10px 0 0 0' }}>4. 広告・アクセス解析ツールの利用について</h2>
+        <h2 style={{ fontSize: '16px', fontWeight: 'bold', color: '#0f172a', margin: '10px 0 0 0' }}>4. 広告の配信およびCookie（クッキー）について</h2>
         <ul style={{ margin: '0 0 0 20px', padding: 0, display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <li>当サービスは、第三者配信の広告サービス（Google AdSense）を利用しています。</li>
-          <li>Googleなどの広告配信事業者は、Cookie（クッキー）を使用して、ユーザーが当サイトや他のウェブサイトに過去にアクセスした際の情報に基づき、適切な広告を配信します。ユーザーはGoogleの広告設定でパーソナライズ広告を無効にできます。</li>
+          <li>当サービスは、第三者配信の広告サービス（Google AdSense等）を利用しています。</li>
+          <li>Googleなどの広告配信事業者は、ユーザーの興味に応じた広告を表示するためにCookie（クッキー）を使用することがあります。ユーザーは<a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" style={{ color: '#ff6897' }}>Googleの広告設定</a>でパーソナライズ広告を無効に設定できます。</li>
           <li>当サービスではトラフィックデータの収集のためにアクセス解析ツール（Google Analytics、Vercel Analytics等）を使用しています。これらはCookieを使用しますが、データは匿名で収集されており、個人を特定するものではありません。</li>
+        </ul>
+
+        <h2 style={{ fontSize: '16px', fontWeight: 'bold', color: '#0f172a', margin: '10px 0 0 0' }}>5. アフィリエイトプログラムに関する表記</h2>
+        <ul style={{ margin: '0 0 0 20px', padding: 0, display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <li>当サービスは、各種アフィリエイトプログラム（じゃらんnet、楽天トラベル、A8.net等のアフィリエイトサービスプロバイダ）に参加しています。</li>
+          <li>当サイトで紹介する一部のリンクを経由して宿泊予約や旅行商品の申し込みが行われた場合、当サービスに紹介料が支払われることがあります。</li>
+          <li>提携リンクを含むコンテンツにおいては、利用者の皆様への透明性を確保するため「PR」「プロモーション」等の表記を行い、適切な属性（rel="sponsored"）を設定しています。</li>
+          <li>紹介している宿泊施設・交通機関・旅行プラン等の契約・購入および利用に関しては、各提携先事業者の利用規約およびプライバシーポリシーが適用されます。</li>
         </ul>
       </div>
       <div style={{ textAlign: 'center', marginTop: '30px' }}>
