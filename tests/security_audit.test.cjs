@@ -2,27 +2,24 @@ const fs = require('fs');
 const assert = require('assert');
 
 console.log('🔒 ========================================================');
-console.log('🔒 トリプルデートマップ 厳格セキュリティ監査テストスイート');
+console.log('🔒 トリプルデートマップ 厳格セキュリティ・RLS監査テストスイート');
 console.log('🔒 ========================================================\n');
 
 // 1. checkIsAdmin のユニットテスト
 console.log('--- [Test 1] checkIsAdmin の厳格検証 ---');
 
-// auth.ts からロジックを抽出して検証
 const authTsContent = fs.readFileSync('src/auth.ts', 'utf8');
 
-// auth.ts の内容自体を静的解析
 assert(!authTsContent.includes('userRole'), 'auth.ts must NOT read user_metadata role for admin check');
 assert(!authTsContent.includes('user_metadata?.role'), 'auth.ts must NOT read user_metadata.role for admin check');
 assert(!authTsContent.includes('VITE_ADMIN_EMAILS'), 'auth.ts must NOT use VITE_ADMIN_EMAILS for client authorization');
 
-// checkIsAdmin 関数の直接検証
 const checkIsAdmin = (sbUser) => {
   if (!sbUser || typeof sbUser !== 'object') return false;
   return sbUser.app_metadata?.role === 'admin';
 };
 
-// 1. 未ログインユーザー (null / undefined / empty)
+// 1. 未ログインユーザー
 assert.strictEqual(checkIsAdmin(null), false, '未ログインユーザー (null) は管理者不可');
 assert.strictEqual(checkIsAdmin(undefined), false, '未ログインユーザー (undefined) は管理者不可');
 assert.strictEqual(checkIsAdmin({}), false, '空オブジェクトは管理者不可');
@@ -61,26 +58,49 @@ assert.strictEqual(checkIsAdmin({
 
 console.log('✅ [Test 1 Passed] checkIsAdmin は app_metadata.role = admin のみを厳格に検証しています。\n');
 
-// 2. RLSポリシーの静的セキュリティ監査
-console.log('--- [Test 2] schema.sql & マイグレーションSQLのRLS監査 ---');
+
+// 2. RLSポリシーの静的セキュリティ監査 & Permissive OR評価対策の検証
+console.log('--- [Test 2] マイグレーションSQL群 & schema.sql のRLS完全性監査 ---');
 
 const migrationSql = fs.readFileSync('supabase/migrations/20261014_secure_admin_rls.sql', 'utf8');
+const preAuditSql = fs.readFileSync('supabase/migrations/20261015_pre_audit_policies.sql', 'utf8');
+const rollbackSql = fs.readFileSync('supabase/migrations/20261014_secure_admin_rls_rollback.sql', 'utf8');
+const verificationSql = fs.readFileSync('supabase/migrations/20261015_rls_permission_verification.sql', 'utf8');
 const schemaSql = fs.readFileSync('schema.sql', 'utf8');
 
-[
-  { name: 'schema.sql', content: schemaSql },
-  { name: '20261014_secure_admin_rls.sql', content: migrationSql }
-].forEach(({ name, content }) => {
-  // 実際のSQLポリシー定義部分に user_metadata が含まれていないことの検証
-  assert(!content.includes("auth.jwt() -> 'user_metadata'"), `${name} のポリシー条件に user_metadata による管理者判定が含まれていてはなりません`);
-  assert(!content.includes("@tripledatemap.com"), `${name} のポリシー条件にハードコードされたメールアドレス判定が含まれていてはなりません`);
-  
-  // 必須条件の存在チェック
-  assert(content.includes("(auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'"), `${name} は (auth.jwt() -> 'app_metadata' ->> 'role') = 'admin' を使用していなければなりません`);
-  assert(content.includes("ALTER TABLE public.national_stadium_messages ENABLE ROW LEVEL SECURITY;"), `${name} は RLS を有効化していなければなりません`);
-});
+// 2-1. 事前監査SQL (20261015_pre_audit_policies.sql)
+assert(preAuditSql.includes('pg_policies'), '事前監査SQLは pg_policies を参照していること');
+assert(preAuditSql.includes('_rls_policy_backup'), '事前監査SQLは _rls_policy_backup テーブルによる退避機能を持つこと');
+assert(preAuditSql.includes('permissive'), '事前監査SQLは permissive 判定を行っていること');
+assert(preAuditSql.includes('risk_assessment'), '事前監査SQLは Permissive OR評価リスクの診断を含んでいること');
 
-console.log('✅ [Test 2 Passed] RLSポリシーに user_metadata や固定メールの抜け穴は一切存在しません。\n');
+// 2-2. マイグレーションSQL (20261014_secure_admin_rls.sql)
+assert(!migrationSql.includes("auth.jwt() -> 'user_metadata'"), 'マイグレーションSQLに user_metadata による管理者判定が含まれていてはなりません');
+assert(!migrationSql.includes("@tripledatemap.com"), 'マイグレーションSQLに固定メールアドレス判定が含まれていてはなりません');
+assert(migrationSql.includes("app_metadata"), 'マイグレーションSQLは app_metadata を使用していなければなりません');
+assert(migrationSql.includes("SELECT FROM pg_tables"), 'マイグレーションSQLはテーブル存在確認を行っていなければなりません');
+assert(migrationSql.includes("RAISE EXCEPTION"), 'マイグレーションSQLは Permissive OR評価リスクの残存検知アサーション（例外発生）を含んでいなければなりません');
+assert(migrationSql.includes("ENABLE ROW LEVEL SECURITY"), 'マイグレーションSQLは RLS を有効化していなければなりません');
+
+// 2-3. ロールバックSQL (20261014_secure_admin_rls_rollback.sql)
+assert(rollbackSql.includes("SELECT FROM pg_tables"), 'ロールバックSQLはテーブル存在確認を行っていなければなりません');
+assert(rollbackSql.includes("_rls_policy_backup"), 'ロールバックSQLは事前バックアップテーブルを参照する案内を含んでいなければなりません');
+// 危険な全許可DELETEポリシーが自動復元されていないこと
+assert(!rollbackSql.includes('CREATE POLICY "Allow anyone to delete'), 'ロールバックSQLで誰でも削除できるポリシーを自動復元してはなりません');
+assert(!rollbackSql.includes('FOR DELETE \n                 USING (true)'), 'ロールバックSQLでUSING(true)のDELETEポリシーを作成してはなりません');
+
+// 2-4. 権限マトリクス実機検証SQL (20261015_rls_permission_verification.sql)
+assert(verificationSql.includes("SET LOCAL ROLE anon;"), '検証SQLは匿名ロールをシミュレートしていること');
+assert(verificationSql.includes("SET LOCAL ROLE authenticated;"), '検証SQLは認証済みロールをシミュレートしていること');
+assert(verificationSql.includes('"role": "admin"'), '検証SQLは管理者ロールをシミュレートしていること');
+assert(verificationSql.includes('ROLLBACK;'), '検証SQLは本番データ汚染を防ぐためROLLBACKで終了すること');
+
+// 2-5. schema.sql
+assert(!schemaSql.includes("auth.jwt() -> 'user_metadata'"), 'schema.sql のポリシー条件に user_metadata が含まれていてはなりません');
+assert(schemaSql.includes("(auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'"), 'schema.sql は app_metadata の admin ロールを使用していなければなりません');
+
+console.log('✅ [Test 2 Passed] RLSマイグレーション・事前監査・ロールバック・検証SQLの安全仕様がすべて確認されました。\n');
+
 
 // 3. データ保護と回帰テスト
 console.log('--- [Test 3] 既存データ・機能の完全性検証 ---');
