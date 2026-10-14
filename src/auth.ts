@@ -354,3 +354,134 @@ export const authService = {
     }
   }
 };
+
+/**
+ * 🔐 管理者権限の検証
+ * - Supabase Auth のユーザー情報（app_metadata.role や user_metadata.role）
+ * - または環境変数 VITE_ADMIN_EMAILS に登録されたメールアドレスリスト
+ * に基づいて厳格にサーバー/クライアント双方の整合性を持って管理者かどうかを判定します。
+ */
+export const checkIsAdmin = (sbUser: any): boolean => {
+  if (!sbUser) return false;
+
+  // 1. Supabase app_metadata または user_metadata によるロール検証
+  const appRole = sbUser.app_metadata?.role;
+  const userRole = sbUser.user_metadata?.role;
+  if (appRole === 'admin' || userRole === 'admin') {
+    return true;
+  }
+
+  // 2. 環境変数 VITE_ADMIN_EMAILS (カンマ区切り) に含まれているか照合
+  const adminEmailsEnv = (import.meta as any).env?.VITE_ADMIN_EMAILS || '';
+  if (adminEmailsEnv && sbUser.email) {
+    const allowed = adminEmailsEnv
+      .split(',')
+      .map((e: string) => e.trim().toLowerCase())
+      .filter(Boolean);
+    if (allowed.includes(sbUser.email.toLowerCase())) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+export const adminAuthService = {
+  /**
+   * 現在のセッションのSupabaseユーザーおよび管理者権限状態を取得
+   */
+  async getAdminSession(): Promise<{ isAuthenticated: boolean; isAdmin: boolean; email: string | null; user: any }> {
+    if (supabase) {
+      try {
+        const { data: { user }, error } = await supabase.auth.getUser();
+        if (error || !user) {
+          return { isAuthenticated: false, isAdmin: false, email: null, user: null };
+        }
+        const isAdmin = checkIsAdmin(user);
+        return {
+          isAuthenticated: true,
+          isAdmin,
+          email: user.email || null,
+          user
+        };
+      } catch (e) {
+        return { isAuthenticated: false, isAdmin: false, email: null, user: null };
+      }
+    }
+
+    // ローカル開発シミュレータ環境用フォールバック
+    const simSession = authService.getSession();
+    if (!simSession || !simSession.email) {
+      return { isAuthenticated: false, isAdmin: false, email: null, user: null };
+    }
+    const adminEmailsEnv = (import.meta as any).env?.VITE_ADMIN_EMAILS || 'admin@tripledatemap.com';
+    const allowed = adminEmailsEnv.split(',').map((e: string) => e.trim().toLowerCase()).filter(Boolean);
+    const isSimAdmin = allowed.includes(simSession.email.toLowerCase()) || simSession.email.startsWith('admin');
+    return {
+      isAuthenticated: true,
+      isAdmin: isSimAdmin,
+      email: simSession.email,
+      user: simSession.user
+    };
+  },
+
+  /**
+   * Supabase Auth による管理者ログイン（サーバー側でパスワード検証）
+   */
+  async signIn(email: string, password: string): Promise<{ success: boolean; isAdmin?: boolean; error?: string }> {
+    if (supabase) {
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: email.trim(),
+          password
+        });
+        if (error) {
+          return { success: false, error: error.message };
+        }
+        if (!data.user) {
+          return { success: false, error: 'ユーザー情報の取得に失敗しました。' };
+        }
+
+        const isAdmin = checkIsAdmin(data.user);
+        if (!isAdmin) {
+          return {
+            success: true,
+            isAdmin: false,
+            error: 'このアカウントには管理者権限がありません。管理者用メールアドレスでログインしてください。'
+          };
+        }
+
+        return { success: true, isAdmin: true };
+      } catch (err: any) {
+        return { success: false, error: err.message || '管理者ログイン処理中にエラーが発生しました。' };
+      }
+    }
+
+    // ローカル開発シミュレータ用
+    const res = await authService.signIn(email, password);
+    if (!res.success) {
+      return { success: false, error: res.error };
+    }
+    const session = authService.getSession();
+    const adminEmailsEnv = (import.meta as any).env?.VITE_ADMIN_EMAILS || 'admin@tripledatemap.com';
+    const allowed = adminEmailsEnv.split(',').map((e: string) => e.trim().toLowerCase()).filter(Boolean);
+    const isSimAdmin = session?.email ? (allowed.includes(session.email.toLowerCase()) || session.email.startsWith('admin')) : false;
+
+    if (!isSimAdmin) {
+      return {
+        success: true,
+        isAdmin: false,
+        error: 'このアカウントには管理者権限がありません。'
+      };
+    }
+    return { success: true, isAdmin: true };
+  },
+
+  /**
+   * 管理者ログアウト
+   */
+  async signOut(): Promise<void> {
+    await authService.signOut();
+  }
+};
+
