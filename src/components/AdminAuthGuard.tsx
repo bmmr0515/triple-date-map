@@ -161,7 +161,7 @@ export const AdminAuthGuard: React.FC<AdminAuthGuardProps> = ({
             現在のアカウント（<strong>{adminEmail || '未設定'}</strong>）には管理者権限が付与されていません。
           </p>
           <p style={{ fontSize: '12px', color: '#94a3b8', margin: '0 0 28px 0', lineHeight: '1.5' }}>
-            Supabaseのダッシュボードにて、管理者のメールアドレスを設定するか、<code>app_metadata.role = 'admin'</code> を付与してください。
+            Supabaseの管理権限（SQL Editor等）にて、該当アカウントの <code>app_metadata</code> に <code>role: 'admin'</code> を安全に付与してください。
           </p>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
