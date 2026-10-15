@@ -132,4 +132,15 @@ assert(courseMatches && courseMatches.length === 10, `モデルコース数が10
 
 console.log('✅ [Test 3 Passed] 293件のスポットデータおよび10件のモデルコースが100%完全保護されています。\n');
 
+
+// 4. 認証エラーハンドリング & X OAuth フォールバック検証
+console.log('--- [Test 4] 認証エラーハンドリング & X/Twitter OAuth フォールバック検証 ---');
+
+assert(authTsContent.includes("provider: 'x'"), 'auth.ts は最新の OAuth 2.0 推奨プロバイダー x を使用していること');
+assert(authTsContent.includes("provider: 'twitter'"), 'auth.ts は旧設定・OAuth 1.0a 用の twitter フォールバックを備えていること');
+assert(authTsContent.includes('invalid login credentials'), 'auth.ts は Invalid login credentials 時の移行ガイダンスを備えていること');
+assert(authTsContent.includes('email not confirmed'), 'auth.ts は Email not confirmed 時のガイダンスを備えていること');
+
+console.log('✅ [Test 4 Passed] XログインのOAuth 2.0/1.0a両対応およびメールログイン移行エラーガイダンスが正常に設定されています。\n');
+
 console.log('🎉 すべての自動セキュリティ監査テストに合格しました！\n');

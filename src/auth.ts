@@ -233,12 +233,37 @@ export const authService = {
     if (supabase) {
       try {
         const { error } = await supabase.auth.signInWithPassword({
-          email,
+          email: email.trim(),
           password
         });
         if (error) throw error;
         return { success: true };
       } catch (err: any) {
+        const msg = (err?.message || '').toLowerCase();
+
+        // 🔑 認証情報不一致 (Invalid login credentials)
+        if (msg.includes('invalid login credentials') || msg.includes('invalid_credentials')) {
+          return {
+            success: false,
+            error:
+              'メールアドレスまたはパスワードが正しくありません。\n\n' +
+              '【新環境への移行に伴う重要なお知らせ】\n' +
+              '・新データベースへの移行に伴い、過去に作成されたアカウントは再登録が必要です。まだ新環境で登録されていない場合は「新規登録」をお試しください。\n' +
+              '・新規登録直後の場合は、確認メール内の認証リンクをクリックして認証を完了させてからログインしてください。'
+          };
+        }
+
+        // ✉️ メール確認未完了
+        if (msg.includes('email not confirmed')) {
+          return {
+            success: false,
+            error:
+              'メールアドレスの確認が完了していません。\n' +
+              'ご登録時に送信された確認メール内の認証リンクをクリックしてください。\n' +
+              '（※メールが届いていない場合は、迷惑メールフォルダをご確認いただくか、Supabase管理画面の「Authentication > Providers > Email」で「Confirm email」がOFFに設定されているかご確認ください）'
+          };
+        }
+
         return { success: false, error: err.message || 'ログインに失敗しました。' };
       }
     }
@@ -270,7 +295,7 @@ export const authService = {
     return { success: true };
   },
 
-  // 本物のX (Twitter) OAuth 認証画面へリダイレクト (Supabase twitter provider)
+  // 本物のX (Twitter) OAuth 認証画面へリダイレクト (Supabase X / Twitter provider)
   async signInWithX(): Promise<{ success: boolean; error?: string }> {
     // 本物のSupabaseクライアントが存在しない（環境変数が未設定）場合はエラーを返す
     if (!supabase) {
@@ -281,17 +306,39 @@ export const authService = {
     }
 
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        // 新しい X / Twitter (OAuth 2.0) プロバイダーには 'x' を指定します
+      // 1. まず最新の OAuth 2.0 推奨プロバイダー 'x' で試行
+      let { error } = await supabase.auth.signInWithOAuth({
         provider: 'x',
         options: {
-          // X認証の成功後に安全に戻るリダイレクトURLを設定
           redirectTo: window.location.origin
         }
       });
+
+      // 2. もし 'x' が未有効（古い設定やOAuth 1.0a側の設定等）の場合、'twitter' でフォールバック試行
+      if (error && (error.message.toLowerCase().includes('not enabled') || error.message.toLowerCase().includes('unsupported provider'))) {
+        console.warn('provider: x failed, trying fallback to twitter:', error.message);
+        const retry = await supabase.auth.signInWithOAuth({
+          provider: 'twitter',
+          options: {
+            redirectTo: window.location.origin
+          }
+        });
+        error = retry.error;
+      }
+
       if (error) throw error;
       return { success: true };
     } catch (err: any) {
+      const msg: string = (err?.message || '').toLowerCase();
+      if (msg.includes('not enabled') || msg.includes('unsupported provider')) {
+        return {
+          success: false,
+          error:
+            '⚠️ X (Twitter) ログイン機能が新Supabase環境で有効化されていません。\n\n' +
+            '【運営者向け設定手順】\n' +
+            'Supabase管理画面の「Authentication > Providers」で「X / Twitter (OAuth 2.0)」または「Twitter」を有効化（Enabled）し、Client IDとClient Secretを設定してください。'
+        };
+      }
       return { success: false, error: err.message || 'X認証の開始に失敗しました。' };
     }
   },
@@ -411,7 +458,17 @@ export const adminAuthService = {
         password
       });
       if (error) {
-        return { success: false, error: error.message };
+        const msg = (error.message || '').toLowerCase();
+        let userFacingError = error.message;
+        if (msg.includes('invalid login credentials') || msg.includes('invalid_credentials')) {
+          userFacingError =
+            'メールアドレスまたはパスワードが正しくありません。\n' +
+            '新Supabase環境（kdvzftmzhntbplkogosn）で管理者アカウントが作成されているかご確認ください。';
+        } else if (msg.includes('email not confirmed')) {
+          userFacingError =
+            '管理者アカウントのメールアドレス確認が未完了です。メール内のリンクをクリックするか、Supabase管理画面で手動確認（Confirm User）してください。';
+        }
+        return { success: false, error: userFacingError };
       }
       if (!data.user) {
         return { success: false, error: 'ユーザー情報の取得に失敗しました。' };
