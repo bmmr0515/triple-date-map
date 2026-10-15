@@ -38,6 +38,7 @@ import { ContactForm } from './components/ContactForm';
 import { INITIAL_ARTICLES } from './articles';
 import { ArticlesListPage, ArticleDetailView } from './components/ArticleViews';
 import { YouTubeEmbed } from './components/YouTubeEmbed';
+import { MigrationBanner } from './components/MigrationBanner';
 
 
 // 🔔 アプリ内新着お知らせのインターフェースとデータ定義
@@ -1647,6 +1648,7 @@ ${window.location.origin + window.location.pathname}
   if (currentRoute.path !== '/' && currentRoute.path !== '/admin/messages') {
     return (
       <div className="app-container" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#f8fafc', fontFamily: "'Outfit', 'Noto Sans JP', sans-serif" }}>
+        <MigrationBanner />
         {/* 共通ヘッダー */}
         <header className="app-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 24px', background: '#ffffff', borderBottom: '1.5px solid #e2e8f0', boxShadow: '0 4px 12px rgba(15, 23, 42, 0.02)' }}>
           <div className="header-left" onClick={() => navigateTo('/')} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 }}>
@@ -2249,6 +2251,7 @@ ${window.location.origin + window.location.pathname}
       )}
 
       {/* 1. 上部パネル (Header) */}
+      <MigrationBanner />
       <header className="app-header">
         <div className="header-left">
           <div className="header-icon-box">

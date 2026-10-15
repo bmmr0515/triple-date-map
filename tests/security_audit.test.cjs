@@ -99,11 +99,27 @@ assert(verificationSql.includes('ROLLBACK;'), '検証SQLは本番データ汚染
 assert(!schemaSql.includes("auth.jwt() -> 'user_metadata'"), 'schema.sql のポリシー条件に user_metadata が含まれていてはなりません');
 assert(schemaSql.includes("(auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'"), 'schema.sql は app_metadata の admin ロールを使用していなければなりません');
 
-console.log('✅ [Test 2 Passed] RLSマイグレーション・事前監査・ロールバック・検証SQLの安全仕様がすべて確認されました。\n');
+// 2-6. 新Supabase環境構築SQL (20261015_setup_new_project_kdvzftmzhntbplkogosn.sql)
+const newProjectSql = fs.readFileSync('supabase/migrations/20261015_setup_new_project_kdvzftmzhntbplkogosn.sql', 'utf8');
+assert(!newProjectSql.includes("auth.jwt() -> 'user_metadata'"), '新プロジェクト構築SQLに user_metadata による管理者判定が含まれていてはなりません');
+assert(newProjectSql.includes("(auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'"), '新プロジェクト構築SQLは app_metadata の admin ロールを使用していなければなりません');
+assert(newProjectSql.includes('national_stadium_messages'), '新プロジェクト構築SQLは national_stadium_messages テーブルを作成していること');
+assert(newProjectSql.includes('contact_inquiries'), '新プロジェクト構築SQLは contact_inquiries テーブルを作成していること');
+assert(newProjectSql.includes('ENABLE ROW LEVEL SECURITY'), '新プロジェクト構築SQLは RLS を有効化していること');
+assert(newProjectSql.includes('RAISE EXCEPTION'), '新プロジェクト構築SQLは Permissive OR評価リスクの検知アサーションを含んでいること');
+
+console.log('✅ [Test 2 Passed] RLSマイグレーション・事前監査・ロールバック・検証SQL・新プロジェクト構築SQLの安全仕様がすべて確認されました。\n');
 
 
-// 3. データ保護と回帰テスト
-console.log('--- [Test 3] 既存データ・機能の完全性検証 ---');
+// 3. データ保護と回帰テスト & UI告知バナー検証
+console.log('--- [Test 3] 既存データ・機能の完全性 & UI告知バナー検証 ---');
+
+// MigrationBanner の存在と App.tsx への組み込み検証
+const bannerContent = fs.readFileSync('src/components/MigrationBanner.tsx', 'utf8');
+const appContent = fs.readFileSync('src/App.tsx', 'utf8');
+assert(bannerContent.includes('システム移行のお知らせ'), 'MigrationBanner にシステム移行告知の文言が含まれていること');
+assert(bannerContent.includes('localStorage'), 'MigrationBanner は非表示状態を localStorage に保持できること');
+assert(appContent.includes('<MigrationBanner />'), 'App.tsx に MigrationBanner が組み込まれていること');
 
 const dbContent = fs.readFileSync('src/db.ts', 'utf8');
 const coursesContent = fs.readFileSync('src/courses.ts', 'utf8');
