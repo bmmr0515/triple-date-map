@@ -24,6 +24,7 @@ import { authService, AuthSession } from './auth';
 import { SupportSection } from './components/SupportSection';
 import { AdPlaceholder } from './components/AdPlaceholder';
 import AdminYouTubeAudit from './components/AdminYouTubeAudit';
+import { AdminAuthGuard } from './components/AdminAuthGuard';
 
 
 
@@ -860,11 +861,7 @@ export default function App() {
         
         // 🌟 ステート・キャッシュの完全初期化: 巡礼記録を即座に空にする
         setCheckins([]);
-        const adminAuth = sessionStorage.getItem('tdm_admin_authenticated');
         sessionStorage.clear();
-        if (adminAuth) {
-          sessionStorage.setItem('tdm_admin_authenticated', adminAuth);
-        }
       }
     });
 
@@ -1672,7 +1669,11 @@ ${window.location.origin + window.location.pathname}
           {(() => {
             switch (currentRoute.path) {
               case '/admin/youtube-audit':
-                return <AdminYouTubeAudit />;
+                return (
+                  <AdminAuthGuard title="YouTube監査ダッシュボード" onNavigateHome={navigateToHome}>
+                    <AdminYouTubeAudit />
+                  </AdminAuthGuard>
+                );
               case '/about':
                 return <AboutPage onNavigate={navigateTo} />;
               case '/editorial-policy':

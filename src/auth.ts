@@ -354,3 +354,90 @@ export const authService = {
     }
   }
 };
+
+/**
+ * 🔐 管理者権限の検証
+ * - 管理者権限の唯一の信頼できる根拠:
+ *   Supabaseの管理権限（service_role等）によってのみ付与可能な app_metadata.role = 'admin' のみを検証します。
+ * - ❌ user_metadata はクライアントから改変可能なため絶対に使用しません。
+ * - ❌ 環境変数のメールリストやメールアドレス接頭辞、localStorage等のクライアント側情報は一切使用しません。
+ */
+export const checkIsAdmin = (sbUser: any): boolean => {
+  if (!sbUser || typeof sbUser !== 'object') return false;
+  return sbUser.app_metadata?.role === 'admin';
+};
+
+export const adminAuthService = {
+  /**
+   * 現在のセッションのSupabaseユーザーおよび管理者権限状態を取得
+   * - Supabase未接続時は管理者操作を一切許可しない安全設計
+   */
+  async getAdminSession(): Promise<{ isAuthenticated: boolean; isAdmin: boolean; email: string | null; user: any }> {
+    if (!supabase) {
+      return { isAuthenticated: false, isAdmin: false, email: null, user: null };
+    }
+
+    try {
+      const { data: { user }, error } = await supabase.auth.getUser();
+      if (error || !user) {
+        return { isAuthenticated: false, isAdmin: false, email: null, user: null };
+      }
+      const isAdmin = checkIsAdmin(user);
+      return {
+        isAuthenticated: true,
+        isAdmin,
+        email: user.email || null,
+        user
+      };
+    } catch (e) {
+      return { isAuthenticated: false, isAdmin: false, email: null, user: null };
+    }
+  },
+
+  /**
+   * Supabase Auth による管理者ログイン（サーバー側でパスワード検証）
+   */
+  async signIn(email: string, password: string): Promise<{ success: boolean; isAdmin?: boolean; error?: string }> {
+    if (!supabase) {
+      return {
+        success: false,
+        error: 'Supabaseの接続設定が存在しないため、管理者機能は利用できません。'
+      };
+    }
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password
+      });
+      if (error) {
+        return { success: false, error: error.message };
+      }
+      if (!data.user) {
+        return { success: false, error: 'ユーザー情報の取得に失敗しました。' };
+      }
+
+      const isAdmin = checkIsAdmin(data.user);
+      if (!isAdmin) {
+        return {
+          success: true,
+          isAdmin: false,
+          error: 'このアカウントには管理者権限（app_metadata.role = "admin"）が付与されていません。'
+        };
+      }
+
+      return { success: true, isAdmin: true };
+    } catch (err: any) {
+      return { success: false, error: err.message || '管理者ログイン処理中にエラーが発生しました。' };
+    }
+  },
+
+  /**
+   * 管理者ログアウト
+   */
+  async signOut(): Promise<void> {
+    await authService.signOut();
+  }
+};
+
+

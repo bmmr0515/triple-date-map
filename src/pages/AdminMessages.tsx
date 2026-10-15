@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { db, StadiumMessage } from '../db';
-import { supabase } from '../auth';
-import { LogOut, Trash2, ArrowLeft, ShieldAlert, KeyRound } from 'lucide-react';
+import { supabase, adminAuthService } from '../auth';
+import { LogOut, Trash2, ArrowLeft, ShieldAlert } from 'lucide-react';
+import { AdminAuthGuard } from '../components/AdminAuthGuard';
 
 const MEMBER_MAP: { [key: string]: string } = {
   '#e9d5ff': '大谷 映美里 (薄紫)',
@@ -36,42 +37,34 @@ const getContrastTextColor = (hexColor: string): string => {
 };
 
 export default function AdminMessages() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [password, setPassword] = useState<string>('');
-  const [errorMsg, setErrorMsg] = useState<string>('');
+  const handleBackToMap = () => {
+    window.history.pushState({}, '', '/');
+    window.dispatchEvent(new Event('pushstate'));
+  };
+
+  return (
+    <AdminAuthGuard title="寄せ書き管理ダッシュボード" onNavigateHome={handleBackToMap}>
+      <AdminMessagesDashboard onNavigateHome={handleBackToMap} />
+    </AdminAuthGuard>
+  );
+}
+
+function AdminMessagesDashboard({ onNavigateHome }: { onNavigateHome: () => void }) {
   const [messages, setMessages] = useState<StadiumMessage[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [deleteLoadingId, setDeleteLoadingId] = useState<string | null>(null);
 
-  // パスワード定数定義 (.env から取得、なければフォールバック)
-  const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || import.meta.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'triple-date-admin-2026';
+  // 絞り込み用ステート
+  const [selectedColor, setSelectedColor] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
-  // 初回読み込み時にセッション確認
   useEffect(() => {
-    const isAuth = sessionStorage.getItem('tdm_admin_authenticated');
-    if (isAuth === 'true') {
-      setIsAuthenticated(true);
-      fetchMessages();
-    }
+    fetchMessages();
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (password === ADMIN_PASSWORD) {
-      sessionStorage.setItem('tdm_admin_authenticated', 'true');
-      setIsAuthenticated(true);
-      setErrorMsg('');
-      fetchMessages();
-    } else {
-      setErrorMsg('パスワードが正しくありません。');
-    }
-  };
-
-  const handleLogout = () => {
-    sessionStorage.removeItem('tdm_admin_authenticated');
-    setIsAuthenticated(false);
-    setPassword('');
-    setMessages([]);
+  const handleLogout = async () => {
+    await adminAuthService.signOut();
+    onNavigateHome();
   };
 
   const fetchMessages = async () => {
@@ -93,7 +86,7 @@ export default function AdminMessages() {
 
     setDeleteLoadingId(msgId);
     try {
-      // 1. Supabase から削除 (有効な場合)
+      // 1. Supabase から削除 (有効な場合 - 認証済みJWTが送信される)
       if (supabase) {
         const { error } = await supabase
           .from('national_stadium_messages')
@@ -119,170 +112,25 @@ export default function AdminMessages() {
     }
   };
 
-  const handleBackToMap = () => {
-    window.history.pushState({}, '', '/');
-    window.dispatchEvent(new Event('pushstate'));
-  };
+  // 絞り込みフィルタリング
+  const filteredMessages = messages.filter(msg => {
+    // メンバーカラーフィルター
+    if (selectedColor !== 'all' && msg.color !== selectedColor) {
+      return false;
+    }
+    // 検索語句フィルター (名前 or メッセージ本文)
+    if (searchQuery.trim() !== '') {
+      const query = searchQuery.toLowerCase();
+      const matchName = msg.name.toLowerCase().includes(query);
+      const matchMsg = msg.message.toLowerCase().includes(query);
+      return matchName || matchMsg;
+    }
+    return true;
+  });
 
-  // 1. 未認証時のログイン画面
-  if (!isAuthenticated) {
-    return (
-      <div style={{
-        height: '100vh',
-        overflowY: 'auto',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'radial-gradient(circle at top left, #1e1b4b 0%, #0f172a 100%)',
-        padding: '20px',
-        fontFamily: 'system-ui, -apple-system, sans-serif'
-      }}>
-        <div style={{
-          width: '100%',
-          maxWidth: '420px',
-          background: 'rgba(255, 255, 255, 0.05)',
-          backdropFilter: 'blur(16px)',
-          borderRadius: '24px',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
-          padding: '40px 30px',
-          textAlign: 'center',
-          animation: 'fade-in 0.3s ease-out'
-        }}>
-          <div style={{
-            width: '60px',
-            height: '60px',
-            borderRadius: '18px',
-            background: 'linear-gradient(135deg, #f59e0b 0%, #db2777 100%)',
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: '20px',
-            boxShadow: '0 8px 20px rgba(219,39,119,0.3)'
-          }}>
-            <ShieldAlert size={28} color="#ffffff" />
-          </div>
-
-          <h1 style={{
-            fontSize: '22px',
-            fontWeight: '900',
-            color: '#ffffff',
-            margin: '0 0 8px 0',
-            letterSpacing: '-0.02em'
-          }}>
-            管理者ダッシュボード
-          </h1>
-          <p style={{
-            fontSize: '13px',
-            color: '#94a3b8',
-            margin: '0 0 30px 0',
-            lineHeight: '1.5'
-          }}>
-            寄せ書きメッセージの管理を行うための専用ページです。アクセスにはパスワードが必要です。
-          </p>
-
-          <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <div style={{ position: 'relative' }}>
-              <span style={{
-                position: 'absolute',
-                left: '14px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                color: '#64748b',
-                display: 'flex',
-                alignItems: 'center'
-              }}>
-                <KeyRound size={18} />
-              </span>
-              <input
-                type="password"
-                placeholder="パスワードを入力"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '14px 16px 14px 44px',
-                  borderRadius: '14px',
-                  border: '1.5px solid rgba(255,255,255,0.1)',
-                  background: 'rgba(15, 23, 42, 0.6)',
-                  color: '#ffffff',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  outline: 'none',
-                  transition: 'all 0.2s',
-                  boxSizing: 'border-box'
-                }}
-                onFocus={(e) => e.target.style.borderColor = '#db2777'}
-                onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.1)'}
-                autoFocus
-              />
-            </div>
-
-            {errorMsg && (
-              <div style={{
-                fontSize: '12.5px',
-                fontWeight: 'bold',
-                color: '#f87171',
-                textAlign: 'left',
-                padding: '4px 8px'
-              }}>
-                ⚠️ {errorMsg}
-              </div>
-            )}
-
-            <button
-              type="submit"
-              style={{
-                background: 'linear-gradient(135deg, #f59e0b 0%, #db2777 100%)',
-                color: '#ffffff',
-                border: 'none',
-                borderRadius: '14px',
-                padding: '14px',
-                fontSize: '14px',
-                fontWeight: '900',
-                cursor: 'pointer',
-                boxShadow: '0 8px 20px rgba(219,39,119,0.25)',
-                transition: 'all 0.2s',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px'
-              }}
-            >
-              認証する
-            </button>
-          </form>
-
-          <button
-            onClick={handleBackToMap}
-            style={{
-              background: 'transparent',
-              border: 'none',
-              color: '#94a3b8',
-              fontSize: '13px',
-              fontWeight: '700',
-              marginTop: '24px',
-              cursor: 'pointer',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              transition: 'color 0.2s'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'}
-            onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}
-          >
-            <ArrowLeft size={14} />
-            地図に戻る
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  // 2. 認証済みの管理画面
   return (
     <div style={{
-      height: '100vh',
+      height: '100%',
       overflowY: 'auto',
       background: '#f8fafc',
       fontFamily: 'system-ui, -apple-system, sans-serif',
@@ -331,7 +179,7 @@ export default function AdminMessages() {
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <button
-              onClick={handleBackToMap}
+              onClick={onNavigateHome}
               className="pop-button"
               style={{
                 display: 'inline-flex',
@@ -378,173 +226,192 @@ export default function AdminMessages() {
       </header>
 
       {/* メインコンテンツ */}
-      <main style={{
-        maxWidth: '1200px',
-        margin: '32px auto',
-        padding: '0 24px',
-        boxSizing: 'border-box'
-      }}>
-        {/* ステータスカード */}
+      <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '24px' }}>
+        {/* 統計バー & フィルター */}
         <div style={{
           background: '#ffffff',
-          borderRadius: '20px',
+          borderRadius: '16px',
           border: '1px solid #e2e8f0',
-          padding: '20px 24px',
+          padding: '20px',
           marginBottom: '24px',
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: '16px'
+          flexDirection: 'column',
+          gap: '16px',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
         }}>
-          <div>
-            <h2 style={{ fontSize: '13px', color: '#64748b', margin: '0 0 4px 0', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              現在の投稿件数
-            </h2>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-              <span style={{ fontSize: '36px', fontWeight: '900', color: '#0f172a', lineHeight: 1 }}>
-                {messages.length}
+          {/* 上段: 総件数 & 検索バー */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '16px'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ fontSize: '13px', fontWeight: '800', color: '#64748b' }}>
+                総メッセージ数:
               </span>
-              <span style={{ fontSize: '14px', color: '#64748b', fontWeight: '700' }}>件</span>
+              <span style={{
+                fontSize: '20px',
+                fontWeight: '900',
+                color: '#db2777',
+                background: '#fdf2f8',
+                padding: '4px 12px',
+                borderRadius: '10px'
+              }}>
+                {messages.length} 件
+              </span>
+              {selectedColor !== 'all' || searchQuery ? (
+                <span style={{ fontSize: '12px', color: '#64748b' }}>
+                  (絞り込み: {filteredMessages.length} 件)
+                </span>
+              ) : null}
+            </div>
+
+            <div style={{ flex: 1, maxWidth: '360px' }}>
+              <input
+                type="text"
+                placeholder="名前や本文で検索..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '10px 14px',
+                  borderRadius: '10px',
+                  border: '1.5px solid #cbd5e1',
+                  background: '#f8fafc',
+                  fontSize: '13px',
+                  outline: 'none',
+                  boxSizing: 'border-box'
+                }}
+              />
             </div>
           </div>
 
-          <button
-            onClick={fetchMessages}
-            disabled={loading}
-            className="pop-button"
-            style={{
-              background: '#0f172a',
-              color: '#ffffff',
-              border: 'none',
-              borderRadius: '12px',
-              padding: '10px 20px',
-              fontSize: '13px',
-              fontWeight: '800',
-              cursor: loading ? 'not-allowed' : 'pointer',
-              opacity: loading ? 0.7 : 1,
-              transition: 'all 0.2s'
-            }}
-          >
-            {loading ? '再読み込み中...' : '🔄 データを更新'}
-          </button>
+          {/* 下段: メンバーカラーフィルターボタン */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+            <button
+              onClick={() => setSelectedColor('all')}
+              style={{
+                background: selectedColor === 'all' ? '#1e293b' : '#f1f5f9',
+                color: selectedColor === 'all' ? '#ffffff' : '#475569',
+                border: 'none',
+                borderRadius: '8px',
+                padding: '6px 12px',
+                fontSize: '11px',
+                fontWeight: '800',
+                cursor: 'pointer'
+              }}
+            >
+              全員表示
+            </button>
+            {Object.entries(MEMBER_MAP).map(([color, label]) => (
+              <button
+                key={color}
+                onClick={() => setSelectedColor(color)}
+                style={{
+                  background: selectedColor === color ? color : '#f1f5f9',
+                  color: selectedColor === color ? getContrastTextColor(color) : '#475569',
+                  border: selectedColor === color ? '1.5px solid #cbd5e1' : '1px solid transparent',
+                  borderRadius: '8px',
+                  padding: '6px 10px',
+                  fontSize: '11px',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                <span style={{
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '50%',
+                  background: color,
+                  border: '1px solid rgba(0,0,0,0.1)'
+                }} />
+                {label.split(' ')[0]}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* テーブルコンテナ */}
+        {/* メッセージ一覧テーブル */}
         <div style={{
           background: '#ffffff',
-          borderRadius: '20px',
+          borderRadius: '16px',
           border: '1px solid #e2e8f0',
           overflow: 'hidden',
-          boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)'
+          boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
         }}>
-          {loading && messages.length === 0 ? (
-            <div style={{ padding: '60px 0', textAlign: 'center', color: '#64748b' }}>
-              <div style={{ fontSize: '14px', fontWeight: '800' }}>データを取得しています...</div>
+          {loading ? (
+            <div style={{ padding: '40px', textAlign: 'center', color: '#64748b' }}>
+              データを読み込み中...
             </div>
-          ) : messages.length === 0 ? (
-            <div style={{ padding: '80px 0', textAlign: 'center', color: '#64748b' }}>
-              <span style={{ fontSize: '32px', display: 'block', marginBottom: '12px' }}>📭</span>
-              <div style={{ fontSize: '14px', fontWeight: '800' }}>まだメッセージの投稿がありません。</div>
+          ) : filteredMessages.length === 0 ? (
+            <div style={{ padding: '40px', textAlign: 'center', color: '#94a3b8' }}>
+              条件に一致するメッセージはありません。
             </div>
           ) : (
             <div style={{ overflowX: 'auto' }}>
-              <table style={{
-                width: '100%',
-                borderCollapse: 'collapse',
-                textAlign: 'left',
-                fontSize: '13px'
-              }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '13px' }}>
                 <thead>
-                  <tr style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
-                    <th style={{ padding: '16px 20px', fontWeight: '800', color: '#475569', width: '120px' }}>宛先メンバー</th>
-                    <th style={{ padding: '16px 20px', fontWeight: '800', color: '#475569', width: '120px' }}>ニックネーム</th>
-                    <th style={{ padding: '16px 20px', fontWeight: '800', color: '#475569' }}>メッセージ</th>
-                    <th style={{ padding: '16px 20px', fontWeight: '800', color: '#475569', width: '140px' }}>投稿日時</th>
-                    <th style={{ padding: '16px 20px', fontWeight: '800', color: '#475569', width: '150px' }}>デバイスID (照合用)</th>
-                    <th style={{ padding: '16px 20px', fontWeight: '800', color: '#475569', width: '80px', textAlign: 'center' }}>操作</th>
+                  <tr style={{ background: '#f8fafc', borderBottom: '1.5px solid #e2e8f0', color: '#64748b' }}>
+                    <th style={{ padding: '14px 16px', width: '130px' }}>宛先メンバー</th>
+                    <th style={{ padding: '14px 16px', width: '140px' }}>投稿者名</th>
+                    <th style={{ padding: '14px 16px' }}>メッセージ</th>
+                    <th style={{ padding: '14px 16px', width: '150px' }}>投稿日時</th>
+                    <th style={{ padding: '14px 16px', width: '80px', textAlign: 'center' }}>操作</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {messages.map((msg) => (
+                  {filteredMessages.map((msg, index) => (
                     <tr
                       key={msg.id}
                       style={{
-                        borderBottom: '1px solid #e2e8f0',
-                        transition: 'background 0.2s'
+                        borderBottom: '1px solid #f1f5f9',
+                        background: index % 2 === 0 ? '#ffffff' : '#fafafa'
                       }}
-                      onMouseEnter={(e) => e.currentTarget.style.background = '#f8fafc'}
-                      onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                     >
-                      {/* 宛先メンバー */}
-                      <td style={{ padding: '16px 20px' }}>
+                      <td style={{ padding: '14px 16px', verticalAlign: 'middle' }}>
                         <span style={{
-                          backgroundColor: msg.color,
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          background: msg.color,
                           color: getContrastTextColor(msg.color),
-                          padding: '4px 10px',
-                          borderRadius: '8px',
+                          padding: '4px 8px',
+                          borderRadius: '6px',
                           fontSize: '11px',
                           fontWeight: '800',
-                          border: '1px solid rgba(0,0,0,0.06)',
-                          display: 'inline-block',
-                          whiteSpace: 'nowrap'
+                          border: '1px solid rgba(0,0,0,0.08)'
                         }}>
-                          {MEMBER_MAP[msg.color] || `未定義 (${msg.color})`}
+                          {MEMBER_MAP[msg.color]?.split(' ')[0] || '全体'}
                         </span>
                       </td>
-
-                      {/* ニックネーム */}
-                      <td style={{ padding: '16px 20px', fontWeight: '700', color: '#0f172a' }}>
-                        {msg.name || '匿名オタク'}
+                      <td style={{ padding: '14px 16px', verticalAlign: 'middle', fontWeight: 'bold' }}>
+                        {msg.name}
                       </td>
-
-                      {/* メッセージ */}
-                      <td style={{
-                        padding: '16px 20px',
-                        lineHeight: '1.6',
-                        color: '#334155',
-                        fontWeight: '600',
-                        whiteSpace: 'pre-wrap',
-                        wordBreak: 'break-all'
-                      }}>
+                      <td style={{ padding: '14px 16px', verticalAlign: 'middle', lineHeight: '1.5', color: '#334155' }}>
                         {msg.message}
                       </td>
-
-                      {/* 投稿日時 */}
-                      <td style={{ padding: '16px 20px', color: '#64748b', fontWeight: '500', whiteSpace: 'nowrap' }}>
-                        {new Date(msg.created_at).toLocaleString('ja-JP', {
-                          year: 'numeric',
-                          month: '2-digit',
-                          day: '2-digit',
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}
+                      <td style={{ padding: '14px 16px', verticalAlign: 'middle', color: '#64748b', fontSize: '11.5px' }}>
+                        {new Date(msg.created_at).toLocaleString('ja-JP')}
                       </td>
-
-                      {/* デバイスID */}
-                      <td style={{ padding: '16px 20px', fontFamily: 'monospace', color: '#64748b', fontSize: '11px' }}>
-                        {msg.device_id ? msg.device_id.substring(0, 16) + '...' : 'N/A'}
-                      </td>
-
-                      {/* 削除ボタン */}
-                      <td style={{ padding: '16px 20px', textAlign: 'center' }}>
+                      <td style={{ padding: '14px 16px', verticalAlign: 'middle', textAlign: 'center' }}>
                         <button
                           onClick={() => handleDelete(msg.id)}
                           disabled={deleteLoadingId === msg.id}
-                          className="pop-button"
-                          title="削除"
                           style={{
                             background: '#fee2e2',
+                            color: '#ef4444',
                             border: 'none',
-                            borderRadius: '10px',
-                            width: '32px',
-                            height: '32px',
+                            borderRadius: '8px',
+                            padding: '6px',
+                            cursor: deleteLoadingId === msg.id ? 'not-allowed' : 'pointer',
                             display: 'inline-flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            cursor: 'pointer',
-                            color: '#ef4444',
-                            transition: 'all 0.2s',
                             opacity: deleteLoadingId === msg.id ? 0.5 : 1
                           }}
                         >

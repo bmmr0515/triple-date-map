@@ -3,6 +3,7 @@ import { Course } from '../courses';
 import { Spot } from '../db';
 import { Breadcrumb } from './ListViews';
 import { AdPlaceholder } from './AdPlaceholder';
+import { AffiliateSection } from './AffiliateSection';
 import { Clock, Navigation, CalendarDays, ExternalLink, Coffee } from 'lucide-react';
 
 interface CourseDetailProps {
@@ -167,6 +168,9 @@ export const CourseDetailView: React.FC<CourseDetailProps> = ({ course, allSpots
           </ul>
         </div>
       )}
+
+      {/* 周辺の宿泊・交通（アフィリエイト） */}
+      <AffiliateSection courseSlug={course.slug} area={course.start_point} />
 
       {/* 広告枠（下部） */}
       <AdPlaceholder />

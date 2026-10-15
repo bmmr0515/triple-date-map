@@ -71,11 +71,11 @@ const spots = rawSpots.map(spot => {
   }
   const status = spot.status || 'published';
   const address = spot.address || '日本、東京都周辺';
-  const nearest_station = spot.nearest_station || '最寄り駅情報なし';
-  const walk_time = spot.walk_time || '徒歩時間情報なし';
-  const scene = spot.scene || 'MVに登場した名場面シーン';
-  const visitor_notes = spot.visitor_notes || '近隣住民の方へのご迷惑にならないようマナーを守って節度ある行動をお願いします。';
-  const check_points = spot.check_points || ['現地での記念撮影', '周辺の散策'];
+  const nearest_station = spot.nearest_station || '';
+  const walk_time = spot.walk_time || '';
+  const scene = (spot.scene && spot.scene !== 'MVに登場した名場面シーン') ? spot.scene : '';
+  const visitor_notes = spot.visitor_notes || '';
+  const check_points = (spot.check_points && spot.check_points.length > 0 && !(spot.check_points.length === 2 && spot.check_points[0] === '現地での記念撮影' && spot.check_points[1] === '周辺の散策')) ? spot.check_points : [];
   const last_confirmed_date = spot.last_confirmed_date || '2026-10-12';
   
   return {
@@ -606,7 +606,7 @@ const buildPageContent = (route) => {
 
             <div style="background: #f8fafc; border-radius: 12px; padding: 14px 18px; font-size: 13px; color: #475569; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px;">
               <div><strong>📍 所在地:</strong> ${s.address || '未指定'}</div>
-              <div><strong>🚉 最寄り駅:</strong> ${s.nearest_station || '最寄り駅情報なし'} ${s.walk_time ? `(徒歩${s.walk_time})` : ''}</div>
+              ${s.nearest_station ? `<div><strong>🚉 最寄り駅:</strong> ${s.nearest_station} ${s.walk_time ? `(徒歩${s.walk_time})` : ''}</div>` : ''}
               ${s.event_date ? `<div><strong>📅 関連日:</strong> ${s.event_date}</div>` : ''}
               <div><strong>📅 最終確認日:</strong> ${s.last_confirmed_date}</div>
             </div>
@@ -637,18 +637,20 @@ ${s.description}
             </p>
             ` : ''}
 
+            ${(s.check_points && s.check_points.length > 0) ? `
             <h2 style="font-size: 18px; font-weight: bold; color: #0f172a; margin-top: 24px; border-left: 4px solid #ff6897; padding-left: 10px;">
               👀 現地注目チェックポイント
             </h2>
             <ul style="font-size: 13.5px; line-height: 1.8; color: #334155; margin: 0 0 24px 20px; padding: 0;">
               ${s.check_points.map(cp => `<li>${cp}</li>`).join('')}
             </ul>
+            ` : ''}
 
             <h2 style="font-size: 18px; font-weight: bold; color: #0f172a; margin-top: 24px; border-left: 4px solid #f59e0b; padding-left: 10px;">
               ⚠️ 訪問時の注意事項・巡礼マナー
             </h2>
             <div style="background: #fffbeb; border: 1px solid #fef3c7; border-radius: 12px; padding: 16px; font-size: 13px; color: #92400e; line-height: 1.7;">
-              ${s.visitor_notes}
+              ${s.visitor_notes || '学校や私有地への無断立ち入りを避け、近隣住民や一般利用者のご迷惑にならないようマナーを守って巡礼をお楽しみください。店舗利用時は他のお客様への配慮をお願いいたします。'}
             </div>
 
             ${s.youtube_title || s.youtube_url ? `
@@ -1081,8 +1083,12 @@ ${s.description}
               <p>聖地チェックイン機能を利用する際、ユーザーの現在地情報を一時的に取得します。この情報は距離判定にのみ使用され、移動履歴としてサーバーに保存・追跡されることはありません。</p>
             </div>
             <div>
-              <h2 style="font-size: 16px; font-weight: bold; color: #0f172a; margin: 0 0 8px 0;">3. 広告・アクセス解析ツールの利用</h2>
-              <p>当サービスでは第三者配信の広告サービス（Google AdSense）およびアクセス解析ツールを利用しています。これらはCookieを使用して適切な広告配信や利用状況分析を行いますが、個人を特定する情報は含まれません。ユーザーはブラウザ設定でCookieを無効にできます。</p>
+              <h2 style="font-size: 16px; font-weight: bold; color: #0f172a; margin: 0 0 8px 0;">3. 広告の配信およびCookie（クッキー）について</h2>
+              <p>当サービスでは第三者配信の広告サービス（Google AdSense等）およびアクセス解析ツールを利用しています。これらはCookieを使用して適切な広告配信や利用状況分析を行いますが、個人を特定する情報は含まれません。ユーザーはブラウザ設定やGoogle広告設定でCookie・パーソナライズ広告を無効にできます。</p>
+            </div>
+            <div>
+              <h2 style="font-size: 16px; font-weight: bold; color: #0f172a; margin: 0 0 8px 0;">4. アフィリエイトプログラムに関する表記</h2>
+              <p>当サービスは、各種アフィリエイトプログラム（じゃらんnet、楽天トラベル、A8.net等のアフィリエイトサービスプロバイダ）に参加しています。当サイト内のリンクを経由して宿泊予約や旅行商品の申し込みが行われた場合、当サービスに紹介料が支払われることがあります。提携リンクを含むコンテンツにおいては「PR」「プロモーション」等の表記を行い、適切な属性（rel="sponsored"）を設定しています。</p>
             </div>
           </div>
           <div style="text-align: center; margin-top: 30px;">
