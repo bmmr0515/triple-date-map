@@ -47,6 +47,84 @@ export const supabase = isRealBaaSConfigured
 // イベントリスナーの管理 (モックおよびSupabase両用)
 const listeners: AuthStateCallback[] = [];
 
+// 🔑 パスワードリカバリー専用リスナーの管理
+export interface PasswordRecoveryState {
+  isRecovery: boolean;
+  error?: string;
+}
+
+type PasswordRecoveryCallback = (state: PasswordRecoveryState) => void;
+const recoveryListeners: PasswordRecoveryCallback[] = [];
+let currentRecoveryState: PasswordRecoveryState = { isRecovery: false };
+
+/**
+ * 🛡️ 認証URLトークンのサニタイズ (要件: トークンをログや分析ツールへ送信しない)
+ * URLに含まれる access_token, refresh_token, code などの認証情報を
+ * 履歴・分析ツール・外部リンクのリファラーから保護するため、即座にURLバーから除去します。
+ */
+export const sanitizeUrlTokens = () => {
+  if (typeof window === 'undefined') return;
+  try {
+    const hash = window.location.hash || '';
+    const search = window.location.search || '';
+    const hasTokens = 
+      hash.includes('access_token') ||
+      hash.includes('type=recovery') ||
+      hash.includes('error=') ||
+      search.includes('code=') ||
+      search.includes('error=');
+
+    if (hasTokens) {
+      window.history.replaceState(null, document.title, window.location.pathname);
+    }
+  } catch (e) {
+    console.error('Failed to sanitize URL tokens:', e);
+  }
+};
+
+// URL初期ロード時およびハッシュ変更時のパスワードリカバリートークン・エラーの直接検知
+const checkUrlForRecovery = () => {
+  if (typeof window === 'undefined') return;
+  const hash = window.location.hash || '';
+  const search = window.location.search || '';
+
+  // 1. 有効期限切れ・無効リンクの検知
+  if (hash.includes('error=') || search.includes('error=')) {
+    const rawParams = hash.includes('error=') ? hash.replace(/^#/, '') : search.replace(/^\?/, '');
+    const params = new URLSearchParams(rawParams);
+    const errorCode = params.get('error_code');
+    const errorDescription = params.get('error_description') || params.get('error') || '';
+
+    if (
+      errorCode === 'otp_expired' ||
+      errorCode === 'access_denied' ||
+      errorDescription.toLowerCase().includes('expired') ||
+      errorDescription.toLowerCase().includes('invalid')
+    ) {
+      currentRecoveryState = {
+        isRecovery: true,
+        error: 'パスワード再設定リンクの有効期限が切れているか、すでに使用されています。お手数ですが、再度パスワード再設定メールを送信してください。'
+      };
+      sanitizeUrlTokens();
+      setTimeout(() => {
+        recoveryListeners.forEach(cb => cb(currentRecoveryState));
+      }, 50);
+    }
+  } else if (hash.includes('type=recovery') || search.includes('type=recovery')) {
+    // 2. 正常なリカバリートークンを含むURLの検知
+    currentRecoveryState = { isRecovery: true };
+    setTimeout(() => {
+      sanitizeUrlTokens();
+      recoveryListeners.forEach(cb => cb(currentRecoveryState));
+    }, 50);
+  }
+};
+
+if (typeof window !== 'undefined') {
+  checkUrlForRecovery();
+  window.addEventListener('hashchange', checkUrlForRecovery);
+}
+
 // Supabaseセッションから既存のUser型へ変換・同期するヘルパー
 const mapSupabaseUserToTdmUser = (sbUser: any): User => {
   const metadata = sbUser.user_metadata || {};
@@ -64,6 +142,14 @@ const mapSupabaseUserToTdmUser = (sbUser: any): User => {
 if (supabase) {
   supabase.auth.onAuthStateChange(async (event, session) => {
     console.log('🔔 Supabase Auth Event:', event);
+
+    // 🔑 PASSWORD_RECOVERY イベントの明示的捕捉
+    if (event === 'PASSWORD_RECOVERY') {
+      currentRecoveryState = { isRecovery: true };
+      sanitizeUrlTokens();
+      recoveryListeners.forEach(cb => cb(currentRecoveryState));
+    }
+
     if (session && session.user) {
       // ユーザーのメタデータを含めてセッションを作成
       const tdmUser = mapSupabaseUserToTdmUser(session.user);
@@ -399,6 +485,82 @@ export const authService = {
       users[idx].titles = updatedUser.titles || [];
       saveSimUsers(users);
     }
+  },
+
+  // 🔑 パスワードリカバリー状態の購読
+  onPasswordRecovery(callback: PasswordRecoveryCallback): () => void {
+    recoveryListeners.push(callback);
+    if (currentRecoveryState.isRecovery) {
+      callback(currentRecoveryState);
+    }
+    return () => {
+      const idx = recoveryListeners.indexOf(callback);
+      if (idx !== -1) {
+        recoveryListeners.splice(idx, 1);
+      }
+    };
+  },
+
+  // 🔑 パスワードリカバリー状態のリセット
+  clearPasswordRecovery() {
+    currentRecoveryState = { isRecovery: false };
+    recoveryListeners.forEach(cb => cb(currentRecoveryState));
+  },
+
+  // 📩 パスワード再設定メールの送信
+  async resetPasswordForEmail(email: string): Promise<{ success: boolean; error?: string }> {
+    if (supabase) {
+      try {
+        const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+          redirectTo: `${window.location.origin}/`
+        });
+        if (error) throw error;
+        return { success: true };
+      } catch (err: any) {
+        const msg = (err?.message || '').toLowerCase();
+        if (msg.includes('rate limit') || msg.includes('over_email_send_rate_limit')) {
+          return {
+            success: false,
+            error: '⏱️ メール送信数の上限に達しました。しばらく時間をおいてから再度お試しください。'
+          };
+        }
+        return { success: false, error: err.message || 'パスワード再設定メールの送信に失敗しました。' };
+      }
+    }
+
+    // ローカルシミュレータ処理
+    await new Promise(resolve => setTimeout(resolve, 500));
+    return { success: true };
+  },
+
+  // 🔐 新しいパスワードへの更新実行 (supabase.auth.updateUser)
+  async updatePassword(newPassword: string): Promise<{ success: boolean; error?: string }> {
+    if (supabase) {
+      try {
+        const { error } = await supabase.auth.updateUser({
+          password: newPassword
+        });
+        if (error) throw error;
+        this.clearPasswordRecovery();
+        return { success: true };
+      } catch (err: any) {
+        return { success: false, error: err.message || 'パスワードの更新に失敗しました。' };
+      }
+    }
+
+    // ローカルシミュレータ処理
+    await new Promise(resolve => setTimeout(resolve, 500));
+    const session = this.getSession();
+    if (session && session.email) {
+      const users = getSimUsers();
+      const user = users.find(u => u.email.toLowerCase() === session.email?.toLowerCase());
+      if (user) {
+        user.passwordHash = newPassword;
+        saveSimUsers(users);
+      }
+    }
+    this.clearPasswordRecovery();
+    return { success: true };
   }
 };
 

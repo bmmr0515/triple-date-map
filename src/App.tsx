@@ -20,11 +20,12 @@ import {
 } from 'lucide-react';
 import Fuse from 'fuse.js';
 import { db, Spot, User, CheckIn, GroupType } from './db';
-import { authService, AuthSession } from './auth';
+import { authService, AuthSession, PasswordRecoveryState } from './auth';
 import { SupportSection } from './components/SupportSection';
 import { AdPlaceholder } from './components/AdPlaceholder';
 import AdminYouTubeAudit from './components/AdminYouTubeAudit';
 import { AdminAuthGuard } from './components/AdminAuthGuard';
+import { PasswordResetModal } from './components/PasswordResetModal';
 
 
 
@@ -232,7 +233,9 @@ export default function App() {
   // 🔐 認証状態
   const [authSession, setAuthSession] = useState<AuthSession | null>(authService.getSession());
   const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
-  const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
+  const [authMode, setAuthMode] = useState<'signin' | 'signup' | 'forgot_password'>('signin');
+  const [passwordRecoveryState, setPasswordRecoveryState] = useState<PasswordRecoveryState | null>(null);
+  const [forgotPasswordSent, setForgotPasswordSent] = useState<boolean>(false);
   
   // ログインフォーム用ステート
   const [authEmail, setAuthEmail] = useState<string>('');
@@ -866,7 +869,19 @@ export default function App() {
       }
     });
 
-    return () => unsubscribe();
+    // 🔑 パスワードリカバリーイベントの購読
+    const unsubscribeRecovery = authService.onPasswordRecovery((state) => {
+      if (state.isRecovery) {
+        setPasswordRecoveryState(state);
+      } else {
+        setPasswordRecoveryState(null);
+      }
+    });
+
+    return () => {
+      unsubscribe();
+      unsubscribeRecovery();
+    };
   }, []);
 
   // 🏆 称号・アワードの獲得を監視・自動判定する
@@ -7265,49 +7280,75 @@ ${window.location.origin + window.location.pathname}
               ✕
             </button>
 
-            {/* ログイン・登録のタブ切り替え */}
-            <div style={{ display: 'flex', borderBottom: '2px solid #f1f5f9', gap: '16px', paddingBottom: '2px' }}>
-              <button
-                type="button"
-                onClick={() => {
-                  setAuthMode('signin');
-                  setAuthError('');
-                }}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  fontSize: '14px',
-                  fontWeight: '900',
-                  color: authMode === 'signin' ? '#ff6897' : 'var(--text-muted)',
-                  borderBottom: authMode === 'signin' ? '3px solid #ff6897' : '3px solid transparent',
-                  paddingBottom: '8px',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s'
-                }}
-              >
-                ログイン
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setAuthMode('signup');
-                  setAuthError('');
-                }}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  fontSize: '14px',
-                  fontWeight: '900',
-                  color: authMode === 'signup' ? '#ff6897' : 'var(--text-muted)',
-                  borderBottom: authMode === 'signup' ? '3px solid #ff6897' : '3px solid transparent',
-                  paddingBottom: '8px',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s'
-                }}
-              >
-                新規アカウント登録
-              </button>
-            </div>
+            {/* ログイン・登録・パスワード再設定のタブ/ヘッダー */}
+            {authMode === 'forgot_password' ? (
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '2px solid #f1f5f9', paddingBottom: '8px' }}>
+                <span style={{ fontSize: '14px', fontWeight: '900', color: '#0f172a' }}>
+                  🔑 パスワードの再設定
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAuthMode('signin');
+                    setAuthError('');
+                    setForgotPasswordSent(false);
+                  }}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    fontSize: '11px',
+                    fontWeight: 'bold',
+                    color: '#ff6897',
+                    cursor: 'pointer'
+                  }}
+                >
+                  ← ログインに戻る
+                </button>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', borderBottom: '2px solid #f1f5f9', gap: '16px', paddingBottom: '2px' }}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAuthMode('signin');
+                    setAuthError('');
+                  }}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    fontSize: '14px',
+                    fontWeight: '900',
+                    color: authMode === 'signin' ? '#ff6897' : 'var(--text-muted)',
+                    borderBottom: authMode === 'signin' ? '3px solid #ff6897' : '3px solid transparent',
+                    paddingBottom: '8px',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  ログイン
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAuthMode('signup');
+                    setAuthError('');
+                  }}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    fontSize: '14px',
+                    fontWeight: '900',
+                    color: authMode === 'signup' ? '#ff6897' : 'var(--text-muted)',
+                    borderBottom: authMode === 'signup' ? '3px solid #ff6897' : '3px solid transparent',
+                    paddingBottom: '8px',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  新規アカウント登録
+                </button>
+              </div>
+            )}
 
             {authError && (
               <div style={{
@@ -7330,6 +7371,28 @@ ${window.location.origin + window.location.pathname}
             <form onSubmit={async (e) => {
               e.preventDefault();
               setAuthError('');
+
+              if (authMode === 'forgot_password') {
+                if (!authEmail.trim()) {
+                  setAuthError('登録メールアドレスを入力してください。');
+                  return;
+                }
+                setIsAuthLoading(true);
+                try {
+                  const res = await authService.resetPasswordForEmail(authEmail);
+                  if (res.success) {
+                    setForgotPasswordSent(true);
+                  } else {
+                    setAuthError(res.error || '再設定メールの送信に失敗しました。');
+                  }
+                } catch (err: any) {
+                  setAuthError(err.message || '送信処理中にエラーが発生しました。');
+                } finally {
+                  setIsAuthLoading(false);
+                }
+                return;
+              }
+
               if (authMode === 'signup' && !agreeTermsSignup) {
                 setAuthError("新規登録するには利用規約・免責事項への同意が必要です。");
                 return;
@@ -7452,27 +7515,72 @@ ${window.location.origin + window.location.pathname}
                 />
               </div>
 
-              <div>
-                <label style={{ fontSize: '10px', fontWeight: '900', color: 'var(--text-muted)', marginBottom: '4px', display: 'block' }}>
-                  パスワード
-                </label>
-                <input
-                  type="password"
-                  required
-                  placeholder="••••••••"
-                  value={authPassword}
-                  onChange={(e) => setAuthPassword(e.target.value)}
-                  style={{
-                    width: '100%',
-                    height: '40px',
-                    padding: '0 12px',
-                    borderRadius: '12px',
-                    border: '2px solid #e2e8f0',
-                    fontSize: '11px',
-                    fontWeight: '800'
-                  }}
-                />
-              </div>
+              {authMode !== 'forgot_password' && (
+                <>
+                  <div>
+                    <label style={{ fontSize: '10px', fontWeight: '900', color: 'var(--text-muted)', marginBottom: '4px', display: 'block' }}>
+                      パスワード
+                    </label>
+                    <input
+                      type="password"
+                      required
+                      placeholder="••••••••"
+                      value={authPassword}
+                      onChange={(e) => setAuthPassword(e.target.value)}
+                      style={{
+                        width: '100%',
+                        height: '40px',
+                        padding: '0 12px',
+                        borderRadius: '12px',
+                        border: '2px solid #e2e8f0',
+                        fontSize: '11px',
+                        fontWeight: '800'
+                      }}
+                    />
+                  </div>
+
+                  {/* パスワードをお忘れの方はこちら */}
+                  {authMode === 'signin' && (
+                    <div style={{ textAlign: 'right', marginTop: '-4px' }}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setAuthMode('forgot_password');
+                          setAuthError('');
+                          setForgotPasswordSent(false);
+                        }}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          color: '#64748b',
+                          fontSize: '10.5px',
+                          fontWeight: 'bold',
+                          cursor: 'pointer',
+                          padding: '2px 0',
+                          textDecoration: 'underline'
+                        }}
+                      >
+                        パスワードをお忘れの方はこちら
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
+
+              {/* パスワード再設定の説明文 */}
+              {authMode === 'forgot_password' && !forgotPasswordSent && (
+                <p style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5', margin: '0' }}>
+                  ご登録のメールアドレスを入力してください。パスワード再設定用のリンクをお送りします。
+                </p>
+              )}
+
+              {/* パスワード再設定送信完了案内 */}
+              {authMode === 'forgot_password' && forgotPasswordSent && (
+                <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', color: '#15803d', padding: '12px', borderRadius: '12px', fontSize: '12px', textAlign: 'center', lineHeight: '1.6' }}>
+                  📩 <strong>再設定メールを送信しました</strong><br />
+                  {authEmail} 宛に再設定リンクを送信しました。メールをご確認の上、新しいパスワードを設定してください。
+                </div>
+              )}
 
               {/* 新規登録時のみ表示する規約埋め込みボックス */}
               {authMode === 'signup' && (
@@ -7510,43 +7618,45 @@ ${window.location.origin + window.location.pathname}
                 </div>
               )}
 
-              {/* 利用規約 ＆ プライバシーポリシー 同意チェックボックス (ログイン・登録共通) */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'flex-start',
-                gap: '8px',
-                textAlign: 'left',
-                background: '#f8fafc',
-                padding: '10px 12px',
-                borderRadius: '12px',
-                border: '1px solid #e2e8f0',
-                marginTop: '4px'
-              }}>
-                <input 
-                  type="checkbox" 
-                  id="terms-agree-signup"
-                  checked={agreeTermsSignup}
-                  onChange={(e) => setAgreeTermsSignup(e.target.checked)}
-                  style={{
-                    marginTop: '2px',
-                    width: '14px',
-                    height: '14px',
-                    accentColor: 'var(--color-equal-love)',
-                    cursor: 'pointer'
-                  }}
-                />
-                <label htmlFor="terms-agree-signup" style={{ fontSize: '9.5px', fontWeight: '800', color: 'var(--text-main)', cursor: 'pointer', lineHeight: '1.4' }}>
-                  <span onClick={(e) => { e.preventDefault(); setShowTermsModal(true); }} style={{ color: '#ff6897', textDecoration: 'underline', cursor: 'pointer' }}>利用規約 ＆ プライバシーポリシー</span>
-                  に同意して、コミュニティのモラルを遵守します。
-                </label>
-              </div>
+              {/* 利用規約 ＆ プライバシーポリシー 同意チェックボックス (ログイン・登録時のみ) */}
+              {authMode !== 'forgot_password' && (
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '8px',
+                  textAlign: 'left',
+                  background: '#f8fafc',
+                  padding: '10px 12px',
+                  borderRadius: '12px',
+                  border: '1px solid #e2e8f0',
+                  marginTop: '4px'
+                }}>
+                  <input 
+                    type="checkbox" 
+                    id="terms-agree-signup"
+                    checked={agreeTermsSignup}
+                    onChange={(e) => setAgreeTermsSignup(e.target.checked)}
+                    style={{
+                      marginTop: '2px',
+                      width: '14px',
+                      height: '14px',
+                      accentColor: 'var(--color-equal-love)',
+                      cursor: 'pointer'
+                    }}
+                  />
+                  <label htmlFor="terms-agree-signup" style={{ fontSize: '9.5px', fontWeight: '800', color: 'var(--text-main)', cursor: 'pointer', lineHeight: '1.4' }}>
+                    <span onClick={(e) => { e.preventDefault(); setShowTermsModal(true); }} style={{ color: '#ff6897', textDecoration: 'underline', cursor: 'pointer' }}>利用規約 ＆ プライバシーポリシー</span>
+                    に同意して、コミュニティのモラルを遵守します。
+                  </label>
+                </div>
+              )}
 
               <button
                 type="submit"
-                disabled={isAuthLoading || !agreeTermsSignup}
+                disabled={isAuthLoading || (authMode !== 'forgot_password' && !agreeTermsSignup)}
                 className="pop-button font-black"
                 style={{
-                  background: (!agreeTermsSignup) 
+                  background: (authMode !== 'forgot_password' && !agreeTermsSignup) 
                     ? '#cbd5e1' 
                     : 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)',
                   color: 'white',
@@ -7554,13 +7664,13 @@ ${window.location.origin + window.location.pathname}
                   padding: '12px',
                   borderRadius: '14px',
                   fontSize: '12px',
-                  cursor: (isAuthLoading || !agreeTermsSignup) ? 'not-allowed' : 'pointer',
-                  opacity: (isAuthLoading || !agreeTermsSignup) ? 0.6 : 1,
+                  cursor: (isAuthLoading || (authMode !== 'forgot_password' && !agreeTermsSignup)) ? 'not-allowed' : 'pointer',
+                  opacity: (isAuthLoading || (authMode !== 'forgot_password' && !agreeTermsSignup)) ? 0.6 : 1,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '8px',
-                  boxShadow: (!agreeTermsSignup) ? 'none' : '0 8px 20px rgba(255, 104, 151, 0.3)',
+                  boxShadow: (authMode !== 'forgot_password' && !agreeTermsSignup) ? 'none' : '0 8px 20px rgba(255, 104, 151, 0.3)',
                   marginTop: '6px'
                 }}
               >
@@ -7569,61 +7679,65 @@ ${window.location.origin + window.location.pathname}
                 ) : (
                   <>
                     <Lock size={14} />
-                    <span>{authMode === 'signin' ? 'ログインする' : '無料でアカウント作成'}</span>
+                    <span>
+                      {authMode === 'forgot_password'
+                        ? (forgotPasswordSent ? '再設定リンクを再送する' : '再設定リンクを送信する')
+                        : (authMode === 'signin' ? 'ログインする' : '無料でアカウント作成')}
+                    </span>
                   </>
                 )}
               </button>
             </form>
 
-
-
-            {/* X (Twitter) ログインシミュレートボタン (一番上に配置して目立たせる) */}
-            <button
-              disabled={isAuthLoading || !agreeTermsSignup}
-              onClick={async () => {
-                setAuthError('');
-                setIsAuthLoading(true);
-                try {
-                  const res = await authService.signInWithX();
-                  if (!res.success) {
-                    console.error("X Auth Error Details:", res.error);
-                    setAuthError(res.error || "X認証に失敗しました。");
+            {/* X (Twitter) ログインシミュレートボタン (通常ログイン/登録時のみ表示) */}
+            {authMode !== 'forgot_password' && (
+              <button
+                disabled={isAuthLoading || !agreeTermsSignup}
+                onClick={async () => {
+                  setAuthError('');
+                  setIsAuthLoading(true);
+                  try {
+                    const res = await authService.signInWithX();
+                    if (!res.success) {
+                      console.error("X Auth Error Details:", res.error);
+                      setAuthError(res.error || "X認証に失敗しました。");
+                    }
+                    // 成功時は何のアラートも出さず、シームレスにXの公式OAuth認証画面へとブラウザを遷移させます。
+                  } catch (err: any) {
+                    console.error("X Auth Exception:", err);
+                    setAuthError(err.message || "X認証中にエラーが発生しました。");
+                  } finally {
+                    setIsAuthLoading(false);
                   }
-                  // 成功時は何のアラートも出さず、シームレスにXの公式OAuth認証画面へとブラウザを遷移させます。
-                } catch (err: any) {
-                  console.error("X Auth Exception:", err);
-                  setAuthError(err.message || "X認証中にエラーが発生しました。");
-                } finally {
-                  setIsAuthLoading(false);
-                }
-              }}
-              className="pop-button"
-              style={{
-                width: '100%',
-                backgroundColor: (!agreeTermsSignup) ? '#f8fafc' : '#0f1419', // クールで目立つXブラック
-                border: '2px solid',
-                borderColor: (!agreeTermsSignup) ? '#e2e8f0' : '#0f1419',
-                padding: '11px',
-                borderRadius: '14px',
-                fontSize: '11.5px',
-                fontWeight: '900',
-                color: (!agreeTermsSignup) ? '#94a3b8' : '#ffffff',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                cursor: (isAuthLoading || !agreeTermsSignup) ? 'not-allowed' : 'pointer',
-                opacity: (!agreeTermsSignup) ? 0.5 : 1,
-                boxShadow: (!agreeTermsSignup) ? 'none' : '0 4px 14px rgba(15, 20, 25, 0.18)',
-                transition: 'all 0.25s',
-                marginBottom: '0px'
-              }}
-            >
-              <svg width="12" height="12" viewBox="0 0 24 24" style={{ flexShrink: 0, fill: (!agreeTermsSignup) ? '#94a3b8' : '#ffffff' }}>
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
-              Xアカウントでログイン
-            </button>
+                }}
+                className="pop-button"
+                style={{
+                  width: '100%',
+                  backgroundColor: (!agreeTermsSignup) ? '#f8fafc' : '#0f1419', // クールで目立つXブラック
+                  border: '2px solid',
+                  borderColor: (!agreeTermsSignup) ? '#e2e8f0' : '#0f1419',
+                  padding: '11px',
+                  borderRadius: '14px',
+                  fontSize: '11.5px',
+                  fontWeight: '900',
+                  color: (!agreeTermsSignup) ? '#94a3b8' : '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  cursor: (isAuthLoading || !agreeTermsSignup) ? 'not-allowed' : 'pointer',
+                  opacity: (!agreeTermsSignup) ? 0.5 : 1,
+                  boxShadow: (!agreeTermsSignup) ? 'none' : '0 4px 14px rgba(15, 20, 25, 0.18)',
+                  transition: 'all 0.25s',
+                  marginBottom: '0px'
+                }}
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" style={{ flexShrink: 0, fill: (!agreeTermsSignup) ? '#94a3b8' : '#ffffff' }}>
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+                Xアカウントでログイン
+              </button>
+            )}
 
 
           </div>
@@ -8339,7 +8453,16 @@ ${window.location.origin + window.location.pathname}
         </div>
       )}
 
-
+      {/* 🔐 パスワード再設定モーダル */}
+      {passwordRecoveryState && (
+        <PasswordResetModal
+          state={passwordRecoveryState}
+          onClose={() => {
+            authService.clearPasswordRecovery();
+            setPasswordRecoveryState(null);
+          }}
+        />
+      )}
 
     </div>
 

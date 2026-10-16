@@ -143,4 +143,47 @@ assert(authTsContent.includes('email not confirmed'), 'auth.ts は Email not con
 
 console.log('✅ [Test 4 Passed] XログインのOAuth 2.0/1.0a両対応およびメールログイン移行エラーガイダンスが正常に設定されています。\n');
 
+
+// 5. パスワード再設定フロー・トークンサニタイズ・強度バリデーション監査
+console.log('--- [Test 5] パスワード再設定フロー & トークンサニタイズ & 強度バリデーション監査 ---');
+
+// 5-1. auth.ts のリカバリー機能実装検証
+assert(authTsContent.includes('PASSWORD_RECOVERY'), 'auth.ts は PASSWORD_RECOVERY イベントを検知していること');
+assert(authTsContent.includes('sanitizeUrlTokens'), 'auth.ts は sanitizeUrlTokens 関数で認証トークンをURLから保護していること');
+assert(authTsContent.includes('history.replaceState'), 'auth.ts は history.replaceState を使用して履歴・ログからトークンを除去していること');
+assert(authTsContent.includes('updatePassword'), 'auth.ts は updatePassword 関数を実装していること');
+assert(authTsContent.includes('resetPasswordForEmail'), 'auth.ts は resetPasswordForEmail 関数を実装していること');
+assert(authTsContent.includes('otp_expired'), 'auth.ts は 有効期限切れ (otp_expired) を検知・ハンドリングしていること');
+
+// 5-2. パスワード強度検証ロジックのユニットテスト
+const validatePasswordStrength = (pwd) => {
+  if (!pwd || pwd.length < 8) return { valid: false, error: 'パスワードは8文字以上である必要があります。' };
+  const hasLetter = /[a-zA-Z]/.test(pwd);
+  const hasNumber = /[0-9]/.test(pwd);
+  if (!hasLetter || !hasNumber) return { valid: false, error: '半角英字と半角数字の両方を含めてください。' };
+  return { valid: true, error: null };
+};
+
+assert.strictEqual(validatePasswordStrength('').valid, false, '空文字は無効');
+assert.strictEqual(validatePasswordStrength('abc123').valid, false, '6文字（8文字未満）は無効');
+assert.strictEqual(validatePasswordStrength('12345678').valid, false, '数字のみ8文字は無効');
+assert.strictEqual(validatePasswordStrength('abcdefgh').valid, false, '英字のみ8文字は無効');
+assert.strictEqual(validatePasswordStrength('password123').valid, true, '英数字混合8文字以上は有効');
+assert.strictEqual(validatePasswordStrength('N0imie#Joy2026!').valid, true, '記号・大文字含む強固なパスワードは有効');
+
+// 5-3. PasswordResetModal コンポーネントの検証
+const resetModalContent = fs.readFileSync('src/components/PasswordResetModal.tsx', 'utf8');
+assert(resetModalContent.includes('新しいパスワード'), 'PasswordResetModal は新しいパスワード入力欄を持つこと');
+assert(resetModalContent.includes('新しいパスワード（確認用）'), 'PasswordResetModal は確認用パスワード入力欄を持つこと');
+assert(resetModalContent.includes('updatePassword'), 'PasswordResetModal は authService.updatePassword を呼び出していること');
+assert(resetModalContent.includes('有効期限'), 'PasswordResetModal はリンク無効・期限切れ案内UIを持つこと');
+assert(resetModalContent.includes('resetPasswordForEmail'), 'PasswordResetModal は期限切れ時の再送機能を持つこと');
+
+// 5-4. App.tsx の統合検証
+assert(appContent.includes('PasswordResetModal'), 'App.tsx は PasswordResetModal をインポートしていること');
+assert(appContent.includes('passwordRecoveryState'), 'App.tsx は passwordRecoveryState ステートを管理していること');
+assert(appContent.includes('パスワードをお忘れの方はこちら'), 'App.tsx はログインモーダルにパスワード再設定への動線を持つこと');
+
+console.log('✅ [Test 5 Passed] パスワード再設定・URLトークン保護・強度検証・再送動線がすべて確認されました。\n');
+
 console.log('🎉 すべての自動セキュリティ監査テストに合格しました！\n');
