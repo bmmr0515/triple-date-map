@@ -878,9 +878,26 @@ export default function App() {
       }
     });
 
+    // ⚠️ OAuthリダイレクト戻り時エラーの購読
+    const unsubscribeOAuthError = authService.onOAuthError((errorMsg) => {
+      setAuthError(errorMsg);
+      setShowAuthModal(true);
+    });
+
+    // 🧪 E2Eテスト用トリガー
+    if (typeof window !== 'undefined') {
+      (window as any).__triggerPasswordRecoveryTest = () => {
+        setPasswordRecoveryState({ isRecovery: true });
+      };
+    }
+
     return () => {
       unsubscribe();
       unsubscribeRecovery();
+      unsubscribeOAuthError();
+      if (typeof window !== 'undefined') {
+        delete (window as any).__triggerPasswordRecoveryTest;
+      }
     };
   }, []);
 

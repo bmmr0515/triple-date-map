@@ -154,6 +154,8 @@ assert(authTsContent.includes('history.replaceState'), 'auth.ts は history.repl
 assert(authTsContent.includes('updatePassword'), 'auth.ts は updatePassword 関数を実装していること');
 assert(authTsContent.includes('resetPasswordForEmail'), 'auth.ts は resetPasswordForEmail 関数を実装していること');
 assert(authTsContent.includes('otp_expired'), 'auth.ts は 有効期限切れ (otp_expired) を検知・ハンドリングしていること');
+assert(authTsContent.includes('getSession()'), 'auth.ts の updatePassword は事前にセッション存在を確認していること');
+assert(authTsContent.includes('onOAuthError'), 'auth.ts は OAuthリダイレクト戻り時エラーを検知・通知するリスナーを持つこと');
 
 // 5-2. パスワード強度検証ロジックのユニットテスト
 const validatePasswordStrength = (pwd) => {
@@ -180,10 +182,12 @@ assert(resetModalContent.includes('有効期限'), 'PasswordResetModal はリン
 assert(resetModalContent.includes('resetPasswordForEmail'), 'PasswordResetModal は期限切れ時の再送機能を持つこと');
 
 // 5-4. App.tsx の統合検証
-assert(appContent.includes('PasswordResetModal'), 'App.tsx は PasswordResetModal をインポートしていること');
-assert(appContent.includes('passwordRecoveryState'), 'App.tsx は passwordRecoveryState ステートを管理していること');
-assert(appContent.includes('パスワードをお忘れの方はこちら'), 'App.tsx はログインモーダルにパスワード再設定への動線を持つこと');
+const latestAppContent = fs.readFileSync('src/App.tsx', 'utf8');
+assert(latestAppContent.includes('PasswordResetModal'), 'App.tsx は PasswordResetModal をインポートしていること');
+assert(latestAppContent.includes('passwordRecoveryState'), 'App.tsx は passwordRecoveryState ステートを管理していること');
+assert(latestAppContent.includes('パスワードをお忘れの方はこちら'), 'App.tsx はログインモーダルにパスワード再設定への動線を持つこと');
+assert(latestAppContent.includes('onOAuthError'), 'App.tsx は OAuthリダイレクト戻り時エラーを購読していること');
 
-console.log('✅ [Test 5 Passed] パスワード再設定・URLトークン保護・強度検証・再送動線がすべて確認されました。\n');
+console.log('✅ [Test 5 Passed] パスワード再設定・URLトークン保護・セッション確認ガード・OAuthリダイレクト戻り時エラー検知がすべて確認されました。\n');
 
 console.log('🎉 すべての自動セキュリティ監査テストに合格しました！\n');
