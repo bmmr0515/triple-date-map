@@ -3,7 +3,11 @@ import { X } from 'lucide-react';
 
 const STORAGE_KEY = 'tdm_migration_notice_closed_v1';
 
-export const MigrationBanner: React.FC = () => {
+interface MigrationBannerProps {
+  onOpenNotice?: () => void;
+}
+
+export const MigrationBanner: React.FC<MigrationBannerProps> = ({ onOpenNotice }) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
@@ -18,7 +22,8 @@ export const MigrationBanner: React.FC = () => {
     }
   }, []);
 
-  const handleClose = () => {
+  const handleClose = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setIsVisible(false);
     try {
       localStorage.setItem(STORAGE_KEY, 'true');
@@ -27,11 +32,20 @@ export const MigrationBanner: React.FC = () => {
     }
   };
 
+  const handleBannerClick = () => {
+    if (onOpenNotice) {
+      onOpenNotice();
+    } else {
+      // グローバルカスタムイベントでも通知を発火
+      window.dispatchEvent(new CustomEvent('tdm:open-notice-modal'));
+    }
+  };
+
   if (!isVisible) return null;
 
   return (
     <aside
-      aria-label="システム移行のお知らせ"
+      aria-label="システム移行のお知らせ・大型アップデート"
       style={{
         background: 'linear-gradient(90deg, #fdf4ff 0%, #fff1f2 50%, #eff6ff 100%)',
         borderBottom: '1px solid #fbcfe8',
@@ -57,7 +71,26 @@ export const MigrationBanner: React.FC = () => {
           gap: '12px'
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1 }}>
+        <div
+          onClick={handleBannerClick}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleBannerClick();
+            }
+          }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            flex: 1,
+            cursor: 'pointer',
+            minWidth: 0,
+            textDecoration: 'none'
+          }}
+        >
           <span
             style={{
               display: 'inline-flex',
@@ -69,15 +102,25 @@ export const MigrationBanner: React.FC = () => {
               padding: '2px 6px',
               fontSize: '10.5px',
               fontWeight: 800,
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
+              flexShrink: 0
             }}
           >
-            重要なお知らせ
+            重要
           </span>
-          <span style={{ fontSize: '11.5px', color: '#334155', fontWeight: 600 }}>
-            データベース移行に伴い、過去にアカウントを作成された方は再度「新規登録」をお願いいたします。
-            <span style={{ color: '#64748b', fontWeight: 500, marginLeft: '4px' }}>
-              （※お使いの端末内のチェックイン履歴・称号はそのまま安全に保持されています）
+          <span style={{ fontSize: '11.5px', color: '#1e293b', fontWeight: 700, lineHeight: '1.4' }}>
+            【重要】トリプルデートマップ 大型アップデートのお知らせ（システム環境リニューアル・機能改善）
+            <span
+              style={{
+                color: '#db2777',
+                fontWeight: 800,
+                marginLeft: '8px',
+                textDecoration: 'underline',
+                whiteSpace: 'nowrap',
+                display: 'inline-inline'
+              }}
+            >
+              詳細を確認する ＞
             </span>
           </span>
         </div>
