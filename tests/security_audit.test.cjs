@@ -156,8 +156,30 @@ assert(authTsContent.includes('resetPasswordForEmail'), 'auth.ts は resetPasswo
 assert(authTsContent.includes('otp_expired'), 'auth.ts は 有効期限切れ (otp_expired) を検知・ハンドリングしていること');
 assert(authTsContent.includes('getSession()'), 'auth.ts の updatePassword は事前にセッション存在を確認していること');
 assert(authTsContent.includes('onOAuthError'), 'auth.ts は OAuthリダイレクト戻り時エラーを検知・通知するリスナーを持つこと');
+assert(authTsContent.includes('!currentRecoveryState.isRecovery'), 'auth.ts はリカバリーモード外（通常ログインユーザー）での updatePassword を拒絶するガードを持つこと');
+assert(!authTsContent.includes('supabase.auth.getSession().then'), 'auth.ts に早期サニタイズ（PKCEコード交換中の getSession 早期消去）が含まれていないこと');
+assert(authTsContent.includes('INITIAL_SESSION'), 'auth.ts は INITIAL_SESSION イベントによる安全なライフサイクル管理を行っていること');
 
-// 5-2. パスワード強度検証ロジックのユニットテスト
+// 5-2. エラー区別ロジック（OAuthエラー vs リカバリーエラー）のユニットテスト
+const discriminateError = (params) => {
+  const errorCode = params.error_code;
+  const errorDescription = params.error_description || params.error || '';
+  const descLower = errorDescription.toLowerCase();
+  const isRecoveryError = 
+    errorCode === 'otp_expired' ||
+    params.type === 'recovery' ||
+    (descLower.includes('email link') && (descLower.includes('expired') || descLower.includes('invalid'))) ||
+    (descLower.includes('otp') && descLower.includes('expired'));
+  return isRecoveryError ? 'recovery' : 'oauth';
+};
+
+assert.strictEqual(discriminateError({ error_code: 'otp_expired' }), 'recovery', 'otp_expiredはリカバリーエラー');
+assert.strictEqual(discriminateError({ error_description: 'Email link is invalid or has expired' }), 'recovery', 'Email link expiredはリカバリーエラー');
+assert.strictEqual(discriminateError({ error: 'invalid_request', error_description: 'The request is invalid' }), 'oauth', 'OAuthのinvalid_requestはOAuthエラーとして区別されること');
+assert.strictEqual(discriminateError({ error: 'access_denied', error_description: 'User denied authorization' }), 'oauth', 'OAuthのaccess_deniedはOAuthエラーとして区別されること');
+assert.strictEqual(discriminateError({ error: 'server_error', error_description: 'Internal server error' }), 'oauth', 'OAuthのserver_errorはOAuthエラーとして区別されること');
+
+// 5-3. パスワード強度検証ロジックのユニットテスト
 const validatePasswordStrength = (pwd) => {
   if (!pwd || pwd.length < 8) return { valid: false, error: 'パスワードは8文字以上である必要があります。' };
   const hasLetter = /[a-zA-Z]/.test(pwd);
@@ -173,7 +195,7 @@ assert.strictEqual(validatePasswordStrength('abcdefgh').valid, false, '英字の
 assert.strictEqual(validatePasswordStrength('password123').valid, true, '英数字混合8文字以上は有効');
 assert.strictEqual(validatePasswordStrength('N0imie#Joy2026!').valid, true, '記号・大文字含む強固なパスワードは有効');
 
-// 5-3. PasswordResetModal コンポーネントの検証
+// 5-4. PasswordResetModal コンポーネントの検証
 const resetModalContent = fs.readFileSync('src/components/PasswordResetModal.tsx', 'utf8');
 assert(resetModalContent.includes('新しいパスワード'), 'PasswordResetModal は新しいパスワード入力欄を持つこと');
 assert(resetModalContent.includes('新しいパスワード（確認用）'), 'PasswordResetModal は確認用パスワード入力欄を持つこと');
@@ -181,13 +203,13 @@ assert(resetModalContent.includes('updatePassword'), 'PasswordResetModal は aut
 assert(resetModalContent.includes('有効期限'), 'PasswordResetModal はリンク無効・期限切れ案内UIを持つこと');
 assert(resetModalContent.includes('resetPasswordForEmail'), 'PasswordResetModal は期限切れ時の再送機能を持つこと');
 
-// 5-4. App.tsx の統合検証
+// 5-5. App.tsx の統合検証
 const latestAppContent = fs.readFileSync('src/App.tsx', 'utf8');
 assert(latestAppContent.includes('PasswordResetModal'), 'App.tsx は PasswordResetModal をインポートしていること');
 assert(latestAppContent.includes('passwordRecoveryState'), 'App.tsx は passwordRecoveryState ステートを管理していること');
 assert(latestAppContent.includes('パスワードをお忘れの方はこちら'), 'App.tsx はログインモーダルにパスワード再設定への動線を持つこと');
 assert(latestAppContent.includes('onOAuthError'), 'App.tsx は OAuthリダイレクト戻り時エラーを購読していること');
 
-console.log('✅ [Test 5 Passed] パスワード再設定・URLトークン保護・セッション確認ガード・OAuthリダイレクト戻り時エラー検知がすべて確認されました。\n');
+console.log('✅ [Test 5 Passed] パスワード再設定・URLトークン保護・セッション確認ガード・エラー区別・通常ログインユーザーガードがすべて確認されました。\n');
 
 console.log('🎉 すべての自動セキュリティ監査テストに合格しました！\n');

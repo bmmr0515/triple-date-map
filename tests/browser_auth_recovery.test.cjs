@@ -109,8 +109,11 @@ async function runBrowserTest() {
     const submitBtn = await page3.waitForSelector('button ::-p-text(パスワードを変更する)', { timeout: 3000 });
     await submitBtn.click();
 
-    // セッションがないためエラーメッセージが表示されることを確認
-    await page3.waitForSelector('text/有効な認証セッションが見つかりません', { timeout: 5000 });
+    // セッションがないためエラーメッセージが表示されることを確認（ガード成功）
+    await page3.waitForFunction(() => {
+      const text = document.body.innerText;
+      return text.includes('パスワード再設定用のセッションではありません') || text.includes('有効な認証セッションが見つかりません');
+    }, { timeout: 5000 });
     console.log('✅ 有効な認証セッションが無い状態での更新が厳格にブロックされました（セッションガード成功）');
 
     // モーダルの閉じるボタンで正常に閉じられることを確認

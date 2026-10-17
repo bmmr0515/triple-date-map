@@ -100,14 +100,18 @@ const checkUrlForErrorsAndRedirects = () => {
     const params = new URLSearchParams(rawParams);
     const errorCode = params.get('error_code');
     const errorDescription = params.get('error_description') || params.get('error') || '';
+    const descLower = errorDescription.toLowerCase();
 
-    // パスワード再設定リンクの期限切れ・無効エラー
-    if (
+    // 🔑 パスワード再設定（リカバリー）固有のエラーかを厳密に判定
+    // ※単なる 'invalid' は OAuth の 'invalid_request' や 'invalid_client' 等にも含まれるため誤認しないこと
+    const isRecoveryError = 
       errorCode === 'otp_expired' ||
-      errorCode === 'access_denied' && (errorDescription.toLowerCase().includes('expired') || errorDescription.toLowerCase().includes('otp')) ||
-      errorDescription.toLowerCase().includes('expired') ||
-      errorDescription.toLowerCase().includes('invalid')
-    ) {
+      hash.includes('type=recovery') ||
+      search.includes('type=recovery') ||
+      (descLower.includes('email link') && (descLower.includes('expired') || descLower.includes('invalid'))) ||
+      (descLower.includes('otp') && descLower.includes('expired'));
+
+    if (isRecoveryError) {
       currentRecoveryState = {
         isRecovery: true,
         error: 'パスワード再設定リンクの有効期限が切れているか、すでに使用されています。お手数ですが、再度パスワード再設定メールを送信してください。'
@@ -119,7 +123,7 @@ const checkUrlForErrorsAndRedirects = () => {
       return;
     }
 
-    // X (Twitter) などのOAuth認可画面からエラー付きでリダイレクトされた場合
+    // X (Twitter) などのOAuth認可画面からエラー付きでリダイレクトされた場合（invalid_request, access_denied, server_error等）
     const desc = params.get('error_description') || params.get('error') || '認証に失敗しました。';
     currentOAuthError = `⚠️ 外部アカウント認証に失敗しました: ${decodeURIComponent(desc.replace(/\+/g, ' '))}`;
     sanitizeUrlTokens();
@@ -181,9 +185,17 @@ if (supabase) {
       }
     }
 
-    // SIGNED_IN時（OAuthリダイレクト戻りやメールログイン完了時）も安全にURLサニタイズ
+    // SIGNED_IN時（OAuthリダイレクト戻りや認証コード交換完了時）も安全にURLサニタイズ
     if (event === 'SIGNED_IN') {
       sanitizeUrlTokens();
+    }
+
+    // INITIAL_SESSION時（Supabase Auth初期化判定完了時）
+    // セッションが無く、かつURLに未処理トークンが残っている場合のみ安全にクリーンアップ
+    if (event === 'INITIAL_SESSION') {
+      if (!session) {
+        sanitizeUrlTokens();
+      }
     }
 
     if (session && session.user) {
@@ -206,15 +218,6 @@ if (supabase) {
       localStorage.removeItem('tdm_user');
       listeners.forEach(cb => cb(null));
     }
-  });
-
-  // 🛡️ 初期セッション確認（偽トークン・無効トークン時のURLクリーンアップ）
-  supabase.auth.getSession().then(({ data: { session }, error }) => {
-    if (!session || error) {
-      sanitizeUrlTokens();
-    }
-  }).catch(() => {
-    sanitizeUrlTokens();
   });
 }
 
@@ -599,6 +602,15 @@ export const authService = {
 
   // 🔐 新しいパスワードへの更新実行 (supabase.auth.updateUser)
   async updatePassword(newPassword: string): Promise<{ success: boolean; error?: string }> {
+    // 🛡️ リカバリーモード中（PASSWORD_RECOVERYイベント後）であるかを厳格確認
+    // 通常ログイン済みのユーザーがリカバリーリンクを踏まずに勝手に呼び出すことを防止
+    if (!currentRecoveryState.isRecovery) {
+      return {
+        success: false,
+        error: 'パスワード再設定用のセッションではありません。再設定メールのリンクから再度アクセスしてください。'
+      };
+    }
+
     if (supabase) {
       try {
         // 🛡️ 有効な認証セッションの存在を事前に厳格検証（偽トークン・手動アクセス排除）
