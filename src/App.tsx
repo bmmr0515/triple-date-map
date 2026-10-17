@@ -53,6 +53,13 @@ export interface Notice {
 
 export const APP_NOTICES: Notice[] = [
   {
+    id: 'notice-20261017-major-update',
+    date: '2026/10/17',
+    title: '【重要】トリプルデートマップ 大型アップデートのお知らせ',
+    content: 'いつもトリプルデートマップをご利用いただきありがとうございます。\nこのたび、ユーザーの皆様により快適かつ安全に聖地巡礼をお楽しみいただけるよう、システムの大型アップデートを実施いたしました。\n\n━━━━━━━━━━━━━━━━━━━━\n① システム環境をリニューアル\n━━━━━━━━━━━━━━━━━━━━\nサービスをより安定して運営するため、データベース環境を新しくしました。\n\n今回の移行に伴い、以前のアカウント情報は引き継がれていません。\n過去にアカウントを登録された方は、お手数ですが再度「新規登録」をお願いいたします。\n\nなお、同じ端末・ブラウザ内に保存されているチェックイン履歴や称号などのデータは、基本的にそのまま保持されます。\n\n━━━━━━━━━━━━━━━━━━━━\n② ログイン・アカウント機能の改善\n━━━━━━━━━━━━━━━━━━━━\n・メールアドレスによるログイン機能を整備\n・パスワード再設定機能を追加\n・ログイン時のエラー表示を改善\n・Xアカウントでのログインボタンを非表示化\n\nパスワードを忘れた場合も、ログイン画面から再設定できるようになりました。\n\n━━━━━━━━━━━━━━━━━━━━\n③ サイトの表示・システムを改善\n━━━━━━━━━━━━━━━━━━━━\n・ページ表示や検索エンジン向けの情報を改善\n・聖地スポット詳細ページの表示内容を整理\n・一部の不要な表示を削除\n・セキュリティ対策を強化\n\n━━━━━━━━━━━━━━━━━━━━\n④ 今後のアップデートについて\n━━━━━━━━━━━━━━━━━━━━\n今後も聖地スポットやモデルコースの充実、より便利な巡礼機能の開発を進めていきます。\n\nこれからもトリプルデートマップをよろしくお願いいたします。',
+    type: 'system'
+  },
+  {
     id: 'notice-20260910-latest-mvs',
     date: '2026/09/10',
     title: '🎬 【作品マスター更新】＝LOVEの最新MV 3作品（『夢の続き』『恋、はじめました。』『夏名残サマーチューン』）の楽曲・動画情報を一元反映しました！',
@@ -350,6 +357,14 @@ export default function App() {
       setWelcomeNotice(latestNotice);
       setShowWelcomeNoticeModal(true);
     }
+
+    const handleOpenModal = () => {
+      setShowNoticeHistoryModal(true);
+    };
+    window.addEventListener('tdm:open-notice-modal', handleOpenModal);
+    return () => {
+      window.removeEventListener('tdm:open-notice-modal', handleOpenModal);
+    };
   }, []);
 
 
@@ -2710,11 +2725,39 @@ ${window.location.origin + window.location.pathname}
               {/* 6. 更新履歴と運営からのお知らせ */}
               <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
                 <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', padding: '20px', borderRadius: '24px', boxShadow: 'var(--shadow-bubble)' }}>
-                  <h3 style={{ fontSize: '15px', fontWeight: '900', margin: '0 0 12px 0', color: '#0f172a' }}>📢 お知らせ</h3>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                    <h3 style={{ fontSize: '15px', fontWeight: '900', margin: 0, color: '#0f172a' }}>📢 お知らせ</h3>
+                    <button
+                      onClick={() => setShowNoticeHistoryModal(true)}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        color: '#ff6897',
+                        fontSize: '11px',
+                        fontWeight: 'bold',
+                        cursor: 'pointer',
+                        padding: '2px 6px',
+                        borderRadius: '6px'
+                      }}
+                    >
+                      すべて見る ＞
+                    </button>
+                  </div>
                   <ul style={{ padding: 0, margin: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '12px' }}>
                     <li style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '8px' }}>
-                      <span style={{ color: '#94a3b8', fontSize: '10px', display: 'block', fontWeight: 'bold' }}>2026/06/22</span>
-                      <a href="#" onClick={(e) => { e.preventDefault(); alert(APP_NOTICES[0].content); }} style={{ color: '#475569', textDecoration: 'none', fontWeight: '600' }}>国立競技場メッセージ寄せ書きボードの募集を終了しました。</a>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '2px' }}>
+                        <span style={{ color: '#94a3b8', fontSize: '10px', fontWeight: 'bold' }}>2026/10/17</span>
+                        <span style={{ fontSize: '9px', fontWeight: 900, background: '#e0e7ff', color: '#4f46e5', padding: '1px 6px', borderRadius: '4px' }}>重要</span>
+                      </div>
+                      <a href="#" onClick={(e) => { e.preventDefault(); setShowNoticeHistoryModal(true); }} style={{ color: '#0f172a', textDecoration: 'none', fontWeight: '700', lineHeight: '1.4', display: 'block' }}>
+                        【重要】トリプルデートマップ 大型アップデートのお知らせ
+                      </a>
+                    </li>
+                    <li style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '8px' }}>
+                      <span style={{ color: '#94a3b8', fontSize: '10px', display: 'block', fontWeight: 'bold', marginBottom: '2px' }}>2026/09/10</span>
+                      <a href="#" onClick={(e) => { e.preventDefault(); setShowNoticeHistoryModal(true); }} style={{ color: '#475569', textDecoration: 'none', fontWeight: '600', lineHeight: '1.4', display: 'block' }}>
+                        【作品マスター更新】＝LOVEの最新MV 3作品の情報を反映
+                      </a>
                     </li>
                   </ul>
                 </div>
