@@ -212,6 +212,7 @@ const INITIAL_SPOTS: Spot[] = [
         "name": "江ノ島湘南大堤防（神奈川県藤沢市）",
         "group": "≠ME",
         "category": "MVロケ地",
+        "address": "神奈川県藤沢市江の島1丁目12-2",
         "latitude": 35.29955,
         "longitude": 139.48835,
         "event_date": "2021-04-07",
@@ -300,6 +301,7 @@ const INITIAL_SPOTS: Spot[] = [
         "name": "セブ島（フィリピン）",
         "group": "=LOVE",
         "category": "MVロケ地",
+        "address": "フィリピン セブ州 セブ島",
         "latitude": 10.3157,
         "longitude": 123.8854,
         "event_date": "2023-07-19",
@@ -317,6 +319,7 @@ const INITIAL_SPOTS: Spot[] = [
         "name": "韓国・ソウル",
         "group": "=LOVE",
         "category": "MVロケ地",
+        "address": "大韓民国 ソウル特別市",
         "latitude": 37.5636,
         "longitude": 126.9832,
         "event_date": "2022-09-28",
@@ -369,6 +372,7 @@ const INITIAL_SPOTS: Spot[] = [
         "name": "足摺岬（高知県）",
         "group": "≠ME",
         "category": "MVロケ地",
+        "address": "高知県土佐清水市足摺岬",
         "latitude": 32.72385,
         "longitude": 133.02355,
         "event_date": "2024-08-28",
@@ -2209,6 +2213,7 @@ const INITIAL_SPOTS: Spot[] = [
         "name": "原岡桟橋（岡本桟橋）",
         "group": "=LOVE",
         "category": "飲食店・その他",
+        "address": "〒299-2403 千葉県南房総市富浦町原岡地先",
         "latitude": 35.04428,
         "longitude": 139.8227,
         "event_date": "2022-09-25",
@@ -2230,6 +2235,7 @@ const INITIAL_SPOTS: Spot[] = [
         "youtubeId": "qzFBzJ2KWwY",
         "group": "=LOVE",
         "category": "飲食店・その他",
+        "address": "〒299-1607 千葉県富津市湊６１０−９",
         "latitude": 35.2227,
         "longitude": 139.8631,
         "event_date": "2022-09-25",
@@ -6140,7 +6146,7 @@ export const db = {
         address: item.address || '',
         nearest_station: item.nearest_station || '',
         walk_time: item.walk_time || '',
-        scene: item.scene || '',
+        scene: (item.scene && !item.scene.includes('MVに登場した名場面シーン')) ? item.scene : '',
         check_points: item.check_points || [],
         visitor_notes: item.visitor_notes || '',
         last_confirmed_date: item.last_confirmed_date || '2026-06-29',
@@ -6163,6 +6169,14 @@ export const db = {
     try {
       const parsed = JSON.parse(data) as Spot[];
       
+      // キャッシュデータ内に古い定型文「MVに登場した名場面シーン」が含まれる場合は即座に最新初期データで修復
+      const hasObsoleteScene = parsed.some(p => p.scene && p.scene.includes('MVに登場した名場面シーン'));
+      if (hasObsoleteScene) {
+        const filled = fillDefaults(INITIAL_SPOTS);
+        this.setSpots(filled);
+        return filled;
+      }
+
       // parsedデータとINITIAL_SPOTSの並び順などを考慮し、ID順にソートした上でシリアライズして比較
       const sortedInitial = [...INITIAL_SPOTS].sort((a, b) => a.id.localeCompare(b.id));
       const sortedParsed = [...parsed].sort((a, b) => a.id.localeCompare(b.id));
@@ -6173,13 +6187,16 @@ export const db = {
           const parsedVal = sortedParsed[i];
           return (
             val.id !== parsedVal.id ||
+            val.name !== parsedVal.name ||
+            val.address !== parsedVal.address ||
             val.latitude !== parsedVal.latitude ||
             val.longitude !== parsedVal.longitude ||
             val.coordinateAccuracy !== parsedVal.coordinateAccuracy ||
             val.accuracyReason !== parsedVal.accuracyReason ||
             val.verification_status !== parsedVal.verification_status ||
             val.holy_point !== parsedVal.holy_point ||
-            val.description !== parsedVal.description
+            val.description !== parsedVal.description ||
+            val.scene !== parsedVal.scene
           );
         })
       ) {

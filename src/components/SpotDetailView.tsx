@@ -283,7 +283,7 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
       )}
 
       {/* どの場面で登場したか */}
-      {spot.scene && !spot.scene.includes('MVに登場した名場面シーン') && (
+      {spot.scene && !spot.scene.includes('MVに登場した名場面シーン') && spot.scene.trim().length > 0 && (
         <div style={{ marginBottom: '24px', background: '#fffbeb', border: '1px solid #fef3c7', padding: '16px', borderRadius: '14px' }}>
           <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#b45309', margin: '0 0 8px 0', display: 'flex', alignItems: 'center', gap: '4px' }}>🎬 どの場面で登場した？</h3>
           <p style={{ fontSize: '13px', lineHeight: '1.6', color: '#78350f', margin: 0 }}>{spot.scene}</p>

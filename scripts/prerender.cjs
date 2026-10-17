@@ -70,10 +70,10 @@ const spots = rawSpots.map(spot => {
     slug = spot.id;
   }
   const status = spot.status || 'published';
-  const address = spot.address || '日本、東京都周辺';
+  const address = spot.address || '';
   const nearest_station = spot.nearest_station || '';
   const walk_time = spot.walk_time || '';
-  const scene = (spot.scene && spot.scene !== 'MVに登場した名場面シーン') ? spot.scene : '';
+  const scene = (spot.scene && !spot.scene.includes('MVに登場した名場面シーン')) ? spot.scene.trim() : '';
   const visitor_notes = spot.visitor_notes || '';
   const check_points = (spot.check_points && spot.check_points.length > 0 && !(spot.check_points.length === 2 && spot.check_points[0] === '現地での記念撮影' && spot.check_points[1] === '周辺の散策')) ? spot.check_points : [];
   const last_confirmed_date = spot.last_confirmed_date || '2026-10-12';
@@ -363,10 +363,25 @@ routes.push({
 
 // 個別スポット詳細ページ
 spots.forEach(spot => {
+  const cleanScene = (spot.scene && !spot.scene.includes('MVに登場した名場面シーン')) ? spot.scene.trim() : '';
+  const cleanDesc = (spot.description || '')
+    .replace(/<iframe[^>]*>.*?<\/iframe>/gi, '')
+    .replace(/⚠️\s*聖地巡礼に関する重要なお願い[\s\S]*$/, '')
+    .replace(/【[^】]*】/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  const summaryText = cleanScene || cleanDesc;
+  const shortSummary = summaryText.length > 90 ? summaryText.slice(0, 90) + '…' : summaryText;
+  const accessPart = (spot.nearest_station && !spot.nearest_station.includes('情報なし'))
+    ? `最寄り駅: ${spot.nearest_station}${spot.walk_time && !spot.walk_time.includes('情報なし') ? `（徒歩${spot.walk_time}）` : ''}。`
+    : '';
+  const rawDesc = `${spot.name}の聖地巡礼情報・ロケ地解説。${shortSummary ? `${shortSummary}。` : ''}${spot.address ? `所在地: ${spot.address}。` : ''}${accessPart}`;
+  const spotDesc = rawDesc.replace(/。+/g, '。').trim();
+
   routes.push({
     path: `/spots/${spot.slug}`,
     title: `${spot.name}（${spot.group}聖地） - トリプルデートマップ`,
-    desc: `${spot.name}のロケ地情報・場面解説。${spot.scene || spot.description.slice(0, 80)}。所在地: ${spot.address}。最寄り駅: ${spot.nearest_station}（徒歩${spot.walk_time}）。`,
+    desc: spotDesc,
     type: 'spot-detail',
     spotData: spot
   });
@@ -377,7 +392,7 @@ spots.forEach(spot => {
       path: `/spots/${spot.id}`,
       canonicalPath: `/spots/${spot.slug}`,
       title: `${spot.name}（${spot.group}聖地） - トリプルデートマップ`,
-      desc: `${spot.name}のロケ地情報・場面解説。所在地: ${spot.address}。`,
+      desc: spotDesc,
       type: 'spot-detail',
       spotData: spot
     });
@@ -490,16 +505,26 @@ const buildPageContent = (route) => {
               <a href="/spots" style="font-size: 13px; color: #ff6897; font-weight: bold; text-decoration: none;">全スポットを見る →</a>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
-              ${popularSpots.map(s => `
+              ${popularSpots.map(s => {
+                const cleanScene = (s.scene && !s.scene.includes('MVに登場した名場面シーン')) ? s.scene.trim() : '';
+                const cleanDesc = (s.description || '')
+                  .replace(/<iframe[^>]*>.*?<\/iframe>/gi, '')
+                  .replace(/⚠️\s*聖地巡礼に関する重要なお願い[\s\S]*$/, '')
+                  .replace(/【[^】]*】/g, '')
+                  .replace(/\s+/g, ' ')
+                  .trim();
+                const cardSnippet = cleanScene || cleanDesc;
+                return `
                 <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
                   <span style="font-size: 10px; font-weight: bold; color: #fff; background: ${s.group === '=LOVE' ? '#ff6897' : s.group === '≠ME' ? '#0ea5e9' : s.group === '≒JOY' ? '#f59e0b' : '#64748b'}; padding: 3px 8px; border-radius: 6px;">${s.group}</span>
                   <h3 style="font-size: 15px; font-weight: bold; color: #0f172a; margin: 8px 0 4px 0;">
                     <a href="/spots/${s.slug}" style="color: inherit; text-decoration: none;">${s.name}</a>
                   </h3>
-                  <p style="font-size: 12px; color: #64748b; margin: 0 0 8px 0;">📍 ${s.address || '東京都'}</p>
-                  <p style="font-size: 12.5px; color: #334155; line-height: 1.5; margin: 0;">${(s.scene || s.description).slice(0, 70)}...</p>
+                  <p style="font-size: 12px; color: #64748b; margin: 0 0 8px 0;">📍 ${s.address || '日本'}</p>
+                  ${cardSnippet ? `<p style="font-size: 12.5px; color: #334155; line-height: 1.5; margin: 0;">${cardSnippet.slice(0, 70)}...</p>` : ''}
                 </div>
-              `).join('')}
+              `;
+              }).join('')}
             </div>
           </section>
 
@@ -510,16 +535,26 @@ const buildPageContent = (route) => {
               <a href="/spots" style="font-size: 13px; color: #ff6897; font-weight: bold; text-decoration: none;">スポット一覧 →</a>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
-              ${recentSpots.map(s => `
+              ${recentSpots.map(s => {
+                const cleanScene = (s.scene && !s.scene.includes('MVに登場した名場面シーン')) ? s.scene.trim() : '';
+                const cleanDesc = (s.description || '')
+                  .replace(/<iframe[^>]*>.*?<\/iframe>/gi, '')
+                  .replace(/⚠️\s*聖地巡礼に関する重要なお願い[\s\S]*$/, '')
+                  .replace(/【[^】]*】/g, '')
+                  .replace(/\s+/g, ' ')
+                  .trim();
+                const cardSnippet = cleanScene || cleanDesc;
+                return `
                 <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
                   <span style="font-size: 10px; font-weight: bold; color: #fff; background: ${s.group === '=LOVE' ? '#ff6897' : s.group === '≠ME' ? '#0ea5e9' : s.group === '≒JOY' ? '#f59e0b' : '#64748b'}; padding: 3px 8px; border-radius: 6px;">${s.group}</span>
                   <h3 style="font-size: 15px; font-weight: bold; color: #0f172a; margin: 8px 0 4px 0;">
                     <a href="/spots/${s.slug}" style="color: inherit; text-decoration: none;">${s.name}</a>
                   </h3>
-                  <p style="font-size: 12px; color: #64748b; margin: 0 0 8px 0;">📍 ${s.address || '東京都'}</p>
-                  <p style="font-size: 12.5px; color: #334155; line-height: 1.5; margin: 0;">${(s.scene || s.description).slice(0, 70)}...</p>
+                  <p style="font-size: 12px; color: #64748b; margin: 0 0 8px 0;">📍 ${s.address || '日本'}</p>
+                  ${cardSnippet ? `<p style="font-size: 12.5px; color: #334155; line-height: 1.5; margin: 0;">${cardSnippet.slice(0, 70)}...</p>` : ''}
                 </div>
-              `).join('')}
+              `;
+              }).join('')}
             </div>
           </section>
 
@@ -605,8 +640,8 @@ const buildPageContent = (route) => {
             </h1>
 
             <div style="background: #f8fafc; border-radius: 12px; padding: 14px 18px; font-size: 13px; color: #475569; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px;">
-              <div><strong>📍 所在地:</strong> ${s.address || '未指定'}</div>
-              ${s.nearest_station ? `<div><strong>🚉 最寄り駅:</strong> ${s.nearest_station} ${s.walk_time ? `(徒歩${s.walk_time})` : ''}</div>` : ''}
+              ${s.address ? `<div><strong>📍 所在地:</strong> ${s.address}</div>` : ''}
+              ${(s.nearest_station && !s.nearest_station.includes('情報なし')) ? `<div><strong>🚉 最寄り駅:</strong> ${s.nearest_station} ${s.walk_time && !s.walk_time.includes('情報なし') ? `(徒歩${s.walk_time})` : ''}</div>` : ''}
               ${s.event_date ? `<div><strong>📅 関連日:</strong> ${s.event_date}</div>` : ''}
               <div><strong>📅 最終確認日:</strong> ${s.last_confirmed_date}</div>
             </div>
@@ -628,7 +663,7 @@ ${s.description}
             </div>
             ` : ''}
 
-            ${s.scene ? `
+            ${(s.scene && !s.scene.includes('MVに登場した名場面シーン') && s.scene.trim().length > 0) ? `
             <h2 style="font-size: 18px; font-weight: bold; color: #0f172a; margin-top: 24px; border-left: 4px solid #ff6897; padding-left: 10px;">
               🎬 MV・映像作品での具体的な登場場面
             </h2>
@@ -876,7 +911,16 @@ ${s.description}
           </p>
 
           <div style="display: flex; flex-direction: column; gap: 16px;">
-            ${currentSpots.map(s => `
+            ${currentSpots.map(s => {
+              const cleanScene = (s.scene && !s.scene.includes('MVに登場した名場面シーン')) ? s.scene.trim() : '';
+              const cleanDesc = (s.description || '')
+                .replace(/<iframe[^>]*>.*?<\/iframe>/gi, '')
+                .replace(/⚠️\s*聖地巡礼に関する重要なお願い[\s\S]*$/, '')
+                .replace(/【[^】]*】/g, '')
+                .replace(/\s+/g, ' ')
+                .trim();
+              const cardSnippet = cleanScene || cleanDesc;
+              return `
               <article style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 8px;">
                   <div>
@@ -889,18 +933,17 @@ ${s.description}
                   <a href="/spots/${s.slug}" style="color: inherit; text-decoration: none;">${s.name}</a>
                 </h2>
                 <p style="font-size: 12.5px; color: #64748b; margin: 0 0 10px 0;">
-                  📍 ${s.address || '日本'} ${s.nearest_station ? `(最寄り: ${s.nearest_station})` : ''}
+                  📍 ${s.address || '日本'} ${(s.nearest_station && !s.nearest_station.includes('情報なし')) ? `(最寄り: ${s.nearest_station})` : ''}
                 </p>
-                <p style="font-size: 13.5px; color: #334155; line-height: 1.6; margin: 0 0 12px 0;">
-                  ${(s.scene || s.description).slice(0, 110)}...
-                </p>
+                ${cardSnippet ? `<p style="font-size: 13.5px; color: #334155; line-height: 1.6; margin: 0 0 12px 0;">${cardSnippet.slice(0, 110)}...</p>` : ''}
                 <div style="text-align: right;">
                   <a href="/spots/${s.slug}" style="font-size: 12.5px; color: #ff6897; font-weight: bold; text-decoration: underline;">
                     詳細解説とアクセスを見る →
                   </a>
                 </div>
               </article>
-            `).join('')}
+            `;
+            }).join('')}
           </div>
 
           ${paginationHtml}
