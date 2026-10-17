@@ -47,6 +47,108 @@ export const supabase = isRealBaaSConfigured
 // イベントリスナーの管理 (モックおよびSupabase両用)
 const listeners: AuthStateCallback[] = [];
 
+// 🔑 パスワードリカバリー専用リスナーの管理
+export interface PasswordRecoveryState {
+  isRecovery: boolean;
+  error?: string;
+}
+
+type PasswordRecoveryCallback = (state: PasswordRecoveryState) => void;
+const recoveryListeners: PasswordRecoveryCallback[] = [];
+let currentRecoveryState: PasswordRecoveryState = { isRecovery: false };
+
+// ⚠️ OAuthリダイレクト戻り時エラーリスナーの管理
+export type OAuthErrorCallback = (errorMsg: string) => void;
+const oauthErrorListeners: OAuthErrorCallback[] = [];
+let currentOAuthError: string | null = null;
+
+/**
+ * 🛡️ 認証URLトークンのサニタイズ (要件: トークンをログや分析ツールへ送信しない)
+ * URLに含まれる access_token, refresh_token, code などの認証情報を
+ * 履歴・分析ツール・外部リンクのリファラーから保護するため、Supabaseによる処理完了後に安全にURLバーから除去します。
+ */
+export const sanitizeUrlTokens = () => {
+  if (typeof window === 'undefined') return;
+  try {
+    const hash = window.location.hash || '';
+    const search = window.location.search || '';
+    const hasTokens = 
+      hash.includes('access_token') ||
+      hash.includes('refresh_token') ||
+      hash.includes('type=recovery') ||
+      hash.includes('error=') ||
+      search.includes('code=') ||
+      search.includes('error=');
+
+    if (hasTokens) {
+      window.history.replaceState(null, document.title, window.location.pathname);
+    }
+  } catch (e) {
+    console.error('Failed to sanitize URL tokens:', e);
+  }
+};
+
+// URL初期ロード時およびハッシュ変更時のエラー・リダイレクト直接検知
+const checkUrlForErrorsAndRedirects = () => {
+  if (typeof window === 'undefined') return;
+  const hash = window.location.hash || '';
+  const search = window.location.search || '';
+
+  // 1. エラーパラメータ（期限切れリンク・無効リンク・OAuthエラー）の検知
+  if (hash.includes('error=') || search.includes('error=')) {
+    const rawParams = hash.includes('error=') ? hash.replace(/^#/, '') : search.replace(/^\?/, '');
+    const params = new URLSearchParams(rawParams);
+    const errorCode = params.get('error_code');
+    const errorDescription = params.get('error_description') || params.get('error') || '';
+    const descLower = errorDescription.toLowerCase();
+
+    // 🔑 パスワード再設定（リカバリー）固有のエラーかを厳密に判定
+    // ※単なる 'invalid' は OAuth の 'invalid_request' や 'invalid_client' 等にも含まれるため誤認しないこと
+    const isRecoveryError = 
+      errorCode === 'otp_expired' ||
+      hash.includes('type=recovery') ||
+      search.includes('type=recovery') ||
+      (descLower.includes('email link') && (descLower.includes('expired') || descLower.includes('invalid'))) ||
+      (descLower.includes('otp') && descLower.includes('expired'));
+
+    if (isRecoveryError) {
+      currentRecoveryState = {
+        isRecovery: true,
+        error: 'パスワード再設定リンクの有効期限が切れているか、すでに使用されています。お手数ですが、再度パスワード再設定メールを送信してください。'
+      };
+      sanitizeUrlTokens();
+      setTimeout(() => {
+        recoveryListeners.forEach(cb => cb(currentRecoveryState));
+      }, 50);
+      return;
+    }
+
+    // X (Twitter) などのOAuth認可画面からエラー付きでリダイレクトされた場合（invalid_request, access_denied, server_error等）
+    const desc = params.get('error_description') || params.get('error') || '認証に失敗しました。';
+    currentOAuthError = `⚠️ 外部アカウント認証に失敗しました: ${decodeURIComponent(desc.replace(/\+/g, ' '))}`;
+    sanitizeUrlTokens();
+    setTimeout(() => {
+      oauthErrorListeners.forEach(cb => cb(currentOAuthError!));
+    }, 50);
+    return;
+  }
+
+  // 2. ローカルシミュレータ（!supabase）専用のフォールバック検知
+  // ※本物のSupabaseが存在する場合は、URLを削除せず保持し、onAuthStateChange('PASSWORD_RECOVERY') で正規のセッション確立を待ちます
+  if (!supabase && (hash.includes('type=recovery') || search.includes('type=recovery'))) {
+    currentRecoveryState = { isRecovery: true };
+    setTimeout(() => {
+      sanitizeUrlTokens();
+      recoveryListeners.forEach(cb => cb(currentRecoveryState));
+    }, 50);
+  }
+};
+
+if (typeof window !== 'undefined') {
+  checkUrlForErrorsAndRedirects();
+  window.addEventListener('hashchange', checkUrlForErrorsAndRedirects);
+}
+
 // Supabaseセッションから既存のUser型へ変換・同期するヘルパー
 const mapSupabaseUserToTdmUser = (sbUser: any): User => {
   const metadata = sbUser.user_metadata || {};
@@ -64,6 +166,38 @@ const mapSupabaseUserToTdmUser = (sbUser: any): User => {
 if (supabase) {
   supabase.auth.onAuthStateChange(async (event, session) => {
     console.log('🔔 Supabase Auth Event:', event);
+
+    // 🔑 PASSWORD_RECOVERY イベントの明示的捕捉
+    // SupabaseがURLトークンを検証し、正規のセッションが確立された「後」に安全にURLをサニタイズ
+    if (event === 'PASSWORD_RECOVERY') {
+      if (session && session.user) {
+        currentRecoveryState = { isRecovery: true };
+        sanitizeUrlTokens();
+        recoveryListeners.forEach(cb => cb(currentRecoveryState));
+      } else {
+        // 偽トークンや不正JWTによりセッション確立に失敗した場合
+        currentRecoveryState = {
+          isRecovery: true,
+          error: '認証セッションを確立できませんでした。リンクが無効である可能性があります。再度メールを送信してください。'
+        };
+        sanitizeUrlTokens();
+        recoveryListeners.forEach(cb => cb(currentRecoveryState));
+      }
+    }
+
+    // SIGNED_IN時（OAuthリダイレクト戻りや認証コード交換完了時）も安全にURLサニタイズ
+    if (event === 'SIGNED_IN') {
+      sanitizeUrlTokens();
+    }
+
+    // INITIAL_SESSION時（Supabase Auth初期化判定完了時）
+    // セッションが無く、かつURLに未処理トークンが残っている場合のみ安全にクリーンアップ
+    if (event === 'INITIAL_SESSION') {
+      if (!session) {
+        sanitizeUrlTokens();
+      }
+    }
+
     if (session && session.user) {
       // ユーザーのメタデータを含めてセッションを作成
       const tdmUser = mapSupabaseUserToTdmUser(session.user);
@@ -399,6 +533,124 @@ export const authService = {
       users[idx].titles = updatedUser.titles || [];
       saveSimUsers(users);
     }
+  },
+
+  // 🔑 パスワードリカバリー状態の購読
+  onPasswordRecovery(callback: PasswordRecoveryCallback): () => void {
+    recoveryListeners.push(callback);
+    if (currentRecoveryState.isRecovery) {
+      callback(currentRecoveryState);
+    }
+    return () => {
+      const idx = recoveryListeners.indexOf(callback);
+      if (idx !== -1) {
+        recoveryListeners.splice(idx, 1);
+      }
+    };
+  },
+
+  // 🔑 パスワードリカバリー状態のリセット
+  clearPasswordRecovery() {
+    currentRecoveryState = { isRecovery: false };
+    recoveryListeners.forEach(cb => cb(currentRecoveryState));
+  },
+
+  // 📩 パスワード再設定メールの送信
+  async resetPasswordForEmail(email: string): Promise<{ success: boolean; error?: string }> {
+    if (supabase) {
+      try {
+        const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+          redirectTo: `${window.location.origin}/`
+        });
+        if (error) throw error;
+        return { success: true };
+      } catch (err: any) {
+        const msg = (err?.message || '').toLowerCase();
+        if (msg.includes('rate limit') || msg.includes('over_email_send_rate_limit')) {
+          return {
+            success: false,
+            error: '⏱️ メール送信数の上限に達しました。しばらく時間をおいてから再度お試しください。'
+          };
+        }
+        return { success: false, error: err.message || 'パスワード再設定メールの送信に失敗しました。' };
+      }
+    }
+
+    // ローカルシミュレータ処理
+    await new Promise(resolve => setTimeout(resolve, 500));
+    return { success: true };
+  },
+
+  // ⚠️ OAuthリダイレクト戻り時エラーの購読
+  onOAuthError(callback: OAuthErrorCallback): () => void {
+    oauthErrorListeners.push(callback);
+    if (currentOAuthError) {
+      callback(currentOAuthError);
+    }
+    return () => {
+      const idx = oauthErrorListeners.indexOf(callback);
+      if (idx !== -1) {
+        oauthErrorListeners.splice(idx, 1);
+      }
+    };
+  },
+
+  // ⚠️ OAuthエラー状態のクリア
+  clearOAuthError() {
+    currentOAuthError = null;
+  },
+
+  // 🔐 新しいパスワードへの更新実行 (supabase.auth.updateUser)
+  async updatePassword(newPassword: string): Promise<{ success: boolean; error?: string }> {
+    // 🛡️ リカバリーモード中（PASSWORD_RECOVERYイベント後）であるかを厳格確認
+    // 通常ログイン済みのユーザーがリカバリーリンクを踏まずに勝手に呼び出すことを防止
+    if (!currentRecoveryState.isRecovery) {
+      return {
+        success: false,
+        error: 'パスワード再設定用のセッションではありません。再設定メールのリンクから再度アクセスしてください。'
+      };
+    }
+
+    if (supabase) {
+      try {
+        // 🛡️ 有効な認証セッションの存在を事前に厳格検証（偽トークン・手動アクセス排除）
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        if (sessionError || !session || !session.user) {
+          return {
+            success: false,
+            error: '有効な認証セッションが見つかりません。パスワード再設定リンクから再度アクセスしてください。'
+          };
+        }
+
+        const { error } = await supabase.auth.updateUser({
+          password: newPassword
+        });
+        if (error) throw error;
+        this.clearPasswordRecovery();
+        return { success: true };
+      } catch (err: any) {
+        return { success: false, error: err.message || 'パスワードの更新に失敗しました。' };
+      }
+    }
+
+    // ローカルシミュレータ処理
+    await new Promise(resolve => setTimeout(resolve, 500));
+    const session = this.getSession();
+    if (!session || !session.email) {
+      return {
+        success: false,
+        error: '有効な認証セッションが見つかりません。再設定リンクから再度アクセスしてください。'
+      };
+    }
+
+    const users = getSimUsers();
+    const user = users.find(u => u.email.toLowerCase() === session.email?.toLowerCase());
+    if (user) {
+      user.passwordHash = newPassword;
+      saveSimUsers(users);
+    }
+    this.clearPasswordRecovery();
+    return { success: true };
   }
 };
 
