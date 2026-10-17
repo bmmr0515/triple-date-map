@@ -7706,8 +7706,8 @@ ${window.location.origin + window.location.pathname}
               </button>
             </form>
 
-            {/* X (Twitter) ログインシミュレートボタン (通常ログイン/登録時のみ表示) */}
-            {authMode !== 'forgot_password' && (
+            {/* X (Twitter) ログインボタン (UIから非表示。X認証ロジック・コード自体は完全に保持) */}
+            {false && authMode !== 'forgot_password' && (
               <button
                 disabled={isAuthLoading || !agreeTermsSignup}
                 onClick={async () => {
