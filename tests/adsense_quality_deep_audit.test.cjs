@@ -47,9 +47,9 @@ assert.strictEqual(spots.length, 293, '全293件の聖地スポットが1件も�
 assert.strictEqual(courses.length, 10, '全10件のモデルコースが維持されていること');
 console.log('✅ [Test 1 Passed] 293スポット & 10モデルコースのデータ完全性を確認。\n');
 
-// --- [Test 2] 住所完全性監査（都道府県のみの住所 0 件） ---
-console.log('--- [Test 2] 住所完全性監査（都道府県のみの住所 0 件） ---');
-const prefRegex = /^(東京都|神奈川県|千葉県|埼玉県|茨城県|栃木県|群馬県|静岡県|高知県|福島県|京都府|大阪府|沖縄県|長野県|山口県|愛知県|北海道|兵庫県|山梨県)$/;
+// --- [Test 2] 住所完全性監査（都道府県のみの住所 0 件 & 撮影地点整合性） ---
+console.log('--- [Test 2] 住所完全性監査（都道府県のみの住所 0 件 & 撮影地点整合性） ---');
+const prefRegex = /^(東京都|神奈川県|千葉県|埼玉県|茨城県|栃木県|群馬県|静岡県|高知県|福島県|京都府|大阪府|沖縄県|長野県|山口県|愛知県|北海道|兵庫県|山梨県|鹿児島県)$/;
 const incompleteAddresses = spots.filter(s => {
   const addr = (s.address || '').trim();
   return addr.length <= 4 || prefRegex.test(addr);
@@ -58,7 +58,21 @@ assert.strictEqual(incompleteAddresses.length, 0, `都道府県名のみの不�
 
 const emptyAddresses = spots.filter(s => !s.address || s.address.trim() === '');
 assert.strictEqual(emptyAddresses.length, 0, '住所が空欄のスポットが0件であること');
-console.log('✅ [Test 2 Passed] 全293件の住所完全性が100%（都道府県のみ0件）であることを確認。\n');
+
+// 具体的スポットの撮影地点・住所の整合性検証
+const yoyogi = spots.find(s => s.id === 'spot-real-yoyogi-ani');
+assert(yoyogi.address.includes('千代田区神田三崎町'), '代々木アニメーション学院東京校はオーディション当時の水道橋校舎（千代田区神田三崎町）が設定されていること');
+
+const akaiyane = spots.find(s => s.id === 'spot-real-sakurasaku-akaiyane');
+assert(akaiyane.address.includes('伊東市川奈'), '赤いやねは川奈（伊東市川奈1327-11）が設定されていること');
+
+const avaco = spots.find(s => s.id === 'spot-real-zettaiidol-avacosaginuma');
+assert(avaco.address.includes('宮前区犬蔵'), 'アバコさぎ沼スタジオは宮前区犬蔵が設定されていること');
+
+const lutheran = spots.find(s => s.id === 'spot-real-todoitelove-urawalutheran');
+assert(lutheran.address.includes('緑区大字大崎3642'), '浦和ルーテル学院は緑区大字大崎3642が設定されていること');
+
+console.log('✅ [Test 2 Passed] 全293件の住所完全性が100%（都道府県のみ0件）かつ撮影地点の整合性を確認。\n');
 
 // --- [Test 3] 定型文・ダミープレースホルダーの完全根絶 ---
 console.log('--- [Test 3] 定型文・ダミープレースホルダーの完全根絶 ---');
@@ -81,38 +95,47 @@ const checkHtmlForPhrase = (dir, phrase) => {
 checkHtmlForPhrase(distDir, 'MVに登場した名場面シーン');
 console.log('✅ [Test 3 Passed] 全静的HTMLファイルにおいてダミー定型文「MVに登場した名場面シーン」が0件であることを確認。\n');
 
-// --- [Test 4] 段階的インデックス（noindex）と sitemap.xml の整合性監査 ---
-console.log('--- [Test 4] 段階的インデックス（noindex）と sitemap.xml の整合性監査 ---');
+// --- [Test 4] 多面的品質判定・段階的インデックス（noindex, follow）と sitemap.xml の整合性監査 ---
+console.log('--- [Test 4] 多面的品質判定・段階的インデックス（noindex, follow）と sitemap.xml の整合性監査 ---');
 const sitemapPath = path.join(distDir, 'sitemap.xml');
 assert(fs.existsSync(sitemapPath), 'dist/sitemap.xml が生成されていること');
 const sitemapContent = fs.readFileSync(sitemapPath, 'utf8');
 
-// 50文字未満の極薄スポットが noindex となり、sitemap.xml に含まれていないこと
-const thinSpots = spots.filter(s => {
-  const cleanDesc = (s.description || '')
+// 多面的評価関数の再現
+const evaluateSpotQuality = (spot) => {
+  const cleanDesc = (spot.description || '')
     .replace(/<iframe[^>]*>.*?<\/iframe>/gi, '')
     .replace(/⚠️\s*聖地巡礼に関する重要なお願い[\s\S]*$/, '')
     .replace(/【[^】]*】/g, '')
     .replace(/\s+/g, ' ')
     .trim();
-  return cleanDesc.length < 50;
-});
-console.log(`情報量審査中（50文字未満・noindex対象）スポット数: ${thinSpots.length}件`);
-assert(thinSpots.length > 0, '薄いコンテンツが適切に検出されていること');
 
-thinSpots.forEach(s => {
+  const hasNotes = !!(spot.visitor_notes && spot.visitor_notes.trim().length > 0);
+  const hasScene = !!(spot.scene && spot.scene.trim().length > 0 && !spot.scene.includes('MVに登場した名場面シーン'));
+  const hasHolyPoint = !!(spot.holy_point && spot.holy_point.trim().length > 0);
+  const hasCheckPoints = !!(spot.check_points && spot.check_points.length > 0);
+  const isOneLiner = /^(MV『[^』]+』のロケ地。?[^。]*。?|『[^』]+』MVロケ地です。?|『[^』]+』巡礼スポット[①-⑤]。?)$/.test(cleanDesc);
+
+  return isOneLiner || cleanDesc.length < 30 || (cleanDesc.length < 50 && !hasNotes && !hasScene && !hasHolyPoint && !hasCheckPoints);
+};
+
+const noindexSpots = spots.filter(evaluateSpotQuality);
+console.log(`多面的評価による情報調査中（noindex対象）スポット数: ${noindexSpots.length}件`);
+assert(noindexSpots.length > 0, '調査中スポットが適切に検出されていること');
+
+noindexSpots.forEach(s => {
   const slug = s.slug || s.id;
-  assert(!sitemapContent.includes(`/spots/${slug}<`), `noindex対象の薄いスポット /spots/${slug} が sitemap.xml に含まれてはなりません`);
+  assert(!sitemapContent.includes(`/spots/${slug}<`), `noindex対象スポット /spots/${slug} が sitemap.xml に含まれてはなりません`);
   
-  // 生成されたHTMLファイルのrobotsタグ検証
+  // 生成されたHTMLファイルのrobotsタグ検証: noindex, follow であること（404以外）
   const htmlPath = path.join(distDir, 'spots', slug, 'index.html');
   if (fs.existsSync(htmlPath)) {
     const html = fs.readFileSync(htmlPath, 'utf8');
-    assert(html.includes('<meta name="robots" content="noindex, nofollow" />'), `薄いスポット ${slug} に noindex タグが設定されていること`);
+    assert(html.includes('<meta name="robots" content="noindex, follow" />'), `調査中スポット ${slug} に noindex, follow タグが設定されていること`);
   }
 });
 
-// 充実スポット（代々木アニメーション学院、日本武道館等）が sitemap.xml に掲載され index であること
+// 充実スポット（代々木アニメーション学院、日本武道館等）が sitemap.xml に掲載され index, follow であること
 const richSpotSlugs = ['yoyogi-ani', 'budokan'];
 richSpotSlugs.forEach(slug => {
   assert(sitemapContent.includes(`/spots/${slug}<`), `充実スポット /spots/${slug} は sitemap.xml に掲載されていること`);
@@ -122,6 +145,10 @@ richSpotSlugs.forEach(slug => {
     assert(html.includes('<meta name="robots" content="index, follow" />'), `充実スポット ${slug} は index, follow であること`);
   }
 });
+
+// 404ページが noindex, nofollow であること
+const fourOhFourHtml = fs.readFileSync(path.join(distDir, '404.html'), 'utf8');
+assert(fourOhFourHtml.includes('<meta name="robots" content="noindex, nofollow" />'), '404.html は noindex, nofollow であること');
 
 // モデルコース全10本が sitemap.xml に掲載されていること
 courses.forEach(c => {
@@ -133,7 +160,7 @@ courses.forEach(c => {
   assert(sitemapContent.includes(`https://tripledatemap.com${p}<`), `重要固定ページ ${p} が sitemap.xml に掲載されていること`);
 });
 
-console.log('✅ [Test 4 Passed] 段階的インデックス制御と sitemap.xml の整合性を確認。\n');
+console.log('✅ [Test 4 Passed] 多面的品質判定・段階的インデックス制御（noindex, follow）と sitemap.xml の整合性を確認。\n');
 
 // --- [Test 5] 構造化データ（JSON-LD）のジオ座標・アドレス検証 ---
 console.log('--- [Test 5] 構造化データ（JSON-LD）のジオ座標・アドレス検証 ---');

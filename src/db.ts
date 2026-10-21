@@ -146,8 +146,8 @@ const INITIAL_SPOTS: Spot[] = [
         "youtube_title": "🎥 関連映像: Documentary of =LOVE -Episode0-",
         "youtube_url": "https://www.youtube.com/embed/zXR_xhihDOQ",
         "reward_title": "すべての始まりの目撃者",
-        "address": "〒151-0053 東京都渋谷区代々木1丁目24-10 代々木アニメーション学院 東京校",
-        "description": "イコノイジョイ全グループのオーディション、初期の合宿やレッスンの舞台となったすべての始まりの場所。指原莉乃プロデューサーとメンバーの絆が生まれた絶対的聖地。JR代々木駅西口から徒歩すぐのアクセスの良い立地にあり、公式ドキュメンタリー映像等でも度々登場するファンにとって原点のシンボルです。\n\n⚠️聖地巡礼に関する重要なお願い\n現役の専門学校です。学生の迷惑になるため、校舎内への無断立ち入りや出入り待ちなどの行為は絶対にやめましょう。外観を眺めるのみにしてください。",
+        "address": "〒101-0061 東京都千代田区神田三崎町1丁目3-9 MCビル",
+        "description": "イコノイジョイ全グループのオーディション、初期の合宿やレッスンの舞台となったすべての始まりの場所。指原莉乃プロデューサーとメンバーの絆が生まれた絶対的聖地。JR中央・総武線の水道橋駅東口から徒歩約2分の立地にあり、2017年のグループ結成オーディションや初期レッスンの舞台となった、ファンにとって原点のシンボルです。\n\n⚠️聖地巡礼に関する重要なお願い\n現役の専門学校です。学生の迷惑になるため、校舎内への無断立ち入りや出入り待ちなどの行為は絶対にやめましょう。外観を眺めるのみにしてください。",
         "coordinateAccuracy": "facility",
         "accuracyReason": "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定",
         "youtubeId": "zXR_xhihDOQ",
@@ -2740,7 +2740,7 @@ const INITIAL_SPOTS: Spot[] = [
             "桜の咲く音がした",
             "赤いやね"
         ],
-        "address": "〒413-0232 静岡県伊東市八幡野1071-2",
+        "address": "〒414-0044 静岡県伊東市川奈1327-11",
         "description": "『桜の咲く音がした』のMVに登場するレトロで可愛い喫茶店。赤い屋根が特徴的で、相模湾を望む高台に位置しています。\n\nURL: https://tabelog.com/\n住所: 〒414-0044 静岡県伊東市川奈１３２７−１１\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/0ImFNEs7P_Q?si=eQBaUPA0cQgOh_Ft&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
         "coordinateAccuracy": "exact",
         "accuracyReason": "映像内の背景構造物（街灯、手すり、特徴的な駅の改札やホーム、看板アングル）が現地写真や地図と完全に一致し、具体的な撮影位置を特定",
@@ -2828,7 +2828,7 @@ const INITIAL_SPOTS: Spot[] = [
             "絶対アイドル辞めないで",
             "アバコスタジオ"
         ],
-        "address": "〒216-0015 神奈川県川崎市宮前区菅生2丁目1-1",
+        "address": "〒216-0011 神奈川県川崎市宮前区犬蔵2丁目17-7",
         "description": "ファンとアイドルの究極の絆を描いた名曲『絶対アイドル辞めないで』のMV撮影が行われたスタジオ。メンバーが華麗なパフォーマンスを披露した撮影の舞台です。\n\n住所: 〒216-0011 神奈川県川崎市宮前区犬蔵２丁目１７−７\n\n⚠️聖地巡礼に関する重要なお願い\n商業用の撮影スタジオ（私有地）です。一般の方の立ち入りや見学は一切禁止されています。周辺道路など近隣への迷惑になる行為も絶対にやめましょう。外観を遠目に見る程度に留めてください。\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/17NBPoc78oM?si=TmajORGeC-AdkGb1&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
         "coordinateAccuracy": "facility",
         "youtubeId": "17NBPoc78oM",
@@ -2849,7 +2849,7 @@ const INITIAL_SPOTS: Spot[] = [
             "届いてLOVE YOU",
             "浦和ルーテル"
         ],
-        "address": "〒336-0977 埼玉県さいたま市緑区上野田394",
+        "address": "〒336-0975 埼玉県さいたま市緑区大字大崎3642",
         "description": "齊藤なぎさ初センター曲『届いてLOVE YOU♡』のMVロケ地。メンバーたちが学校を舞台に、甘酸っぱいスクールライフや告白ストーリーを演じた聖地です。\n\n住所: 〒330-0051 埼玉県さいたま市緑区大崎３６４２\n\n⚠️聖地巡礼に関する重要なお願い\n現在も生徒が通う「現役の私立学校」です。関係者以外の敷地内への無断立ち入り、生徒が映り込む形での撮影、周辺での長時間の滞留は絶対に禁止です！オタクのモラルとして、巡礼はごく遠巻きに外観を眺める程度に留めてください。\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/RxcNhst20uw?si=A4VcogqM9DQDxNGl&amp;controls=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
         "coordinateAccuracy": "facility",
         "youtubeId": "RxcNhst20uw",

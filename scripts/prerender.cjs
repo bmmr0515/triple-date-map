@@ -378,8 +378,15 @@ spots.forEach(spot => {
   const rawDesc = `${spot.name}の聖地巡礼情報・ロケ地解説。${shortSummary ? `${shortSummary}。` : ''}${spot.address ? `所在地: ${spot.address}。` : ''}${accessPart}`;
   const spotDesc = rawDesc.replace(/。+/g, '。').trim();
 
-  // 🛡️ コンテンツ品質判定: 本文が50文字未満の極薄ページ（調査中・情報不足）は noindex とし、十分な情報があるページのみをGoogleインデックス対象にする
-  const isThinContent = cleanDesc.length < 50;
+  // 🛡️ 多面的コンテンツ品質判定: 
+  // 50文字固定ではなく、スポット固有の情報、MV関連性、単文定型プレースホルダーか、注意事項・見どころの有無を総合評価
+  const hasNotes = !!(spot.visitor_notes && spot.visitor_notes.trim().length > 0);
+  const hasScene = !!(spot.scene && spot.scene.trim().length > 0 && !spot.scene.includes('MVに登場した名場面シーン'));
+  const hasHolyPoint = !!(spot.holy_point && spot.holy_point.trim().length > 0);
+  const hasCheckPoints = !!(spot.check_points && spot.check_points.length > 0);
+  const isOneLiner = /^(MV『[^』]+』のロケ地。?[^。]*。?|『[^』]+』MVロケ地です。?|『[^』]+』巡礼スポット[①-⑤]。?)$/.test(cleanDesc);
+
+  const isThinContent = isOneLiner || cleanDesc.length < 30 || (cleanDesc.length < 50 && !hasNotes && !hasScene && !hasHolyPoint && !hasCheckPoints);
 
   routes.push({
     path: `/spots/${spot.slug}`,
@@ -1464,8 +1471,10 @@ routes.forEach(route => {
     jsonLdScript = `\n  <script type="application/ld+json">${JSON.stringify(structData)}</script>`;
   }
 
-  // meta tags 置換・挿入
-  const robotsTag = route.noindex ? '<meta name="robots" content="noindex, nofollow" />' : '<meta name="robots" content="index, follow" />';
+  // meta tags 置換・挿入（404のみ nofollow、それ以外の noindex ページはリンク巡回を維持するため follow）
+  const robotsTag = route.noindex 
+    ? (route.type === '404' ? '<meta name="robots" content="noindex, nofollow" />' : '<meta name="robots" content="noindex, follow" />')
+    : '<meta name="robots" content="index, follow" />';
   const metaTags = `
   <meta name="description" content="${route.desc.replace(/"/g, '&quot;')}" />
   ${robotsTag}
