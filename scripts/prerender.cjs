@@ -378,15 +378,19 @@ spots.forEach(spot => {
   const rawDesc = `${spot.name}の聖地巡礼情報・ロケ地解説。${shortSummary ? `${shortSummary}。` : ''}${spot.address ? `所在地: ${spot.address}。` : ''}${accessPart}`;
   const spotDesc = rawDesc.replace(/。+/g, '。').trim();
 
+  // 🛡️ コンテンツ品質判定: 本文が50文字未満の極薄ページ（調査中・情報不足）は noindex とし、十分な情報があるページのみをGoogleインデックス対象にする
+  const isThinContent = cleanDesc.length < 50;
+
   routes.push({
     path: `/spots/${spot.slug}`,
     title: `${spot.name}（${spot.group}聖地） - トリプルデートマップ`,
     desc: spotDesc,
     type: 'spot-detail',
-    spotData: spot
+    spotData: spot,
+    noindex: isThinContent
   });
 
-  // spot.id と spot.slug が異なる場合は spot.id 側も出力（URL互換性）
+  // spot.id と spot.slug が異なる場合は spot.id 側も出力（URL互換性・重複インデックス防止のためnoindex）
   if (spot.id !== spot.slug && spot.id !== `spot-${spot.slug}`) {
     routes.push({
       path: `/spots/${spot.id}`,
@@ -394,7 +398,8 @@ spots.forEach(spot => {
       title: `${spot.name}（${spot.group}聖地） - トリプルデートマップ`,
       desc: spotDesc,
       type: 'spot-detail',
-      spotData: spot
+      spotData: spot,
+      noindex: true
     });
   }
 });
@@ -681,12 +686,14 @@ ${s.description}
             </ul>
             ` : ''}
 
+            ${s.visitor_notes ? `
             <h2 style="font-size: 18px; font-weight: bold; color: #0f172a; margin-top: 24px; border-left: 4px solid #f59e0b; padding-left: 10px;">
               ⚠️ 訪問時の注意事項・巡礼マナー
             </h2>
             <div style="background: #fffbeb; border: 1px solid #fef3c7; border-radius: 12px; padding: 16px; font-size: 13px; color: #92400e; line-height: 1.7;">
-              ${s.visitor_notes || '学校や私有地への無断立ち入りを避け、近隣住民や一般利用者のご迷惑にならないようマナーを守って巡礼をお楽しみください。店舗利用時は他のお客様への配慮をお願いいたします。'}
+              ${s.visitor_notes}
             </div>
+            ` : ''}
 
             ${s.youtube_title || s.youtube_url ? `
             <h2 style="font-size: 18px; font-weight: bold; color: #0f172a; margin-top: 28px; border-left: 4px solid #ff6897; padding-left: 10px;">
@@ -1430,7 +1437,12 @@ routes.forEach(route => {
       "description": s.description,
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": s.address || "日本"
+        "streetAddress": s.address || "日本"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": s.latitude,
+        "longitude": s.longitude
       },
       "url": canonicalUrl
     };
