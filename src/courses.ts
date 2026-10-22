@@ -320,8 +320,8 @@ export const INITIAL_COURSES: Course[] = [
     duration: "約3時間",
     start_point: "JR水道橋駅 / 東京ドーム",
     end_point: "九段下駅 / 日本武道館",
-    transportation: "徒歩",
-    estimated_cost: "約0円（施設利用料除く）",
+    transportation: "電車（JR総武線・中央線）および徒歩",
+    estimated_cost: "約350円（JR運賃等）",
     recommended_time: "日中（11:00〜16:00）",
     spots: [
       {
@@ -342,7 +342,7 @@ export const INITIAL_COURSES: Course[] = [
       }
     ],
     external_map_url: "https://www.google.com/maps/dir/?api=1&origin=Tokyo+Dome&destination=Nippon+Budokan",
-    notes: "日本武道館や東京ドームはイベント開催日には大変混雑します。一般利用客や関係者の通行導線を塞がないように注意してください。代々木アニメーション学院は現役の専門学校です。校舎内への無断立ち入りや出待ち行為は厳禁であり、公道から外観を見学してください。",
+    notes: "水道橋（東京ドーム）から代々木（代々木アニメーション学院）間、および代々木から九段下（日本武道館）間はJR総武線・中央線および地下鉄の利用が現実的です。代々木アニメーション学院は現役の専門学校です。校舎内への無断立ち入りや出待ち行為は厳禁であり、公道から外観を見学してください。日本武道館や東京ドームはイベント開催日には大変混雑しますので一般通行の妨げにならないよう配慮してください。",
     related_groups: ["合同", "=LOVE", "≠ME", "≒JOY"],
     related_songs: ["Documentary of =LOVE", "わたし注意報", "夢の続き"],
     cafe_spots: ["東京ドームシティ ラクーア内カフェ", "神保町・水道橋の純喫茶（さぼうる等）", "北の丸公園休憩所 CAFÉ 33"],
