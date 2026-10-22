@@ -1036,7 +1036,7 @@ const INITIAL_SPOTS: Spot[] = [
         "tags": [
             "トリガー巡礼"
         ],
-        "address": "〒153-0044 東京都目黒区大橋1丁目4-10 ミモザハウス",
+        "address": "〒150-0047 東京都渋谷区神山町20-5",
         "description": "野口衣織が男の子と相合傘をするシーンが撮影されたハウススタジオ。",
         "coordinateAccuracy": "facility",
         "accuracyReason": "施設自体は特定できているが、施設内の具体的な撮影位置は一般非公開または特定困難なため代表入口等にピンを設定",
@@ -1101,8 +1101,8 @@ const INITIAL_SPOTS: Spot[] = [
         "name": "ロックハート城（祝祭）",
         "group": "=LOVE",
         "category": "MVロケ地",
-        "latitude": 36.6025,
-        "longitude": 139.0068,
+        "latitude": 36.5925,
+        "longitude": 138.9328,
         "event_date": "2021-08-25",
         "youtube_title": "🎥 関連映像: 『祝祭』公式MV",
         "youtube_url": "https://www.youtube.com/embed/m8WtzVPXxwU",
@@ -3528,7 +3528,7 @@ const INITIAL_SPOTS: Spot[] = [
         "tags": [
             "夢の続き"
         ],
-        "address": "東京都港区南青山周辺（外苑西通り）",
+        "address": "東京都渋谷区千駄ヶ谷〜新宿区霞ヶ丘町周辺（外苑西通り）",
         "description": "『夢の続き』MVに登場する外苑西通りのロケ地。国立競技場へと続く風景の中で、グループが歩んできた軌跡と未来を感じられるスポットです。",
         "coordinateAccuracy": "exact",
         "workKey": "work-RjHjQlEjs_E"
