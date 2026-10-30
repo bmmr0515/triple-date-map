@@ -477,19 +477,29 @@ export default function App() {
           </p>
         )}
 
-        {/* 抽出された iframe があればレンダリング */}
-        {iframes.length > 0 && iframes.map((iframeHtml, index) => (
-          <div 
-            key={index}
-            className="video-box" 
-            style={{ width: '100%', aspectRatio: '16/9', borderRadius: '16px', overflow: 'hidden', marginTop: '4px', marginBottom: '4px' }}
-            dangerouslySetInnerHTML={{ 
-              __html: iframeHtml
-                .replace(/width="\d+"/, 'width="100%"')
-                .replace(/height="\d+"/, 'height="100%"')
-            }} 
-          />
-        ))}
+        {/* 抽出された YouTube iframe があれば安全にレンダリング */}
+        {iframes.length > 0 && iframes.map((iframeHtml, index) => {
+          const srcMatch = iframeHtml.match(/src=["'](https:\/\/(?:www\.)?(?:youtube\.com|youtube-nocookie\.com)\/embed\/[^"']+)["']/i);
+          if (!srcMatch) return null;
+          const safeSrc = srcMatch[1];
+          return (
+            <div 
+              key={index}
+              className="video-box" 
+              style={{ width: '100%', aspectRatio: '16/9', borderRadius: '16px', overflow: 'hidden', marginTop: '4px', marginBottom: '4px' }}
+            >
+              <iframe
+                src={safeSrc}
+                title="関連映像"
+                width="100%"
+                height="100%"
+                style={{ border: 'none' }}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          );
+        })}
 
         {/* 警告文 */}
         {warningText.trim() && (
