@@ -29,37 +29,54 @@ const parseContentToReact = (content: string): React.ReactNode => {
     if (trimmed.startsWith('####')) {
       const text = trimmed.replace(/^####\s*/, '');
       return (
-        <h4 key={pIdx} style={{ fontSize: '15px', fontWeight: 'bold', color: '#1e293b', marginTop: '24px', marginBottom: '8px', borderLeft: '3px solid #ff6897', paddingLeft: '8px' }} dangerouslySetInnerHTML={{ __html: text }} />
+        <h4 key={pIdx} style={{ fontSize: '15px', fontWeight: 'bold', color: '#1e293b', marginTop: '24px', marginBottom: '8px', borderLeft: '3px solid #ff6897', paddingLeft: '8px' }}>
+          {text}
+        </h4>
       );
     }
     if (trimmed.startsWith('###')) {
       const text = trimmed.replace(/^###\s*/, '');
       return (
-        <h3 key={pIdx} style={{ fontSize: '17px', fontWeight: '900', color: '#0f172a', marginTop: '28px', marginBottom: '12px', background: 'linear-gradient(120deg, #fff5f5 0%, #fff 100%)', borderLeft: '4px solid #ff6897', padding: '6px 12px', borderRadius: '4px' }} dangerouslySetInnerHTML={{ __html: text }} />
+        <h3 key={pIdx} style={{ fontSize: '17px', fontWeight: '900', color: '#0f172a', marginTop: '28px', marginBottom: '12px', background: 'linear-gradient(120deg, #fff5f5 0%, #fff 100%)', borderLeft: '4px solid #ff6897', padding: '6px 12px', borderRadius: '4px' }}>
+          {text}
+        </h3>
       );
     }
     if (trimmed.startsWith('##')) {
       const text = trimmed.replace(/^##\s*/, '');
       return (
-        <h2 key={pIdx} style={{ fontSize: '19px', fontWeight: '900', color: '#0f172a', marginTop: '32px', marginBottom: '16px', borderBottom: '2px solid #e2e8f0', paddingBottom: '8px' }} dangerouslySetInnerHTML={{ __html: text }} />
+        <h2 key={pIdx} style={{ fontSize: '19px', fontWeight: '900', color: '#0f172a', marginTop: '32px', marginBottom: '16px', borderBottom: '2px solid #e2e8f0', paddingBottom: '8px' }}>
+          {text}
+        </h2>
       );
     }
 
     // 2. 引用ブロックの処理 (>)
     if (trimmed.startsWith('>')) {
-      const quoteHtml = trimmed.split('\n').map(line => line.replace(/^>\s*/, '')).join('<br />');
+      const quoteLines = trimmed.split('\n').map(line => line.replace(/^>\s*/, ''));
       return (
         <blockquote key={pIdx} style={{ margin: '20px 0', padding: '16px 20px', background: '#f8fafc', borderLeft: '4px solid #a78bfa', borderRadius: '0 12px 12px 0', fontStyle: 'italic', color: '#475569', display: 'flex', gap: '8px' }}>
           <Quote size={20} style={{ color: '#a78bfa', flexShrink: 0, marginTop: '2px' }} />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '13.5px', lineHeight: '1.7' }} dangerouslySetInnerHTML={{ __html: quoteHtml }} />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '13.5px', lineHeight: '1.7' }}>
+            {quoteLines.map((line, lIdx) => (
+              <span key={lIdx}>{line}</span>
+            ))}
+          </div>
         </blockquote>
       );
     }
 
     // 3. 通常の段落 (複数行含む改行を考慮)
-    const paragraphHtml = trimmed.replace(/\n/g, '<br />');
+    const lines = trimmed.split('\n');
     return (
-      <p key={pIdx} style={{ fontSize: '14.5px', lineHeight: '1.9', color: '#334155', margin: '0 0 16px 0', textJustify: 'inter-character', textAlign: 'justify' }} dangerouslySetInnerHTML={{ __html: paragraphHtml }} />
+      <p key={pIdx} style={{ fontSize: '14.5px', lineHeight: '1.9', color: '#334155', margin: '0 0 16px 0', textJustify: 'inter-character', textAlign: 'justify' }}>
+        {lines.map((line, lIdx) => (
+          <React.Fragment key={lIdx}>
+            {line}
+            {lIdx < lines.length - 1 && <br />}
+          </React.Fragment>
+        ))}
+      </p>
     );
   });
 };
