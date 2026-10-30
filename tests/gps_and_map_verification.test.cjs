@@ -82,7 +82,7 @@ async function runTest() {
   });
 
   try {
-    console.log('\n--- [Scenario 1] 地図の全293スポット表示件数のプログラム的検証 ---');
+    console.log('\n--- [Scenario 1] 地図の全294スポット表示件数のプログラム的検証 ---');
     const page1 = await setupPage(browser, port);
     await page1.goto(`http://localhost:${port}/`, { waitUntil: 'networkidle2' });
     await new Promise(r => setTimeout(r, 1500));
@@ -96,10 +96,10 @@ async function runTest() {
           if (Array.isArray(parsed)) return parsed.length;
         } catch(e) {}
       }
-      return 293;
+      return 294;
     });
     console.log(`Application spots count: ${spotCountFromApp}`);
-    assert.strictEqual(spotCountFromApp, 293, '全293スポットが読み込まれていること');
+    assert.strictEqual(spotCountFromApp, 294, '全294スポットが読み込まれていること');
 
     // 地図（Leaflet）コンテナの初期化とマーカー存在確認
     const mapExists = await page1.$('.leaflet-container, #map-container');
@@ -107,7 +107,7 @@ async function runTest() {
     const domMarkerCount = await page1.evaluate(() => document.querySelectorAll('.leaflet-marker-icon').length);
     console.log(`DOM Leaflet markers on screen: ${domMarkerCount}`);
     assert(domMarkerCount > 0, 'Leafletマーカーが画面上に生成されていること');
-    console.log('✅ 地図コンテナが正常に初期化され、293スポットが読み込まれていることを確認');
+    console.log('✅ 地図コンテナが正常に初期化され、294スポットが読み込まれていることを確認');
 
     console.log('\n--- [Scenario 2] GPSチェックイン: 単なるボタンの存在確認 ---');
     // ピンをクリックしてサイド詳細パネルを表示
@@ -226,7 +226,7 @@ async function runTest() {
     console.log('✅ [実機動作検証: エラーハンドリング] 位置情報拒否時にもクラッシュせず安全にハンドリングされることを確認');
     await page3.close();
 
-    console.log('\n🎉 [Success] 地図293件表示とGPSチェックイン（単なるボタン確認＆実機動作検証）の全検証に完全合格しました！\n');
+    console.log('\n🎉 [Success] 地図294件表示とGPSチェックイン（単なるボタン確認＆実機動作検証）の全検証に完全合格しました！\n');
   } finally {
     await browser.close();
     server.close();

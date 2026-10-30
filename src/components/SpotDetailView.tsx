@@ -2,7 +2,8 @@ import React from 'react';
 import { Spot } from '../db';
 import { Breadcrumb } from './ListViews';
 import { AdPlaceholder } from './AdPlaceholder';
-import { MapPin, Train, Calendar, ShieldAlert, Heart, HelpCircle, Compass, ShieldCheck } from 'lucide-react';
+import { MapPin, Train, Calendar, ShieldAlert, Heart, HelpCircle, Compass, ShieldCheck, ExternalLink } from 'lucide-react';
+import { ProductCard } from './ProductCard';
 import { TwitterEmbed } from './TwitterEmbed';
 import { YouTubeEmbed } from './YouTubeEmbed';
 
@@ -345,6 +346,32 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
           <HelpCircle size={16} /> 情報提供・修正依頼
         </a>
       </div>
+
+      {/* 公式情報・関連リンク */}
+      {(spot.primarySourceUrl || spot.operatorUrl) && (
+        <div style={{ margin: '20px 0', padding: '14px 16px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', fontSize: '13px' }}>
+          <strong style={{ display: 'block', fontSize: '12px', color: '#475569', marginBottom: '8px' }}>🔗 公式情報・関連リンク</strong>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {spot.primarySourceUrl && (
+              <a href={spot.primarySourceUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <span>公式情報（作品・アートワーク公式発表）</span>
+                <ExternalLink size={13} />
+              </a>
+            )}
+            {spot.operatorUrl && (
+              <a href={spot.operatorUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <span>施設・駅公式サイト（{spot.operatorName || '施設公式サイト'}）</span>
+                <ExternalLink size={13} />
+              </a>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* 商品・アフィリエイト紹介カード（聖地解説や地図より下に配置） */}
+      {spot.productInfo && (
+        <ProductCard productInfo={spot.productInfo} />
+      )}
 
       {/* 最終確認日 */}
       {spot.last_confirmed_date && (

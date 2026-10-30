@@ -39,6 +39,7 @@ import { ContactForm } from './components/ContactForm';
 import { INITIAL_ARTICLES } from './articles';
 import { ArticlesListPage, ArticleDetailView } from './components/ArticleViews';
 import { YouTubeEmbed } from './components/YouTubeEmbed';
+import { ProductCard } from './components/ProductCard';
 import { MigrationBanner } from './components/MigrationBanner';
 
 
@@ -5969,6 +5970,32 @@ ${window.location.origin + window.location.pathname}
                         </button>
                       </div>
                     </div>
+
+                    {/* 公式情報・関連リンク */}
+                    {(selectedSpot.primarySourceUrl || selectedSpot.operatorUrl) && (
+                      <div style={{ marginTop: '16px', padding: '12px 14px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', fontSize: '12px' }}>
+                        <div style={{ fontWeight: 'bold', color: '#475569', marginBottom: '6px' }}>🔗 公式情報・関連リンク</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                          {selectedSpot.primarySourceUrl && (
+                            <a href={selectedSpot.primarySourceUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                              <span>公式発表（アートワーク・ニュース）</span>
+                              <ExternalLink size={12} />
+                            </a>
+                          )}
+                          {selectedSpot.operatorUrl && (
+                            <a href={selectedSpot.operatorUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                              <span>施設・駅公式サイト（{selectedSpot.operatorName || '公式サイト'}）</span>
+                              <ExternalLink size={12} />
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* 商品紹介カード（聖地解説や地図より下に配置） */}
+                    {selectedSpot.productInfo && (
+                      <ProductCard productInfo={selectedSpot.productInfo} />
+                    )}
 
                   </div>
                 )}

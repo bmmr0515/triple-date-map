@@ -228,7 +228,7 @@ const routes = [];
 routes.push({
   path: '/',
   title: 'トリプルデートマップ - イコノイジョイ聖地巡礼ファンマップ',
-  desc: '＝LOVE・≠ME・≒JOY（イコノイジョイ）のMVロケ地、ライブ会場、番組ロケ地を網羅した非公式聖地巡礼メディア。全293件の聖地詳細解説と10本のモデルコースを掲載中！',
+  desc: '＝LOVE・≠ME・≒JOY（イコノイジョイ）のMVロケ地、ライブ会場、番組ロケ地を網羅した非公式聖地巡礼メディア。全294件の聖地詳細解説と10本のモデルコースを掲載中！',
   type: 'home'
 });
 
@@ -723,6 +723,37 @@ ${s.description}
             <div style="background: #fdf4ff; border: 1px solid #fae8ff; border-radius: 14px; padding: 18px; margin-top: 24px;">
               <h3 style="font-size: 15px; font-weight: bold; color: #86198f; margin: 0 0 6px 0;">🏆 GPSチェックイン特典アワード称号</h3>
               <p style="font-size: 13px; color: #701a75; margin: 0;">現地を訪れてGPSチェックインを完了すると、限定称号 <strong>「${s.reward_title}」</strong> を獲得できます！</p>
+            </div>
+            ` : ''}
+
+            <!-- 公式情報・関連リンク -->
+            ${(s.primarySourceUrl || s.operatorUrl) ? `
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 18px; margin-top: 24px;">
+              <h3 style="font-size: 14px; font-weight: bold; color: #475569; margin: 0 0 10px 0;">🔗 公式情報・関連リンク</h3>
+              <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
+                ${s.primarySourceUrl ? `<a href="${s.primarySourceUrl}" target="_blank" rel="noopener noreferrer" style="color: #2563eb; text-decoration: none;">公式情報（作品・アートワーク公式発表） ↗</a>` : ''}
+                ${s.operatorUrl ? `<a href="${s.operatorUrl}" target="_blank" rel="noopener noreferrer" style="color: #2563eb; text-decoration: none;">施設・駅公式サイト（${s.operatorName || '公式サイト'}） ↗</a>` : ''}
+              </div>
+            </div>
+            ` : ''}
+
+            <!-- 商品・アフィリエイト紹介カード -->
+            ${s.productInfo ? `
+            <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 18px 20px; margin-top: 24px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <strong style="font-size: 14px; color: #1e293b;">💿 『${s.productInfo.title.replace(/^≒JOY\s*6thシングル『|』$/g, '')}』CD情報</strong>
+                ${s.productInfo.isAffiliate ? '<span style="font-size: 10px; color: #64748b; background: #e2e8f0; padding: 2px 6px; borderRadius: 4px; font-weight: bold;">PR（広告）</span>' : ''}
+              </div>
+              <div style="font-size: 13px; color: #334155; line-height: 1.6; margin-bottom: 12px;">
+                <div style="font-weight: bold; color: #0f172a;">${s.productInfo.title}</div>
+                ${s.productInfo.edition ? `<div style="font-size: 12px; color: #64748b;">${s.productInfo.edition}</div>` : ''}
+                <div style="font-size: 12px; color: #64748b;">${s.productInfo.releaseDate}発売</div>
+                ${s.productInfo.jan ? `<div style="font-size: 11px; color: #94a3b8;">JAN: ${s.productInfo.jan}</div>` : ''}
+              </div>
+              <a href="${s.productInfo.url}" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 8px 16px; background: #d97706; color: #ffffff; border-radius: 8px; font-size: 13px; font-weight: bold; text-decoration: none;">
+                ［${s.productInfo.shopName}で商品を見る］
+              </a>
+              ${s.productInfo.isAffiliate ? '<div style="margin-top: 8px; font-size: 10px; color: #94a3b8;">※アフィリエイト広告を利用しています</div>' : ''}
             </div>
             ` : ''}
 

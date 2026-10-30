@@ -815,6 +815,15 @@ export const OFFICIAL_VIDEOS: Record<string, OfficialVideo> = {
     memorialDate: "2026-10-09",
     contentType: "公式YouTube企画"
   },
+  "work-nearly-equal-joy-rockstar-sama": {
+    workKey: "work-nearly-equal-joy-rockstar-sama",
+    title: "ロックスター様",
+    group: "≒JOY",
+    youtubeId: "",
+    officialUrl: "https://nearly-equal-joy.jp/news/detail/4073",
+    memorialDate: "2026-10-22",
+    contentType: "シングル"
+  }
 };
 
 export const getOfficialVideoBySpot = (spot: { workKey?: string; youtubeId?: string }): OfficialVideo | null => {

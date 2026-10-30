@@ -66,6 +66,16 @@ export interface SpotImage {
   copyright_status?: 'owner' | 'permitted' | 'unknown' | 'web_unauthorized'; // 権利状態
 }
 
+export interface SpotProductLink {
+  title: string;
+  releaseDate: string;
+  edition?: string;
+  jan?: string;
+  shopName: string;
+  url: string;
+  isAffiliate: boolean;
+}
+
 export interface Spot {
   id: string;
   name: string;
@@ -104,6 +114,8 @@ export interface Spot {
   coordinateAccuracy?: 'exact' | 'facility' | 'approximate' | 'scene-area';
   accuracyReason?: string;
   primarySourceUrl?: string;
+  operatorUrl?: string;
+  productInfo?: SpotProductLink;
 }
 
 export interface User {
@@ -6104,6 +6116,46 @@ const INITIAL_SPOTS: Spot[] = [
         "youtubeId": "86XlfukroBA",
         "workKey": "youtube-86XlfukroBA",
         "address": "〒901-0233 沖縄県豊見城市瀬長174番地6"
+    },
+    {
+        "id": "spot-real-yagiri-station",
+        "name": "矢切駅",
+        "operatorName": "北総鉄道株式会社",
+        "group": "≒JOY",
+        "category": "ジャケット・アーティスト写真撮影地",
+        "latitude": 35.7575,
+        "longitude": 139.8997,
+        "event_date": "2026-10-22",
+        "memorial_date": "2026-10-22",
+        "reward_title": "ロックスターの目撃者",
+        "tags": [
+            "ロックスター様",
+            "ニアジョイ6th",
+            "矢切駅",
+            "ジャケ写"
+        ],
+        "slug": "yagiri-station",
+        "status": "published",
+        "address": "〒271-0096 千葉県松戸市下矢切120",
+        "nearest_station": "北総鉄道 北総線 矢切駅 (HS02)",
+        "walk_time": "駅直結（地下ホーム・構内）",
+        "description": "≒JOY 6thシングル『ロックスター様』のジャケット写真およびアーティスト写真が撮影された北総鉄道北総線の駅。Type B・C・Eでは、地下ホームや階段付近、白い円柱、赤白の注意表示、タイル壁など、矢切駅構内の特徴的な風景が使用されています。Type Eのジャケット背景では「矢切」の駅名表示も確認できます。Type A・Dでは鉄道車両内で撮影された写真が使用され、黒を基調とした衣装と地下駅・車内の無機質な雰囲気が作品の世界観を引き立てています。",
+        "visitor_notes": "矢切駅は現在も営業している鉄道駅です。ホームや階段、車内で長時間立ち止まったり、三脚・照明機材を使用したり、通行を妨げる撮影は行わないでください。線路内や立入禁止区域には絶対に入らず、駅係員や利用者が写り込まないよう配慮してください。改札内を見学する場合は、必ず有効な乗車券・入場券等に関する鉄道会社の規則に従ってください。",
+        "primarySourceUrl": "https://nearly-equal-joy.jp/news/detail/4073",
+        "operatorUrl": "https://www.hokuso-railway.co.jp/railway/station/yagiri.html",
+        "coordinateAccuracy": "exact",
+        "accuracyReason": "北総鉄道矢切駅の駅舎・構内中央地点",
+        "workKey": "work-nearly-equal-joy-rockstar-sama",
+        "last_confirmed_date": "2026-10-30",
+        "productInfo": {
+            "title": "≒JOY 6thシングル『ロックスター様』",
+            "releaseDate": "2026年11月25日",
+            "edition": "初回仕様限定盤 Type A（CD＋Blu-ray）",
+            "jan": "4547366854275",
+            "shopName": "楽天ブックス",
+            "url": "https://books.rakuten.co.jp/rb/18826192/",
+            "isAffiliate": false
+        }
     }
 ];
 
