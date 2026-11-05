@@ -41,11 +41,11 @@ const courses = eval('(' + coursesArrayString + ')');
 const articlesTs = fs.readFileSync('src/articles.ts', 'utf8');
 assert(articlesTs.includes('INITIAL_ARTICLES'), 'articles.ts 内に INITIAL_ARTICLES が存在すること');
 
-// --- [Test 1] 聖地スポット294件 & モデルコース10件の完全保持 ---
-console.log('--- [Test 1] 聖地スポット294件 & モデルコース10件の完全保持 ---');
-assert.strictEqual(spots.length, 294, '全294件の聖地スポットが1件も欠損せず維持されていること');
+// --- [Test 1] 聖地スポット295件 & モデルコース10件の完全保持 ---
+console.log('--- [Test 1] 聖地スポット295件 & モデルコース10件の完全保持 ---');
+assert.strictEqual(spots.length, 295, '全295件の聖地スポットが1件も欠損せず維持されていること');
 assert.strictEqual(courses.length, 10, '全10件のモデルコースが維持されていること');
-console.log('✅ [Test 1 Passed] 294スポット & 10モデルコースのデータ完全性を確認。\n');
+console.log('✅ [Test 1 Passed] 295スポット & 10モデルコースのデータ完全性を確認。\n');
 
 // --- [Test 2] 住所完全性監査（都道府県のみの住所 0 件 & 撮影地点整合性） ---
 console.log('--- [Test 2] 住所完全性監査（都道府県のみの住所 0 件 & 撮影地点整合性） ---');
@@ -72,7 +72,7 @@ assert(avaco.address.includes('宮前区犬蔵'), 'アバコさぎ沼スタジ�
 const lutheran = spots.find(s => s.id === 'spot-real-todoitelove-urawalutheran');
 assert(lutheran.address.includes('緑区大字大崎3642'), '浦和ルーテル学院は緑区大字大崎3642が設定されていること');
 
-console.log('✅ [Test 2 Passed] 全294件の住所完全性が100%（都道府県のみ0件）かつ撮影地点の整合性を確認。\n');
+console.log('✅ [Test 2 Passed] 全295件の住所完全性が100%（都道府県のみ0件）かつ撮影地点の整合性を確認。\n');
 
 // --- [Test 3] 定型文・ダミープレースホルダーの完全根絶 ---
 console.log('--- [Test 3] 定型文・ダミープレースホルダーの完全根絶 ---');

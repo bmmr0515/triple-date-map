@@ -535,7 +535,8 @@ export default function App() {
     return new Fuse<Spot>(spots, {
       keys: [
         { name: 'name', weight: 0.4 },
-        { name: 'reward_title', weight: 0.3 },
+        { name: 'reward_title', weight: 0.25 },
+        { name: 'tags', weight: 0.2 },
         { name: 'group', weight: 0.15 },
         { name: 'category', weight: 0.15 },
         { name: 'description', weight: 0.1 }
@@ -561,7 +562,9 @@ export default function App() {
         spot.name.toLowerCase().includes(k) ||
         (spot.reward_title && spot.reward_title.toLowerCase().includes(k)) ||
         spot.group.toLowerCase().includes(k) ||
-        spot.category.toLowerCase().includes(k)
+        spot.category.toLowerCase().includes(k) ||
+        spot.description.toLowerCase().includes(k) ||
+        (spot.tags && spot.tags.some(t => t.toLowerCase().includes(k)))
       );
     });
 
@@ -1320,7 +1323,9 @@ export default function App() {
       const nameMatch = spot.name.toLowerCase().includes(keyword);
       const descMatch = spot.description.toLowerCase().includes(keyword);
       const ytMatch = spot.youtube_title?.toLowerCase().includes(keyword) || false;
-      if (!nameMatch && !descMatch && !ytMatch) {
+      const tagsMatch = spot.tags?.some(t => t.toLowerCase().includes(keyword)) || false;
+      const addrMatch = spot.address?.toLowerCase().includes(keyword) || false;
+      if (!nameMatch && !descMatch && !ytMatch && !tagsMatch && !addrMatch) {
         return false;
       }
     }

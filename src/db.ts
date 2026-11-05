@@ -82,7 +82,7 @@ export interface Spot {
   operatorName?: string;
   group: "=LOVE" | "≠ME" | "≒JOY" | "合同";
 
-  category: "MVロケ地" | "ライブ会場" | "聖地店舗" | "飲食店・その他" | "ジャケット・アーティスト写真撮影地";
+  category: "MVロケ地" | "ライブ会場" | "聖地店舗" | "飲食店・その他" | "ジャケット・アーティスト写真撮影地" | "番組・広告・PR動画撮影地";
   description: string;
   latitude: number;
   longitude: number;
@@ -6156,6 +6156,39 @@ const INITIAL_SPOTS: Spot[] = [
             "url": "https://books.rakuten.co.jp/rb/18826192/",
             "isAffiliate": false
         }
+    },
+    {
+        "id": "spot-real-tatsumibashi-gion",
+        "name": "巽橋（祇園白川）",
+        "operatorName": "京美人Award実行委員会",
+        "group": "≒JOY",
+        "category": "番組・広告・PR動画撮影地",
+        "latitude": 35.0055745,
+        "longitude": 135.7745134,
+        "event_date": "2026-10-19",
+        "reward_title": "祇園白川の京美人",
+        "tags": [
+            "京美人Award",
+            "市原愛弓",
+            "巽橋",
+            "祇園白川",
+            "PR動画",
+            "京都",
+            "京美人Award Season5"
+        ],
+        "slug": "tatsumibashi-gion",
+        "status": "published",
+        "address": "〒605-0087 京都府京都市東山区元吉町（祇園白川・巽橋）",
+        "nearest_station": "京阪本線 祇園四条駅 / 阪急京都線 京都河原町駅",
+        "walk_time": "祇園四条駅より徒歩約4分、京都河原町駅より徒歩約8分",
+        "description": "≒JOYの市原愛弓が公式アンバサダーを務める「京美人Award Season5」のPR動画に登場した場所。市原愛弓はSeason4に続き、2年連続で公式アンバサダーに就任しました。動画では着物姿で京都・祇園白川の巽橋周辺を歩く様子が撮影されています。白川の流れ、石畳、町家、柳が連なる京都らしい景観と、市原愛弓の華やかな着物姿が印象的な聖地です。\n\n【補足情報】\n巽橋は京都・祇園白川に架かる橋で、周辺には石畳や伝統的な町家が残っています。祇園新橋一帯は歴史的な町並みが保存されている地域です。",
+        "visitor_notes": "巽橋周辺は観光地であると同時に、住民や店舗関係者が生活・営業している場所です。長時間の占有、通行を妨げる撮影、三脚や大型機材の使用、大声での会話、私有地への立ち入りは控えてください。芸妓・舞妓や一般の方へ無断でカメラを向けず、混雑時は撮影を優先せず通行者へ道を譲ってください。",
+        "primarySourceUrl": "https://nearly-equal-joy.jp/news/detail/4071",
+        "operatorUrl": "https://www.kyoubijin-award.com/",
+        "coordinateAccuracy": "exact",
+        "accuracyReason": "祇園白川に架かる巽橋の現地座標",
+        "workKey": "work-kyobijin-award-season5",
+        "last_confirmed_date": "2026-11-06"
     }
 ];
 

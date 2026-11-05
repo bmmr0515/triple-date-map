@@ -823,6 +823,15 @@ export const OFFICIAL_VIDEOS: Record<string, OfficialVideo> = {
     officialUrl: "https://nearly-equal-joy.jp/news/detail/4073",
     memorialDate: "2026-10-22",
     contentType: "シングル"
+  },
+  "work-kyobijin-award-season5": {
+    workKey: "work-kyobijin-award-season5",
+    title: "京美人Award Season5 PR動画",
+    group: "≒JOY",
+    youtubeId: "",
+    officialUrl: "https://www.kyoubijin-award.com/",
+    memorialDate: "2026-10-19",
+    contentType: "番組・広告・PR動画"
   }
 };
 

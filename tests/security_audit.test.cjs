@@ -125,12 +125,12 @@ const dbContent = fs.readFileSync('src/db.ts', 'utf8');
 const coursesContent = fs.readFileSync('src/courses.ts', 'utf8');
 
 const spotMatches = dbContent.match(/"id":\s*["'][a-zA-Z0-9_-]+["']/g);
-assert(spotMatches && spotMatches.length === 294, `スポット数が294件であること (実際: ${spotMatches ? spotMatches.length : 0})`);
+assert(spotMatches && spotMatches.length === 295, `スポット数が295件であること (実際: ${spotMatches ? spotMatches.length : 0})`);
 
 const courseMatches = coursesContent.match(/slug:\s*["'][a-zA-Z0-9_-]+["']/g);
 assert(courseMatches && courseMatches.length === 10, `モデルコース数が10件であること (実際: ${courseMatches ? courseMatches.length : 0})`);
 
-console.log('✅ [Test 3 Passed] 294件のスポットデータおよび10件のモデルコースが100%完全保護されています。\n');
+console.log('✅ [Test 3 Passed] 295件のスポットデータおよび10件のモデルコースが100%完全保護されています。\n');
 
 
 // 4. 認証エラーハンドリング & X OAuth フォールバック検証
