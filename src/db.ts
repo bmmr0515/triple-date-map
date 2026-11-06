@@ -79,6 +79,7 @@ export interface SpotProductLink {
 export interface Spot {
   id: string;
   name: string;
+  short_name?: string;
   operatorName?: string;
   group: "=LOVE" | "≠ME" | "≒JOY" | "合同";
 
@@ -6189,6 +6190,53 @@ const INITIAL_SPOTS: Spot[] = [
         "accuracyReason": "祇園白川に架かる巽橋の現地座標",
         "workKey": "work-kyobijin-award-season5",
         "last_confirmed_date": "2026-11-06"
+    },
+    {
+        "id": "spot-real-global-tower-beppu",
+        "name": "グローバルタワー／別府国際コンベンションセンター ビーコンプラザ",
+        "short_name": "グローバルタワー",
+        "operatorName": "別府国際コンベンションセンター ビーコンプラザ",
+        "group": "≒JOY",
+        "category": "MVロケ地",
+        "latitude": 33.283032,
+        "longitude": 131.486292,
+        "event_date": "2026-11-06",
+        "memorial_date": "2026-11-06",
+        "youtubeId": "oRNQ5SLAnjA",
+        "youtube_url": "https://www.youtube.com/embed/oRNQ5SLAnjA",
+        "youtube_title": "🎥 関連映像: ≒JOY『ロックスター様』公式MV",
+        "reward_title": "グローバルタワーのロックスター",
+        "tags": [
+            "ロックスター様",
+            "ニアジョイ6th",
+            "グローバルタワー",
+            "ビーコンプラザ",
+            "別府",
+            "大分",
+            "MVロケ地"
+        ],
+        "slug": "global-tower-beppu",
+        "status": "published",
+        "address": "〒874-0828 大分県別府市山の手町12-1",
+        "nearest_station": "JR日豊本線 別府駅",
+        "walk_time": "別府駅西口より徒歩約15分（バス利用時は「ビーコンプラザ前」下車すぐ）",
+        "description": "≒JOYの6thシングル表題曲『ロックスター様』のMusic Videoで、メインダンスシーンが撮影された場所です。\n\nMVには、グローバルタワー直下の屋外デッキをはじめ、ビーコンプラザの白く開放的なエントランスホール、ガラス張りの展望通路、建物外周の通路や搬入口付近など、施設内の複数エリアが登場します。\n\nグローバルタワーは、別府国際コンベンションセンター「ビーコンプラザ」に隣接する高さ約125mのシンボルタワーです。地上100mと96mに展望デッキがあり、別府市街や別府湾、鶴見岳方面を見渡せます。\n\n大分県出身の建築家・磯崎新氏が設計した特徴的な建築で、MVではその無機質で壮大な空間を生かした力強いダンスシーンが展開されています。",
+        "visitor_notes": "・展望デッキは営業時間、入場料金、休館日を公式サイトで確認する\n・施設利用者やイベント来場者の通行を妨げない\n・ダンスの再現撮影や長時間の場所占有をしない\n・搬入口、関係者エリア、立入禁止区域には入らない\n・施設スタッフから指示があった場合は必ず従う\n・撮影目的で施設へ直接問い合わせる行為は控える",
+        "primarySourceUrl": "https://www.youtube.com/watch?v=oRNQ5SLAnjA",
+        "operatorUrl": "https://www.b-conplaza.jp/visiter/globaltower/",
+        "coordinateAccuracy": "exact",
+        "accuracyReason": "グローバルタワーおよびビーコンプラザ屋外デッキ・展望デッキ本体の正確な実座標",
+        "workKey": "work-nearly-equal-joy-rockstar-sama",
+        "last_confirmed_date": "2026-11-06",
+        "productInfo": {
+            "title": "≒JOY 6thシングル『ロックスター様』",
+            "releaseDate": "2026年11月25日",
+            "edition": "初回仕様限定盤 Type A（CD＋Blu-ray）",
+            "jan": "4547366854275",
+            "shopName": "楽天ブックス",
+            "url": "https://books.rakuten.co.jp/rb/18826192/",
+            "isAffiliate": false
+        }
     }
 ];
 

@@ -101,6 +101,11 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
         <h1 style={{ fontSize: '24px', fontWeight: 'bold', color: '#0f172a', margin: '8px 0 0 0' }}>
           {spot.name}
         </h1>
+        {spot.short_name && spot.short_name !== spot.name && (
+          <div style={{ fontSize: '13px', color: '#64748b', fontWeight: 'bold' }}>
+            （短縮表記: {spot.short_name}）
+          </div>
+        )}
       </div>
 
       {/* ⚠️ 検証特定ロケ地に関する注記（公式発表ではないロケ地の場合に表示） */}

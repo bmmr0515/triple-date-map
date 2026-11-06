@@ -535,6 +535,7 @@ export default function App() {
     return new Fuse<Spot>(spots, {
       keys: [
         { name: 'name', weight: 0.4 },
+        { name: 'short_name', weight: 0.35 },
         { name: 'reward_title', weight: 0.25 },
         { name: 'tags', weight: 0.2 },
         { name: 'group', weight: 0.15 },
@@ -560,6 +561,7 @@ export default function App() {
       const k = keyword.toLowerCase();
       return (
         spot.name.toLowerCase().includes(k) ||
+        (spot.short_name && spot.short_name.toLowerCase().includes(k)) ||
         (spot.reward_title && spot.reward_title.toLowerCase().includes(k)) ||
         spot.group.toLowerCase().includes(k) ||
         spot.category.toLowerCase().includes(k) ||
@@ -680,7 +682,7 @@ export default function App() {
 
     // 1. 部分一致での検索を試みる
     const normalFiltered = baseFiltered.filter(spot => {
-      const nameMatch = spot.name.toLowerCase().includes(keyword);
+      const nameMatch = spot.name.toLowerCase().includes(keyword) || (spot.short_name?.toLowerCase().includes(keyword) || false);
       const descMatch = spot.description.toLowerCase().includes(keyword);
       const categoryMatch = spot.category.toLowerCase().includes(keyword);
       const rewardMatch = spot.reward_title?.toLowerCase().includes(keyword) || false;
@@ -1320,7 +1322,7 @@ export default function App() {
     // 2. キーワード検索（大文字小文字無視、曲名・施設名・エピソードから）
     if (searchKeyword.trim() !== '') {
       const keyword = searchKeyword.toLowerCase();
-      const nameMatch = spot.name.toLowerCase().includes(keyword);
+      const nameMatch = spot.name.toLowerCase().includes(keyword) || (spot.short_name?.toLowerCase().includes(keyword) || false);
       const descMatch = spot.description.toLowerCase().includes(keyword);
       const ytMatch = spot.youtube_title?.toLowerCase().includes(keyword) || false;
       const tagsMatch = spot.tags?.some(t => t.toLowerCase().includes(keyword)) || false;

@@ -228,7 +228,7 @@ const routes = [];
 routes.push({
   path: '/',
   title: 'トリプルデートマップ - イコノイジョイ聖地巡礼ファンマップ',
-  desc: '＝LOVE・≠ME・≒JOY（イコノイジョイ）のMVロケ地、ライブ会場、番組ロケ地を網羅した非公式聖地巡礼メディア。全295件の聖地詳細解説と10本のモデルコースを掲載中！',
+  desc: '＝LOVE・≠ME・≒JOY（イコノイジョイ）のMVロケ地、ライブ会場、番組ロケ地を網羅した非公式聖地巡礼メディア。全296件の聖地詳細解説と10本のモデルコースを掲載中！',
   type: 'home'
 });
 
@@ -306,7 +306,7 @@ routes.push({
 routes.push({
   path: '/spots',
   title: '聖地スポット一覧 - トリプルデートマップ',
-  desc: 'イコノイジョイの全295箇所のMVロケ地・イベント会場・番組訪問スポットを一覧で探せます。',
+  desc: 'イコノイジョイの全296箇所のMVロケ地・イベント会場・番組訪問スポットを一覧で探せます。',
   type: 'spots-list',
   page: 1
 });
@@ -649,6 +649,7 @@ const buildPageContent = (route) => {
 
             <h1 style="font-size: 24px; font-weight: 900; color: #0f172a; margin: 0 0 16px 0; line-height: 1.4;">
               ${s.name}
+              ${s.short_name && s.short_name !== s.name ? `<span style="display: block; font-size: 13px; color: #64748b; font-weight: bold; margin-top: 4px;">（短縮表記: ${s.short_name}）</span>` : ''}
             </h1>
 
             <div style="background: #f8fafc; border-radius: 12px; padding: 14px 18px; font-size: 13px; color: #475569; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px;">

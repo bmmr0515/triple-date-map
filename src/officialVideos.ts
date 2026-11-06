@@ -819,10 +819,19 @@ export const OFFICIAL_VIDEOS: Record<string, OfficialVideo> = {
     workKey: "work-nearly-equal-joy-rockstar-sama",
     title: "ロックスター様",
     group: "≒JOY",
-    youtubeId: "",
-    officialUrl: "https://nearly-equal-joy.jp/news/detail/4073",
-    memorialDate: "2026-10-22",
-    contentType: "シングル"
+    youtubeId: "oRNQ5SLAnjA",
+    officialUrl: "https://www.youtube.com/watch?v=oRNQ5SLAnjA",
+    memorialDate: "2026-11-06",
+    contentType: "公式MV"
+  },
+  "work-oRNQ5SLAnjA": {
+    workKey: "work-oRNQ5SLAnjA",
+    title: "ロックスター様",
+    group: "≒JOY",
+    youtubeId: "oRNQ5SLAnjA",
+    officialUrl: "https://www.youtube.com/watch?v=oRNQ5SLAnjA",
+    memorialDate: "2026-11-06",
+    contentType: "公式MV"
   },
   "work-kyobijin-award-season5": {
     workKey: "work-kyobijin-award-season5",
