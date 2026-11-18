@@ -274,8 +274,8 @@ const routes = [];
 // 1. トップページ
 routes.push({
   path: '/',
-  title: 'トリプルデートマップ - イコノイジョイ聖地巡礼ファンマップ',
-  desc: '＝LOVE・≠ME・≒JOY（イコノイジョイ）のMVロケ地、ライブ会場、番組ロケ地を網羅した非公式聖地巡礼メディア。全296件の聖地詳細解説と10本のモデルコースを掲載中！',
+  title: 'トリプルデート・マップ｜イコノイジョイ聖地巡礼マップ',
+  desc: '＝LOVE・≠ME・≒JOYのMVや公式動画に登場した聖地を、地図と詳しい解説から探せる非公式ファンサイトです。',
   type: 'home'
 });
 
@@ -1575,15 +1575,64 @@ ${stripIframeTags(s.description)}
 
 // 4. 静的HTMLファイル生成ループ
 console.log('📝 HTMLファイルの生成中...');
+const OGP_IMAGE_URL = 'https://tripledatemap.com/og/tripledatemap-ogp.png?v=20261118';
+
 routes.forEach(route => {
   let html = templateHtml;
   const canonicalUrl = `https://tripledatemap.com${route.canonicalPath || route.path}`;
-  const ogImage = 'https://tripledatemap.com/ogp-image.png';
+
+  // 各種タイトルの算出
+  let pageTitle = route.title;
+  let ogTitle = route.title;
+  let twitterTitle = route.title;
+  let ogDesc = route.desc;
+  let twitterDesc = route.desc;
+  let ogType = 'website';
+
+  if (route.type === 'home') {
+    pageTitle = 'トリプルデート・マップ｜イコノイジョイ聖地巡礼マップ';
+    ogTitle = 'トリプルデート・マップ｜イコノイジョイ聖地巡礼マップ';
+    twitterTitle = 'トリプルデート・マップ｜イコノイジョイ聖地巡礼マップ';
+    ogDesc = '＝LOVE・≠ME・≒JOYのMVや公式動画に登場した聖地を、地図と詳しい解説から探せる非公式ファンサイトです。';
+    twitterDesc = '＝LOVE・≠ME・≒JOYの聖地を地図から探せる非公式ファンサイト';
+    ogType = 'website';
+  } else if (route.type === 'spot-detail') {
+    const s = route.spotData;
+    ogTitle = `${s.name}｜トリプルデート・マップ`;
+    twitterTitle = `${s.name}｜トリプルデート・マップ`;
+    // スポット解説を120文字程度に整形
+    let desc120 = route.desc;
+    if (desc120.length > 120) {
+      desc120 = desc120.slice(0, 118) + '…';
+    }
+    ogDesc = desc120;
+    twitterDesc = desc120;
+    ogType = 'article';
+  } else if (route.type === 'course-detail') {
+    const c = route.courseData;
+    ogTitle = `${c.name}｜トリプルデート・マップ`;
+    twitterTitle = `${c.name}｜トリプルデート・マップ`;
+    ogDesc = route.desc;
+    twitterDesc = route.desc;
+    ogType = 'article';
+  } else if (route.type === 'article-detail') {
+    const a = route.articleData;
+    ogTitle = `${a.title}｜トリプルデート・マップ`;
+    twitterTitle = `${a.title}｜トリプルデート・マップ`;
+    ogDesc = route.desc;
+    twitterDesc = route.desc;
+    ogType = 'article';
+  }
 
   // title 置換
-  html = html.replace(/<title>[^<]*<\/title>/g, `<title>${route.title}</title>`);
-  // 既存の description メタタグを削除（二重化防止）
+  html = html.replace(/<title>[^<]*<\/title>/g, `<title>${pageTitle}</title>`);
+
+  // テンプレート由来の既存メタタグを二重化防止のため完全除去
   html = html.replace(/<meta\s+name=["']description["'][^>]*>/gi, '');
+  html = html.replace(/<link\s+rel=["']canonical["'][^>]*>/gi, '');
+  html = html.replace(/<meta\s+name=["']robots["'][^>]*>/gi, '');
+  html = html.replace(/<meta\s+property=["']og:[^"']+["'][^>]*>/gi, '');
+  html = html.replace(/<meta\s+name=["']twitter:[^"']+["'][^>]*>/gi, '');
 
   // 構造化データ（JSON-LD）の生成
   let jsonLdScript = '';
@@ -1627,20 +1676,37 @@ routes.forEach(route => {
   const robotsTag = route.noindex 
     ? (route.type === '404' ? '<meta name="robots" content="noindex, nofollow" />' : '<meta name="robots" content="noindex, follow" />')
     : '<meta name="robots" content="index, follow" />';
-  const metaTags = `
+
+  let metaTags = `
   <meta name="description" content="${route.desc.replace(/"/g, '&quot;')}" />
   ${robotsTag}
-  <link rel="canonical" href="${canonicalUrl}" />
-  <meta property="og:title" content="${route.title.replace(/"/g, '&quot;')}" />
-  <meta property="og:description" content="${route.desc.replace(/"/g, '&quot;')}" />
-  <meta property="og:url" content="${canonicalUrl}" />
-  <meta property="og:image" content="${ogImage}" />
-  <meta property="og:type" content="${route.path === '/' ? 'website' : 'article'}" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="${route.title.replace(/"/g, '&quot;')}" />
-  <meta name="twitter:description" content="${route.desc.replace(/"/g, '&quot;')}" />
-  <meta name="twitter:image" content="${ogImage}" />${jsonLdScript}
-  `;
+  <link rel="canonical" href="${canonicalUrl}" />`;
+
+  // 404ページには不要な個別OGPを出力しない（管理画面・ログイン画面・404ページ対策）
+  if (route.type !== '404') {
+    metaTags += `
+  <meta property="og:type" content="${ogType}">
+  <meta property="og:site_name" content="トリプルデート・マップ">
+  <meta property="og:title" content="${ogTitle.replace(/"/g, '&quot;')}">
+  <meta property="og:description" content="${ogDesc.replace(/"/g, '&quot;')}">
+  <meta property="og:url" content="${canonicalUrl}">
+  <meta property="og:image" content="${OGP_IMAGE_URL}">
+  <meta property="og:image:secure_url" content="${OGP_IMAGE_URL}">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="トリプルデート・マップ">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${twitterTitle.replace(/"/g, '&quot;')}">
+  <meta name="twitter:description" content="${twitterDesc.replace(/"/g, '&quot;')}">
+  <meta name="twitter:image" content="${OGP_IMAGE_URL}">
+  <meta name="twitter:image:alt" content="トリプルデート・マップ">`;
+  }
+
+  if (jsonLdScript) {
+    metaTags += jsonLdScript;
+  }
 
   html = html.replace('</head>', `${metaTags}\n</head>`);
 
@@ -1668,7 +1734,12 @@ if (!fs.existsSync(fourOhFourDest)) {
   const fourOhFourRoute = routes.find(r => r.path === '/404');
   if (fourOhFourRoute) {
     let html = templateHtml.replace(/<title>[^<]*<\/title>/g, `<title>${fourOhFourRoute.title}</title>`);
-    html = html.replace('</head>', `<meta name="robots" content="noindex, nofollow" />\n</head>`);
+    html = html.replace(/<meta\s+name=["']description["'][^>]*>/gi, '');
+    html = html.replace(/<link\s+rel=["']canonical["'][^>]*>/gi, '');
+    html = html.replace(/<meta\s+name=["']robots["'][^>]*>/gi, '');
+    html = html.replace(/<meta\s+property=["']og:[^"']+["'][^>]*>/gi, '');
+    html = html.replace(/<meta\s+name=["']twitter:[^"']+["'][^>]*>/gi, '');
+    html = html.replace('</head>', `<meta name="description" content="${fourOhFourRoute.desc}" />\n  <meta name="robots" content="noindex, nofollow" />\n</head>`);
     html = html.replace('<div id="root"></div>', `<div id="root">${buildPageContent(fourOhFourRoute)}</div>`);
     fs.writeFileSync(fourOhFourDest, html, 'utf8');
   }
