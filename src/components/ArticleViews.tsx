@@ -3,7 +3,7 @@ import { Article } from '../articles';
 import { Spot } from '../db';
 import { Breadcrumb } from './ListViews';
 import { AdPlaceholder } from './AdPlaceholder';
-import { Calendar, Tag, ArrowRight, BookOpen, Quote, MapPin, Eye } from 'lucide-react';
+import { Calendar, Tag, ArrowRight, BookOpen, Quote, MapPin, Eye, Clock, User, ExternalLink, List, AlertTriangle } from 'lucide-react';
 
 interface ArticlesListProps {
   articles: Article[];
@@ -51,7 +51,12 @@ const parseContentToReact = (content: string): React.ReactNode => {
       );
     }
 
-    // 2. 引用ブロックの処理 (>)
+    // 2. 区切り線の処理 (---)
+    if (trimmed === '---') {
+      return <hr key={pIdx} style={{ border: 'none', borderTop: '1.5px solid #e2e8f0', margin: '32px 0' }} />;
+    }
+
+    // 3. 引用ブロックの処理 (>)
     if (trimmed.startsWith('>')) {
       const quoteLines = trimmed.split('\n').map(line => line.replace(/^>\s*/, ''));
       return (
@@ -59,20 +64,20 @@ const parseContentToReact = (content: string): React.ReactNode => {
           <Quote size={20} style={{ color: '#a78bfa', flexShrink: 0, marginTop: '2px' }} />
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '13.5px', lineHeight: '1.7' }}>
             {quoteLines.map((line, lIdx) => (
-              <span key={lIdx}>{line}</span>
+              <span key={lIdx} dangerouslySetInnerHTML={{ __html: line }} />
             ))}
           </div>
         </blockquote>
       );
     }
 
-    // 3. 通常の段落 (複数行含む改行を考慮)
+    // 4. 通常の段落 (複数行含む改行を考慮、インラインHTML対応)
     const lines = trimmed.split('\n');
     return (
       <p key={pIdx} style={{ fontSize: '14.5px', lineHeight: '1.9', color: '#334155', margin: '0 0 16px 0', textJustify: 'inter-character', textAlign: 'justify' }}>
         {lines.map((line, lIdx) => (
           <React.Fragment key={lIdx}>
-            {line}
+            <span dangerouslySetInnerHTML={{ __html: line }} />
             {lIdx < lines.length - 1 && <br />}
           </React.Fragment>
         ))}
@@ -175,10 +180,16 @@ export const ArticlesListPage: React.FC<ArticlesListProps> = ({ articles, onNavi
   );
 };
 
-// 2. コラム詳細ページ
+// 2. コラム詳細ページ（目次・執筆者・更新日・参考資料・非公式表記・関連スポット強化）
 export const ArticleDetailView: React.FC<ArticleDetailProps> = ({ article, allSpots, onNavigate, onViewOnMap }) => {
   // 関連スポットの取得
   const relatedSpots = allSpots.filter(s => article.relatedSpotIds?.includes(s.id) && s.status === 'published');
+
+  // 目次の自動抽出（## 見出し）
+  const headings = article.content
+    .split('\n')
+    .filter(line => line.startsWith('## '))
+    .map(line => line.replace(/^##\s*/, '').trim());
 
   // 記事本文の分割（広告の中間挿入用）
   const renderArticleBodyWithAds = () => {
@@ -212,8 +223,8 @@ export const ArticleDetailView: React.FC<ArticleDetailProps> = ({ article, allSp
         onNavigate={onNavigate} 
       />
 
-      {/* メタ情報 */}
-      <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '16px' }}>
+      {/* メタ情報 & 執筆者 */}
+      <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '16px' }}>
         <span style={{ 
           fontSize: '11px', 
           fontWeight: 'bold', 
@@ -227,14 +238,41 @@ export const ArticleDetailView: React.FC<ArticleDetailProps> = ({ article, allSp
         }}>
           <Tag size={12} /> {article.category}
         </span>
-        <span style={{ fontSize: '12px', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '4px' }}>
-          <Calendar size={12} /> {article.publishedAt}
+        <span style={{ fontSize: '12px', color: '#64748b', display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <Calendar size={12} /> 公開: {article.publishedAt}
+        </span>
+        {article.updatedAt && (
+          <span style={{ fontSize: '12px', color: '#059669', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 'bold' }}>
+            <Clock size={12} /> 更新: {article.updatedAt}
+          </span>
+        )}
+        <span style={{ fontSize: '12px', color: '#475569', display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <User size={12} /> 執筆: {article.author || 'れつぴ（トリプルデートマップ管理者）'}
         </span>
       </div>
 
-      <h1 style={{ fontSize: '24px', fontWeight: '950', color: '#0f172a', margin: '0 0 24px 0', lineHeight: '1.4', borderBottom: '1px solid #f1f5f9', paddingBottom: '16px' }}>
+      <h1 style={{ fontSize: '24px', fontWeight: '950', color: '#0f172a', margin: '0 0 16px 0', lineHeight: '1.4' }}>
         {article.title}
       </h1>
+
+      {/* リード文・抜粋カード */}
+      <div style={{ background: '#f8fafc', borderLeft: '4px solid #ff6897', padding: '16px 20px', borderRadius: '0 12px 12px 0', marginBottom: '24px', fontSize: '14px', lineHeight: '1.8', color: '#475569' }}>
+        <strong>【概要】</strong> {article.excerpt}
+      </div>
+
+      {/* 目次（Table of Contents） */}
+      {headings.length > 0 && (
+        <div style={{ background: '#fafaf9', border: '1px solid #e7e5e4', borderRadius: '16px', padding: '20px 24px', marginBottom: '32px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', fontWeight: 'bold', color: '#1c1917', marginBottom: '12px' }}>
+            <List size={18} style={{ color: '#ff6897' }} /> 目次
+          </div>
+          <ul style={{ margin: 0, paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '13px', color: '#57534e', lineHeight: '1.6' }}>
+            {headings.map((h, i) => (
+              <li key={i}>{h}</li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {/* 記事本文 (広告を中間に挿入してパース) */}
       <div className="article-body" style={{ margin: '24px 0' }}>
@@ -244,6 +282,33 @@ export const ArticleDetailView: React.FC<ArticleDetailProps> = ({ article, allSp
       {/* 記事下部の広告プレースホルダー */}
       <div style={{ margin: '32px 0' }}>
         <AdPlaceholder />
+      </div>
+
+      {/* 📚 参考資料・出典 */}
+      {article.sources && article.sources.length > 0 && (
+        <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '20px', margin: '28px 0' }}>
+          <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#1e293b', margin: '0 0 10px 0', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <ExternalLink size={15} style={{ color: '#2563eb' }} /> 📚 参考資料・公式出典
+          </h3>
+          <ul style={{ margin: 0, paddingLeft: '18px', display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '12.5px', color: '#475569' }}>
+            {article.sources.map((src, i) => (
+              <li key={i}>
+                <a href={src.url} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none' }}>
+                  {src.title} ↗
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* ⚠️ 非公式サイトに関する明記 */}
+      <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '16px', padding: '16px 20px', margin: '28px 0', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+        <AlertTriangle size={18} style={{ color: '#dc2626', flexShrink: 0, marginTop: '2px' }} />
+        <div style={{ fontSize: '12px', color: '#991b1b', lineHeight: '1.7' }}>
+          <strong>【非公式ファンメディアの表記】</strong><br />
+          当サイト「トリプルデートマップ」および本記事は、ファンによる非公式の調査・解説コンテンツです。株式会社代々木アニメーション学院、各所属レコード会社、および所属事務所等とは一切関係がありません。
+        </div>
       </div>
 
       {/* 🔗 関連聖地スポットリンク */}

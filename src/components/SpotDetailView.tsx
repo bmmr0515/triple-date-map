@@ -5,7 +5,8 @@ import { AdPlaceholder } from './AdPlaceholder';
 import { MapPin, Train, Calendar, ShieldAlert, Heart, HelpCircle, Compass, ShieldCheck, ExternalLink } from 'lucide-react';
 import { ProductCard } from './ProductCard';
 import { TwitterEmbed } from './TwitterEmbed';
-import { YouTubeEmbed } from './YouTubeEmbed';
+import { SpotVideoSection } from './SpotVideoSection';
+import { stripIframeTags } from '../utils/youtube';
 
 interface SpotDetailProps {
   spot: Spot;
@@ -54,26 +55,9 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
 
   const relatedSpots = getRelatedSpots();
 
-  // YouTube埋め込みURLの処理
-  const renderYoutube = () => {
-    if (!spot.youtubeId && !spot.youtube_url) return null;
-    return (
-      <div style={{ margin: '16px 0' }}>
-        <YouTubeEmbed 
-          key={spot.youtubeId || spot.youtube_url}
-          youtubeIdOrUrl={spot.youtube_url || spot.youtubeId} 
-          title={spot.youtube_title || `${spot.name} 関連動画`} 
-        />
-
-      </div>
-    );
-  };
-
-
-  // メイン説明文の警告を除去したクリーンアップ
+  // メイン説明文のiframe・警告を除去したクリーンアップ
   const getCleanDescription = () => {
-    const iframeRegex = /<iframe[^>]*>.*?<\/iframe>/gi;
-    let clean = spot.description.replace(iframeRegex, '').trim();
+    let clean = stripIframeTags(spot.description);
     const warningRegex = /⚠️\s*聖地巡礼に関する重要なお願い[：:]?\s*/;
     const match = clean.match(warningRegex);
     if (match) {
@@ -83,6 +67,7 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
   };
 
   const cleanDescription = getCleanDescription();
+  const showAds = Boolean(spot.seoIndexEligible && spot.adsEligible && spot.contentReviewed);
 
   return (
     <div style={{ maxWidth: '800px', margin: '40px auto', padding: '24px', background: '#ffffff', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)' }}>
@@ -187,8 +172,8 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
         </div>
       ) : null}
 
-      {/* 広告枠（記事中） */}
-      <AdPlaceholder />
+      {/* 広告枠（記事中：審査承認済み優良スポットのみ表示） */}
+      {showAds && <AdPlaceholder />}
 
       {/* 基本情報グリッド */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '16px', marginBottom: '24px' }}>
@@ -311,8 +296,8 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
         </div>
       )}
 
-      {/* YouTube映像埋め込み */}
-      {renderYoutube()}
+      {/* YouTube映像埋め込み（共通コンポーネント：最大1本・重複排除・複数動画テキストリンク化） */}
+      <SpotVideoSection spot={spot} />
 
       {/* 訪問時の注意 */}
       {spot.visitor_notes && !spot.visitor_notes.includes('特になし') ? (
@@ -378,15 +363,14 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
         <ProductCard productInfo={spot.productInfo} />
       )}
 
-      {/* 最終確認日 */}
-      {spot.last_confirmed_date && (
-        <div style={{ fontSize: '11px', color: '#94a3b8', textAlign: 'right', marginBottom: '24px' }}>
-          最終情報確認日: {spot.last_confirmed_date}
-        </div>
-      )}
+      {/* 執筆者・最終確認日メタ情報 */}
+      <div style={{ marginTop: '24px', padding: '12px 16px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '11px', color: '#64748b' }}>
+        <span>✍️ 執筆・現地調査: <strong>{spot.reviewedBy || 'れつぴ（トリプルデートマップ管理者）'}</strong></span>
+        <span>最終確認日: <strong>{spot.reviewedAt ? spot.reviewedAt.split('T')[0] : (spot.last_confirmed_date || '2026-11-11')}</strong></span>
+      </div>
 
-      {/* 広告枠（記事下部） */}
-      <AdPlaceholder />
+      {/* 広告枠（記事下部：審査承認済み優良スポットのみ表示） */}
+      {showAds && <AdPlaceholder />}
 
       {/* 周辺の関連スポット推薦 */}
       {relatedSpots.length > 0 && (

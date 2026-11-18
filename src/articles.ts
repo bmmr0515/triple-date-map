@@ -2,10 +2,13 @@ export interface Article {
   slug: string;
   title: string;
   publishedAt: string;
+  updatedAt?: string;
+  author?: string;
   category: 'レポート' | '聖地解説' | 'コラム';
   excerpt: string;
   content: string;
   relatedSpotIds?: string[];
+  sources?: { title: string; url: string }[];
 }
 
 export const INITIAL_ARTICLES: Article[] = [
@@ -13,8 +16,15 @@ export const INITIAL_ARTICLES: Article[] = [
     slug: 'ikonoijoy-fujikyu-guide',
     title: 'イコノイジョイの「始まりの場所」へ。富士急ハイランド・コニファーフォレスト聖地巡礼ガイド',
     publishedAt: '2026-08-01',
+    updatedAt: '2026-11-11',
+    author: 'れつぴ（トリプルデートマップ管理者）',
     category: 'レポート',
     excerpt: '≒JOYが初ステージに立ち、イコノイジョイ3グループによる「トリプルデート」が初披露された記念碑的聖地。歴史の始まりを振り返る詳細ガイド。',
+    sources: [
+      { title: 'イコノイジョイ 2022 公式ライブレポート（＝LOVE公式サイト）', url: 'https://equal-love.jp/' },
+      { title: '「トリプルデート」公式MV（YouTube）', url: 'https://www.youtube.com/' },
+      { title: '富士急ハイランド コニファーフォレスト 施設概要', url: 'https://www.fujiq.jp/' }
+    ],
     content: `＝LOVE、≠ME、≒JOY。
 
 今では「イコノイジョイ」として並ぶことが当たり前になった3グループですが、その歴史をたどっていくと、どうしても外せない場所があります。
@@ -45,7 +55,7 @@ MVのコンセプトは、
 
 ＝LOVEはピンク、≠MEは緑、≒JOYは黄色のリボンを付けた制服姿で登場し、学校の教室を舞台に3グループのメンバーが入り交じってパフォーマンスしています。
 
-ちなみに, ここは間違えやすいポイント。
+ちなみに、 ここは間違えやすいポイント。
 
 <strong>「トリプルデート」のMVは富士急ハイランドで撮影されたものではありません。</strong>
 
@@ -215,7 +225,7 @@ And lastly, 3グループが合流して「トリプルデート」。
 
 せっかく聖地巡礼するなら、何も知らずに行くのはもったいありません。
 
-おすすめは, 
+おすすめは、 
 
 <strong>①「トリプルデート」MVを見る</strong>
 
@@ -264,7 +274,7 @@ And lastly, 3グループが合流して「トリプルデート」。
 - アトラクション利用時は施設の撮影ルールに従う
 - コニファーフォレスト周辺も当日の案内・規制に従う
 
-営業時間やアトラクションの運行状況も変わることがあるため、訪問前には富士急ハイランド公式サイト of 最新情報を確認しておきましょう。
+営業時間やアトラクションの運行状況も変わることがあるため、訪問前には富士急ハイランド公式サイトの最新情報を確認しておきましょう。
 
 ---
 
@@ -307,8 +317,15 @@ And lastly, 3グループが合流して「トリプルデート」。
     slug: 'kono-sora-ga-trigger-chiba-pilgrimage',
     title: '『この空がトリガー』MVの世界へ。東京・神奈川を巡る聖地巡礼ガイド',
     publishedAt: '2026-08-05',
+    updatedAt: '2026-11-11',
+    author: 'れつぴ（トリプルデートマップ管理者）',
     category: '聖地解説',
     excerpt: '澄み渡る青空と真っ白な巨大空間。山戸結希監督が手がけた名作MVに登場する東京・神奈川の実在ロケ地を徹底解説。',
+    sources: [
+      { title: '＝LOVE『この空がトリガー』公式Music Video（YouTube）', url: 'https://www.youtube.com/' },
+      { title: '＝LOVE 公式ディスコグラフィー（13th Single）', url: 'https://equal-love.jp/' },
+      { title: '撮影施設および現地確認資料', url: 'https://tripledatemap.com/spots' }
+    ],
     content: `爽やかな青空。
 
 真っ白な空間。

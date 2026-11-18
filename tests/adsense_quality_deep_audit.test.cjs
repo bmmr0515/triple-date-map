@@ -101,27 +101,14 @@ const sitemapPath = path.join(distDir, 'sitemap.xml');
 assert(fs.existsSync(sitemapPath), 'dist/sitemap.xml が生成されていること');
 const sitemapContent = fs.readFileSync(sitemapPath, 'utf8');
 
-// 多面的評価関数の再現
+// 新ルールによる品質審査判定関数の再現（明示的フラグ制御）
 const evaluateSpotQuality = (spot) => {
-  const cleanDesc = (spot.description || '')
-    .replace(/<iframe[^>]*>.*?<\/iframe>/gi, '')
-    .replace(/⚠️\s*聖地巡礼に関する重要なお願い[\s\S]*$/, '')
-    .replace(/【[^】]*】/g, '')
-    .replace(/\s+/g, ' ')
-    .trim();
-
-  const hasNotes = !!(spot.visitor_notes && spot.visitor_notes.trim().length > 0);
-  const hasScene = !!(spot.scene && spot.scene.trim().length > 0 && !spot.scene.includes('MVに登場した名場面シーン'));
-  const hasHolyPoint = !!(spot.holy_point && spot.holy_point.trim().length > 0);
-  const hasCheckPoints = !!(spot.check_points && spot.check_points.length > 0);
-  const isOneLiner = /^(MV『[^』]+』のロケ地。?[^。]*。?|『[^』]+』MVロケ地です。?|『[^』]+』巡礼スポット[①-⑤]。?)$/.test(cleanDesc);
-
-  return isOneLiner || cleanDesc.length < 30 || (cleanDesc.length < 50 && !hasNotes && !hasScene && !hasHolyPoint && !hasCheckPoints);
+  return !(spot.seoIndexEligible === true && spot.contentReviewed === true);
 };
 
 const noindexSpots = spots.filter(evaluateSpotQuality);
-console.log(`多面的評価による情報調査中（noindex対象）スポット数: ${noindexSpots.length}件`);
-assert(noindexSpots.length > 0, '調査中スポットが適切に検出されていること');
+console.log(`厳格な事前審査による noindex, follow 対象スポット数: ${noindexSpots.length}件`);
+assert(noindexSpots.length > 0, '安全側に倒した noindex スポットが適切に設定されていること');
 
 noindexSpots.forEach(s => {
   const slug = s.slug || s.id;
@@ -135,14 +122,14 @@ noindexSpots.forEach(s => {
   }
 });
 
-// 充実スポット（代々木アニメーション学院、日本武道館等）が sitemap.xml に掲載され index, follow であること
-const richSpotSlugs = ['yoyogi-ani', 'budokan'];
+// 厳選審査合格スポット（矢切駅、グローバルタワー、原宿コンバース等）が sitemap.xml に掲載され index, follow であること
+const richSpotSlugs = ['yagiri-station', 'global-tower-beppu', 'white-atelier-converse-harajuku'];
 richSpotSlugs.forEach(slug => {
-  assert(sitemapContent.includes(`/spots/${slug}<`), `充実スポット /spots/${slug} は sitemap.xml に掲載されていること`);
+  assert(sitemapContent.includes(`/spots/${slug}<`), `厳選審査合格スポット /spots/${slug} は sitemap.xml に掲載されていること`);
   const htmlPath = path.join(distDir, 'spots', slug, 'index.html');
   if (fs.existsSync(htmlPath)) {
     const html = fs.readFileSync(htmlPath, 'utf8');
-    assert(html.includes('<meta name="robots" content="index, follow" />'), `充実スポット ${slug} は index, follow であること`);
+    assert(html.includes('<meta name="robots" content="index, follow" />'), `厳選審査合格スポット ${slug} は index, follow であること`);
   }
 });
 

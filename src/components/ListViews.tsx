@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Spot } from '../db';
 import { Course } from '../courses';
-import { MapPin, ArrowRight, Music, Users } from 'lucide-react';
-import { AdPlaceholder } from './AdPlaceholder';
+import { MapPin, ArrowRight, Music, Users, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface ListPagesProps {
   spots: Spot[];
   courses?: Course[];
+  initialPage?: number;
   onNavigate: (path: string) => void;
   onViewOnMap: (spot: Spot) => void;
 }
@@ -30,24 +30,64 @@ export const Breadcrumb: React.FC<{ items: { name: string; path?: string }[]; on
   );
 };
 
-// 1. スポット一覧ページ
-export const SpotsListPage: React.FC<ListPagesProps> = ({ spots, onNavigate, onViewOnMap }) => {
+// 1. スポット一覧ページ（20件ごとのページネーション・100文字要約・広告完全撤去）
+export const SpotsListPage: React.FC<ListPagesProps> = ({ spots, initialPage = 1, onNavigate, onViewOnMap }) => {
   const publishedSpots = spots.filter(s => s.status === 'published');
-  
+  const itemsPerPage = 20;
+  const totalPages = Math.ceil(publishedSpots.length / itemsPerPage);
+
+  const getPageFromUrl = () => {
+    if (typeof window !== 'undefined') {
+      const match = window.location.pathname.match(/\/spots\/page\/(\d+)/);
+      if (match) {
+        const page = parseInt(match[1], 10);
+        if (page >= 1 && page <= totalPages) return page;
+      }
+    }
+    return initialPage;
+  };
+
+  const [currentPage, setCurrentPage] = useState<number>(getPageFromUrl);
+
+  // initialPage や URL の変更を監視
+  React.useEffect(() => {
+    setCurrentPage(getPageFromUrl());
+  }, [initialPage, totalPages]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    const newPath = page === 1 ? '/spots' : `/spots/page/${page}`;
+    onNavigate(newPath);
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentSpots = publishedSpots.slice(startIndex, startIndex + itemsPerPage);
+
   return (
     <div style={{ maxWidth: '1000px', margin: '40px auto', padding: '24px' }}>
       <Breadcrumb items={[{ name: 'スポット一覧' }]} onNavigate={onNavigate} />
-      <h1 style={{ fontSize: '24px', fontWeight: '900', color: '#0f172a', marginBottom: '24px', borderBottom: '3px solid #ff6897', paddingBottom: '10px' }}>📍 スポット一覧 ({publishedSpots.length}箇所)</h1>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '24px', borderBottom: '3px solid #ff6897', paddingBottom: '10px' }}>
+        <h1 style={{ fontSize: '24px', fontWeight: '900', color: '#0f172a', margin: 0 }}>📍 スポット一覧 ({publishedSpots.length}箇所)</h1>
+        <span style={{ fontSize: '13px', color: '#64748b', fontWeight: 'bold' }}>
+          ページ {currentPage} / {totalPages}
+        </span>
+      </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
-        {publishedSpots.reduce<React.ReactNode[]>((acc, spot, index) => {
-          acc.push(
+        {currentSpots.map((spot) => {
+          const rawText = spot.description.replace(/<iframe[^>]*>.*?<\/iframe>/gi, '').split('⚠️')[0].trim();
+          const summary = rawText.length > 100 ? rawText.slice(0, 100) + '...' : rawText;
+
+          return (
             <div key={spot.id} className="list-spot-card" style={{ display: 'flex', flexDirection: 'column', padding: '18px', background: '#fff', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.04)', border: '1px solid #f1f5f9' }}>
               <span style={{ fontSize: '10px', fontWeight: 'bold', color: spot.group === '=LOVE' ? '#ff6897' : spot.group === '≠ME' ? '#58ccff' : spot.group === '≒JOY' ? '#ffdf3f' : '#cbd5e1', background: '#f8fafc', padding: '4px 8px', borderRadius: '8px', alignSelf: 'flex-start', marginBottom: '8px' }}>{spot.group}</span>
               <h3 style={{ fontSize: '15px', fontWeight: 'bold', color: '#0f172a', margin: '0 0 8px 0' }}>{spot.name}</h3>
-              <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 16px 0', flexGrow: 1, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                {spot.description.replace(/<iframe[^>]*>.*?<\/iframe>/gi, '').split('⚠️')[0].trim()}
+              <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 16px 0', flexGrow: 1, minHeight: '48px', lineHeight: 1.5 }}>
+                {summary}
               </p>
-              <div style={{ display: 'flex', gap: '8px' }}>
+              <div style={{ display: 'flex', gap: '8px', marginTop: 'auto' }}>
                 <a href={`/spots/${spot.slug}`} onClick={(e) => { e.preventDefault(); onNavigate(`/spots/${spot.slug}`); }} style={{ flexGrow: 1, textAlign: 'center', background: '#f1f5f9', color: '#0f172a', textDecoration: 'none', padding: '8px', borderRadius: '10px', fontSize: '12px', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
                   詳細を見る <ArrowRight size={14} />
                 </a>
@@ -57,19 +97,65 @@ export const SpotsListPage: React.FC<ListPagesProps> = ({ spots, onNavigate, onV
               </div>
             </div>
           );
-          
-          // 4件ごとに広告を追加 (0始まりなので index === 3, 7, 11... の後)
-          if ((index + 1) % 4 === 0) {
-            acc.push(
-              <div key={`ad-${spot.id}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', borderRadius: '16px', border: '1px solid #f1f5f9', padding: '12px' }}>
-                <AdPlaceholder />
-              </div>
-            );
-          }
-          
-          return acc;
-        }, [])}
+        })}
       </div>
+
+      {/* ページネーションコントロール */}
+      {totalPages > 1 && (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginTop: '36px' }}>
+          <button
+            onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+            disabled={currentPage === 1}
+            style={{
+              display: 'flex', alignItems: 'center', gap: '4px', padding: '8px 14px', borderRadius: '8px',
+              border: '1px solid #e2e8f0', background: currentPage === 1 ? '#f8fafc' : '#fff',
+              color: currentPage === 1 ? '#94a3b8' : '#0f172a', cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
+              fontSize: '13px', fontWeight: 'bold'
+            }}
+          >
+            <ChevronLeft size={16} /> 前へ
+          </button>
+          
+          <div style={{ display: 'flex', gap: '4px' }}>
+            {Array.from({ length: totalPages }, (_, i) => i + 1)
+              .filter(p => p === 1 || p === totalPages || Math.abs(p - currentPage) <= 2)
+              .map((p, idx, arr) => {
+                const prev = arr[idx - 1];
+                const showEllipsis = prev && p - prev > 1;
+                return (
+                  <React.Fragment key={p}>
+                    {showEllipsis && <span style={{ padding: '8px 4px', color: '#94a3b8' }}>…</span>}
+                    <button
+                      onClick={() => handlePageChange(p)}
+                      style={{
+                        padding: '8px 12px', borderRadius: '8px', border: '1px solid #e2e8f0',
+                        background: currentPage === p ? '#ff6897' : '#fff',
+                        color: currentPage === p ? '#fff' : '#0f172a',
+                        fontWeight: currentPage === p ? 'bold' : 'normal',
+                        cursor: 'pointer', fontSize: '13px'
+                      }}
+                    >
+                      {p}
+                    </button>
+                  </React.Fragment>
+                );
+              })}
+          </div>
+
+          <button
+            onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+            disabled={currentPage === totalPages}
+            style={{
+              display: 'flex', alignItems: 'center', gap: '4px', padding: '8px 14px', borderRadius: '8px',
+              border: '1px solid #e2e8f0', background: currentPage === totalPages ? '#f8fafc' : '#fff',
+              color: currentPage === totalPages ? '#94a3b8' : '#0f172a', cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
+              fontSize: '13px', fontWeight: 'bold'
+            }}
+          >
+            次へ <ChevronRight size={16} />
+          </button>
+        </div>
+      )}
     </div>
   );
 };

@@ -79,7 +79,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  min-width: 0; /* flexアイテムの最小幅制限を解除して子要素のellipsisを効かせる */
+  flex-shrink: 0;
 }
 
 .header-icon-box {

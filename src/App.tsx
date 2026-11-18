@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { 
   Calendar, 
   ChevronRight, 
-  Play, 
   Award, 
   CheckCircle2, 
   Compass, 
@@ -22,7 +21,6 @@ import Fuse from 'fuse.js';
 import { db, Spot, User, CheckIn, GroupType } from './db';
 import { authService, AuthSession, PasswordRecoveryState } from './auth';
 import { SupportSection } from './components/SupportSection';
-import { AdPlaceholder } from './components/AdPlaceholder';
 import AdminYouTubeAudit from './components/AdminYouTubeAudit';
 import { AdminAuthGuard } from './components/AdminAuthGuard';
 import { PasswordResetModal } from './components/PasswordResetModal';
@@ -38,7 +36,8 @@ import { CourseDetailView } from './components/CourseDetailView';
 import { ContactForm } from './components/ContactForm';
 import { INITIAL_ARTICLES } from './articles';
 import { ArticlesListPage, ArticleDetailView } from './components/ArticleViews';
-import { YouTubeEmbed } from './components/YouTubeEmbed';
+import { SpotVideoSection } from './components/SpotVideoSection';
+import { stripIframeTags } from './utils/youtube';
 import { ProductCard } from './components/ProductCard';
 import { MigrationBanner } from './components/MigrationBanner';
 
@@ -198,7 +197,7 @@ export const APP_NOTICES: Notice[] = [
     id: 'notice-20260520-recipe',
     date: '2026/05/20',
     title: '🎉 11箇所の新スポットと「笑顔のレシピ」巡礼ミッションが追加されました！',
-    content: '【新スポット追加】\n・スタジオゼロノアール (千葉県木更津市)\n・ロックハート城 (群馬県)\n・東京ドーム / メッセモール等 『笑顔のレシピ』関連聖地6箇所\n・サンタモニカクレープ原宿店 / MIYASHITA PARK等 『絶対アイドル辞めないで』ジャケット撮影地\n・その他、多数のMV撮影地が追加されました！\n\n【笑顔のレシピ 巡礼ミッション始動！】\n指定 of 聖地を巡ってチェックインを記録すると、限定の称号「笑顔のレシピ料理人」が獲得できます！ぜひ挑戦してみてください！',
+    content: '【新スポット追加】\n・スタジオゼロノアール (千葉県木更津市)\n・ロックハート城 (群馬県)\n・東京ドーム / メッセモール等 『笑顔のレシピ』関連聖地6箇所\n・サンタモニカクレープ原宿店 / MIYASHITA PARK等 『絶対アイドル辞めないで』ジャケット撮影地\n・その他、多数のMV撮影地が追加されました！\n\n【笑顔のレシピ 巡礼ミッション始動！】\n指定の聖地を巡ってチェックインを記録すると、限定の称号「笑顔のレシピ料理人」が獲得できます！ぜひ挑戦してみてください！',
     type: 'update'
   },
   {
@@ -451,12 +450,10 @@ export default function App() {
     return "";
   };
 
-  // 📝 聖地説明文の警告テキスト強調用レンダリングヘルパー
+  // 📝 聖地説明文の警告テキスト強調用レンダリングヘルパー（iframeコードは完全除外）
   const renderDescription = (desc: string) => {
-    // 1. まず全体から iframe タグを抽出して除去する
-    const iframeRegex = /<iframe[^>]*>.*?<\/iframe>/gi;
-    const iframes = desc.match(iframeRegex) || [];
-    const cleanDesc = desc.replace(iframeRegex, '').trim();
+    // 1. iframe タグを完全除去し、文字としても画面上にも表示しない
+    const cleanDesc = stripIframeTags(desc);
 
     // 2. クリーンになったテキストに対して従来の警告テキスト分割を行う
     let mainDesc = cleanDesc;
@@ -477,30 +474,6 @@ export default function App() {
             {mainDesc.trim()}
           </p>
         )}
-
-        {/* 抽出された YouTube iframe があれば安全にレンダリング */}
-        {iframes.length > 0 && iframes.map((iframeHtml, index) => {
-          const srcMatch = iframeHtml.match(/src=["'](https:\/\/(?:www\.)?(?:youtube\.com|youtube-nocookie\.com)\/embed\/[^"']+)["']/i);
-          if (!srcMatch) return null;
-          const safeSrc = srcMatch[1];
-          return (
-            <div 
-              key={index}
-              className="video-box" 
-              style={{ width: '100%', aspectRatio: '16/9', borderRadius: '16px', overflow: 'hidden', marginTop: '4px', marginBottom: '4px' }}
-            >
-              <iframe
-                src={safeSrc}
-                title="関連映像"
-                width="100%"
-                height="100%"
-                style={{ border: 'none' }}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
-            </div>
-          );
-        })}
 
         {/* 警告文 */}
         {warningText.trim() && (
@@ -751,6 +724,12 @@ export default function App() {
       return { path: '/articles/:slug', params: { slug: articleMatch[1] } };
     }
 
+    // スポット一覧ページネーション: /spots/page/:page
+    const spotsPageMatch = cleanPath.match(/^\/spots\/page\/(\d+)$/);
+    if (spotsPageMatch) {
+      return { path: '/spots/page/:page', params: { page: spotsPageMatch[1] } };
+    }
+
     // 個別スポット詳細: /spots/:slug
     const spotMatch = cleanPath.match(/^\/spots\/([a-zA-Z0-9_-]+)$/);
     if (spotMatch) {
@@ -770,6 +749,11 @@ export default function App() {
     
     if (validPaths.includes(cleanPath)) {
       return { path: cleanPath, params: {} };
+    }
+
+    // マイページ: /mypage はトップ画面のマイページタブとしてレンダリング
+    if (cleanPath === '/mypage') {
+      return { path: '/', params: { tab: 'mypage' } };
     }
     
     // 🔐 管理者・ギャラリーページの認証状態に応じた強力なフォールバックルーティング
@@ -813,6 +797,56 @@ export default function App() {
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
+
+  // 🛡️ SPA遷移時も DOM 上の robots / canonical を常に正確に同期更新
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+
+    let robotsMeta = document.querySelector('meta[name="robots"]') as HTMLMetaElement;
+    if (!robotsMeta) {
+      robotsMeta = document.createElement('meta');
+      robotsMeta.name = 'robots';
+      document.head.appendChild(robotsMeta);
+    }
+    let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.rel = 'canonical';
+      document.head.appendChild(canonicalLink);
+    }
+
+    if (currentRoute.path === '/spots/:slug') {
+      const spot = spots.find(s => s.slug === currentRoute.params.slug || s.id === currentRoute.params.slug);
+      if (spot) {
+        const isIndex = Boolean(spot.seoIndexEligible === true && spot.contentReviewed === true);
+        robotsMeta.content = isIndex ? 'index, follow' : 'noindex, follow';
+        canonicalLink.href = `https://tripledatemap.com/spots/${spot.slug || spot.id}`;
+      }
+    } else if (currentRoute.path === '/spots/page/:page') {
+      const pageNum = parseInt(currentRoute.params.page, 10);
+      robotsMeta.content = pageNum > 1 ? 'noindex, follow' : 'index, follow';
+      canonicalLink.href = pageNum > 1 ? `https://tripledatemap.com/spots/page/${pageNum}` : 'https://tripledatemap.com/spots';
+    } else if (currentRoute.path === '/404') {
+      robotsMeta.content = 'noindex, nofollow';
+      canonicalLink.href = 'https://tripledatemap.com/404';
+    } else if (currentRoute.path === '/spots') {
+      robotsMeta.content = 'index, follow';
+      canonicalLink.href = 'https://tripledatemap.com/spots';
+    } else if (currentRoute.path === '/') {
+      robotsMeta.content = 'index, follow';
+      canonicalLink.href = 'https://tripledatemap.com/';
+    } else {
+      robotsMeta.content = 'index, follow';
+      canonicalLink.href = `https://tripledatemap.com${currentRoute.path}`;
+    }
+  }, [currentRoute, spots]);
+
+  // /mypage へのアクセス時はマイページタブを自動選択
+  useEffect(() => {
+    if (currentRoute.params.tab === 'mypage' || (typeof window !== 'undefined' && window.location.pathname === '/mypage')) {
+      setRightPanelTab('mypage');
+    }
+  }, [currentRoute]);
 
   const navigateTo = (path: string, e?: React.MouseEvent) => {
     if (e) e.preventDefault();
@@ -1756,7 +1790,15 @@ ${window.location.origin + window.location.pathname}
               case '/contact':
                 return <ContactForm onNavigate={navigateTo} />;
               case '/spots':
-                return <SpotsListPage spots={spots} onNavigate={navigateTo} onViewOnMap={handleViewOnMap} />;
+              case '/spots/page/:page':
+                return (
+                  <SpotsListPage 
+                    spots={spots} 
+                    initialPage={currentRoute.path === '/spots/page/:page' && currentRoute.params.page ? parseInt(currentRoute.params.page, 10) : 1}
+                    onNavigate={navigateTo} 
+                    onViewOnMap={handleViewOnMap} 
+                  />
+                );
               case '/areas':
                 return <AreasListPage spots={spots} onNavigate={navigateTo} onViewOnMap={handleViewOnMap} />;
               case '/groups':
@@ -2330,10 +2372,10 @@ ${window.location.origin + window.location.pathname}
         </div>
 
         {/* アクティブグループの可愛いバッジ と アカウント認証UI */}
-        <div className="header-right" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <div className="header-right" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
           
           {/* 📋 ビュー切り替えトグル ＆ 🔔 通知ベル */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             {/* 切り替えセグメンテッドトグル */}
             <div style={{
               display: 'flex',
@@ -2508,7 +2550,7 @@ ${window.location.origin + window.location.pathname}
                 </button>
               </div>
             ) : (
-              <div style={{ display: 'flex', gap: '6px' }}>
+              <div style={{ display: 'flex', gap: '6px', flexWrap: 'nowrap', flexShrink: 0 }}>
                 <button
                   onClick={() => {
                     setAuthMode('signin');
@@ -2519,11 +2561,12 @@ ${window.location.origin + window.location.pathname}
                     background: '#f3f4f6',
                     border: '1px solid #e5e7eb',
                     color: 'var(--text-main)',
-                    fontSize: '10px',
+                    fontSize: '11px',
                     fontWeight: 'bold',
                     padding: '6px 12px',
                     borderRadius: '12px',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap'
                   }}
                 >
                   ログイン
@@ -2538,11 +2581,12 @@ ${window.location.origin + window.location.pathname}
                     background: 'linear-gradient(135deg, #ff6897 0%, #a78bfa 100%)',
                     border: 'none',
                     color: 'white',
-                    fontSize: '10px',
+                    fontSize: '11px',
                     padding: '6px 12px',
                     borderRadius: '12px',
                     cursor: 'pointer',
-                    boxShadow: '0 4px 10px rgba(255, 104, 151, 0.2)'
+                    boxShadow: '0 4px 10px rgba(255, 104, 151, 0.2)',
+                    whiteSpace: 'nowrap'
                   }}
                 >
                   無料登録
@@ -5544,9 +5588,6 @@ ${window.location.origin + window.location.pathname}
                       <SupportSection />
                     </div>
 
-                    {/* 広告コンポーネント */}
-                    <AdPlaceholder />
-
                     {/* 非公式であることの強い明記 */}
                     <div style={{ 
                       background: '#fef2f2', 
@@ -5788,21 +5829,8 @@ ${window.location.origin + window.location.pathname}
 
 
 
-                    {/* YouTube動画自動埋め込み */}
-                    {(selectedSpot.youtubeId || selectedSpot.youtube_url) && (
-                      <div className="video-section">
-                        <div className="video-label-bold" style={{ fontWeight: 'bold', fontSize: '11px', color: '#1e293b', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                          <Play className="w-3 h-3 text-red-500 fill-red-500" />
-                          {selectedSpot.youtube_title || "🎥 関連映像"}
-                        </div>
-                        <YouTubeEmbed 
-                          key={selectedSpot.id + '_' + (selectedSpot.youtubeId || selectedSpot.youtube_url)}
-                          youtubeIdOrUrl={selectedSpot.youtube_url || selectedSpot.youtubeId} 
-                          title={selectedSpot.youtube_title || `${selectedSpot.name} 関連動画`} 
-                        />
-
-                      </div>
-                    )}
+                    {/* 📺 聖地YouTube動画共通セクション（原則1本・重複排除・複数動画テキストリンク化） */}
+                    <SpotVideoSection spot={selectedSpot} />
 
 
 
@@ -6599,7 +6627,7 @@ ${window.location.origin + window.location.pathname}
                                 称号: {rewardTitle}
                               </div>
                               <div style={{ fontSize: '7.5px', color: '#94a3b8' }}>
-                                {isCompleted ? '🎉 神の領域！全聖地をコンプリートしました！' : '全50箇所の聖地すべてを巡って究極の称号GET！'}
+                                {isCompleted ? '🎉 神の領域！全聖地をコンプリートしました！' : '全50箇所の聖地すべてを巡って特別称号GET！'}
                               </div>
                             </div>
                           </div>
@@ -8226,19 +8254,8 @@ ${window.location.origin + window.location.pathname}
 
 
 
-              {/* YouTube動画自動埋め込み (完全再現) */}
-                {(selectedSpot.youtubeId || selectedSpot.youtube_url) && (
-                  <div className="video-section" style={{ marginTop: '16px' }}>
-                    <div className="video-label-bold" style={{ fontWeight: 'bold', fontSize: '11px', color: '#1e293b', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <Play className="w-3 h-3 text-red-500 fill-red-500" />
-                      {selectedSpot.youtube_title || "🎥 関連映像"}
-                    </div>
-                    <YouTubeEmbed 
-                      youtubeIdOrUrl={selectedSpot.youtube_url || selectedSpot.youtubeId} 
-                      title={selectedSpot.youtube_title || `${selectedSpot.name} 関連動画`} 
-                    />
-                  </div>
-                )}
+              {/* 📺 聖地YouTube動画共通セクション（原則1本・重複排除・複数動画テキストリンク化） */}
+              <SpotVideoSection spot={selectedSpot} />
 
 
               {/* 🗺️ Googleマップで経路案内ボタン */}

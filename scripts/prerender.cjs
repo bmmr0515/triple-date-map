@@ -21,6 +21,53 @@ const generateSlug = (name) => {
     .replace(/-+/g, '-');
 };
 
+// 🎬 YouTube動画ID正規化関数
+const extractYouTubeVideoId = (input) => {
+  if (!input || typeof input !== 'string') return null;
+  let trimmed = input.trim();
+  if (!trimmed) return null;
+
+  if (trimmed.includes('<iframe')) {
+    const srcMatch = trimmed.match(/src=["']([^"']+)["']/i);
+    if (srcMatch && srcMatch[1]) trimmed = srcMatch[1];
+  }
+  trimmed = trimmed.replace(/&amp;/g, '&');
+
+  const urlPatterns = [
+    /(?:youtube\.com|youtube-nocookie\.com)\/(?:embed\/|v\/|shorts\/|live\/)([a-zA-Z0-9_-]{11})/i,
+    /(?:youtube\.com|youtube-nocookie\.com)\/watch\?(?:[^&]*&)*v=([a-zA-Z0-9_-]{11})/i,
+    /youtu\.be\/([a-zA-Z0-9_-]{11})/i
+  ];
+  for (const pattern of urlPatterns) {
+    const match = trimmed.match(pattern);
+    if (match && match[1]) return match[1];
+  }
+  if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) return trimmed;
+  const fallback = trimmed.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+  if (fallback && fallback[1]) return fallback[1];
+  return null;
+};
+
+// 📝 iframeタグ完全除去関数
+const stripIframeTags = (text) => {
+  if (!text) return '';
+  return text
+    .replace(/<iframe[^>]*>.*?<\/iframe>/gi, '')
+    .replace(/<iframe[^>]*\/?>/gi, '')
+    .trim();
+};
+
+// 📺 スポット動画解決関数（代表動画1件＋重複排除）
+const resolveSpotVideos = (spot) => {
+  const candidates = [spot.youtubeId, spot.youtube_url];
+  const normalizedIds = candidates.map(extractYouTubeVideoId).filter(Boolean);
+  const uniqueIds = Array.from(new Set(normalizedIds));
+  return {
+    primaryVideoId: uniqueIds[0] || null,
+    otherVideoIds: uniqueIds.slice(1)
+  };
+};
+
 console.log('🚀 静的プリレンダリングエンジンの起動...');
 
 const DIST_DIR = path.join(__dirname, '../dist');
@@ -311,16 +358,19 @@ routes.push({
   page: 1
 });
 
-// スポット一覧のページネーション (1ページ25件)
-const ITEMS_PER_PAGE = 25;
+// スポット一覧のページネーション (1ページ20件)
+const ITEMS_PER_PAGE = 20;
 const totalSpotPages = Math.ceil(spots.length / ITEMS_PER_PAGE);
 for (let p = 1; p <= totalSpotPages; p++) {
   routes.push({
     path: `/spots/page/${p}`,
+    canonicalPath: p === 1 ? '/spots' : `/spots/page/${p}`,
     title: `聖地スポット一覧 (${p}/${totalSpotPages}ページ) - トリプルデートマップ`,
     desc: `イコノイジョイの聖地スポット一覧 第${p}ページ。全${spots.length}件中 ${(p-1)*ITEMS_PER_PAGE + 1}〜${Math.min(p*ITEMS_PER_PAGE, spots.length)}件目を表示。`,
     type: 'spots-list',
-    page: p
+    page: p,
+    // 2ページ目以降は低付加価値・重複コンテンツ防止のため noindex, follow とする
+    noindex: p > 1
   });
 }
 
@@ -352,6 +402,15 @@ routes.push({
   type: 'articles-list'
 });
 
+// マイページ (noindex)
+routes.push({
+  path: '/mypage',
+  title: '巡礼マイページ - トリプルデートマップ',
+  desc: 'あなたの聖地巡礼チェックイン記録、獲得称号、推し設定などを確認・管理できるマイページです。',
+  type: 'home',
+  noindex: true
+});
+
 // 404ページ (noindex)
 routes.push({
   path: '/404',
@@ -378,15 +437,11 @@ spots.forEach(spot => {
   const rawDesc = `${spot.name}の聖地巡礼情報・ロケ地解説。${shortSummary ? `${shortSummary}。` : ''}${spot.address ? `所在地: ${spot.address}。` : ''}${accessPart}`;
   const spotDesc = rawDesc.replace(/。+/g, '。').trim();
 
-  // 🛡️ 多面的コンテンツ品質判定: 
-  // 50文字固定ではなく、スポット固有の情報、MV関連性、単文定型プレースホルダーか、注意事項・見どころの有無を総合評価
-  const hasNotes = !!(spot.visitor_notes && spot.visitor_notes.trim().length > 0);
-  const hasScene = !!(spot.scene && spot.scene.trim().length > 0 && !spot.scene.includes('MVに登場した名場面シーン'));
-  const hasHolyPoint = !!(spot.holy_point && spot.holy_point.trim().length > 0);
-  const hasCheckPoints = !!(spot.check_points && spot.check_points.length > 0);
-  const isOneLiner = /^(MV『[^』]+』のロケ地。?[^。]*。?|『[^』]+』MVロケ地です。?|『[^』]+』巡礼スポット[①-⑤]。?)$/.test(cleanDesc);
-
-  const isThinContent = isOneLiner || cleanDesc.length < 30 || (cleanDesc.length < 50 && !hasNotes && !hasScene && !hasHolyPoint && !hasCheckPoints);
+  // 🛡️ AdSense・品質審査管理フィールドによる厳格なインデックス制御
+  // 文字数だけでなく、施設特定・登場場面・ロケ地根拠・明確な住所・固有注意事項・独自性等の
+  // 事前品質審査を完全にパスしたスポットのみ index 対象とする。
+  // 未指定または条件未達のものは安全側に倒し noindex, follow とする。
+  const isEligibleForIndex = Boolean(spot.seoIndexEligible === true && spot.contentReviewed === true);
 
   routes.push({
     path: `/spots/${spot.slug}`,
@@ -394,7 +449,7 @@ spots.forEach(spot => {
     desc: spotDesc,
     type: 'spot-detail',
     spotData: spot,
-    noindex: isThinContent
+    noindex: !isEligibleForIndex
   });
 
   // spot.id と spot.slug が異なる場合は spot.id 側も出力（URL互換性・重複インデックス防止のためnoindex）
@@ -666,7 +721,7 @@ const buildPageContent = (route) => {
               📖 聖地・ロケ地としての詳しい解説
             </h2>
             <div style="font-size: 14.5px; line-height: 1.8; color: #334155; white-space: pre-wrap; margin-bottom: 24px;">
-${s.description}
+${stripIframeTags(s.description)}
             </div>
 
             ${s.holy_point ? `
@@ -703,22 +758,33 @@ ${s.description}
             </div>
             ` : ''}
 
-            ${s.youtube_title || s.youtube_url ? `
-            <h2 style="font-size: 18px; font-weight: bold; color: #0f172a; margin-top: 28px; border-left: 4px solid #ff6897; padding-left: 10px;">
-              🎥 登場作品・公式映像情報
-            </h2>
-            ${s.youtube_title ? `<p style="font-size: 14px; font-weight: bold; color: #0f172a; margin-bottom: 12px;">${s.youtube_title}</p>` : ''}
-            ${s.youtube_url ? `
-            <p style="font-size: 13px; color: #64748b; margin-bottom: 12px;">
-              <a href="${s.youtube_url.includes('embed/') ? s.youtube_url.replace('embed/', 'watch?v=') : s.youtube_url}" target="_blank" rel="noopener noreferrer" style="color: #ff6897; font-weight: bold; text-decoration: underline;">
-                ▶ YouTube公式動画を新しいタブで視聴する（公式再生数に貢献）
-              </a>
-            </p>
-            <div style="width: 100%; aspect-ratio: 16/9; max-width: 640px; margin: 16px 0; border-radius: 14px; overflow: hidden; background: #000;">
-              ${s.youtube_url.includes('<iframe') ? s.youtube_url : `<iframe width="100%" height="100%" src="${s.youtube_url}" title="${s.name} 関連公式動画" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`}
-            </div>
-            ` : ''}
-            ` : ''}
+            ${(() => {
+              const { primaryVideoId, otherVideoIds } = resolveSpotVideos(s);
+              if (!primaryVideoId) return '';
+              const videoTitle = s.youtube_title || `${s.name} 関連公式映像`;
+              const watchUrl = `https://www.youtube.com/watch?v=${primaryVideoId}`;
+              const embedUrl = `https://www.youtube.com/embed/${primaryVideoId}`;
+              return `
+              <h2 style="font-size: 18px; font-weight: bold; color: #0f172a; margin-top: 28px; border-left: 4px solid #ff6897; padding-left: 10px;">
+                🎥 登場作品・公式映像情報
+              </h2>
+              <p style="font-size: 14px; font-weight: bold; color: #0f172a; margin-bottom: 12px;">${videoTitle}</p>
+              <p style="font-size: 13px; color: #64748b; margin-bottom: 12px;">
+                <a href="${watchUrl}" target="_blank" rel="noopener noreferrer" style="color: #ff6897; font-weight: bold; text-decoration: underline;">
+                  ▶ YouTube公式動画を新しいタブで視聴する（公式再生数に貢献）
+                </a>
+              </p>
+              <div style="width: 100%; aspect-ratio: 16/9; max-width: 640px; margin: 16px 0; border-radius: 14px; overflow: hidden; background: #000;">
+                <iframe width="100%" height="100%" src="${embedUrl}" title="${videoTitle}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border: none;"></iframe>
+              </div>
+              ${otherVideoIds.length > 0 ? `
+              <div style="margin-top: 12px; padding: 10px 14px; background: #f8fafc; border-radius: 10px; border: 1px solid #e2e8f0; font-size: 12px;">
+                <div style="font-weight: bold; color: #64748b; margin-bottom: 6px;">その他の関連動画:</div>
+                ${otherVideoIds.map(vid => `<div><a href="https://www.youtube.com/watch?v=${vid}" target="_blank" rel="noopener noreferrer" style="color: #2563eb; text-decoration: none;">▶ YouTubeで関連動画を見る（ID: ${vid}） ↗</a></div>`).join('')}
+              </div>
+              ` : ''}
+              `;
+            })()}
 
             ${s.reward_title ? `
             <div style="background: #fdf4ff; border: 1px solid #fae8ff; border-radius: 14px; padding: 18px; margin-top: 24px;">
@@ -757,6 +823,12 @@ ${s.description}
               ${s.productInfo.isAffiliate ? '<div style="margin-top: 8px; font-size: 10px; color: #94a3b8;">※アフィリエイト広告を利用しています</div>' : ''}
             </div>
             ` : ''}
+
+            <!-- 執筆者・最終確認日 -->
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 16px; margin-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; color: #64748b; flex-wrap: wrap; gap: 8px;">
+              <span>✍️ 執筆・現地調査: <strong>${s.reviewedBy || 'れつぴ（トリプルデートマップ管理者）'}</strong></span>
+              <span>最終確認日: <strong>${s.reviewedAt ? s.reviewedAt.split('T')[0] : (s.last_confirmed_date || '2026-11-11')}</strong></span>
+            </div>
 
             <!-- 修正依頼・情報提供 -->
             <div style="margin-top: 36px; padding-top: 20px; border-top: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap; font-size: 12px; color: #64748b;">
@@ -966,6 +1038,7 @@ ${s.description}
                 .replace(/\s+/g, ' ')
                 .trim();
               const cardSnippet = cleanScene || cleanDesc;
+              const summary = cardSnippet.length > 100 ? cardSnippet.slice(0, 100) + '...' : cardSnippet;
               return `
               <article style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 8px;">
@@ -981,7 +1054,7 @@ ${s.description}
                 <p style="font-size: 12.5px; color: #64748b; margin: 0 0 10px 0;">
                   📍 ${s.address || '日本'} ${(s.nearest_station && !s.nearest_station.includes('情報なし')) ? `(最寄り: ${s.nearest_station})` : ''}
                 </p>
-                ${cardSnippet ? `<p style="font-size: 13.5px; color: #334155; line-height: 1.6; margin: 0 0 12px 0;">${cardSnippet.slice(0, 110)}...</p>` : ''}
+                ${summary ? `<p style="font-size: 13.5px; color: #334155; line-height: 1.6; margin: 0 0 12px 0;">${summary}</p>` : ''}
                 <div style="text-align: right;">
                   <a href="/spots/${s.slug}" style="font-size: 12.5px; color: #ff6897; font-weight: bold; text-decoration: underline;">
                     詳細解説とアクセスを見る →
@@ -1399,6 +1472,11 @@ ${s.description}
 
     case 'article-detail': {
       const a = route.articleData;
+      const headings = a.content
+        .split('\n')
+        .filter(line => line.startsWith('## '))
+        .map(line => line.replace(/^##\s*/, '').trim());
+
       mainContent = `
         <main style="max-width: 800px; margin: 30px auto; padding: 0 20px;">
           <nav aria-label="breadcrumb" style="font-size: 12px; margin-bottom: 16px; color: #64748b;">
@@ -1408,12 +1486,54 @@ ${s.description}
           </nav>
 
           <article style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
-            <span style="font-size: 11px; font-weight: bold; color: #7c3aed; background: #f3e8ff; padding: 3px 8px; border-radius: 6px;">${a.category}</span>
-            <span style="font-size: 12px; color: #64748b; margin-left: 8px;">公開日: ${a.publishedAt}</span>
-            <h1 style="font-size: 24px; font-weight: 900; color: #0f172a; margin: 12px 0 20px 0; line-height: 1.4;">${a.title}</h1>
-            <div style="font-size: 14.5px; line-height: 1.85; color: #334155; margin-bottom: 30px;">
-              ${a.content.split('\n\n').map(p => `<p style="margin-bottom: 16px;">${p.replace(/\n/g, '<br/>')}</p>`).join('')}
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 12px;">
+              <span style="font-size: 11px; font-weight: bold; color: #7c3aed; background: #f3e8ff; padding: 3px 8px; border-radius: 6px;">${a.category}</span>
+              <span style="font-size: 12px; color: #64748b;">公開日: ${a.publishedAt}</span>
+              ${a.updatedAt ? `<span style="font-size: 12px; color: #059669; font-weight: bold;">更新日: ${a.updatedAt}</span>` : ''}
+              <span style="font-size: 12px; color: #475569;">執筆: ${a.author || 'れつぴ（管理者）'}</span>
             </div>
+
+            <h1 style="font-size: 24px; font-weight: 900; color: #0f172a; margin: 12px 0 16px 0; line-height: 1.4;">${a.title}</h1>
+
+            <div style="background: #f8fafc; border-left: 4px solid #ff6897; padding: 14px 18px; border-radius: 0 10px 10px 0; margin-bottom: 24px; font-size: 13.5px; color: #475569; line-height: 1.7;">
+              <strong>【概要】</strong> ${a.excerpt}
+            </div>
+
+            ${headings.length > 0 ? `
+            <div style="background: #fafaf9; border: 1px solid #e7e5e4; border-radius: 14px; padding: 18px 20px; margin-bottom: 28px;">
+              <div style="font-size: 14px; font-weight: bold; color: #1c1917; margin-bottom: 10px;">📋 目次</div>
+              <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #57534e; line-height: 1.7;">
+                ${headings.map(h => `<li>${h}</li>`).join('')}
+              </ul>
+            </div>
+            ` : ''}
+
+            <div style="font-size: 14.5px; line-height: 1.85; color: #334155; margin-bottom: 30px;">
+              ${a.content.split('\n\n').map(p => {
+                if (p.startsWith('## ')) {
+                  return `<h2 style="font-size: 19px; font-weight: 900; color: #0f172a; margin: 32px 0 16px 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">${p.replace(/^##\s*/, '')}</h2>`;
+                }
+                if (p.startsWith('### ')) {
+                  return `<h3 style="font-size: 16px; font-weight: bold; color: #0f172a; margin: 24px 0 12px 0;">${p.replace(/^###\s*/, '')}</h3>`;
+                }
+                return `<p style="margin-bottom: 16px;">${p.replace(/\n/g, '<br/>')}</p>`;
+              }).join('')}
+            </div>
+
+            ${a.sources && a.sources.length > 0 ? `
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 16px 20px; margin: 28px 0;">
+              <div style="font-size: 13.5px; font-weight: bold; color: #1e293b; margin-bottom: 8px;">📚 参考資料・公式出典</div>
+              <ul style="margin: 0; padding-left: 18px; font-size: 12.5px; color: #475569; line-height: 1.6;">
+                ${a.sources.map(src => `<li><a href="${src.url}" target="_blank" rel="noopener noreferrer" style="color: #2563eb; text-decoration: none;">${src.title} ↗</a></li>`).join('')}
+              </ul>
+            </div>
+            ` : ''}
+
+            <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 12px; padding: 14px 18px; margin: 28px 0; font-size: 12px; color: #991b1b; line-height: 1.6;">
+              <strong>【非公式ファンメディアの表記】</strong><br/>
+              当サイト「トリプルデートマップ」および本記事は、ファン有志による非公式の調査・解説コンテンツです。所属事務所・レコード会社等とは一切関係がありません。
+            </div>
+
             <div style="border-top: 1px solid #f1f5f9; padding-top: 20px; text-align: center;">
               <a href="/articles" style="color: #ff6897; font-weight: bold; text-decoration: underline;">← コラム一覧へ戻る</a>
             </div>
