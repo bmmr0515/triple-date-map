@@ -415,7 +415,9 @@ export const OFFICIAL_VIDEOS: Record<string, OfficialVideo> = {
     title: "メンバーだけで旅行に行ってきました！！！【大阪&京都旅】",
     group: "=LOVE",
     youtubeId: "YgOd8ZpFaUU",
-    officialUrl: "https://www.youtube.com/watch?v=YgOd8ZpFaUU"
+    officialUrl: "https://www.youtube.com/watch?v=YgOd8ZpFaUU",
+    memorialDate: "2023-01-05",
+    contentType: "公式YouTube企画"
   },
   "work-i024yWd9oiI": {
     workKey: "work-i024yWd9oiI",
@@ -841,6 +843,24 @@ export const OFFICIAL_VIDEOS: Record<string, OfficialVideo> = {
     officialUrl: "https://www.kyoubijin-award.com/",
     memorialDate: "2026-10-19",
     contentType: "番組・広告・PR動画"
+  },
+  "work-Dz787fY6GjQ": {
+    workKey: "work-Dz787fY6GjQ",
+    title: "【京都】人力車に乗りながらガールズトーク！【京都旅#2】",
+    group: "≠ME",
+    youtubeId: "Dz787fY6GjQ",
+    officialUrl: "https://www.youtube.com/watch?v=Dz787fY6GjQ",
+    memorialDate: "2021-12-01",
+    contentType: "公式YouTube企画"
+  },
+  "work-zIST21lyxR0": {
+    workKey: "work-zIST21lyxR0",
+    title: "【女子旅】京都でお着物を着てきました！！【京都旅#1】",
+    group: "≠ME",
+    youtubeId: "zIST21lyxR0",
+    officialUrl: "https://www.youtube.com/watch?v=zIST21lyxR0",
+    memorialDate: "2021-11-24",
+    contentType: "公式YouTube企画"
   }
 };
 
