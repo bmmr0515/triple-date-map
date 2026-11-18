@@ -1575,7 +1575,7 @@ ${stripIframeTags(s.description)}
 
 // 4. 静的HTMLファイル生成ループ
 console.log('📝 HTMLファイルの生成中...');
-const OGP_IMAGE_URL = 'https://tripledatemap.com/og/tripledatemap-ogp.png?v=20261118';
+const OGP_IMAGE_URL = 'https://tripledatemap.com/og/tripledatemap-ogp-v2.png';
 
 routes.forEach(route => {
   let html = templateHtml;
