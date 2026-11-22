@@ -861,6 +861,15 @@ export const OFFICIAL_VIDEOS: Record<string, OfficialVideo> = {
     officialUrl: "https://www.youtube.com/watch?v=zIST21lyxR0",
     memorialDate: "2021-11-24",
     contentType: "公式YouTube企画"
+  },
+  "work-kdwmYsFF1tc": {
+    workKey: "work-kdwmYsFF1tc",
+    title: "どんな君も どんな夜も",
+    group: "≒JOY",
+    youtubeId: "kdwmYsFF1tc",
+    officialUrl: "https://www.youtube.com/watch?v=kdwmYsFF1tc",
+    memorialDate: "2026-11-21",
+    contentType: "公式MV"
   }
 };
 
