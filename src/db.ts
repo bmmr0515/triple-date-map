@@ -6472,6 +6472,47 @@ const INITIAL_SPOTS: Spot[] = [
         "accuracyReason": "施設公式掲載（スペースマーケット・ロケーションバンク）の施設入口・駐車場アクセス座標と一致",
         "workKey": "work-kdwmYsFF1tc",
         "last_confirmed_date": "2026-11-21"
+    },
+    {
+        "id": "spot-real-winkgirl-studio-basil-mint",
+        "name": "スタジオバジル ミント",
+        "short_name": "スタジオバジル ミント",
+        "operatorName": "株式会社パスティス・バジル（スタジオバジル）",
+        "group": "≒JOY",
+        "category": "MVロケ地",
+        "latitude": 35.776405,
+        "longitude": 139.736208,
+        "event_date": "2026-11-24",
+        "memorial_date": "2026-11-24",
+        "youtubeId": "wrl8FpW6xMA",
+        "youtube_url": "https://www.youtube.com/embed/wrl8FpW6xMA",
+        "youtube_title": "🎥 関連映像: ≒JOY『必殺ウインクガール』公式MV",
+        "reward_title": "白き中庭の必殺ウインク",
+        "tags": [
+            "必殺ウインクガール",
+            "ニアジョイ6th",
+            "市原愛弓",
+            "スタジオバジル",
+            "スタジオバジル ミント",
+            "東京都北区",
+            "志茂",
+            "東京",
+            "ハウススタジオ",
+            "MVロケ地"
+        ],
+        "slug": "winkgirl-studio-basil-mint",
+        "status": "published",
+        "address": "〒115-0042 東京都北区志茂3-6-1",
+        "nearest_station": "東京メトロ南北線 志茂駅",
+        "walk_time": "志茂駅より徒歩約7分",
+        "description": "【この場所について】\n東京都北区志茂にある自然光ハウススタジオ「スタジオバジル ミント」です。ブリック壁と木々に囲まれた広い中庭、人工芝、ヨーロピアンテイストの門やテラスなど、複数の撮影環境を備えています。≒JOY『必殺ウインクガール』のMusic Videoでは、メンバーが白い衣装で人形と対面する屋外場面などに使用されています。\n\n【作品内で登場する場面】\n淡い色のレンガ壁と白い縦長窓に囲まれた中庭で、市原愛弓さんと白い衣装のメンバーが人形と向き合う場面に登場します。また、石壁とレンガのアーチ、黒い装飾付きアイアンゲート付近でもメンバーの撮影が行われています。\n\n【巡礼時の注意・マナー】\nここは撮影用のレンタルスタジオであり、一般の観光施設や自由見学施設ではありません。予約や許可のない敷地内への立ち入り、門前での長時間の滞在、近隣住宅や通行の妨げになる撮影は行わないでください。施設利用を希望する場合は、必ず公式サイトを通じて事前に問い合わせ・予約を行い、施設の利用規約とスタッフの指示に従ってください。\n\n【関連ロケ地】\nホテルスプリングス幕張・大宴会場「エメラルド」\n※『必殺ウインクガール』の白い衣装でのダンス場面に使用された別施設。登録済みの場合は相互リンクを設定し、同一スポットとして統合しないこと。\n\n【参考資料】\n・スタジオバジル ミント公式ページ\n  https://www.pastis.co.jp/mint/\n・≒JOY公式『必殺ウインクガール』Music Video\n  https://www.youtube.com/watch?v=wrl8FpW6xMA\n\n【調査情報】\n最終情報確認日：2026-11-26\n執筆・調査：れつぴ",
+        "visitor_notes": "・撮影用のレンタルスタジオであり、一般の観光施設や自由見学施設ではありません\n・予約や許可のない敷地内への立ち入り、門前での長時間の滞在は固くお控えください\n・近隣住宅や通行の妨げになる撮影はおやめください\n・施設利用を希望する場合は公式サイトから事前予約を行い、利用規約とスタッフの指示に従ってください",
+        "primarySourceUrl": "https://www.youtube.com/watch?v=wrl8FpW6xMA",
+        "operatorUrl": "https://www.pastis.co.jp/mint/",
+        "coordinateAccuracy": "exact",
+        "accuracyReason": "Googleマップおよびストリートビューにて敷地東側公道に面したメイン出入口（黒色伸縮ゲート・石畳アプローチ境界）の位置を確認",
+        "workKey": "work-wrl8FpW6xMA",
+        "last_confirmed_date": "2026-11-26"
     }
 ];
 

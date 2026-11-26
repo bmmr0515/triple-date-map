@@ -870,6 +870,15 @@ export const OFFICIAL_VIDEOS: Record<string, OfficialVideo> = {
     officialUrl: "https://www.youtube.com/watch?v=kdwmYsFF1tc",
     memorialDate: "2026-11-21",
     contentType: "公式MV"
+  },
+  "work-wrl8FpW6xMA": {
+    workKey: "work-wrl8FpW6xMA",
+    title: "必殺ウインクガール",
+    group: "≒JOY",
+    youtubeId: "wrl8FpW6xMA",
+    officialUrl: "https://www.youtube.com/watch?v=wrl8FpW6xMA",
+    memorialDate: "2026-11-24",
+    contentType: "公式MV"
   }
 };
 
