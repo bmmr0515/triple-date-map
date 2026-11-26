@@ -57,6 +57,16 @@ const stripIframeTags = (text) => {
     .trim();
 };
 
+// 🔗 URL自動リンク化関数
+const linkifyUrls = (text) => {
+  if (!text) return '';
+  return text.replace(/(https?:\/\/[^\s<]+)/g, (url) => {
+    const isInternal = url.includes('tripledatemap.com');
+    const href = isInternal ? url.replace(/https?:\/\/tripledatemap\.com/, '') : url;
+    return `<a href="${href}" ${isInternal ? '' : 'target="_blank" rel="noopener noreferrer" '}style="color: #ff6897; text-decoration: underline; word-break: break-all;">${url}</a>`;
+  });
+};
+
 // 📺 スポット動画解決関数（代表動画1件＋重複排除）
 const resolveSpotVideos = (spot) => {
   const candidates = [spot.youtubeId, spot.youtube_url];
@@ -679,9 +689,18 @@ const buildPageContent = (route) => {
       const s = route.spotData;
       const groupColor = s.group === '=LOVE' ? '#ff6897' : s.group === '≠ME' ? '#0ea5e9' : s.group === '≒JOY' ? '#f59e0b' : '#64748b';
       
-      // 同じグループの関連スポット（自スポット除く）
+      // 同じグループの関連スポット（同一楽曲 workKey 最優先、次いで同一グループ）
       const relatedSpots = spots
-        .filter(other => other.id !== s.id && (other.group === s.group || other.workKey === s.workKey))
+        .filter(other => other.id !== s.id)
+        .sort((a, b) => {
+          if (s.workKey) {
+            if (a.workKey === s.workKey && b.workKey !== s.workKey) return -1;
+            if (b.workKey === s.workKey && a.workKey !== s.workKey) return 1;
+          }
+          if (a.group === s.group && b.group !== s.group) return -1;
+          if (b.group === s.group && a.group !== s.group) return 1;
+          return 0;
+        })
         .slice(0, 4);
 
       mainContent = `
@@ -721,7 +740,7 @@ const buildPageContent = (route) => {
               📖 聖地・ロケ地としての詳しい解説
             </h2>
             <div style="font-size: 14.5px; line-height: 1.8; color: #334155; white-space: pre-wrap; margin-bottom: 24px;">
-${stripIframeTags(s.description)}
+${linkifyUrls(stripIframeTags(s.description))}
             </div>
 
             ${s.holy_point ? `

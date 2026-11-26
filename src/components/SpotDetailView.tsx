@@ -46,14 +46,48 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
     return items;
   };
 
-  // 関連記事スポット（同じグループ or 同じ楽曲など）
+  // 関連記事スポット（同一楽曲 workKey 最優先、次いで同じグループ）
   const getRelatedSpots = () => {
     return allSpots
-      .filter(s => s.id !== spot.id && (s.group === spot.group || s.category === spot.category))
+      .filter(s => s.id !== spot.id)
+      .sort((a, b) => {
+        if (spot.workKey) {
+          if (a.workKey === spot.workKey && b.workKey !== spot.workKey) return -1;
+          if (b.workKey === spot.workKey && a.workKey !== spot.workKey) return 1;
+        }
+        if (a.group === spot.group && b.group !== spot.group) return -1;
+        if (b.group === spot.group && a.group !== spot.group) return 1;
+        return 0;
+      })
       .slice(0, 3);
   };
 
   const relatedSpots = getRelatedSpots();
+
+  // テキスト内のURLをクリック可能なリンクとしてレンダリング
+  const renderTextWithLinks = (text: string) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const parts = text.split(urlRegex);
+    return parts.map((part, index) => {
+      if (part.match(urlRegex)) {
+        const isInternal = part.includes('tripledatemap.com');
+        const href = isInternal ? part.replace(/https?:\/\/tripledatemap\.com/, '') : part;
+        return (
+          <a
+            key={index}
+            href={href}
+            target={isInternal ? undefined : "_blank"}
+            rel={isInternal ? undefined : "noopener noreferrer"}
+            style={{ color: '#ff6897', textDecoration: 'underline', fontWeight: 500, wordBreak: 'break-all' }}
+            onClick={isInternal ? (e) => { e.preventDefault(); onNavigate(href); } : undefined}
+          >
+            {part}
+          </a>
+        );
+      }
+      return part;
+    });
+  };
 
   // メイン説明文のiframe・警告を除去したクリーンアップ
   const getCleanDescription = () => {
@@ -250,7 +284,7 @@ export const SpotDetailView: React.FC<SpotDetailProps> = ({ spot, allSpots, onNa
       {cleanDescription && (
         <div style={{ marginBottom: '24px' }}>
           <h3 style={{ fontSize: '17px', fontWeight: 'bold', color: '#0f172a', marginBottom: '10px' }}>📝 聖地解説</h3>
-          <p style={{ fontSize: '14px', lineHeight: '1.8', color: '#334155', whiteSpace: 'pre-wrap', margin: 0 }}>{cleanDescription}</p>
+          <p style={{ fontSize: '14px', lineHeight: '1.8', color: '#334155', whiteSpace: 'pre-wrap', margin: 0 }}>{renderTextWithLinks(cleanDescription)}</p>
         </div>
       )}
 
